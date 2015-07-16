@@ -1,0 +1,43 @@
+General Features
+================
+- browsing & ordering drinks (dashboard/overview/ticker)
+- commenting & rating of drinks
+- manage accounts (customer, manager)
+- managing drinks
+- pricing engine
+- customizable
+- filtering on best price, category, etc..
+- REST & Hateoas API
+
+_____________________________________________________
+possible actors & use-cases:
+
+Customer
+========
+- browsing drinks (includes filtering, search for tags, etc.)
+- ordering drinks
+- crud account (registering, etc.)
+- login/logout (transparent)
+- commenting & rating (on drinks)
+- customization (e.g. preferences, currency, etc.)
+
+Bar-Tender
+==========
+- Manage orders (browse orders)
+- Manage Stock?
+- anything else?
+
+Manager
+=======
+- manage accounts (customer, managers)
+- crud drinks (tagging, categorization)
+- manage pricing engine
+- login/logout
+- statistics
+- billing
+
+
+
+
+
+

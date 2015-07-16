@@ -1,0 +1,29 @@
+General Project Guidelines
+==========================
+
+i18n:
+- in general: english
+- texts: english
+- formats: user-locales
+- no specific i18n support
+
+concepts & paradigmas:
+- REST & Hateoas API
+- responsive design: desktop (manager), mobile (customer)
+- SPA
+
+ide, frameworks & tools:
+- webstorm
+- node-js (server-side)
+- angular (client-side)
+- gulp & yeoman generator (ng-poly)
+- jasmine testing
+- typescript
+
+dev-process:
+- aiming for bi-weekly sprints (flexible)
+
+
+
+
+
