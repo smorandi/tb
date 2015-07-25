@@ -7,7 +7,7 @@ import express = require('express');
 import path = require('path');
 import favicon = require('serve-favicon');
 
-import morgan = require('morgan');
+import log4js = require('log4js');
 import logger = require('./logger');
 
 import cookieParser = require('cookie-parser');
@@ -16,18 +16,16 @@ import bodyParser = require('body-parser');
 import routes = require('../routes/index.routes');
 import drinks = require('../routes/drinks.routes');
 
-
-
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, '/../views'));
 app.set('view engine', 'hbs');
 
-// Enable logger (morgan)
-app.use(morgan(logger.getLogFormat(), logger.getLogOptions()));
-
+// Enable logger (log4js)
 app.use(favicon(__dirname + '/../public/favicon.ico'));
+
+app.use(log4js.connectLogger(logger, { level: 'auto', format: ':method :url :status' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());

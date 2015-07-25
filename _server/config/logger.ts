@@ -2,28 +2,23 @@
  * Created by Stefano on 25.07.2015.
  */
 /// <reference path="../typings/tsd.d.ts" />
-'use strict';
+import log4js = require("log4js");
 
-import morgan = require('morgan');
-import config = require('./config');
-import fs = require('fs');
-
-export function getLogFormat() {
-    return config.log.format;
-};
-
-export function getLogOptions() {
-    var options = {};
-
-    try {
-        if (config.log.options.stream !== "stdout") {
-            options = {
-                stream: fs.createWriteStream(process.cwd() + '/' + config.log.options.stream, {flags: 'a'})
-            };
+var config = {
+    "appenders": [
+        {
+            //"category": "console",
+            "type": "console",
+            "layout": {
+                "type": "pattern",
+                "pattern": "%d [%[%-5p%]] - %m"
+            }
         }
-    } catch (e) {
-        options = {};
-    }
+    ],
+    "replaceConsole": true
+}
 
-    return options;
-};
+log4js.configure(<any>config);
+var logger = log4js.getLogger();
+
+export = logger;

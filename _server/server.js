@@ -9,19 +9,19 @@
 var debug = require('debug')('tb_server:server');
 var http = require('http');
 var mongoose = require('mongoose');
-var chalk = require('chalk');
 var config = require('./config/config');
 var app = require('./config/express');
+var logger = require("./config/logger");
 
 // Bootstrap db connection
 var db = mongoose.connect(config.db.uri, config.db.options, function (err) {
     if (err) {
-        console.error(chalk.red('Could not connect to MongoDB!'));
-        console.log(chalk.red(err));
+        logger.error('Could not connect to MongoDB!');
+        logger.error(err);
     }
 });
 mongoose.connection.on('error', function (err) {
-        console.error(chalk.red('MongoDB connection error: ' + err));
+        logger.error('MongoDB connection error: ' + err);
         process.exit(-1);
     }
 );
@@ -56,18 +56,18 @@ function onError(error) {
         throw error;
     }
 
-    var bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
+    var bind = typeof config.port === 'string'
+        ? 'Pipe ' + config.port
+        : 'Port ' + config.port;
 
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
+            logger.fatal(bind + ' requires elevated privileges');
             process.exit(1);
             break;
         case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
+            logger.fatal(bind + ' is already in use');
             process.exit(1);
             break;
         default:
@@ -78,11 +78,10 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
 function onListening() {
     var addr = server.address();
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    logger.info('Listening on ' + bind)
 }
