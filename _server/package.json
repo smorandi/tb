@@ -15,6 +15,7 @@
     "serve-favicon": "~2.2.1",
     "tsd":"~0.6.3",
     "mongoose":"~3.8.5",
-    "chalk": "~1.1.0"
+    "chalk": "~1.1.0",
+    "typescript":"~1.5.3"
   }
 }
