@@ -24,8 +24,7 @@ mongoose.connection.on("error", err => {
         process.exit(-1);
     }
 );
-
-// Init the express application
+mongoose.connection.on("connected", () => logger.info('Mongoose default connection open to ' + config.db.uri));
 
 /**
  * Get port from environment and store in Express.

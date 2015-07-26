@@ -21,6 +21,7 @@ export var port = process.env.PORT || 3000;
 export var urls = {
     home: "http://localhost" + ":" + port + "/",
     drinks: "http://localhost" + ":" + port + "/drinks/",
+    users: "http://localhost" + ":" + port + "/users/",
 };
 
 export var serverRoot = path.join(__dirname + "/..");

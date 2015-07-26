@@ -5,20 +5,44 @@
 
 "use strict";
 
-import mongoose = require("mongoose");
 import api = require("./api");
+import mongoose = require("mongoose");
+import express = require("express");
+import _ = require("lodash");
 
-interface IDrinkModel extends api.IDrink, mongoose.Document {
+export interface IMixInDocument extends api.IEntity, mongoose.Document {
+    _id:any;
+}
+
+//______________________________________________________________________________________________________________________
+// drink...
+export interface IDrinkDocument extends api.IDrink, IMixInDocument {
     _id:any;
 }
 
 var drinkSchema = new mongoose.Schema({
-    name: String,
+    name: {type: String, required: true},
     description: String,
     alcoholic: Boolean,
     quantity: String,
-    price: Number,
-    category: String
+    price: {type: Number, required: true},
+    category: {type: String, enum: ["SoftDrink", "Beer", "Cocktail"]}
 });
 
-export var Drink = mongoose.model<IDrinkModel>("Drink", drinkSchema);
+export var drinkRepository = mongoose.model<IDrinkDocument>("Drink", drinkSchema);
+
+
+//______________________________________________________________________________________________________________________
+// user...
+export interface IUserDocument extends api.IUser, IMixInDocument {
+    _id:any;
+}
+
+var userSchema = new mongoose.Schema({
+    firstName: String,
+    lastName: String,
+    role: String,
+    joinDate: Date
+});
+
+export var userRepository = mongoose.model<IUserDocument>("User", userSchema);

@@ -5,20 +5,29 @@
 
 //______________________________________________________________________________________________________________________
 // entities...
-export enum Category {SoftDrink, Beer, Cocktail};
+export enum Category {SoftDrink, Beer, Cocktail}
+export enum Role {Customer, Manager}
 
 export interface IEntity {
     _id:any;
 }
 
 export interface IDrink extends IEntity {
-    name:string;
-    description:string;
-    alcoholic:boolean;
-    quantity:string;
-    price:number;
+    name:String;
+    description:String;
+    alcoholic:Boolean;
+    quantity:String;
+    price:Number;
     category: Category;
 }
+
+export interface IUser extends IEntity {
+    firstName:String;
+    lastName:String;
+    role: Role;
+    joinDate: Date;
+}
+
 
 //______________________________________________________________________________________________________________________
 // resources...
@@ -32,8 +41,8 @@ export interface IResource {
     _links: Array<ILink>;
 }
 
-export interface IDrinkResource extends IResource, IDrink {
-}
+//export interface IDrinkResource extends IResource, IDrink {
+//}
 
 export class Link implements ILink {
     rel:string;
