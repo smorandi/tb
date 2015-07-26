@@ -1,7 +1,9 @@
 pre-requisites
 
-- node.js (with express)
+- node.js (with express/npm)
 - mongodb
+- typescript (install with npm install -g typescript, ~1.5.3)
+- tsd (install with npm install -g tsd, ~0.6.3)
 
 do the following steps to get everything:
 

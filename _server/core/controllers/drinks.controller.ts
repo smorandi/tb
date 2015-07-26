@@ -1,7 +1,7 @@
 /**
  * Created by Stefano on 24.07.2015.
  */
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 "use strict";
 
 import mongoose = require("mongoose");
@@ -9,8 +9,8 @@ import errorHandler = require("./errors.controller");
 
 import api = require("../models/api");
 import impl = require("../models/impl");
-import utils = require("../models/utils");
-import config = require("../config/config");
+import utils = require("../utils/utils");
+import config = require("../../config/config");
 
 function createDrinkResource(drink:api.IDrink) {
     var selfLink = new api.Link("self", config.urls.drinks + drink._id, "GET");

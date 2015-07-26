@@ -31,6 +31,15 @@
     },
     "log4js/log4js.d.ts": {
       "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+    },
+    "lodash/lodash.d.ts": {
+      "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+    },
+    "glob/glob.d.ts": {
+      "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+    },
+    "minimatch/minimatch.d.ts": {
+      "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
     }
   }
 }
