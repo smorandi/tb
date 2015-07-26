@@ -3,7 +3,7 @@
  */
 "use strict";
 
-import api = require("./api");
+import api = require("../models/api");
 
 export function createFromEntity<R extends api.IResource>(entity:api.IEntity, links:Array<api.ILink>):R {
     // a bit of magic here...we are going to "dynmaically" add the links to the entity in a new object, which
