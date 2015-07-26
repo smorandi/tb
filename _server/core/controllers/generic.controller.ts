@@ -14,7 +14,7 @@ import _ = require("lodash");
 
 //______________________________________________________________________________________________________________________
 // controller...
-interface IController {
+export interface IController {
     list?(req:express.Request, res:express.Response, next:Function):void;
     read?(req:express.Request, res:express.Response, next:Function):void;
     create?(req:express.Request, res:express.Response, next:Function):void;
@@ -22,7 +22,7 @@ interface IController {
     remove?(req:express.Request, res:express.Response, next:Function):void;
 }
 
-class GenericController<E extends impl.IMixInDocument> implements IController {
+export class GenericController<E extends impl.IMixInDocument> implements IController {
     private repository:mongoose.Model<E>;
 
     constructor(repository:mongoose.Model<E>) {
@@ -38,7 +38,7 @@ class GenericController<E extends impl.IMixInDocument> implements IController {
         this.repository.find({}).lean().exec((err:Error, docs:Array<E>) => {
             if (err) {
                 return res.status(400).send({
-                    message: getErrorMessage(err)
+                    message: GenericController.getErrorMessage(err)
                 });
             } else {
                 res.json(this.createResources(docs));
@@ -46,8 +46,8 @@ class GenericController<E extends impl.IMixInDocument> implements IController {
         });
     }
 
-    read(req:express.Request, res:express.Response, next:Function):void {
-        this.repository.findById(req.params.id).exec((err:Error, doc:E) => {
+    public read(req:express.Request, res:express.Response, next:Function):void {
+        this.repository.findById(req.params.id).lean().exec((err:Error, doc:E) => {
             if (err) return next(err);
             if (!doc) return res.status(404).end();
 
@@ -59,7 +59,7 @@ class GenericController<E extends impl.IMixInDocument> implements IController {
         this.repository.create(req.body, (err:Error, doc:E) => {
             if (err) {
                 return res.status(400).send({
-                    message: getErrorMessage(err)
+                    message: GenericController.getErrorMessage(err)
                 });
             } else {
                 // returning 201 with location to the created resource...
@@ -72,7 +72,7 @@ class GenericController<E extends impl.IMixInDocument> implements IController {
         this.repository.findByIdAndUpdate(req.params.id, req.body, (err:Error, doc:E) => {
                 if (err) {
                     return res.status(400).send({
-                        message: getErrorMessage(err)
+                        message: GenericController.getErrorMessage(err)
                     });
                 } else if (!doc) {
                     return res.status(404).end();
@@ -93,8 +93,29 @@ class GenericController<E extends impl.IMixInDocument> implements IController {
         });
     }
 
+    //public resolveById(req:express.Request, res:express.Response, next:Function, id:any):void {
+    //    var x:any = mongoose.Types.ObjectId;
+    //    if (!x.isValid(id)) {
+    //        res.status(400).send({
+    //            message: "ID of requested resource is invalid"
+    //        });
+    //    } else {
+    //        this.repository.findById(id).lean().exec((err, doc) => {
+    //            if (err) return next(err);
+    //            if (!doc) {
+    //                res.status(404).send({
+    //                    message: "resource not found"
+    //                });
+    //            } else {
+    //                req.body = doc;
+    //                next();
+    //            }
+    //        });
+    //    }
+    //}
+
     public getBaseUrl():string {
-        return "";
+        throw new Error("getBaseUrl() must be overriden and implemented");
     }
 
     protected createSelfLink <E extends api.IEntity> (entity:E):api.ILink {
@@ -113,14 +134,14 @@ class GenericController<E extends impl.IMixInDocument> implements IController {
         return new api.Link("create", this.getBaseUrl(), "POST");
     }
 
-    private createResources <E extends api.IEntity > (entities:Array<E>) {
+    private createResources <E extends api.IEntity > (entities:Array<E>):Array<api.IResource> {
         var resources = [];
         entities.forEach((entity, index, entities) => resources.push(this.createResource(entity)));
 
         return resources;
     }
 
-    private createResource <E extends api.IEntity > (entity:E) {
+    private createResource <E extends api.IEntity > (entity:E):api.IResource {
         logger.trace("creating resource out of entity")
 
         var selfLink = this.createSelfLink(entity);
@@ -133,77 +154,41 @@ class GenericController<E extends impl.IMixInDocument> implements IController {
         // add the links to the given entity...
         var resource = _.extend({}, entity, {_links: links});
         logger.trace("resource=", resource)
-        return resource;
-    }
-}
-
-//______________________________________________________________________________________________________________________
-// drinks-controller
-class DrinksController extends GenericController<impl.IDrinkDocument> {
-    constructor() {
-        super(impl.drinkRepository);
+        return <api.IResource>resource;
     }
 
-    public getBaseUrl():string {
-        return config.urls.drinks;
-    }
-}
+    private static getUniqueErrorMessage(err):string {
+        var output;
 
-export var drinksController = new DrinksController();
+        try {
+            var fieldName = err.err.substring(err.err.lastIndexOf('.$') + 2, err.err.lastIndexOf('_1'));
+            output = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' already exists';
 
-//______________________________________________________________________________________________________________________
-// users-controller
-class UsersController extends GenericController<impl.IUserDocument> {
-    constructor() {
-        super(impl.userRepository);
-    }
-
-    public getBaseUrl():string {
-        return config.urls.users;
-    }
-}
-
-export var usersController = new UsersController();
-
-//______________________________________________________________________________________________________________________
-// error handling...
-/**
- * Get unique error field name
- */
-var getUniqueErrorMessage = function(err) {
-    var output;
-
-    try {
-        var fieldName = err.err.substring(err.err.lastIndexOf('.$') + 2, err.err.lastIndexOf('_1'));
-        output = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' already exists';
-
-    } catch (ex) {
-        output = 'Unique field already exists';
-    }
-
-    return output;
-};
-
-/**
- * Get the error message from error object
- */
-function getErrorMessage(err:any) {
-    var message = '';
-
-    if (err.code) {
-        switch (err.code) {
-            case 11000:
-            case 11001:
-                message = getUniqueErrorMessage(err);
-                break;
-            default:
-                message = 'Something went wrong';
+        } catch (ex) {
+            output = 'Unique field already exists';
         }
-    } else {
-        for (var errName in err.errors) {
-            if (err.errors[errName].message) message = err.errors[errName].message;
-        }
+
+        return output;
     }
 
-    return message;
+    private static getErrorMessage(err:any):string {
+        var message = '';
+
+        if (err.code) {
+            switch (err.code) {
+                case 11000:
+                case 11001:
+                    message = GenericController.getUniqueErrorMessage(err);
+                    break;
+                default:
+                    message = 'Something went wrong';
+            }
+        } else {
+            for (var errName in err.errors) {
+                if (err.errors[errName].message) message = err.errors[errName].message;
+            }
+        }
+
+        return message;
+    }
 }

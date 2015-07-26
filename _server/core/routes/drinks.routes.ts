@@ -5,13 +5,11 @@
 "use strict";
 
 import express = require('express');
-import controllers = require("../controllers/controllers");
 import logger = require("../../config/logger");
+import controller = require("../controllers/drinks.controller");
 
 function init(app) {
     logger.trace("initializing drink routes...")
-
-    var controller = controllers.drinksController;
 
     app.route('/drinks')
         .get((req, res, next) => controller.list(req, res, next))
@@ -21,6 +19,8 @@ function init(app) {
         .get((req, res, next) => controller.read(req, res, next))
         .put((req, res, next) => controller.update(req, res, next))
         .delete((req, res, next) => controller.delete(req, res, next))
+
+    //app.param("id", (req, res, next, id) => controller.resolveById(req, res, next, id));
 }
 
 export = init;

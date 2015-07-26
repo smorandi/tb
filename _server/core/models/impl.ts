@@ -27,7 +27,7 @@ var drinkSchema = new mongoose.Schema({
     quantity: String,
     price: {type: Number, required: true},
     category: {type: String, enum: ["SoftDrink", "Beer", "Cocktail"]}
-});
+}, {versionKey: false});
 
 export var drinkRepository = mongoose.model<IDrinkDocument>("Drink", drinkSchema);
 
@@ -43,6 +43,6 @@ var userSchema = new mongoose.Schema({
     lastName: String,
     role: String,
     joinDate: Date
-});
+}, {versionKey: false});
 
 export var userRepository = mongoose.model<IUserDocument>("User", userSchema);

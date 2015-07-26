@@ -5,13 +5,11 @@
 "use strict";
 
 import express = require('express');
-import controllers = require("../controllers/controllers");
 import logger = require("../../config/logger");
+import controller = require("../controllers/users.controller");
 
 function init(app) {
     logger.trace("initializing user routes...")
-
-    var controller = controllers.usersController;
 
     app.route('/users')
         .get((req, res, next) => controller.list(req, res, next))
