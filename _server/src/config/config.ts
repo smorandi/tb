@@ -1,8 +1,8 @@
 /**
  * Created by Stefano on 25.07.2015.
  */
-/// <reference path="../typings/tsd.d.ts" />
-import path = require('path');
+/// <reference path="../../typings/tsd.d.ts" />
+import path = require("path");
 "use strict";
 
 export var db = {

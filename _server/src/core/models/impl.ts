@@ -1,14 +1,24 @@
 /**
  * Created by Stefano on 25.07.2015.
  */
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
+/// <reference path="./api.ts" />
 
 "use strict";
 
-import api = require("./api");
 import mongoose = require("mongoose");
-import express = require("express");
-import _ = require("lodash");
+
+export class Link implements api.ILink {
+    rel:string;
+    url:string;
+    method:string;
+
+    constructor(rel:string, url:string, method:string) {
+        this.rel = rel;
+        this.url = url;
+        this.method = method;
+    }
+}
 
 export interface IMixInDocument extends api.IEntity, mongoose.Document {
     _id:any;

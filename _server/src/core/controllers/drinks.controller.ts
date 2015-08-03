@@ -1,7 +1,7 @@
 /**
  * Created by Stefano on 26.07.2015.
  */
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 "use strict";
 
 import generic = require("./generic.controller");

@@ -1,10 +1,9 @@
 /**
  * Created by Stefano on 26.07.2015.
  */
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 "use strict";
 
-import api = require("../models/api");
 import impl = require("../models/impl");
 import config = require("../../config/config");
 import logger = require("../../config/logger");
@@ -119,19 +118,19 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
     }
 
     protected createSelfLink <E extends api.IEntity> (entity:E):api.ILink {
-        return new api.Link("self", this.getBaseUrl() + entity._id, "GET");
+        return new impl.Link("self", this.getBaseUrl() + entity._id, "GET");
     }
 
     protected createDeleteLink <E extends api.IEntity> (entity:E):api.ILink {
-        return new api.Link("delete", this.getBaseUrl() + entity._id, "DELETE");
+        return new impl.Link("delete", this.getBaseUrl() + entity._id, "DELETE");
     }
 
     protected createUpdateLink<E extends api.IEntity> (entity:E):api.ILink {
-        return new api.Link("update", this.getBaseUrl() + entity._id, "PUT");
+        return new impl.Link("update", this.getBaseUrl() + entity._id, "PUT");
     }
 
     protected createCreateLink <E extends api.IEntity> (entity:E):api.ILink {
-        return new api.Link("create", this.getBaseUrl(), "POST");
+        return new impl.Link("create", this.getBaseUrl(), "POST");
     }
 
     private createResources <E extends api.IEntity > (entities:Array<E>):Array<api.IResource> {

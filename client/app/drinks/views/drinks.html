@@ -1,0 +1,24 @@
+<a ui-sref="newDrink" class="btn-primary btn-lg nodecoration">Add New Drink</a>
+
+<div class="master-detail-wrapper">
+    <br>
+    Filter: <input type="text" ng-model="vm.drinks.query"/>
+    <br>
+
+    <table class="table table-striped table-hover drinktable master">
+        <tr>
+            <td><h3>All Drinks</h3></td>
+            <td></td>
+        </tr>
+        <tr ng-repeat="drink in vm.drinks | filter: vm.drinks.query" ui-sref-active="selected"
+            ui-sref="drinks.viewDrink({id:drink._id})">
+            <td>{{drink.name}}</td>
+            <td>
+                <!--<a class="btn btn-primary" ui-sref="viewDrink({id:drink._id})">View</a>-->
+                <a class="btn btn-danger" ng-click="vm.deleteDrink(drink, $event)">Delete</a>
+            </td>
+        </tr>
+    </table>
+
+    <div class="detail" ui-view></div>
+</div>

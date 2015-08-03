@@ -1,0 +1,37 @@
+<table class="table drinktable">
+    <tr>
+        <td><h3>Details for {{vm.drink.name}}</h3></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Id</td>
+        <td>{{vm.drink._id}}</td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>{{vm.drink.name}}</td>
+    </tr>
+    <tr>
+        <td>Description</td>
+        <td>{{vm.drink.description}}</td>
+    </tr>
+    <tr>
+        <td>Alcoholic</td>
+        <td>{{vm.drink.alcoholic}}</td>
+    </tr>
+    <tr>
+        <td>Quantity</td>
+        <td>{{vm.drink.quantity}}</td>
+    </tr>
+    <tr>
+        <td>Price</td>
+        <td>{{vm.drink.price}}</td>
+    </tr>
+    <tr>
+        <td>Category</td>
+        <td>{{vm.drink.category}}</td>
+    </tr>
+</table>
+<div>
+    <a class="btn btn-primary" ui-sref="editDrink({id:movie._id})">Edit</a>
+</div>

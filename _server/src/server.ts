@@ -1,7 +1,7 @@
 /**
  * Created by Stefano on 25.07.2015.
  */
-/// <reference path="./typings/tsd.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 "use strict";
 
 /**
