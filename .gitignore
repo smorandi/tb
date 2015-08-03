@@ -11,12 +11,21 @@ config/env/local.js
 .nodemonignore
 .sass-cache/
 npm-debug.log
-_server/node_modules/
+*/node_modules/
 public/lib/
 app/tests/coverage/
 .bower-*/
-_server/typings/
+*/typings/
 .idea/
+*/bower_components
+**/*.d.ts
+#yeoman
+# node_modules
+*/node_modules
+*/report
+*/coverage
+*/build
+tmp
 
 # Eclipse project files
 # =====================
