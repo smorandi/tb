@@ -11,7 +11,6 @@ import logger = require("../../config/logger");
 import express = require("express");
 import mongoose = require("mongoose");
 import _ = require("lodash");
-import api = require("../models/api");
 
 var hal = require("halberd");
 
@@ -44,7 +43,10 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
                     message: GenericController.getErrorMessage(err)
                 });
             } else {
-                res.json(this.createResources(docs));
+                res.format({
+                    "application/hal+json": () =>  res.json(this.createResources(req, docs)),
+                    "application/json": () =>  res.json(docs)
+                });
             }
         });
     }
@@ -54,7 +56,10 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
             if (err) return next(err);
             if (!doc) return res.status(404).end();
 
-            res.json(this.createResource(doc));
+            res.format({
+                "application/hal+json": () =>  res.json(this.createResource(req, doc)),
+                "application/json": () =>  res.json(doc)
+            });
         })
     }
 
@@ -66,13 +71,13 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
                 });
             } else {
                 // returning 201 with location to the created resource...
-                res.status(201).location(this.getBaseUrl() + doc._id).end()
+                res.status(201).location(this._getBaseUrl(req) + "/" + doc._id).end()
             }
         });
     }
 
     public update(req:express.Request, res:express.Response, next:Function):void {
-        this.repository.findByIdAndUpdate(req.params.id, req.body, (err:Error, doc:E) => {
+        this.repository.findByIdAndUpdate(req.params.id, req.body).lean().exec((err:Error, doc:E) => {
                 if (err) {
                     return res.status(400).send({
                         message: GenericController.getErrorMessage(err)
@@ -80,7 +85,10 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
                 } else if (!doc) {
                     return res.status(404).end();
                 } else {
-                    res.json(this.createResource(doc));
+                    res.format({
+                        "application/hal+json": () => res.json(this.createResource(req, doc)),
+                        "application/json": () => res.json(doc),
+                    });
                 }
             }
         );
@@ -94,6 +102,63 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
             // http://www.restapitutorial.com/lessons/httpmethods.html
             res.status(204).end();
         });
+    }
+
+    private _getBaseUrl(req:express.Request):string {
+        return req.headers["host"] + this.getBaseUrl();
+    }
+
+    protected getBaseUrl():string {
+        throw new Error("method must be overridden and implemented");
+    }
+
+    protected createSelfLink <E extends api.IEntity> (req:express.Request, entity:E):any {
+        return new hal.Link("self", this._getBaseUrl(req) + "/" + entity._id);
+    }
+
+    protected createDeleteLink <E extends api.IEntity> (req:express.Request, entity:E):any {
+        return new hal.Link("delete", this._getBaseUrl(req) + "/" + entity._id);
+    }
+
+    protected createUpdateLink<E extends api.IEntity> (req:express.Request, entity:E):any {
+        return new hal.Link("update", this._getBaseUrl(req) + "/" + entity._id);
+    }
+
+    protected createCreateLink <E extends api.IEntity> (req:express.Request, entity:E):any {
+        return new hal.Link("create", this._getBaseUrl(req));
+    }
+
+    private createResources <E extends api.IEntity> (req:express.Request, entities:Array<E>):Array<any> {
+        var collection = new hal.Resource({}, this._getBaseUrl(req));
+
+        entities.forEach((entity, index, entities) => collection.embed("collection", this.createResource(req, entity)));
+
+        return collection;
+    }
+
+    private createResource <E extends api.IEntity> (req:express.Request, entity:E):any {
+        logger.trace("creating resource out of entity")
+
+        var selfLink = this.createSelfLink(req, entity);
+        var deleteLink = this.createDeleteLink(req, entity);
+        var updateLink = this.createUpdateLink(req, entity);
+        var createLink = this.createCreateLink(req, entity);
+
+        var links = [selfLink, deleteLink, updateLink, createLink];
+
+        // add the links to the given entity...
+        //var resource = _.extend({}, entity, {_links: links});
+        //return <api.IResource>resource;
+
+        var resource = new hal.Resource(entity);
+        resource.link(selfLink);
+        resource.link(deleteLink);
+        resource.link(updateLink);
+        resource.link(createLink);
+
+        logger.trace("resource=", resource)
+
+        return resource;
     }
 
     //public resolveById(req:express.Request, res:express.Response, next:Function, id:any):void {
@@ -116,58 +181,6 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
     //        });
     //    }
     //}
-
-    public getBaseUrl():string {
-        throw new Error("getBaseUrl() must be overriden and implemented");
-    }
-
-    protected createSelfLink <E extends api.IEntity> (entity:E):any {
-        return new hal.Link("self", this.getBaseUrl() + entity._id);
-    }
-
-    protected createDeleteLink <E extends api.IEntity> (entity:E):any {
-        return new hal.Link("delete", this.getBaseUrl() + entity._id);
-    }
-
-    protected createUpdateLink<E extends api.IEntity> (entity:E):any {
-        return new hal.Link("update", this.getBaseUrl() + entity._id);
-    }
-
-    protected createCreateLink <E extends api.IEntity> (entity:E):any {
-        return new hal.Link("create", this.getBaseUrl());
-    }
-
-    private createResources <E extends api.IEntity> (entities:Array<E>):Array<any> {
-        var resources = [];
-        entities.forEach((entity, index, entities) => resources.push(this.createResource(entity)));
-
-        return resources;
-    }
-
-    private createResource <E extends api.IEntity> (entity:E):any {
-        logger.trace("creating resource out of entity")
-
-        var selfLink = this.createSelfLink(entity);
-        var deleteLink = this.createDeleteLink(entity);
-        var updateLink = this.createUpdateLink(entity);
-        var createLink = this.createCreateLink(entity);
-
-        var links = [selfLink, deleteLink, updateLink, createLink];
-
-        // add the links to the given entity...
-        //var resource = _.extend({}, entity, {_links: links});
-        //return <api.IResource>resource;
-
-        var resource = new hal.Resource(entity);
-        resource.link(selfLink);
-        resource.link(deleteLink);
-        resource.link(updateLink);
-        resource.link(createLink);
-
-        logger.trace("resource=", resource)
-
-        return resource;
-    }
 
     private static getUniqueErrorMessage(err):string {
         var output;

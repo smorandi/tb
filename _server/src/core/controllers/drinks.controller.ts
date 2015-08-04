@@ -13,7 +13,7 @@ class DrinksController extends generic.GenericController<impl.IDrinkDocument> {
         super(impl.drinkRepository);
     }
 
-    public getBaseUrl():string {
+    protected getBaseUrl():string {
         return config.urls.drinks;
     }
 }

@@ -13,7 +13,7 @@ class UsersController extends generic.GenericController<impl.IUserDocument> {
         super(impl.userRepository);
     }
 
-    public getBaseUrl():string {
+    protected getBaseUrl():string {
         return config.urls.users;
     }
 }

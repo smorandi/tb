@@ -18,10 +18,11 @@ export var app = {
 
 export var port = process.env.PORT || 3000;
 
+var homeUrl = "";
 export var urls = {
-    home: "http://localhost" + ":" + port + "/",
-    drinks: "http://localhost" + ":" + port + "/drinks/",
-    users: "http://localhost" + ":" + port + "/users/",
+    home: homeUrl,
+    drinks: homeUrl + "/drinks",
+    users: homeUrl + "/users",
 };
 
 export var serverRoot = path.join(__dirname + "/..");
