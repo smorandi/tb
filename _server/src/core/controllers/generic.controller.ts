@@ -2,6 +2,7 @@
  * Created by Stefano on 26.07.2015.
  */
 /// <reference path="../../../typings/tsd.d.ts" />
+
 "use strict";
 
 import impl = require("../models/impl");
@@ -10,6 +11,9 @@ import logger = require("../../config/logger");
 import express = require("express");
 import mongoose = require("mongoose");
 import _ = require("lodash");
+import api = require("../models/api");
+
+var hal = require("halberd");
 
 //______________________________________________________________________________________________________________________
 // controller...
@@ -117,30 +121,30 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
         throw new Error("getBaseUrl() must be overriden and implemented");
     }
 
-    protected createSelfLink <E extends api.IEntity> (entity:E):api.ILink {
-        return new impl.Link("self", this.getBaseUrl() + entity._id, "GET");
+    protected createSelfLink <E extends api.IEntity> (entity:E):any {
+        return new hal.Link("self", this.getBaseUrl() + entity._id);
     }
 
-    protected createDeleteLink <E extends api.IEntity> (entity:E):api.ILink {
-        return new impl.Link("delete", this.getBaseUrl() + entity._id, "DELETE");
+    protected createDeleteLink <E extends api.IEntity> (entity:E):any {
+        return new hal.Link("delete", this.getBaseUrl() + entity._id);
     }
 
-    protected createUpdateLink<E extends api.IEntity> (entity:E):api.ILink {
-        return new impl.Link("update", this.getBaseUrl() + entity._id, "PUT");
+    protected createUpdateLink<E extends api.IEntity> (entity:E):any {
+        return new hal.Link("update", this.getBaseUrl() + entity._id);
     }
 
-    protected createCreateLink <E extends api.IEntity> (entity:E):api.ILink {
-        return new impl.Link("create", this.getBaseUrl(), "POST");
+    protected createCreateLink <E extends api.IEntity> (entity:E):any {
+        return new hal.Link("create", this.getBaseUrl());
     }
 
-    private createResources <E extends api.IEntity > (entities:Array<E>):Array<api.IResource> {
+    private createResources <E extends api.IEntity> (entities:Array<E>):Array<any> {
         var resources = [];
         entities.forEach((entity, index, entities) => resources.push(this.createResource(entity)));
 
         return resources;
     }
 
-    private createResource <E extends api.IEntity > (entity:E):api.IResource {
+    private createResource <E extends api.IEntity> (entity:E):any {
         logger.trace("creating resource out of entity")
 
         var selfLink = this.createSelfLink(entity);
@@ -151,9 +155,18 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
         var links = [selfLink, deleteLink, updateLink, createLink];
 
         // add the links to the given entity...
-        var resource = _.extend({}, entity, {_links: links});
+        //var resource = _.extend({}, entity, {_links: links});
+        //return <api.IResource>resource;
+
+        var resource = new hal.Resource(entity);
+        resource.link(selfLink);
+        resource.link(deleteLink);
+        resource.link(updateLink);
+        resource.link(createLink);
+
         logger.trace("resource=", resource)
-        return <api.IResource>resource;
+
+        return resource;
     }
 
     private static getUniqueErrorMessage(err):string {

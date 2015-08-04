@@ -2,23 +2,11 @@
  * Created by Stefano on 25.07.2015.
  */
 /// <reference path="../../../typings/tsd.d.ts" />
-/// <reference path="./api.ts" />
 
 "use strict";
 
 import mongoose = require("mongoose");
-
-export class Link implements api.ILink {
-    rel:string;
-    url:string;
-    method:string;
-
-    constructor(rel:string, url:string, method:string) {
-        this.rel = rel;
-        this.url = url;
-        this.method = method;
-    }
-}
+import api = require("../models/api");
 
 export interface IMixInDocument extends api.IEntity, mongoose.Document {
     _id:any;
