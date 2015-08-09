@@ -2,8 +2,8 @@
     <h3>Details for {{vm.drink.name}}</h3>
 
     <div>
-        <a class="btn btn-primary" ui-sref="editDrink({id:movie._id})">Edit</a>
-        <a class="btn btn-danger" ng-show="vm.drink.$has('delete')"
+        <a class="btn btn-primary" ng-show="vm.canEdit()" ng-click="vm.editDrink()">Edit</a>
+        <a class="btn btn-danger" ng-show="vm.canDelete()"
            ng-click="vm.deleteDrink($event)">Delete</a>
     </div>
 </div>

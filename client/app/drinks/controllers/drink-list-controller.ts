@@ -15,17 +15,52 @@ module drinks.controllers {
 
             halClient.$get("http://localhost:3000/drinks").then(drinksResource => {
                 this.drinksResource = drinksResource;
-                return drinksResource.$get("collection");
+                if(drinksResource.$has("collection")) {
+                    return drinksResource.$get("collection");
+                }
             }).then(collection => {
                 this.drinkResources = collection;
             });
         }
 
-        deleteDrink(drink:any, event:Event) {
+        public canCreateNewDrink():boolean {
+            return this.drinksResource === undefined ? false : this.drinksResource.$has("create");
+        }
+
+        public canDeleteAllDrinks():boolean {
+            return this.drinksResource.$has("delete");
+        }
+
+        public canDelete(drink:any):boolean {
+            return drink.$has("delete");
+        }
+
+        public deleteDrink(drink:any, event:Event):void {
             if (this.popupService.showPopup('Really delete this?')) {
                 drink.$del("delete").then(x => this.$state.reload());
             }
             event.stopPropagation();
+        }
+
+        public deleteAllDrinks(event:Event):void {
+            if (this.popupService.showPopup('Really delete all drinks?')) {
+                this.drinksResource.$del("delete").then(res => this.$state.go("drinks", {}, {reload: true}));
+            }
+            event.stopPropagation();
+        }
+
+        public createNewDrink():void {
+            this.$state.go("newDrink", {
+                url: this.drinksResource.$href("create"),
+                resource: this.drinksResource
+            })
+        }
+
+        public viewDrink(drink:any):void {
+            this.$state.go("drinks.viewDrink", {
+                url: drink.$href("self"),
+                resource: drink
+            })
         }
     }
 

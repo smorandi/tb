@@ -5,11 +5,14 @@
             <input type="search" ng-model="vm.query"/>
 
             <div>
-                <a ui-sref="newDrink({link:vm.drinksResource.$href('create')})" class="btn-primary btn-lg nodecoration"
-                   ng-show="vm.drinksResource.$has('create')">Add
+                <!--<a ui-sref="newDrink({link:vm.drinksResource.$href('create')})" class="btn-primary btn-lg nodecoration"-->
+                <!--ng-show="vm.drinksResource.$has('create')">Add-->
+                <!--New Drink</a>-->
+                <a class="btn-primary btn-lg nodecoration" ng-click="vm.createNewDrink()"
+                   ng-show="vm.canCreateNewDrink()">Add
                     New Drink</a>
                 <a class="btn btn-danger" ng-show="vm.drinksResource.$has('delete')"
-                   ng-click="vm.deleteDrinks($event)">Delete</a>
+                   ng-click="vm.deleteAllDrinks($event)">Delete</a>
             </div>
         </div>
 
@@ -23,12 +26,14 @@
             <th>
                 Actions
             </th>
+            <!--<tr ng-repeat="drink in vm.drinkResources | filter: vm.query" ui-sref-active="selected"-->
+                <!--ui-sref="drinks.viewDrink({link:drink.$href('self')})">-->
             <tr ng-repeat="drink in vm.drinkResources | filter: vm.query" ui-sref-active="selected"
-                ui-sref="drinks.viewDrink({link:drink.$href('self')})">
+                ng-click="vm.viewDrink(drink)">
                 <td>{{drink.name}}</td>
                 <td>{{drink.id}}</td>
                 <td>
-                    <a class="btn btn-danger" ng-show="drink.$has('delete')"
+                    <a class="btn btn-danger" ng-show="vm.canDelete(drink)"
                        ng-click="vm.deleteDrink(drink, $event)">Delete</a>
                 </td>
             </tr>
