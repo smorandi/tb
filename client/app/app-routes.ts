@@ -1,10 +1,10 @@
-///<reference path='../typings/tsd.d.ts' />
+///<reference path="../typings/tsd.d.ts" />
 module client {
-    'use strict';
+    "use strict";
 
-    angular.module('tb').config(config);
+    angular.module("tb").config(config);
 
     function config($urlRouterProvider:ng.ui.IUrlRouterProvider) {
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise("");
     }
 }

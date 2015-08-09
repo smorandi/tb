@@ -3,6 +3,7 @@
   "name": "tb",
   "timestamp": 1437917244205,
   "order": [
+    "d285dad7-0c4c-4cdd-7858-daf5346143eb",
     "03acd3c5-dda8-6872-49f7-6ede6bbd17b6",
     "a4c5c44c-4dfc-a049-ead2-7e5480b21b3d",
     "b74de18b-1e27-dccf-833d-4ef50f613767",
@@ -10,7 +11,8 @@
     "74cd7fa1-fd50-db7c-7cf8-bef25a5d767e",
     "039da9b1-510c-49d7-9aae-1f14fd2632e0",
     "b6af5aef-9ef4-1ddc-2843-a7011381d560",
-    "6ca4990b-e29d-7790-fe38-acf44ec8b985"
+    "6ca4990b-e29d-7790-fe38-acf44ec8b985",
+    "d4374c3c-642a-9b05-15b4-b5fead1c3c19"
   ],
   "requests": [
     {
@@ -46,14 +48,14 @@
       "id": "20feb78b-e8cd-4894-e7a4-746fa16c0470",
       "name": "Read Drink (HAL+Json)",
       "description": "",
-      "url": "http://localhost:3000/drinks/55be773d7962e9f925e076b3",
+      "url": "http://localhost:3000/drinks/55bfccc219cfb33010a2b8bc",
       "method": "GET",
       "headers": "Accept: application/hal+json\n",
-      "data": "{\n  \"name\": \"Gin Tonic\",\n  \"description\": \"Super delicious drink\",\n  \"alcoholic\": true,\n  \"quantity\": \"3dl\",\n  \"price\": 5,\n  \"category\": \"Cocktail\"\n}",
-      "dataMode": "raw",
+      "data": [],
+      "dataMode": "params",
       "timestamp": 0,
       "version": 2,
-      "time": 1438707389968
+      "time": 1438718951167
     },
     {
       "collectionId": "1122aa67-66f8-3d71-68e2-ee03342480f3",
@@ -116,14 +118,42 @@
       "id": "b74de18b-1e27-dccf-833d-4ef50f613767",
       "name": "Read Drink (Json)",
       "description": "",
-      "url": "http://localhost:3000/drinks/55be773d7962e9f925e076b3",
+      "url": "http://localhost:3000/drinks/55bfccc219cfb33010a2b8bc",
       "method": "GET",
       "headers": "Accept: application/json\n",
-      "data": "{\n  \"name\": \"Gin Tonic\",\n  \"description\": \"Super delicious drink\",\n  \"alcoholic\": true,\n  \"quantity\": \"3dl\",\n  \"price\": 5,\n  \"category\": \"Cocktail\"\n}",
+      "data": [],
+      "dataMode": "params",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1438718630778
+    },
+    {
+      "collectionId": "1122aa67-66f8-3d71-68e2-ee03342480f3",
+      "id": "d285dad7-0c4c-4cdd-7858-daf5346143eb",
+      "name": "Get Home-Resource",
+      "description": "",
+      "url": "http://localhost:3000",
+      "method": "GET",
+      "headers": "Accept: application/hal+json\n",
+      "data": [],
+      "dataMode": "params",
+      "timestamp": 0,
+      "responses": [],
+      "version": 2
+    },
+    {
+      "collectionId": "1122aa67-66f8-3d71-68e2-ee03342480f3",
+      "id": "d4374c3c-642a-9b05-15b4-b5fead1c3c19",
+      "name": "Delete All Drinks",
+      "description": "",
+      "url": "http://localhost:3000/drinks",
+      "method": "DELETE",
+      "headers": "",
+      "data": "",
       "dataMode": "raw",
       "timestamp": 0,
       "version": 2,
-      "time": 1438707385544
+      "time": 1439124161968
     }
   ]
 }

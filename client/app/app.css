@@ -1,0 +1,25 @@
+.master-detail-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.master {
+    flex: 5;
+}
+
+.master-detail-glue {
+    flex: 1;
+}
+
+.detail {
+    flex: 5;
+}
+
+
+.header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -98,7 +98,7 @@ module.exports = function (gulp, $, config) {
             .pipe($.if(isProd, $.rev()))
             .pipe($.sourcemaps.write('.', {
                 includeContent: true,
-                sourceRoot: '/tb/'
+                sourceRoot: '/tb/client/app/'
             }))
             .pipe(gulp.dest(config.buildJs))
             .pipe(jsFilter.restore);

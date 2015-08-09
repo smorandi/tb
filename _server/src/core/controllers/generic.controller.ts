@@ -37,22 +37,18 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
 
     public list(req:express.Request, res:express.Response, next:Function):void {
         // NOTE: MUST use lean here...we don't want any mongoose magic applied to the retrieved objects..
-        this.repository.find({}).lean().exec((err:Error, docs:Array<E>) => {
-            if (err) {
-                return res.status(400).send({
-                    message: GenericController.getErrorMessage(err)
-                });
-            } else {
-                res.format({
-                    "application/hal+json": () =>  res.json(this.createResources(req, docs)),
-                    "application/json": () =>  res.json(docs)
-                });
-            }
+        this.repository.find({}).exec((err:Error, docs:Array<E>) => {
+            if (err) return next(err);
+
+            res.format({
+                "application/hal+json": () =>  res.json(this.createResources(req, docs)),
+                "application/json": () =>  res.json(docs)
+            });
         });
     }
 
     public read(req:express.Request, res:express.Response, next:Function):void {
-        this.repository.findById(req.params.id).lean().exec((err:Error, doc:E) => {
+        this.repository.findById(req.params.id).exec((err:Error, doc:E) => {
             if (err) return next(err);
             if (!doc) return res.status(404).end();
 
@@ -65,37 +61,38 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
 
     public create(req:express.Request, res:express.Response, next:Function):void {
         this.repository.create(req.body, (err:Error, doc:E) => {
-            if (err) {
-                return res.status(400).send({
-                    message: GenericController.getErrorMessage(err)
-                });
-            } else {
-                // returning 201 with location to the created resource...
-                res.status(201).location(this._getBaseUrl(req) + "/" + doc._id).end()
-            }
+            if (err) return next(err);
+
+            // returning 201 with location to the created resource...
+            res.status(201).location(this._getBaseUrl(req) + "/" + doc._id).end()
         });
     }
 
     public update(req:express.Request, res:express.Response, next:Function):void {
-        this.repository.findByIdAndUpdate(req.params.id, req.body).lean().exec((err:Error, doc:E) => {
-                if (err) {
-                    return res.status(400).send({
-                        message: GenericController.getErrorMessage(err)
-                    });
-                } else if (!doc) {
-                    return res.status(404).end();
-                } else {
-                    res.format({
-                        "application/hal+json": () => res.json(this.createResource(req, doc)),
-                        "application/json": () => res.json(doc),
-                    });
-                }
+        this.repository.findByIdAndUpdate(req.params.id, req.body).exec((err:Error, doc:E) => {
+                if (err) return next(err);
+                if (!doc) return res.status(404).end();
+
+                res.format({
+                    "application/hal+json": () => res.json(this.createResource(req, doc)),
+                    "application/json": () => res.json(doc),
+                });
             }
         );
     }
 
     public delete(req:express.Request, res:express.Response, next:Function):void {
-        this.repository.findByIdAndRemove(req.params.id, (err:Error, model:E) => {
+        this.repository.findByIdAndRemove(req.params.id).exec((err:Error, model:E) => {
+            if (err) return next(err);
+
+            // returning 204 - NO content
+            // http://www.restapitutorial.com/lessons/httpmethods.html
+            res.status(204).end();
+        });
+    }
+
+    public deleteList(req:express.Request, res:express.Response, next:Function):void {
+        this.repository.remove({}).exec((err:Error, model:E) => {
             if (err) return next(err);
 
             // returning 204 - NO content
@@ -105,56 +102,59 @@ export class GenericController<E extends impl.IMixInDocument> implements IContro
     }
 
     private _getBaseUrl(req:express.Request):string {
-        return req.headers["host"] + this.getBaseUrl();
+        return req.protocol + "://" + req.headers["host"] + this.getBaseUrl();
     }
 
     protected getBaseUrl():string {
         throw new Error("method must be overridden and implemented");
     }
 
-    protected createSelfLink <E extends api.IEntity> (req:express.Request, entity:E):any {
-        return new hal.Link("self", this._getBaseUrl(req) + "/" + entity._id);
+    protected createSelfLink <E extends impl.IMixInDocument> (req:express.Request, entity:E):any {
+        return new hal.Link("self", this._getBaseUrl(req) + "/" + entity.id);
     }
 
-    protected createDeleteLink <E extends api.IEntity> (req:express.Request, entity:E):any {
-        return new hal.Link("delete", this._getBaseUrl(req) + "/" + entity._id);
+    protected createDeleteLink <E extends impl.IMixInDocument> (req:express.Request, entity?:E):any {
+
+        var url:string = this._getBaseUrl(req);
+
+        if (entity !== undefined) {
+            url += "/" + entity.id;
+        }
+
+        return new hal.Link("delete", url);
     }
 
-    protected createUpdateLink<E extends api.IEntity> (req:express.Request, entity:E):any {
-        return new hal.Link("update", this._getBaseUrl(req) + "/" + entity._id);
+    protected createUpdateLink<E extends impl.IMixInDocument> (req:express.Request, entity:E):any {
+        return new hal.Link("update", this._getBaseUrl(req) + "/" + entity.id);
     }
 
-    protected createCreateLink <E extends api.IEntity> (req:express.Request, entity:E):any {
+    protected createCreateLink <E extends impl.IMixInDocument> (req:express.Request):any {
         return new hal.Link("create", this._getBaseUrl(req));
     }
 
-    private createResources <E extends api.IEntity> (req:express.Request, entities:Array<E>):Array<any> {
+    private createResources <E extends impl.IMixInDocument> (req:express.Request, entities:Array<E>):Array<any> {
+        logger.trace("creating collection resource")
         var collection = new hal.Resource({}, this._getBaseUrl(req));
 
         entities.forEach((entity, index, entities) => collection.embed("collection", this.createResource(req, entity)));
+        collection.link(this.createCreateLink(req));
+        collection.link(this.createDeleteLink(req));
+
+        logger.trace("collection-resource=", collection)
 
         return collection;
     }
 
-    private createResource <E extends api.IEntity> (req:express.Request, entity:E):any {
+    private createResource <E extends impl.IMixInDocument> (req:express.Request, entity:E):any {
         logger.trace("creating resource out of entity")
 
         var selfLink = this.createSelfLink(req, entity);
         var deleteLink = this.createDeleteLink(req, entity);
         var updateLink = this.createUpdateLink(req, entity);
-        var createLink = this.createCreateLink(req, entity);
 
-        var links = [selfLink, deleteLink, updateLink, createLink];
-
-        // add the links to the given entity...
-        //var resource = _.extend({}, entity, {_links: links});
-        //return <api.IResource>resource;
-
-        var resource = new hal.Resource(entity);
-        resource.link(selfLink);
+        var resource = new hal.Resource(entity.toObject(), selfLink);
         resource.link(deleteLink);
         resource.link(updateLink);
-        resource.link(createLink);
 
         logger.trace("resource=", resource)
 

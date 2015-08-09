@@ -2,5 +2,5 @@
 module drinks {
     "use strict";
 
-    angular.module("drinks", ["ui.router", "ngResource", "services"]);
+    angular.module("drinks", ["ui.router", "tb", "angular-hal"]);
 }

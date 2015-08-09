@@ -1,11 +1,17 @@
-<table class="table drinktable">
-    <tr>
-        <td><h3>Details for {{vm.drink.name}}</h3></td>
-        <td></td>
-    </tr>
+<div class="header-row">
+    <h3>Details for {{vm.drink.name}}</h3>
+
+    <div>
+        <a class="btn btn-primary" ui-sref="editDrink({id:movie._id})">Edit</a>
+        <a class="btn btn-danger" ng-show="vm.drink.$has('delete')"
+           ng-click="vm.deleteDrink($event)">Delete</a>
+    </div>
+</div>
+
+<table class="table table-striped">
     <tr>
         <td>Id</td>
-        <td>{{vm.drink._id}}</td>
+        <td>{{vm.drink.id}}</td>
     </tr>
     <tr>
         <td>Name</td>
@@ -32,6 +38,3 @@
         <td>{{vm.drink.category}}</td>
     </tr>
 </table>
-<div>
-    <a class="btn btn-primary" ui-sref="editDrink({id:movie._id})">Edit</a>
-</div>

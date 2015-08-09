@@ -10,13 +10,12 @@ module impl {
     "use strict";
 
     export interface IMixInDocument extends api.IEntity, mongoose.Document {
-        _id:any;
+        id:any;
     }
 
 //______________________________________________________________________________________________________________________
 // drink...
     export interface IDrinkDocument extends api.IDrink, IMixInDocument {
-        _id:any;
     }
 
     var drinkSchema = new mongoose.Schema({
@@ -28,13 +27,15 @@ module impl {
         category: {type: String, enum: ["SoftDrink", "Beer", "Cocktail"]}
     }, {versionKey: false});
 
+    drinkSchema.set('toJSON', {virtuals: true});
+    drinkSchema.set('toObject', {virtuals: true});
+
     export var drinkRepository = mongoose.model<IDrinkDocument>("Drink", drinkSchema);
 
 
 //______________________________________________________________________________________________________________________
 // user...
     export interface IUserDocument extends api.IUser, IMixInDocument {
-        _id:any;
     }
 
     var userSchema = new mongoose.Schema({

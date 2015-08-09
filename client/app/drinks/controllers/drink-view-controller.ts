@@ -1,16 +1,26 @@
 ///<reference path='../../../typings/tsd.d.ts' />
-///<reference path="../../services/resources-factory.ts" />
 
 module drinks.controllers {
     'use strict';
 
     class DrinkViewController {
-        drink:services.IDrink;
+        link:any;
+        drink:any;
 
-        public static $inject = ["$log", "$scope", "$state", "$stateParams", "services.popupService", "services.drinkResource"];
+        public static $inject = ["$log", "$scope", "$state", "$stateParams", "popupService", "halClient"];
 
-        constructor(private $log:ng.ILogService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private popupService, private drinkResource:services.IDrinkResource) {
-            this.drink = drinkResource.get({id: $stateParams["id"]});
+        constructor(private $log:ng.ILogService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private popupService, private halClient) {
+            // have to decode here...no clue but this is called twice by the ng-framework. first with a correct string and the second time with a uriEncoded string.
+            this.link = decodeURIComponent($stateParams["link"]);
+
+            halClient.$get(this.link).then(res => this.drink = res);
+        }
+
+        public deleteDrink():void {
+            if (this.popupService.showPopup('Really delete this?')) {
+                this.drink.$del("delete").then(res => this.$state.reload());
+            }
+            event.stopPropagation();
         }
     }
 

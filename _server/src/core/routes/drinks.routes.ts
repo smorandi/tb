@@ -13,7 +13,8 @@ function init(app) {
 
     app.route('/drinks')
         .get((req, res, next) => controller.list(req, res, next))
-        .post((req, res, next) => controller.create(req, res, next));
+        .post((req, res, next) => controller.create(req, res, next))
+        .delete((req, res, next) => controller.deleteList(req, res, next));
 
     app.route('/drinks/:id')
         .get((req, res, next) => controller.read(req, res, next))

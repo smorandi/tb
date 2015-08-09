@@ -32,11 +32,46 @@ app.set("showStackError", true);
 
 app.use(favicon(path.join(config.serverRoot, "/public/favicon.ico")));
 
+// response logging...
+//app.use((req:any, res:any, next) => {
+//    var oldWrite = res.write,
+//        oldEnd = res.end;
+//
+//    var chunks = [];
+//
+//    res.write = function (chunk) {
+//        chunks.push(chunk);
+//
+//        oldWrite.apply(res, arguments);
+//    };
+//
+//    res.end = function (chunk) {
+//        if (chunk)
+//            chunks.push(chunk);
+//
+//        var body = Buffer.concat(chunks).toString('utf8');
+//
+//        var jsonBody = JSON.parse(body);
+//        logger.trace(req.path + "\n", jsonBody);
+//
+//        oldEnd.apply(res, arguments);
+//    };
+//
+//    next();
+//});
+
 // Enable logger (log4js)
-app.use(log4js.connectLogger(logger, {level: "auto", format: ":method :url :status"}));
+app.use(log4js.connectLogger(logger, {level: "auto", format: ":method :url :status :req[Accept] :res[Content-Type]"}));
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+// just for now...logging any json content of the request..
+app.use((req, res, next) => {
+    logger.trace("\n", req.body);
+    next();
+});
 
 //use cors to allow everything (for now)
 app.use(cors());
@@ -71,11 +106,7 @@ app.use((err:any, req, res, next) => {
     res.status(err.status || 500);
     var message = err.message || err;
     var stack = err.stack || new Error()["stack"];
-    res.format({
-        "text/plain": function () {
-            res.send(message + "\n" + stack);
-        },
-    });
+    res.json(err);
     logger.error(message, err);
 });
 

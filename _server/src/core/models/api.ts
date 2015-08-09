@@ -7,7 +7,7 @@ module api {
 //______________________________________________________________________________________________________________________
 // entities...
     export interface IEntity {
-        _id:any;
+        id:any;
     }
 
     export interface IDrink extends IEntity {
