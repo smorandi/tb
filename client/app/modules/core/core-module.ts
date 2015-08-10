@@ -1,8 +1,8 @@
-///<reference path="../typings/tsd.d.ts" />
+///<reference path="../../../typings/tsd.d.ts" />
 module client {
     "use strict";
 
-    angular.module("tb", ["ui.router", "mgcrea.ngStrap", "drinks", "angular-hal"]).factory("WebsiteService", ["halClient", halClient => {
+    angular.module("core", ["ui.router", "mgcrea.ngStrap", "drinks", "angular-hal"]).factory("WebsiteService", ["halClient", halClient => {
         return {
             "load": () => halClient.$get("http://localhost:3000")
         };

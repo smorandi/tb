@@ -1,4 +1,4 @@
-///<reference path="../../../typings/tsd.d.ts" />
+///<reference path="../../../../typings/tsd.d.ts" />
 
 module drinks.controllers {
     "use strict";
@@ -8,14 +8,14 @@ module drinks.controllers {
         public drinkResources:any;
         public query:string;
 
-        public static $inject = ["$log", "$scope", "$state", "popupService", "halClient"];
+        public static $inject = ["$log", "$scope", "$state", "$stateParams", "popupService", "halClient"];
 
-        constructor(private $log:ng.ILogService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private popupService, private halClient) {
-            //this.drinks = drinkResource.query();
+        constructor(private $log:ng.ILogService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private popupService, private halClient) {
+            $log.info("DrinkListController called with url: " + $stateParams["url"]);
 
             halClient.$get("http://localhost:3000/drinks").then(drinksResource => {
                 this.drinksResource = drinksResource;
-                if(drinksResource.$has("collection")) {
+                if (drinksResource.$has("collection")) {
                     return drinksResource.$get("collection");
                 }
             }).then(collection => {
@@ -28,7 +28,7 @@ module drinks.controllers {
         }
 
         public canDeleteAllDrinks():boolean {
-            return this.drinksResource.$has("delete");
+            return this.drinksResource === undefined ? false : this.drinksResource.$has("delete");
         }
 
         public canDelete(drink:any):boolean {
@@ -43,10 +43,12 @@ module drinks.controllers {
         }
 
         public deleteAllDrinks(event:Event):void {
-            if (this.popupService.showPopup('Really delete all drinks?')) {
-                this.drinksResource.$del("delete").then(res => this.$state.go("drinks", {}, {reload: true}));
+            if (this.canDeleteAllDrinks()) {
+                if (this.popupService.showPopup('Really delete all drinks?')) {
+                    this.drinksResource.$del("delete").then(res => this.$state.go("drinks", {}, {reload: true}));
+                }
+                event.stopPropagation();
             }
-            event.stopPropagation();
         }
 
         public createNewDrink():void {
