@@ -3,5 +3,5 @@
 module drinks {
     "use strict";
 
-    angular.module("drinks", ["ui.router", "angular-hal"]);
+    angular.module("drinks", ["ui.router"]);
 }

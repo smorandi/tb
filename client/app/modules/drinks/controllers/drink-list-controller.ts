@@ -1,26 +1,16 @@
 ///<reference path="../../../../typings/tsd.d.ts" />
+///<reference path="../../core/core-module.ts" />
 
 module drinks.controllers {
     "use strict";
 
     class DrinkListController {
-        public drinksResource:any;
-        public drinkResources:any;
         public query:string;
 
-        public static $inject = ["$log", "$scope", "$state", "$stateParams", "popupService", "halClient"];
+        public static $inject = ["$log", "$location", "$scope", "$state", "$stateParams", "apiService", "utilsService", "drinksResource", "drinkResources"];
 
-        constructor(private $log:ng.ILogService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private popupService, private halClient) {
-            $log.info("DrinkListController called with url: " + $stateParams["url"]);
-
-            halClient.$get("http://localhost:3000/drinks").then(drinksResource => {
-                this.drinksResource = drinksResource;
-                if (drinksResource.$has("collection")) {
-                    return drinksResource.$get("collection");
-                }
-            }).then(collection => {
-                this.drinkResources = collection;
-            });
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private apiService:core.ApiService, private utilsService:core.UtilsService, private drinksResource, private drinkResources) {
+            $log.info("DrinkListController called with client-url: " + $location.path());
         }
 
         public canCreateNewDrink():boolean {
@@ -36,7 +26,7 @@ module drinks.controllers {
         }
 
         public deleteDrink(drink:any, event:Event):void {
-            if (this.popupService.showPopup('Really delete this?')) {
+            if (this.utilsService.showPopup('Really delete this?')) {
                 drink.$del("delete").then(x => this.$state.reload());
             }
             event.stopPropagation();
@@ -44,7 +34,7 @@ module drinks.controllers {
 
         public deleteAllDrinks(event:Event):void {
             if (this.canDeleteAllDrinks()) {
-                if (this.popupService.showPopup('Really delete all drinks?')) {
+                if (this.utilsService.showPopup('Really delete all drinks?')) {
                     this.drinksResource.$del("delete").then(res => this.$state.go("drinks", {}, {reload: true}));
                 }
                 event.stopPropagation();
@@ -52,17 +42,13 @@ module drinks.controllers {
         }
 
         public createNewDrink():void {
-            this.$state.go("newDrink", {
-                url: this.drinksResource.$href("create"),
-                resource: this.drinksResource
+            this.$state.go("^.newDrink", {
+                href: this.drinksResource.$href("create"),
             })
         }
 
         public viewDrink(drink:any):void {
-            this.$state.go("drinks.viewDrink", {
-                url: drink.$href("self"),
-                resource: drink
-            })
+            this.$state.go("home.drinks.list.detail", {id: drink.id});
         }
     }
 

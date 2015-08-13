@@ -1,19 +1,17 @@
 ///<reference path="../../../../typings/tsd.d.ts" />
+///<reference path="../../core/core-module.ts" />
 
 module drinks.controllers {
     "use strict";
 
     class DrinkViewController {
-        url:any;
         drink:any;
 
-        public static $inject = ["$log", "$location", "$scope", "$state", "$stateParams", "popupService", "halClient"];
+        public static $inject = ["$log", "$location", "$scope", "$state", "$stateParams", "utilsService", "drinkResource"];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private popupService, private halClient) {
-            $log.info("DrinkViewController called with url: " + $stateParams["url"]);
-
-            this.url = decodeURIComponent($stateParams["url"]);
-            halClient.$get(this.url).then(res => this.drink = res);
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private utilsService:core.UtilsService, private drinkResource) {
+            $log.info("DrinkViewController called with client-url: " + $location.path());
+            this.drink = drinkResource;
         }
 
         public canDelete():void {
@@ -25,7 +23,7 @@ module drinks.controllers {
         }
 
         public deleteDrink():void {
-            if (this.popupService.showPopup("Really delete this?")) {
+            if (this.utilsService.showPopup("Really delete this?")) {
                 this.drink.$del("delete").then(res => this.$state.reload());
             }
             event.stopPropagation();
