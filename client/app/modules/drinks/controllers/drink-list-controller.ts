@@ -1,7 +1,7 @@
 ///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../../core/core-module.ts" />
+///<reference path="../../home/home-module.ts" />
 
-module drinks.controllers {
+module drinks {
     "use strict";
 
     class DrinkListController {
@@ -9,7 +9,7 @@ module drinks.controllers {
 
         public static $inject = ["$log", "$location", "$scope", "$state", "$stateParams", "apiService", "utilsService", "drinksResource", "drinkResources"];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private apiService:core.ApiService, private utilsService:core.UtilsService, private drinksResource, private drinkResources) {
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private apiService:home.ApiService, private utilsService:home.UtilsService, private drinksResource, private drinkResources) {
             $log.info("DrinkListController called with client-url: " + $location.path());
         }
 
@@ -42,13 +42,11 @@ module drinks.controllers {
         }
 
         public createNewDrink():void {
-            this.$state.go("^.newDrink", {
-                href: this.drinksResource.$href("create"),
-            })
+            this.$state.go("home.drinks.newDrink");
         }
 
         public viewDrink(drink:any):void {
-            this.$state.go("home.drinks.list.detail", {id: drink.id});
+            this.$state.go("home.drinks.overview.list.detail", {id: drink.id});
         }
     }
 

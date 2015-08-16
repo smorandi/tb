@@ -1,29 +1,27 @@
 ///<reference path="../../../../typings/tsd.d.ts" />
+///<reference path="../../home/home-module.ts" />
 
-module drinks.controllers {
+module drinks {
     "use strict";
 
     class DrinkCreateController {
-        url:any;
         drink:any;
 
-        public static $inject = ["$log", "$scope", "$state", "$stateParams", "popupService", "halClient"];
+        public static $inject = ["$log", "$location", "$state", "utilsService", "drinksResource"];
 
-        constructor(private $log:ng.ILogService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private popupService, private halClient) {
-            $log.info("DrinkCreateController called with url: " + $stateParams["url"]);
-
-            this.url = decodeURIComponent($stateParams["url"]);
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:home.UtilsService, private drinksResource) {
+            $log.info("DrinkEditController called with client-url: " + $location.path());
         }
 
         createDrink():void {
-            this.halClient.$post(this.url, {}, this.drink).then(res => {
-                this.popupService.alert("The drink has been created!");
-                this.$state.go("drinks", {}, {reload: true});
+            this.drinksResource.$post("create", {}, this.drink).then(res => {
+                this.utilsService.alert("The drink has been updated!");
+                this.$state.go(".list", {}, {relative: this.$state.get("home.drinks.overview"), reload: true});
             }).catch(err => {
-                this.popupService.alert(JSON.stringify(err, undefined, 2));
+                this.utilsService.alert(JSON.stringify(err, undefined, 2));
             });
         }
     }
 
-    angular.module('drinks').controller('DrinkCreateController', DrinkCreateController);
+    angular.module("drinks").controller("DrinkCreateController", DrinkCreateController);
 }

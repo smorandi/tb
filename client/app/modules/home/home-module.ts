@@ -1,8 +1,8 @@
 ///<reference path="../../../typings/tsd.d.ts" />
-module core {
+module home {
     "use strict";
 
-    angular.module("core", ["ui.router", "mgcrea.ngStrap", "drinks", "angular-hal"]).factory("apiService", ["halClient", "$log", (halClient, $log) =>
+    angular.module("home", ["ui.router", "mgcrea.ngStrap", "drinks", "angular-hal"]).factory("apiService", ["halClient", "$log", (halClient, $log) =>
         new ApiService(halClient, $log)
     ]).service("utilsService", ($window) => new UtilsService($window)).run(($log, $rootScope) => {
         $rootScope.$on('$stateChangeStart',
@@ -34,8 +34,8 @@ module core {
             return url.replace(/^[^#]*?:\/\/.*?(\/.*)$/, "$1");
         }
 
-        public showPopup(message:string):void {
-            this.$window.confirm(message);
+        public showPopup(message:string):boolean {
+            return this.$window.confirm(message);
         }
 
         public alert(message:string):void {

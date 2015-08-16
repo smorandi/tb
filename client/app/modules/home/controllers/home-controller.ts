@@ -1,7 +1,7 @@
 ///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../core-module.ts" />
+///<reference path="../home-module.ts" />
 
-module core {
+module home {
     "use strict";
 
     interface IPage {
@@ -18,9 +18,9 @@ module core {
         public static getPageForRel(rel:string):IPage {
             switch (rel) {
                 case "drinks" :
-                    return new Page("Drinks", ".drinks.list");
+                    return new Page("Drinks", "home.drinks.overview.list");
                 case "drinks" :
-                    return new Page("Users", ".users.list");
+                    return new Page("Users", "home.users.overview.list");
                 default:
                     return null;
             }
@@ -60,5 +60,5 @@ module core {
         }
     }
 
-    angular.module("core").controller("HomeController", HomeController);
+    angular.module("home").controller("HomeController", HomeController);
 }

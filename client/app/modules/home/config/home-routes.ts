@@ -1,10 +1,10 @@
 ///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../core-module.ts" />
+///<reference path="../home-module.ts" />
 
-module core {
+module home {
     "use strict";
 
-    angular.module("core").config(["$stateProvider", "$urlRouterProvider",
+    angular.module("home").config(["$stateProvider", "$urlRouterProvider",
         ($stateProvider, $urlRouterProvider) => {
             // Redirect to home view when route not found
             $urlRouterProvider.otherwise("");
@@ -13,7 +13,7 @@ module core {
             $stateProvider.
                 state("home", {
                     url: "",
-                    templateUrl: "modules/core/views/home.html",
+                    templateUrl: "modules/home/views/home.html",
                     controller: "HomeController",
                     controllerAs: "vm",
                     resolve: {

@@ -1,29 +1,27 @@
 ///<reference path="../../../../typings/tsd.d.ts" />
+///<reference path="../../home/home-module.ts" />
 
-module drinks.controllers {
+module drinks {
     "use strict";
 
     class DrinkEditController {
-        url:any;
         drink:any;
 
-        public static $inject = ["$log", "$scope", "$state", "$stateParams", "popupService", "halClient"];
+        public static $inject = ["$log", "$location", "$state", "utilsService", "drinkResource"];
 
-        constructor(private $log:ng.ILogService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private popupService, private halClient) {
-            $log.info("DrinkEditController called with url: " + $stateParams["url"]);
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:home.UtilsService, private drinkResource) {
+            $log.info("DrinkEditController called with client-url: " + $location.path());
 
-            this.url = decodeURIComponent($stateParams["url"]);
-
-            //as we cannot directly the read-only instance of resource, we clone it...
-            this.drink = JSON.parse(JSON.stringify($stateParams["resource"]));
+            //as we cannot directly edit the read-only instance of resource, we clone it...
+            this.drink = JSON.parse(JSON.stringify(drinkResource));
         }
 
         public updateDrink():void {
-            this.halClient.$put(this.url, {}, this.drink).then(res => {
-                this.popupService.alert("The drink has been updated!");
-                this.$state.go("drinks.viewDrink", {url:res.$href("self"), resource: res}, {reload: true});
+            this.drinkResource.$put("update", {}, this.drink).then(res => {
+                this.utilsService.alert("The drink has been updated!");
+                this.$state.go("^", {}, {reload: true});
             }).catch(err => {
-                this.popupService.alert(JSON.stringify(err, undefined, 2));
+                this.utilsService.alert(JSON.stringify(err, undefined, 2));
             });
         }
     }

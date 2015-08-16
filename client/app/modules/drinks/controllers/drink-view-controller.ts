@@ -1,15 +1,15 @@
 ///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../../core/core-module.ts" />
+///<reference path="../../home/home-module.ts" />
 
-module drinks.controllers {
+module drinks {
     "use strict";
 
     class DrinkViewController {
         drink:any;
 
-        public static $inject = ["$log", "$location", "$scope", "$state", "$stateParams", "utilsService", "drinkResource"];
+        public static $inject = ["$log", "$location", "$state", "utilsService", "drinkResource"];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private utilsService:core.UtilsService, private drinkResource) {
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:home.UtilsService, private drinkResource) {
             $log.info("DrinkViewController called with client-url: " + $location.path());
             this.drink = drinkResource;
         }
@@ -22,15 +22,15 @@ module drinks.controllers {
             return this.drink === undefined ? false : this.drink.$has("update");
         }
 
-        public deleteDrink():void {
+        public deleteDrink(event:Event):void {
             if (this.utilsService.showPopup("Really delete this?")) {
-                this.drink.$del("delete").then(res => this.$state.reload());
+                this.drink.$del("delete").then(res => this.$state.go("^.list"));
             }
             event.stopPropagation();
         }
 
         public editDrink() {
-            this.$state.go("editDrink", {url: this.drink.$href("update"), resource: this.drink});
+            this.$state.go(".editDrink");
         }
     }
 
