@@ -18,14 +18,17 @@ function init(app) {
             var homeUrl:string = baseUrl + config.urls.home;
             var usersUrl:string = baseUrl + config.urls.users;
             var drinksUrl:string = baseUrl + config.urls.drinks;
+            var engineUrl:string = baseUrl + config.urls.engine;
 
             var homeResource = new hal.Resource({}, homeUrl);
 
             var usersLink = new hal.Link("users", usersUrl);
             var drinksLink = new hal.Link("drinks", drinksUrl);
+            var engineLink = new hal.Link("engine", engineUrl);
 
             homeResource.link(usersLink);
             homeResource.link(drinksLink);
+            homeResource.link(engineLink);
 
             res.format({
                 "application/hal+json": () => res.json(homeResource)

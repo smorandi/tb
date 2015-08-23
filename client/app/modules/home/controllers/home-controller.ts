@@ -17,9 +17,11 @@ module home {
     class HomeController {
         public static getPageForRel(rel:string):IPage {
             switch (rel) {
+                case "engine" :
+                    return new Page("Engine", "home.engine");
                 case "drinks" :
                     return new Page("Drinks", "home.drinks.overview.list");
-                case "drinks" :
+                case "users" :
                     return new Page("Users", "home.users.overview.list");
                 default:
                     return null;
@@ -34,6 +36,9 @@ module home {
         constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private homeResource) {
             $log.info("HomeController called with client-url: " + $location.path());
 
+            if (this.homeResource.$has("engine")) {
+                this.pushPage("engine");
+            }
             if (this.homeResource.$has("drinks")) {
                 this.pushPage("drinks");
             }

@@ -32,37 +32,8 @@ app.set("showStackError", true);
 
 app.use(favicon(path.join(config.serverRoot, "/public/favicon.ico")));
 
-// response logging...
-//app.use((req:any, res:any, next) => {
-//    var oldWrite = res.write,
-//        oldEnd = res.end;
-//
-//    var chunks = [];
-//
-//    res.write = function (chunk) {
-//        chunks.push(chunk);
-//
-//        oldWrite.apply(res, arguments);
-//    };
-//
-//    res.end = function (chunk) {
-//        if (chunk)
-//            chunks.push(chunk);
-//
-//        var body = Buffer.concat(chunks).toString('utf8');
-//
-//        var jsonBody = JSON.parse(body);
-//        logger.trace(req.path + "\n", jsonBody);
-//
-//        oldEnd.apply(res, arguments);
-//    };
-//
-//    next();
-//});
-
 // Enable logger (log4js)
 app.use(log4js.connectLogger(logger, {level: "auto", format: ":method :url :status :req[Accept] :res[Content-Type]"}));
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -82,7 +53,6 @@ app.use(helmet.xssFilter());
 app.use(helmet.nosniff());
 app.use(helmet.ienoopen());
 app.disable("x-powered-by");
-
 
 app.use(cookieParser());
 

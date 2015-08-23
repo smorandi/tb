@@ -23,6 +23,7 @@ export var urls = {
     home: homeUrl,
     drinks: homeUrl + "/drinks",
     users: homeUrl + "/users",
+    engine: homeUrl + "/engine",
 };
 
 export var serverRoot = path.join(__dirname + "/..");

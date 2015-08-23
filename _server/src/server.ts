@@ -12,6 +12,7 @@ import mongoose = require("mongoose");
 import config = require("./config/config");
 import app = require("./config/express");
 import logger = require("./config/logger");
+import engine = require("./core/engine/Engine");
 
 // Bootstrap db connection
 var db = mongoose.connect(config.db.uri, config.db.options, err => {
@@ -26,24 +27,28 @@ mongoose.connection.on("error", err => {
 );
 mongoose.connection.on("connected", () => logger.info('Mongoose default connection open to ' + config.db.uri));
 
-/**
- * Get port from environment and store in Express.
- */
 app.set("port", config.port);
 
-/**
- * Create HTTP server.
- */
-
 var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
 
 server.listen(config.port);
 server.on("error", onError);
 server.on("listening", onListening);
+
+var io:SocketIO.Server = require("socket.io").listen(server);
+engine.setIO(io);
+
+io.on("connection", function (socket:SocketIO.Socket) {
+    socket.on("event", function (data) {
+        logger.info("websocket connection");
+    });
+    socket.on("disconnect", function () {
+        logger.info("websocket disconnected");
+    });
+
+    logger.info("client connected: ");
+});
+
 
 /**
  * Event listener for HTTP server "error" event.

@@ -1,15 +1,59 @@
 ///<reference path="../../../typings/tsd.d.ts" />
+
+var mySocket;
+
 module home {
     "use strict";
 
-    angular.module("home", ["ui.router", "mgcrea.ngStrap", "drinks", "angular-hal"]).factory("apiService", ["halClient", "$log", (halClient, $log) =>
+    angular.module("home", ["ui.router", "mgcrea.ngStrap", "drinks", "engine", "angular-hal", "btford.socket-io"]).factory("apiService", ["halClient", "$log", (halClient, $log) =>
         new ApiService(halClient, $log)
     ]).service("utilsService", ($window) => new UtilsService($window)).run(($log, $rootScope) => {
         $rootScope.$on('$stateChangeStart',
             (event, toState, toParams, fromState, fromParams) => {
                 $log.info("transition: " + fromState.name + " -> " + toState.name);
             })
+    }).factory("socketService", function (socketFactory) {
+
+        var myIoSocket = io.connect("http://localhost:3000");
+
+        mySocket = socketFactory({
+            ioSocket: myIoSocket
+        });
+
+        return mySocket;
+
+        //
+        //var socket = io.connect("http://localhost:3000");
+        //return {
+        //    on: function(eventName, callback) {
+        //        socket.on(eventName, function() {
+        //            var args = arguments;
+        //            $rootScope.$apply(function() {
+        //                callback.apply(socket, args);
+        //            });
+        //        });
+        //    },
+        //    emit: function(eventName, data, callback) {
+        //        if(typeof data == 'function') {
+        //            callback = data;
+        //            data = {};
+        //        }
+        //        socket.emit(eventName, data, function() {
+        //            var args = arguments;
+        //            $rootScope.$apply(function() {
+        //                if(callback) {
+        //                    callback.apply(socket, args);
+        //                }
+        //            });
+        //        });
+        //    },
+        //    emitAndListen: function(eventName, data, callback) {
+        //        this.emit(eventName, data, callback);
+        //        this.on(eventName, callback);
+        //    }
+        //};
     });
+
 
     export class ApiService {
         constructor(private halClient:any, private $log:ng.ILogService) {
