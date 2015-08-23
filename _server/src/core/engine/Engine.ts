@@ -5,6 +5,7 @@
 
 import impl = require("../models/impl");
 import logger = require("../../config/logger");
+import _ = require("lodash");
 
 var wsIO:SocketIO.Server;
 var timer:NodeJS.Timer;
@@ -45,9 +46,15 @@ class Engine {
     private loop() {
         impl.drinkRepository.find({}).exec((err:Error, docs:Array<impl.IDrinkDocument>) => {
             logger.info("emitting new prices...");
-            docs.forEach((doc, index, array) => {
-                wsIO.sockets.emit("newPrices", doc);
+
+            var dynamicDrinks:Array<impl.IDrinkDocument> = [];
+            docs.forEach((drink, index, drinks) => {
+
+                var dynamicDrink:any = _.extend({currentPrice: Math.random()}, drink.toObject());
+                dynamicDrinks.push(dynamicDrink);
             });
+
+            wsIO.sockets.emit("newPrices", dynamicDrinks);
         });
     }
 }

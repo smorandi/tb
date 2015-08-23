@@ -14,6 +14,15 @@ module engine {
                         controllerAs: "vm",
                     }
                 },
+                resolve: {
+                    engineResource: ($log, homeResource) => {
+                        $log.info("resolving engine-resource...");
+                        return homeResource.$get("engine").then(res => {
+                            $log.info("drinks-resource resolved...");
+                            return res;
+                        });
+                    },
+                },
             })
         }
     );

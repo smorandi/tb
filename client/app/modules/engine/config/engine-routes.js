@@ -12,6 +12,15 @@ var engine;
                     controller: "EngineController",
                     controllerAs: "vm"
                 }
+            },
+            resolve: {
+                engineResource: function ($log, homeResource) {
+                    $log.info("resolving engine-resource...");
+                    return homeResource.$get("engine").then(function (res) {
+                        $log.info("drinks-resource resolved...");
+                        return res;
+                    });
+                }
             }
         });
     });
