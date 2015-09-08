@@ -20,9 +20,16 @@ module drinks {
 
                     drinkResources: ($log, drinksResource) => {
                         $log.info("resolving drink-resources...");
+                        if(!drinksResource.$has("collection")){
+                            $log.info("drink-resources resolved...");
+                            return [];
+                        }
                         return drinksResource.$get("collection").then(res => {
                             $log.info("drink-resources resolved...");
                             return res;
+                        }, err => {
+                            $log.info("no collection in drinksResource");
+                            return null;
                         });
                     }
                 },
