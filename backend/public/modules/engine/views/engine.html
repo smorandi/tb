@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+        <div class="header-row">
+            <h1>Engine</h1>
+
+            <div>
+                <a class="btn btn-info" ng-click="vm.activateEngine($event)">Activate</a>
+                <a class="btn btn-info" ng-click="vm.deactivateEngine($event)">Deactivate</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <td>Status</td>
+                <td><span class="label" ng-class="vm.engineResource.status == 'activated' ? 'label-success' : 'label-default'">{{vm.engineResource.status}}</span></td>
+            </tr>
+            <tr>
+                <td>Last Change Date</td>
+                <td>{{vm.engineResource.lastChangeDate}}</td>
+            </tr>
+            <tr>
+                <td>Update Interval</td>
+                <td>{{vm.engineResource.updateInterval}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

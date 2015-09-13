@@ -14,7 +14,7 @@ var utils = require("./utils");
 var config = require("./config");
 var helmet = require("helmet");
 var cors = require("cors");
-function init(options, repository, emitter, domain, evtCmd) {
+function init(denormalizerOptions, viewModelService, eventBus, domainService, evtCmd) {
     var app = express();
     // view engine setup
     app.set("views", path.join(config.serverRoot, "/core/views"));
@@ -47,7 +47,7 @@ function init(options, repository, emitter, domain, evtCmd) {
     // Globbing routing files
     var routesFiles = utils.getGlobbedFiles(path.join(config.serverRoot, "/src/core/routes/**/*.js"));
     logger.debug("initializing routes", routesFiles);
-    routesFiles.forEach(function (routePath) { return require(path.resolve(routePath))(app, options, repository, emitter, domain, evtCmd); });
+    routesFiles.forEach(function (routePath) { return require(path.resolve(routePath))(app, denormalizerOptions, viewModelService, eventBus, domainService, evtCmd); });
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
         var err = new Error("Not Found");

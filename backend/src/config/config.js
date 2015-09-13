@@ -14,13 +14,14 @@ exports.app = {
     keywords: "xxx"
 };
 exports.port = process.env.PORT || 3000;
-var homeUrl = "";
 exports.urls = {
-    home: homeUrl,
-    drinks: homeUrl + "/drinks",
-    users: homeUrl + "/users",
-    customers: homeUrl + "/customers",
-    engine: homeUrl + "/engine"
+    home: "/home",
+    drinks: "/drinks",
+    users: "/users",
+    customers: "/customers",
+    baskets: "/baskets",
+    orders: "/orders",
+    engine: "/engine"
 };
 exports.serverRoot = path.join(__dirname + "/../..");
 //# sourceMappingURL=config.js.map

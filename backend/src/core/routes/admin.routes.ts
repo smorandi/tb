@@ -11,7 +11,7 @@ var hal = require("halberd");
 function init(app, options, repository, eventBus) {
     logger.trace("initializing admin routes...")
 
-    app.route("/admin/replay").get((req, res, next) => {
+    app.route("/admin/replay").post((req, res, next) => {
         eventBus.emit("replay");
         res.end();
     });

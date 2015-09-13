@@ -3,6 +3,6 @@
 var denormalizer = require("cqrs-eventdenormalizer");
 
 module.exports = denormalizer.defineCollection({
-    name: "customer",
+    name: "customers",
     defaultPayload: "payload",
 });

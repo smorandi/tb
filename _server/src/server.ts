@@ -14,7 +14,6 @@ import app = require("./config/express");
 import logger = require("./config/logger");
 import engine = require("./core/engine/Engine");
 
-// Bootstrap db connection
 var db = mongoose.connect(config.db.uri, config.db.options, err => {
     if (err) {
         logger.error("Could not connect to MongoDB!", err);

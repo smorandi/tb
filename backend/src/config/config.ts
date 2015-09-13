@@ -18,13 +18,14 @@ export var app = {
 
 export var port = process.env.PORT || 3000;
 
-var homeUrl = "";
 export var urls = {
-    home: homeUrl,
-    drinks: homeUrl + "/drinks",
-    users: homeUrl + "/users",
-    customers: homeUrl + "/customers",
-    engine: homeUrl + "/engine",
+    home: "/home",
+    drinks: "/drinks",
+    users: "/users",
+    customers: "/customers",
+    baskets: "/baskets",
+    orders: "/orders",
+    engine: "/engine",
 };
 
 export var serverRoot = path.join(__dirname + "/../..");

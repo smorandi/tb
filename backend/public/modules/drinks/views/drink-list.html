@@ -1,0 +1,40 @@
+<div class="master">
+    <div class="header-row">
+        <h3>All Drinks</h3>
+        <input type="search" ng-model="vm.query"/>
+
+        <div>
+            <!--<a ui-sref="newDrink({link:vm.drinksResource.$href('create')})" class="btn-primary btn-lg nodecoration"-->
+            <!--ng-show="vm.drinksResource.$has('create')">Add-->
+            <!--New Drink</a>-->
+            <a class="btn-primary btn-lg nodecoration" ng-click="vm.createNewDrink()"
+               ng-show="vm.canCreateNewDrink()">Add
+                New Drink</a>
+            <a class="btn btn-danger" ng-show="vm.drinksResource.$has('delete')"
+               ng-click="vm.deleteAllDrinks($event)">Delete</a>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <th>
+            Name
+        </th>
+        <th>
+            ID
+        </th>
+        <th>
+            Actions
+        </th>
+        <!--<tr ng-repeat="drink in vm.drinkResources | filter: vm.query" ui-sref-active="selected"-->
+        <!--ui-sref="drinks.viewDrink({url:drink.$href('self')})">-->
+        <tr ng-repeat="drink in vm.drinkResources | filter: vm.query" ui-sref-active="selected"
+            ng-click="vm.viewDrink(drink)">
+            <td>{{drink.name}}</td>
+            <td>{{drink.id}}</td>
+            <td>
+                <a class="btn btn-danger" ng-show="vm.canDelete(drink)"
+                   ng-click="vm.deleteDrink(drink, $event)">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>

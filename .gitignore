@@ -17,7 +17,7 @@ app/tests/coverage/
 .bower-*/
 */typings/
 .idea/
-*/bower_components
+**/*bower_components
 **/*.d.ts
 #yeoman
 # node_modules

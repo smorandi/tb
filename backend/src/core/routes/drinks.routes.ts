@@ -13,7 +13,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
     logger.trace("initializing drink routes...");
 
     var drinksRepo = repository.extend({
-        collectionName: "drink"
+        collectionName: "drinks"
     });
 
     if (options.repository.type === "inmemory") {

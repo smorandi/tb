@@ -7,19 +7,20 @@
 
 import logger = require("../../config/logger");
 import express = require("express");
+import _ = require("lodash");
 
 var hal = require("halberd");
 
 module resourceUtils {
-    function createBaseUrl(req:express.Request, baseUrl:string):string {
+    export function createBaseUrl(req:express.Request, baseUrl:string):string {
         return req.protocol + "://" + req.headers["host"] + baseUrl;
     }
 
-    function createSelfLink(req:express.Request, baseUrl:string, entity:any):any {
+    export function createSelfLink(req:express.Request, baseUrl:string, entity:any):any {
         return new hal.Link("self", createBaseUrl(req, baseUrl) + "/" + entity.id);
     }
 
-    function createDeleteLink(req:express.Request, baseUrl:string, entity?:any):any {
+    export function createDeleteLink(req:express.Request, baseUrl:string, entity?:any):any {
 
         var url:string = createBaseUrl(req, baseUrl);
 
@@ -30,11 +31,11 @@ module resourceUtils {
         return new hal.Link("delete", url);
     }
 
-    function createUpdateLink(req:express.Request, baseUrl:string, entity:any):any {
+    export function createUpdateLink(req:express.Request, baseUrl:string, entity:any):any {
         return new hal.Link("update", createBaseUrl(req, baseUrl) + "/" + entity.id);
     }
 
-    function createCreateLink(req:express.Request, baseUrl:string):any {
+    export function createCreateLink(req:express.Request, baseUrl:string):any {
         return new hal.Link("create", createBaseUrl(req, baseUrl));
     }
 
@@ -46,30 +47,37 @@ module resourceUtils {
         collection.link(createCreateLink(req, baseUrl));
         //collection.link(createDeleteLink(req, baseUrl));
 
-        logger.trace("collection-resource=", collection)
+        logger.trace("collection-resource: ", collection)
 
         return collection;
     }
 
-    export function createResource(req:express.Request, baseUrl:string, entity:any):any {
-        logger.trace("creating resource out of entity");
+    export function createResource(req:express.Request, url:string, entity:any, supportedCrudLinks?:Array<string>):any {
+        logger.trace("creating resource out of entity: ", entity);
 
+        // have to do this conversion since entity might be a viewModel or a POJSO
         var _entity = entity;
         if((typeof entity.toJSON) === "function") {
             _entity = entity.toJSON();
         }
 
-        var selfLink = createSelfLink(req, baseUrl, _entity);
-        var deleteLink = createDeleteLink(req, baseUrl, _entity);
-        var updateLink = createUpdateLink(req, baseUrl, _entity);
-
-        // have to do this covnerion since entity might be a viewModel or a POJSO
-
+        var selfLink = createSelfLink(req, url, _entity);
         var resource = new hal.Resource(_entity, selfLink);
-        resource.link(deleteLink);
-        resource.link(updateLink);
 
-        logger.trace("resource=", resource)
+        // adding standard links
+        if(supportedCrudLinks !== undefined) {
+            if(_.includes(supportedCrudLinks, "create")){
+                resource.link(createCreateLink(req, url));
+            }
+            if(_.includes(supportedCrudLinks, "delete")){
+                resource.link(createDeleteLink(req, url, _entity));
+            }
+            if(_.includes(supportedCrudLinks, "update")){
+                resource.link(createUpdateLink(req, url, _entity));
+            }
+        }
+
+        logger.trace("resource created: ", resource)
 
         return resource;
     }

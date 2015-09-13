@@ -9,15 +9,32 @@ import _ = require("lodash");
 import logger = require("../../config/logger");
 import config = require("../../config/config");
 import resourceUtils = require("../utils/resourceUtils");
+var hal = require("halberd");
 
-function init(app, options, repository, eventBus, domain, cmdSrv) {
+
+function createCustomerResource(req:express.Request, customerEntity:any) {
+    var resource = resourceUtils.createResource(req, config.urls.customers, customerEntity, ["update", "delete"]);
+
+    var basketLink = resource.link("basket", resourceUtils.createBaseUrl(req, config.urls.baskets) + "/" + customerEntity.id)
+    var ordersLink = resource.link("orders", resourceUtils.createBaseUrl(req, config.urls.orders) + "/" + customerEntity.id)
+}
+
+function createBasketResource(req:express.Request, customerEntity:any) {
+    //var resource = resourceUtils.createResource(req, config.urls.baskets, customerEntity, ["update", "delete"]);
+    //
+    //var basketLink = resource.link("basket", resourceUtils.createBaseUrl(req, config.urls.baskets) + "/" + customerEntity.id)
+    //var ordersLink = resource.link("orders", resourceUtils.createBaseUrl(req, config.urls.orders) + "/" + customerEntity.id)
+}
+
+
+function init(app, viewModelOptions, repository, eventBus, domain, cmdSrv) {
     logger.trace("initializing customer routes...");
 
     var customerRepo = repository.extend({
-        collectionName: "customer"
+        collectionName: "customers"
     });
 
-    if (options.repository.type === "inmemory") {
+    if (viewModelOptions.repository.type === "inmemory") {
         customerRepo = require("../../viewmodels/customers/collection").repository;
     }
 
@@ -130,7 +147,6 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 }
             });
         });
-
 
     app.route("/customers/:id/orders")
         .get((req, res, next) => {

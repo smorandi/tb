@@ -65,7 +65,7 @@ var orderMadeVB = denormalizer.defineViewBuilder({
     aggregate: "customer",
     id: "aggregate.id"
 }, function (order, vm) {
-    logger.info("customerDeleted (vm.repository.collectionName) -> " + vm.repository.collectionName);
+    logger.info("orderMadeVB (vm.repository.collectionName) -> " + vm.repository.collectionName);
 
     var drinkCollection = require("../drinks/collection");
 

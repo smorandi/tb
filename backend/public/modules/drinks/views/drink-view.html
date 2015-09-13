@@ -1,0 +1,40 @@
+<div class="header-row">
+    <h3>Details for {{vm.drink.name}}</h3>
+
+    <div>
+        <a class="btn btn-primary" ng-show="vm.canEdit()" ng-click="vm.editDrink()">Edit</a>
+        <a class="btn btn-danger" ng-show="vm.canDelete()"
+           ng-click="vm.deleteDrink($event)">Delete</a>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <tr>
+        <td>Id</td>
+        <td>{{vm.drink.id}}</td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>{{vm.drink.name}}</td>
+    </tr>
+    <tr>
+        <td>Description</td>
+        <td>{{vm.drink.description}}</td>
+    </tr>
+    <tr>
+        <td>Alcoholic</td>
+        <td>{{vm.drink.alcoholic}}</td>
+    </tr>
+    <tr>
+        <td>Quantity</td>
+        <td>{{vm.drink.quantity}}</td>
+    </tr>
+    <tr>
+        <td>Price</td>
+        <td>{{vm.drink.price}}</td>
+    </tr>
+    <tr>
+        <td>Category</td>
+        <td>{{vm.drink.category}}</td>
+    </tr>
+</table>
