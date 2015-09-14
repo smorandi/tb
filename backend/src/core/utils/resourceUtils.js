@@ -3,64 +3,72 @@
  */
 /// <reference path="../../../typings/tsd.d.ts" />
 "use strict";
-var logger = require("../../config/logger");
 var _ = require("lodash");
+var logger = require("../../config/logger");
 var hal = require("halberd");
 var resourceUtils;
 (function (resourceUtils) {
-    function createBaseUrl(req, baseUrl) {
-        return req.protocol + "://" + req.headers["host"] + baseUrl;
+    function createBaseUrl(req, url) {
+        return req.protocol + "://" + req.headers["host"] + url;
     }
     resourceUtils.createBaseUrl = createBaseUrl;
-    function createSelfLink(req, baseUrl, entity) {
-        return new hal.Link("self", createBaseUrl(req, baseUrl) + "/" + entity.id);
+    function createSelfLink(baseUrl, entity) {
+        var url = baseUrl;
+        if (entity !== undefined && entity !== null) {
+            url += "/" + entity.id;
+        }
+        return new hal.Link("self", url);
     }
     resourceUtils.createSelfLink = createSelfLink;
-    function createDeleteLink(req, baseUrl, entity) {
-        var url = createBaseUrl(req, baseUrl);
-        if (entity !== undefined) {
+    function createDeleteLink(baseUrl, entity) {
+        var url = baseUrl;
+        if (entity !== undefined && entity !== null) {
             url += "/" + entity.id;
         }
         return new hal.Link("delete", url);
     }
     resourceUtils.createDeleteLink = createDeleteLink;
-    function createUpdateLink(req, baseUrl, entity) {
-        return new hal.Link("update", createBaseUrl(req, baseUrl) + "/" + entity.id);
+    function createUpdateLink(baseUrl, entity) {
+        var url = baseUrl;
+        if (entity !== undefined && entity !== null) {
+            url += "/" + entity.id;
+        }
+        return new hal.Link("update", url);
     }
     resourceUtils.createUpdateLink = createUpdateLink;
-    function createCreateLink(req, baseUrl) {
-        return new hal.Link("create", createBaseUrl(req, baseUrl));
+    function createCreateLink(baseUrl) {
+        return new hal.Link("create", baseUrl);
     }
     resourceUtils.createCreateLink = createCreateLink;
-    function createResources(req, baseUrl, entities) {
+    function createCollectionResource(baseUrl, entities, collectionCrudLinks, entityCrudLinks, embedName) {
         logger.trace("creating collection resource");
-        var collection = new hal.Resource({}, createBaseUrl(req, baseUrl));
-        entities.forEach(function (entity, index, entities) { return collection.embed("collection", createResource(req, baseUrl, entity)); });
-        collection.link(createCreateLink(req, baseUrl));
-        //collection.link(createDeleteLink(req, baseUrl));
-        logger.trace("collection-resource: ", collection);
+        var collection = createResource(baseUrl, null, collectionCrudLinks);
+        var name = (embedName === null || embedName === undefined) ? "items" : embedName;
+        var embeddedResources = _.map(entities, function (entity) { return createResource(baseUrl, entity, entityCrudLinks); });
+        collection.embed(name, embeddedResources);
         return collection;
     }
-    resourceUtils.createResources = createResources;
-    function createResource(req, url, entity, supportedCrudLinks) {
+    resourceUtils.createCollectionResource = createCollectionResource;
+    function createResource(baseUrl, entity, entityCrudLinks) {
         logger.trace("creating resource out of entity: ", entity);
-        // have to do this conversion since entity might be a viewModel or a POJSO
-        var _entity = entity;
-        if ((typeof entity.toJSON) === "function") {
-            _entity = entity.toJSON();
+        // always convert to a JSON object if it has a toJSON function...
+        if (entity !== undefined && entity !== null) {
+            if (typeof entity.toJSON === "function") {
+                entity = entity.toJSON();
+            }
         }
-        var selfLink = createSelfLink(req, url, _entity);
-        var resource = new hal.Resource(_entity, selfLink);
+        var selfLink = createSelfLink(baseUrl, entity);
+        var resource = new hal.Resource(entity, selfLink);
         // adding standard links
-        if (supportedCrudLinks !== undefined) {
-            if (_.includes(supportedCrudLinks, "create")) {
-                resource.link(createCreateLink(req, url));
+        if (entityCrudLinks !== undefined && entityCrudLinks !== null) {
+            if (entityCrudLinks.indexOf("c") !== -1) {
+                resource.link(createCreateLink(baseUrl));
             }
-            if (_.includes(supportedCrudLinks, "delete")) {
-                resource.link(createDeleteLink(req, url, _entity));
+            if (entityCrudLinks.indexOf("d") !== -1) {
+                resource.link(createDeleteLink(baseUrl, entity));
             }
-            if (_.includes(supportedCrudLinks, "update")) {
-                resource.link(createUpdateLink(req, url, _entity));
+            if (entityCrudLinks.indexOf("u") !== -1) {
+                resource.link(createUpdateLink(baseUrl, entity));
             }
         }
         logger.trace("resource created: ", resource);

@@ -16,17 +16,23 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
     }
     app.route("/drinks")
         .get(function (req, res, next) {
+        var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
         drinksRepo.find({}, function (err, docs) {
             if (err)
                 return next(err);
             res.format({
-                "application/hal+json": function () { return res.json(resourceUtils.createResources(req, config.urls.drinks, docs)); },
+                "application/hal+json": function () { return res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud")); },
                 "application/json": function () { return res.json(docs); }
             });
         });
     }).post(function (req, res, next) {
         cmdSrv.send("createDrink").for("drink").with({ payload: req.body }).go(function (evt) {
-            res.status(201).end();
+            if (evt.event === "commandRejected") {
+                return next(evt.payload.reason);
+            }
+            else {
+                res.status(202).end();
+            }
         });
     });
     app.route("/drinks/:id")
@@ -36,8 +42,9 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 return next(err);
             if (!doc || doc.length === 0)
                 return res.status(404).end();
+            var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
             res.format({
-                "application/hal+json": function () { return res.json(resourceUtils.createResource(req, config.urls.drinks, doc)); },
+                "application/hal+json": function () { return res.json(resourceUtils.createResource(baseUrl, doc, "ud")); },
                 "application/json": function () { return res.json(doc); }
             });
         });
@@ -47,15 +54,21 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 return next(evt.payload.reason);
             }
             else {
+                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
                 res.format({
-                    "application/hal+json": function () { return res.json(resourceUtils.createResource(req, config.urls.drinks, evt.payload)); },
+                    "application/hal+json": function () { return res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud")); },
                     "application/json": function () { return res.json(evt.payload); }
                 });
             }
         });
     }).delete(function (req, res, next) {
         cmdSrv.send("deleteDrink").for("drink").instance(req.params.id).go(function (evt) {
-            res.status(204).end();
+            if (evt.event === "commandRejected") {
+                return next(evt.payload.reason);
+            }
+            else {
+                res.status(204).end();
+            }
         });
     });
 }

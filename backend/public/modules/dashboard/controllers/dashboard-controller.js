@@ -6,7 +6,6 @@ var home;
     "use strict";
     var DashboardController = (function () {
         function DashboardController($log, $location, $scope, $state, $stateParams, apiService, utilsService, socketService, dashboard) {
-            var _this = this;
             this.$log = $log;
             this.$location = $location;
             this.$scope = $scope;
@@ -16,11 +15,17 @@ var home;
             this.utilsService = utilsService;
             this.socketService = socketService;
             this.dashboard = dashboard;
+            this.db = [];
             $log.info("DashboardController called with client-url: '" + $location.path() + "'");
-            socketService.on("dashboard", function (data) {
-                $log.info("DashboardController --> " + JSON.stringify(data));
-                _this.dashboard = data;
-            });
+            this.db = dashboard;
+            //var y = $scope["dashboard"];
+            //$scope.$watch("dashboard", change => {
+            //    this.dashboard = change;
+            //});
+            //socketService.on("dashboard", data => {
+            //    $log.info("DashboardController --> " + JSON.stringify(data));
+            //    this.dashboard = data;
+            //});
         }
         DashboardController.$inject = ["$log", "$location", "$scope", "$state", "$stateParams", "apiService", "utilsService", "socketService", "dashboard"];
         return DashboardController;

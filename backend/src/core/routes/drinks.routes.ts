@@ -22,17 +22,25 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
 
     app.route("/drinks")
         .get((req, res, next) => {
+
+            var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
+
             drinksRepo.find({}, (err, docs) => {
                 if (err) return next(err);
 
                 res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createResources(req, config.urls.drinks, docs)),
+                    "application/hal+json": () =>  res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud")),
                     "application/json": () =>  res.json(docs)
                 });
             });
         }).post((req, res, next) => {
             cmdSrv.send("createDrink").for("drink").with({payload: req.body}).go(evt => {
-                res.status(201).end();
+                if (evt.event === "commandRejected") {
+                    return next(evt.payload.reason);
+                }
+                else {
+                    res.status(202).end();
+                }
             });
         });
 
@@ -43,8 +51,10 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
+                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
+
                 res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createResource(req, config.urls.drinks, doc)),
+                    "application/hal+json": () =>  res.json(resourceUtils.createResource(baseUrl, doc, "ud")),
                     "application/json": () =>  res.json(doc)
                 });
             });
@@ -54,15 +64,22 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                     return next(evt.payload.reason);
                 }
                 else {
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
+
                     res.format({
-                        "application/hal+json": () => res.json(resourceUtils.createResource(req, config.urls.drinks, evt.payload)),
+                        "application/hal+json": () => res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud")),
                         "application/json": () => res.json(evt.payload),
                     });
                 }
             });
         }).delete((req, res, next) => {
             cmdSrv.send("deleteDrink").for("drink").instance(req.params.id).go(evt => {
-                res.status(204).end();
+                if (evt.event === "commandRejected") {
+                    return next(evt.payload.reason);
+                }
+                else {
+                    res.status(204).end();
+                }
             });
         });
 }

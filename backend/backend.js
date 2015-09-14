@@ -79,35 +79,48 @@ function onInitDenormalizer(err) {
     });
 
     // setup special replay channel...
-    eventBus.on("replay", replay);
+    eventBus.on("replay", function () {
+        replay(function (err) {
+            engine.initDashboard();
+        });
+    });
 
     var app = require("./src/config/express")(viewModelOptions, viewModelRepository, eventBus, cqrs_domainService, cqrs_cmdService);
 
     startServer(app);
 }
 
-function replay() {
+function replay(callback) {
     logger.info("replaying events...");
 
     cqrs_denormalizerService.clear(function (err) {
         if (err) {
-            logger.error("command error: ", err);
+            logger.error("clear vms failed: ", err);
+            if (callback !== undefined) {
+                callback.call(err);
+            }
+            return;
         }
     });
 
     cqrs_domainService.eventStore.getEvents(function (err, evts) {
         if (err) {
             logger.error("error on retrieving events: ", err);
+            if (callback !== undefined) {
+                callback.call(err);
+            }
         }
         else {
-            var es = _.map(evts, "payload");
-            cqrs_denormalizerService.replay(es, function (err) {
-                logger.info("replaying done");
+            var eventPayload = _.map(evts, "payload");
+            cqrs_denormalizerService.replay(eventPayload, function (err) {
                 if (err) {
                     logger.error("replaying done with error: ", err);
                 }
-                else{
-                    engine.initDashboard();
+                else {
+                    logger.info("replaying done");
+                }
+                if (callback !== undefined) {
+                    callback.call(err);
                 }
             });
         }
@@ -126,14 +139,9 @@ function onInitViewModel(err, repository) {
 }
 
 function startServer(app) {
-
-    replay();
-
     server = http.createServer(app);
-    server.listen(config.port);
     server.on("error", onError);
     server.on("listening", onListening);
-
     var io = require("socket.io").listen(server);
     io.on("connection", function (socket) {
         socket.on("event", function (data) {
@@ -149,7 +157,19 @@ function startServer(app) {
     var drinkRepo = require("./src/viewmodels/drinks/collection").repository;
     engine.setWSIO(io);
     engine.setRepository(drinkRepo);
-    //engine.activate();
+
+    replay(function (err) {
+        if (err) {
+            logger.fatal("replaying done with error: ", err);
+            process.exit(1);
+        }
+
+        engine.initDashboard();
+
+        server.listen(config.port);
+
+        //engine.activate();
+    });
 }
 
 /**

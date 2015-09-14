@@ -20,12 +20,12 @@ export var port = process.env.PORT || 3000;
 
 export var urls = {
     home: "/home",
+    dashboard: "/dashboard",
     drinks: "/drinks",
-    users: "/users",
     customers: "/customers",
     baskets: "/baskets",
     orders: "/orders",
-    engine: "/engine",
+    admin: "/admin",
 };
 
 export var serverRoot = path.join(__dirname + "/../..");

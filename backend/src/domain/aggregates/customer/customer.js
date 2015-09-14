@@ -15,7 +15,7 @@ var customer = domain.defineAggregate({
         lastname: "lastname",
         loginname: "loginname",
         password: "password",
-        basketItems: [],
+        basket: [],
         orders: [],
     });
 
@@ -89,7 +89,7 @@ var basketItemAddedEvt = domain.defineEvent({
         name: "basketItemAdded"
     },
     function (basketItem, aggregate) {
-        aggregate.get("basketItems").push(basketItem);
+        aggregate.get("basket").push(basketItem);
     });
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -107,7 +107,7 @@ var basketItemRemovedEvt = domain.defineEvent({
         name: "basketItemRemoved"
     },
     function (id, aggregate) {
-        _.remove(aggregate.get("basketItems"), function (item) {
+        _.remove(aggregate.get("basket"), function (item) {
             return item.id === id;
         });
     });
@@ -123,10 +123,10 @@ var makeOrderCmd = domain.defineCommand({
 
     var id = uuid.v4().toString();
     var timestamp = new Date();
-    var basketItems = aggregate.get("basketItems");
+    var basket = aggregate.get("basket");
 
     var orderItems = [];
-    basketItems.forEach(function (basketItem) {
+    basket.forEach(function (basketItem) {
         orderItems.push({item: {id: basketItem.item.id}, number: basketItem.number});
     });
 
@@ -145,7 +145,7 @@ var orderMadeEvt = domain.defineEvent({
         aggregate.get("orders").push(order);
 
         // clear the basket...
-        aggregate.set("basketItems", []);
+        aggregate.set("basket", []);
     });
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -154,7 +154,7 @@ var makeOrderPrecondition = domain.definePreCondition({
     name: "makeOrder",
     description: "basket must not be empty",
 }, function (data, aggregate) {
-    if (aggregate.get("basketItems").length === 0) {
+    if (aggregate.get("basket").length === 0) {
         throw new Error();
     }
 });

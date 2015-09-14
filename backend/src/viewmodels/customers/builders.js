@@ -45,7 +45,7 @@ var basketItemAddedVB = denormalizer.defineViewBuilder({
         }
     });
 
-    vm.get("basketItems").push(basketItem);
+    vm.get("basket").push(basketItem);
 });
 
 var basketItemRemovedVB = denormalizer.defineViewBuilder({
@@ -55,7 +55,7 @@ var basketItemRemovedVB = denormalizer.defineViewBuilder({
 }, function (id, vm) {
     logger.info("basketItemRemoved (vm.repository.collectionName) -> " + vm.repository.collectionName, id);
 
-    _.remove(vm.get("basketItems"), function (item) {
+    _.remove(vm.get("basket"), function (item) {
         return item.id === id;
     });
 });
@@ -82,7 +82,7 @@ var orderMadeVB = denormalizer.defineViewBuilder({
     vm.get("orders").push(order);
 
     // clear basket...
-    vm.set("basketItems", []);
+    vm.set("basket", []);
 });
 
 

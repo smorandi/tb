@@ -16,12 +16,12 @@ exports.app = {
 exports.port = process.env.PORT || 3000;
 exports.urls = {
     home: "/home",
+    dashboard: "/dashboard",
     drinks: "/drinks",
-    users: "/users",
     customers: "/customers",
     baskets: "/baskets",
     orders: "/orders",
-    engine: "/engine"
+    admin: "/admin"
 };
 exports.serverRoot = path.join(__dirname + "/../..");
 //# sourceMappingURL=config.js.map

@@ -20,7 +20,7 @@
             <th>
                 Current Price
             </th>
-            <tr ng-repeat="item in vm.dashboard | filter: vm.query">
+            <tr ng-repeat="item in vm.db | filter: vm.query">
                 <td>{{item.name}}</td>
                 <td>{{item.id}}</td>
                 <td>{{item.basePrice}}</td>

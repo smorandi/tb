@@ -3,5 +3,5 @@
 module engine {
     "use strict";
 
-    angular.module("engine", ["ui.router"]);
+    angular.module("admin", ["ui.router"]);
 }

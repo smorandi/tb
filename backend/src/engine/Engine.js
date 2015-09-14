@@ -4,7 +4,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 "use strict";
 var logger = require("../config/logger");
-var _ = require("lodash");
 var Engine = (function () {
     function Engine() {
         this.status = "initial";
@@ -39,12 +38,13 @@ var Engine = (function () {
                 logger.error("error in retrieving drinks", err);
             }
             else {
-                dashboard.length = 0;
+                exports.dashboard.length = 0;
                 docs.forEach(function (doc, index, drinks) {
                     var drink = doc.toJSON();
+                    var drinkId = drink.id;
                     var currentPrice = drink.basePrice;
-                    var dashboardItem = _.extend({ currentPrice: currentPrice }, drink);
-                    dashboard.push(dashboardItem);
+                    var dashboardItem = { id: drinkId, currentPrice: currentPrice };
+                    exports.dashboard.push(dashboardItem);
                 });
             }
         });
@@ -56,22 +56,23 @@ var Engine = (function () {
                 logger.error("error in retrieving drinks", err);
             }
             else {
-                dashboard.length = 0;
+                exports.dashboard.length = 0;
                 docs.forEach(function (doc, index, drinks) {
                     var drink = doc.toJSON();
+                    var drinkId = drink.id;
                     var currentPrice = Math.random() + drink.basePrice;
-                    var dashboardItem = _.extend({ currentPrice: currentPrice }, drink);
-                    dashboard.push(dashboardItem);
+                    var dashboardItem = { id: drinkId, currentPrice: currentPrice };
+                    exports.dashboard.push(dashboardItem);
                 });
             }
         });
     };
     Engine.prototype.getDashboard = function () {
-        return dashboard;
+        return exports.dashboard;
     };
     Engine.prototype.emitDashboard = function () {
         logger.info("emitting dashboard...");
-        wsIO.sockets.emit("dashboard", dashboard);
+        wsIO.sockets.emit("dashboard", exports.dashboard);
     };
     Engine.prototype.loop = function () {
         this.recalculateDashboard();
@@ -80,10 +81,10 @@ var Engine = (function () {
     return Engine;
 })();
 var repository;
-var dashboard = [];
 var wsIO;
 var timer;
 exports.engine = new Engine();
+exports.dashboard = [];
 function setWSIO(io) {
     wsIO = io;
 }
@@ -105,8 +106,4 @@ function deactivate() {
     exports.engine.deactivate();
 }
 exports.deactivate = deactivate;
-function getDashboard() {
-    return dashboard;
-}
-exports.getDashboard = getDashboard;
 //# sourceMappingURL=engine.js.map

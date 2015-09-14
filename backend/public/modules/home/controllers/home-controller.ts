@@ -17,12 +17,12 @@ module home {
     class HomeController {
         public static getPageForRel(rel:string):IPage {
             switch (rel) {
-                case "engine" :
-                    return new Page("Engine", "home.engine");
+                case "admin" :
+                    return new Page("Admin", "home.admin");
                 case "drinks" :
                     return new Page("Drinks", "home.drinks.overview.list");
-                case "users" :
-                    return new Page("Users", "home.users.overview.list");
+                case "customers" :
+                    return new Page("Customers", "home.customers.overview.list");
                 default:
                     return null;
             }
@@ -30,21 +30,35 @@ module home {
 
         //public pages:{ [key: string]: IPage; } = {};
         public pages:Array<IPage> = [];
+        //public dashboard = [];
 
-        public static $inject = ["$log", "$location", "$state", "homeResource"];
+        public static $inject = ["$log", "$location", "$scope", "$state", "socketService", "homeResource", "dashboard"];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private homeResource) {
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private socketService, private homeResource, private dashboard) {
             $log.info("HomeController called with client-url: '" + $location.path() + "'");
 
-            if (this.homeResource.$has("engine")) {
-                this.pushPage("engine");
+            //$scope["dashboard"] = ["der fisch"];
+
+            if (this.homeResource.$has("admin")) {
+                this.pushPage("admin");
             }
             if (this.homeResource.$has("drinks")) {
                 this.pushPage("drinks");
             }
-            if (this.homeResource.$has("users")) {
-                this.pushPage("users");
+            if (this.homeResource.$has("customers")) {
+                this.pushPage("customers");
             }
+            //if (this.homeResource.$has("dashboard")) {
+            //    this.homeResource.$get("dashboard").then(res => {
+            //        $log.info("dashboard resolved...");
+            //        $scope["dashboard"] = res;
+            //    });
+            //}
+
+            //socketService.on("dashboard", data => {
+            //    $log.info("HomeController --> " + JSON.stringify(data));
+            //    $scope["dashboard"] = data;
+            //});
         }
 
         public pushPage(rel:string):IPage {

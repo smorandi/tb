@@ -8,7 +8,7 @@ var customerCreatedVB = denormalizer.defineViewBuilder({
     id: "aggregate.id"
 }, function (data, vm) {
     logger.info("customerCreated (vm.repository.collectionName) -> " + vm.repository.collectionName);
-    vm.set("basketItems", []);
+    vm.set("basket", []);
 });
 
 var customerDeletedVB = denormalizer.defineViewBuilder({
@@ -36,7 +36,7 @@ var basketItemAddedVB = denormalizer.defineViewBuilder({
         }
     });
 
-    vm.get("basketItems").push(basketItem);
+    vm.get("basket").push(basketItem);
 });
 
 var basketItemRemovedVB = denormalizer.defineViewBuilder({
@@ -59,7 +59,7 @@ var orderMadeVB = denormalizer.defineViewBuilder({
     logger.info("orderMadeVB (vm.repository.collectionName) -> " + vm.repository.collectionName, order);
 
     // clear basket...
-    vm.set("basketItems", []);
+    vm.set("basket", []);
 });
 
 

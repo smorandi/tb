@@ -26,7 +26,7 @@ module home {
                                 return res;
                             });
                         }
-                    }
+                    },
                 });
         }
     ]);

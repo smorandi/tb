@@ -2,6 +2,6 @@
 var engine;
 (function (engine) {
     "use strict";
-    angular.module("engine", ["ui.router"]);
+    angular.module("admin", ["ui.router"]);
 })(engine || (engine = {}));
-//# sourceMappingURL=engine-module.js.map
+//# sourceMappingURL=admin-module.js.map

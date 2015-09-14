@@ -49,9 +49,11 @@ class Engine {
                 dashboard.length = 0;
                 docs.forEach((doc, index, drinks) => {
                     var drink = doc.toJSON();
+
+                    var drinkId = drink.id;
                     var currentPrice = drink.basePrice;
 
-                    var dashboardItem:any = _.extend({currentPrice: currentPrice}, drink);
+                    var dashboardItem:any = {id: drinkId, currentPrice: currentPrice};
                     dashboard.push(dashboardItem);
                 });
             }
@@ -68,9 +70,11 @@ class Engine {
                 dashboard.length = 0;
                 docs.forEach((doc, index, drinks) => {
                     var drink = doc.toJSON();
+
+                    var drinkId = drink.id;
                     var currentPrice = Math.random() + drink.basePrice;
 
-                    var dashboardItem:any = _.extend({currentPrice: currentPrice}, drink);
+                    var dashboardItem:any = {id: drinkId, currentPrice: currentPrice};
                     dashboard.push(dashboardItem);
                 });
             }
@@ -93,10 +97,10 @@ class Engine {
 }
 
 var repository:any;
-var dashboard = [];
 var wsIO:SocketIO.Server;
 var timer:NodeJS.Timer;
 export var engine = new Engine();
+export var dashboard = [];
 
 export function setWSIO(io:SocketIO.Server) {
     wsIO = io;
@@ -118,8 +122,3 @@ export function activate():void {
 export function deactivate():void {
     engine.deactivate();
 }
-
-export function getDashboard():Array<any> {
-    return dashboard;
-}
-

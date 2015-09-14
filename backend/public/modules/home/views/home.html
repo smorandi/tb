@@ -12,7 +12,7 @@
         <div class="navbar-collapse collapse" data-bs-collapse-target>
             <ul ng-repeat="page in vm.pages" class="nav navbar-nav">
                 <li data-ui-sref-active="active">
-                    <a ng-click="vm.go(page)">{{page.name}}</a>
+                    <a href ui-sref="{{page.state}}">{{page.name}}</a>
                 </li>
             </ul>
         </div>

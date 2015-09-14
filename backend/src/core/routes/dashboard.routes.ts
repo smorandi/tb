@@ -16,7 +16,7 @@ function init(app, viewModelOptions, repository, eventBus, cqrs_domainService, c
     app.route("/dashboard")
         .get((req, res, next) => {
             res.format({
-                "application/json": () =>  res.json(engine.getDashboard())
+                "application/json": () =>  res.json(engine.dashboard)
             });
         })
 }

@@ -2,7 +2,7 @@
 var home;
 (function (home) {
     "use strict";
-    angular.module("home", ["ui.router", "mgcrea.ngStrap", "drinks", "dashboard", "engine", "angular-hal", "btford.socket-io"]).factory("apiService", function (halClient, $log) {
+    angular.module("home", ["ui.router", "mgcrea.ngStrap", "drinks", "dashboard", "admin", "angular-hal", "btford.socket-io"]).factory("apiService", function (halClient, $log) {
         return new ApiService(halClient, $log);
     }).factory("socketService", function (socketFactory) {
         // TODO: maybe get it from the index.html?!?
@@ -13,9 +13,30 @@ var home;
         return mySocket;
     }).factory("utilsService", function ($window) {
         return new UtilsService($window);
-    }).run(function ($log, $rootScope) {
+    }).factory("dashboard", function (apiService, socketService) {
+        var db = [{ id: "xxx" }];
+        apiService.$load().then(function (res) {
+            res.$get("dashboard").then(function (x) {
+                db.length = 0;
+                x.forEach(function (item) { return db.push(item); });
+            });
+        });
+        socketService.on("dashboard", function (data) {
+            db.length = 0;
+            data.forEach(function (item) { return db.push(item); });
+        });
+        return db;
+    }).run(function ($log, $rootScope, utilsService) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             $log.info("transition: " + fromState.name + " -> " + toState.name);
+        });
+        $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+            $log.error("$stateChangeError: " + fromState.name + " -> " + toState.name);
+            utilsService.alert(error);
+        });
+        $rootScope.$on('$stateNotFound', function (event, unfoundState, fromState, fromParams) {
+            $log.error("$stateNotFound: " + fromState.name + " -> " + unfoundState.to);
+            utilsService.alert("$stateNotFound\n" + fromState.name + " -> " + unfoundState.to);
         });
     });
     var ApiService = (function () {

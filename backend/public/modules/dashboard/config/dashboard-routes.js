@@ -13,21 +13,7 @@ var home;
                     controllerAs: "vm"
                 }
             },
-            resolve: {
-                dashboard: function ($log, homeResource) {
-                    $log.info("resolving dashboard...");
-                    if (homeResource.$has("dashboard")) {
-                        return homeResource.$get("dashboard").then(function (res) {
-                            $log.info("dashboard resolved...");
-                            return res;
-                        });
-                    }
-                    else {
-                        $log.info("no dashboard found. returning empty null...");
-                        return null;
-                    }
-                }
-            }
+            resolve: {}
         });
     });
 })(home || (home = {}));

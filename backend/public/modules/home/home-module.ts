@@ -3,7 +3,7 @@
 module home {
     "use strict";
 
-    angular.module("home", ["ui.router", "mgcrea.ngStrap", "drinks", "dashboard", "engine", "angular-hal", "btford.socket-io"]
+    angular.module("home", ["ui.router", "mgcrea.ngStrap", "drinks", "dashboard", "admin", "angular-hal", "btford.socket-io"]
     ).factory("apiService", (halClient, $log) => {
             return new ApiService(halClient, $log);
         }
@@ -21,11 +21,38 @@ module home {
     ).factory("utilsService", ($window) => {
             return new UtilsService($window);
         }
-    ).run(($log, $rootScope) => {
+    ).factory("dashboard", (apiService, socketService) => {
+            var db = [{id: "xxx"}];
+
+            apiService.$load().then(res => {
+                res.$get("dashboard").then(x => {
+                    db.length = 0;
+                    x.forEach(item => db.push(item));
+                });
+            });
+
+            socketService.on("dashboard", data => {
+                db.length = 0;
+                data.forEach(item => db.push(item));
+            });
+
+            return db;
+        }
+    ).run(($log, $rootScope, utilsService) => {
             $rootScope.$on('$stateChangeStart',
                 (event, toState, toParams, fromState, fromParams) => {
                     $log.info("transition: " + fromState.name + " -> " + toState.name);
-                })
+                });
+            $rootScope.$on('$stateChangeError',
+                (event, toState, toParams, fromState, fromParams, error) => {
+                    $log.error("$stateChangeError: " + fromState.name + " -> " + toState.name);
+                    utilsService.alert(error);
+                });
+            $rootScope.$on('$stateNotFound',
+                (event, unfoundState, fromState, fromParams) => {
+                    $log.error("$stateNotFound: " + fromState.name + " -> " + unfoundState.to);
+                    utilsService.alert("$stateNotFound\n" + fromState.name + " -> " + unfoundState.to);
+                });
         });
 
 

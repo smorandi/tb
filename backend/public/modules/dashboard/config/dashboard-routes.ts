@@ -15,19 +15,19 @@ module home {
                     }
                 },
                 resolve: {
-                    dashboard: ($log, homeResource) => {
-                        $log.info("resolving dashboard...");
-                        if (homeResource.$has("dashboard")) {
-                            return homeResource.$get("dashboard").then(res => {
-                                $log.info("dashboard resolved...");
-                                return res;
-                            });
-                        }
-                        else {
-                            $log.info("no dashboard found. returning empty null...");
-                            return null;
-                        }
-                    },
+                    //dashboard: ($log, homeResource) => {
+                    //    $log.info("resolving dashboard...");
+                    //    if (homeResource.$has("dashboard")) {
+                    //        return homeResource.$get("dashboard").then(res => {
+                    //            $log.info("dashboard resolved...");
+                    //            return res;
+                    //        });
+                    //    }
+                    //    else {
+                    //        $log.info("no dashboard found. returning empty null...");
+                    //        return null;
+                    //    }
+                    //},
                 },
             })
         }

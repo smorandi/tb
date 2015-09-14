@@ -26,35 +26,36 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
             ordersRepo.find({}, (err, docs) => {
                 if (err) return next(err);
 
+                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.orders);
+
                 res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createResources(req, config.urls.orders, docs)),
+                    "application/hal+json": () =>  res.json(resourceUtils.createCollectionResource(baseUrl, docs)),
                     "application/json": () =>  res.json(docs)
                 });
             });
         });
 
-    app.route("/orders/:id")
+    app.route("/orders/:customerId")
         .get((req, res, next) => {
             ordersRepo.findOne({id: req.params.id}, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
                 var orders = doc.get("orders");
-
-                var baseUrl = "/orders/" + req.params.id;
+                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId);
 
                 res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createResources(req, baseUrl, orders)),
+                    "application/hal+json": () =>  res.json(resourceUtils.createCollectionResource(baseUrl, orders)),
                     "application/json": () =>  res.json(orders)
                 });
             });
         }).post((req, res, next) => {
-            cmdSrv.send("makeOrder").for("customer").instance(req.params.id).go(evt => {
+            cmdSrv.send("makeOrder").for("customer").instance(req.params.customerId).go(evt => {
                 if (evt.event === "commandRejected") {
                     return next(evt.payload.reason);
                 }
                 else {
-                    res.status(201).end();
+                    res.status(202).end();
                 }
             });
         });
