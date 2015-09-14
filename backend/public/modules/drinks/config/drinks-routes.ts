@@ -20,11 +20,11 @@ module drinks {
 
                     drinkResources: ($log, drinksResource) => {
                         $log.info("resolving drink-resources...");
-                        if(!drinksResource.$has("collection")){
+                        if(!drinksResource.$has("items")){
                             $log.info("no drink resources found. returning empty array...");
                             return [];
                         }
-                        return drinksResource.$get("collection").then(res => {
+                        return drinksResource.$get("items").then(res => {
                             $log.info("drink-resources resolved...");
                             return res;
                         }, err => {

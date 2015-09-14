@@ -4,21 +4,27 @@
 var engine;
 (function (engine) {
     var AdminController = (function () {
-        function AdminController($log, $location, $scope, $state, $stateParams, apiService, utilsService, adminResource) {
+        function AdminController($log, $location, $scope, $state, $stateParams, $document, apiService, utilsService, adminResource) {
             this.$log = $log;
             this.$location = $location;
             this.$scope = $scope;
             this.$state = $state;
             this.$stateParams = $stateParams;
+            this.$document = $document;
             this.apiService = apiService;
             this.utilsService = utilsService;
             this.adminResource = adminResource;
+            this.alerts = [];
             $log.info("AdminController called with client-url: " + $location.path());
         }
+        AdminController.prototype.addAlert = function (msg) {
+            this.alerts.push({ type: "success", msg: msg });
+        };
         AdminController.prototype.replay = function () {
             var _this = this;
             this.adminResource.$post("replay", {}, {}).then(function (res) {
-                _this.adminResource = res;
+                //this.$state.reload();
+                _this.addAlert("Replay successful");
             }).catch(function (err) {
                 _this.utilsService.alert(JSON.stringify(err, undefined, 2));
             });
@@ -39,7 +45,7 @@ var engine;
                 _this.utilsService.alert(JSON.stringify(err, undefined, 2));
             });
         };
-        AdminController.$inject = ["$log", "$location", "$scope", "$state", "$stateParams", "apiService", "utilsService", "adminResource"];
+        AdminController.$inject = ["$log", "$location", "$scope", "$state", "$stateParams", "$document", "apiService", "utilsService", "adminResource"];
         return AdminController;
     })();
     angular.module("admin").controller("AdminController", AdminController);

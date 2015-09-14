@@ -5,15 +5,22 @@
 module engine {
     class AdminController {
         private drinks:Array<any>;
+        private alerts = [];
 
-        public static $inject = ["$log", "$location", "$scope", "$state", "$stateParams", "apiService", "utilsService", "adminResource"];
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private apiService:home.ApiService, private utilsService:home.UtilsService, private adminResource) {
+        public static $inject = ["$log", "$location", "$scope", "$state", "$stateParams", "$document", "apiService", "utilsService", "adminResource"];
+
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $scope:ng.IScope, private $state:ng.ui.IStateService, private $stateParams:ng.ui.IStateParamsService, private $document:ng.IDocumentService, private apiService:home.ApiService, private utilsService:home.UtilsService, private adminResource) {
             $log.info("AdminController called with client-url: " + $location.path());
+        }
+
+        public addAlert(msg:string) {
+            this.alerts.push({type:"success", msg: msg});
         }
 
         public replay():void {
             this.adminResource.$post("replay", {}, {}).then(res => {
-                this.adminResource = res;
+                //this.$state.reload();
+                this.addAlert("Replay successful");
             }).catch(err => {
                 this.utilsService.alert(JSON.stringify(err, undefined, 2));
             });

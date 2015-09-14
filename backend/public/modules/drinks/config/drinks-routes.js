@@ -18,11 +18,11 @@ var drinks;
                 },
                 drinkResources: function ($log, drinksResource) {
                     $log.info("resolving drink-resources...");
-                    if (!drinksResource.$has("collection")) {
+                    if (!drinksResource.$has("items")) {
                         $log.info("no drink resources found. returning empty array...");
                         return [];
                     }
-                    return drinksResource.$get("collection").then(function (res) {
+                    return drinksResource.$get("items").then(function (res) {
                         $log.info("drink-resources resolved...");
                         return res;
                     }, function (err) {

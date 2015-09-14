@@ -17,7 +17,7 @@ function init(app, options, repository, eventBus) {
     var controller = new AdminController(repository, eventBus, null, null);
 
     app.route("/admin").get((req, res, next) => controller.getAsResource(req, res, next));
-    app.route("/admin/replay").post((req, res, next) => controller.replay(req, res, next));
+    app.route("/admin/replays").post((req, res, next) => controller.replay(req, res, next));
     app.route("/admin/activations").put((req, res, next) => controller.activateEngine(req, res, next));
     app.route("/admin/deactivations").put((req, res, next) => controller.deactivateEngine(req, res, next));
 }
