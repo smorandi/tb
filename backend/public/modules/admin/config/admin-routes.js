@@ -10,7 +10,7 @@ var engine;
                 "@home": {
                     templateUrl: "modules/admin/views/admin.html",
                     controller: "AdminController",
-                    controllerAs: "vm"
+                    controllerAs: "vm",
                 }
             },
             resolve: {
@@ -20,8 +20,8 @@ var engine;
                         $log.info("admin-resource resolved...");
                         return res;
                     });
-                }
-            }
+                },
+            },
         });
     });
 })(engine || (engine = {}));

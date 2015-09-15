@@ -1,6 +1,3 @@
-/**
- * Created by Stefano on 24.07.2015.
- */
 /// <reference path="../../../typings/tsd.d.ts" />
 "use strict";
 var logger = require("../../config/logger");
@@ -57,7 +54,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
                 res.format({
                     "application/hal+json": function () { return res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud")); },
-                    "application/json": function () { return res.json(evt.payload); }
+                    "application/json": function () { return res.json(evt.payload); },
                 });
             }
         });

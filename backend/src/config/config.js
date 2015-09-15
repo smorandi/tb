@@ -1,12 +1,9 @@
-/**
- * Created by Stefano on 25.07.2015.
- */
 /// <reference path="../../typings/tsd.d.ts" />
 var path = require("path");
 "use strict";
 exports.db = {
     uri: "mongodb://localhost:27017/tb",
-    options: null
+    options: null,
 };
 exports.app = {
     title: "Trinkbörse",
@@ -21,7 +18,7 @@ exports.urls = {
     customers: "/customers",
     baskets: "/baskets",
     orders: "/orders",
-    admin: "/admin"
+    admin: "/admin",
 };
 exports.serverRoot = path.join(__dirname + "/../..");
 //# sourceMappingURL=config.js.map

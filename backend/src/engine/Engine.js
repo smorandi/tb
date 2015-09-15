@@ -1,6 +1,3 @@
-/**
- * Created by Stefano on 23.08.2015.
- */
 /// <reference path="../../typings/tsd.d.ts" />
 "use strict";
 var logger = require("../config/logger");
@@ -10,8 +7,6 @@ var Engine = (function () {
         this.lastChangeDate = new Date();
         this.updateInterval = 5000;
     }
-    //constructor() {
-    //}
     Engine.prototype.getStatus = function () {
         return this.status;
     };

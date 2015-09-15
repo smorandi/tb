@@ -51,7 +51,6 @@ var resourceUtils;
     resourceUtils.createCollectionResource = createCollectionResource;
     function createResource(baseUrl, entity, entityCrudLinks) {
         logger.trace("creating resource out of entity: ", entity);
-        // always convert to a JSON object if it has a toJSON function...
         if (entity !== undefined && entity !== null) {
             if (typeof entity.toJSON === "function") {
                 entity = entity.toJSON();
@@ -59,7 +58,6 @@ var resourceUtils;
         }
         var selfLink = createSelfLink(baseUrl, entity);
         var resource = new hal.Resource(entity, selfLink);
-        // adding standard links
         if (entityCrudLinks !== undefined && entityCrudLinks !== null) {
             if (entityCrudLinks.indexOf("c") !== -1) {
                 resource.link(createCreateLink(baseUrl));

@@ -5,9 +5,7 @@ var home;
     "use strict";
     angular.module("home").config(["$stateProvider", "$urlRouterProvider",
         function ($stateProvider, $urlRouterProvider) {
-            // Redirect to home view when route not found
             $urlRouterProvider.otherwise("/dashboard");
-            // Home state routing
             $stateProvider.
                 state("home", {
                 abstract: true,
@@ -24,7 +22,7 @@ var home;
                             return res;
                         });
                     }
-                }
+                },
             });
         }
     ]);

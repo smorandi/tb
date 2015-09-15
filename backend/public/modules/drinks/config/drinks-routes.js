@@ -30,30 +30,30 @@ var drinks;
                         return null;
                     });
                 }
-            }
+            },
         }).state("home.drinks.newDrink", {
             url: "/new",
             views: {
                 "@home.drinks": {
                     templateUrl: "modules/drinks/views/drink-add.html",
                     controller: "DrinkCreateController",
-                    controllerAs: "vm"
+                    controllerAs: "vm",
                 }
-            }
+            },
         }).state("home.drinks.overview", {
             url: "",
             abstract: true,
-            templateUrl: "modules/drinks/views/drinks-overview.html"
+            templateUrl: "modules/drinks/views/drinks-overview.html",
         }).state("home.drinks.overview.list", {
             url: "",
             views: {
                 "mas@home.drinks.overview": {
                     templateUrl: "modules/drinks/views/drink-list.html",
                     controller: "DrinkListController",
-                    controllerAs: "vm"
+                    controllerAs: "vm",
                 },
                 "det@home.drinks.overview": {
-                    templateUrl: "modules/drinks/views/drink-view.html"
+                    templateUrl: "modules/drinks/views/drink-view.html",
                 }
             }
         }).state("home.drinks.overview.list.detail", {
@@ -66,25 +66,25 @@ var drinks;
                         $log.info("drink-resource resolved...");
                         return res;
                     });
-                }
+                },
             },
             url: "/{id}",
             views: {
                 "det@home.drinks.overview": {
                     templateUrl: "modules/drinks/views/drink-view.html",
                     controller: "DrinkViewController",
-                    controllerAs: "vm"
+                    controllerAs: "vm",
                 }
-            }
+            },
         }).state("home.drinks.overview.list.detail.editDrink", {
             url: "/edit",
             views: {
                 "@home.drinks": {
                     templateUrl: "modules/drinks/views/drink-edit.html",
                     controller: "DrinkEditController",
-                    controllerAs: "vm"
+                    controllerAs: "vm",
                 }
-            }
+            },
         });
     });
 })(drinks || (drinks = {}));

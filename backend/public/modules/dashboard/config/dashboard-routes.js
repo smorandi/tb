@@ -10,10 +10,10 @@ var home;
                 "@home": {
                     templateUrl: "modules/dashboard/views/dashboard.html",
                     controller: "DashboardController",
-                    controllerAs: "vm"
+                    controllerAs: "vm",
                 }
             },
-            resolve: {}
+            resolve: {},
         });
     });
 })(home || (home = {}));

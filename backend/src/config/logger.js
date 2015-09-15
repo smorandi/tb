@@ -1,12 +1,8 @@
-/**
- * Created by Stefano on 25.07.2015.
- */
 /// <reference path="../../typings/tsd.d.ts" />
 var log4js = require("log4js");
 var config = {
     "appenders": [
         {
-            //"category": "console",
             "type": "console",
             "layout": {
                 "type": "pattern",
