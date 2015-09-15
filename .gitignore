@@ -18,6 +18,7 @@ app/tests/coverage/
 */typings/
 .idea/
 **/*bower_components
+**/*/bower_components
 **/*.d.ts
 #yeoman
 # node_modules
