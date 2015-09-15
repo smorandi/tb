@@ -2,7 +2,7 @@
  * Created by Stefano on 26.07.2015.
  */
 /// <reference path="../../typings/tsd.d.ts" />
-'use strict';
+"use strict";
 
 import _ = require("lodash");
 import glob = require("glob");
@@ -15,7 +15,7 @@ export function getGlobbedFiles(globPatterns, removeRoot?) {
     var _this = this;
 
     // URL paths regex
-    var urlRegex = new RegExp('^(?:[a-z]+:)?\/\/', 'i');
+    var urlRegex = new RegExp("^(?:[a-z]+:)?\/\/", "i");
 
     // The output array
     var output = [];
@@ -33,7 +33,7 @@ export function getGlobbedFiles(globPatterns, removeRoot?) {
             var files = glob.sync(globPatterns);
             if (removeRoot) {
                 files = files.map(function(file) {
-                    return file.replace(removeRoot, '');
+                    return file.replace(removeRoot, "");
                 });
             }
 

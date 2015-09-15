@@ -11,7 +11,7 @@
     "angular-hal": "~0.1.5",
     "bootstrap": "~3.2.0",
     "font-awesome": "~4.2.0",
-    "lodash": "~3.9.0",
+    "lodash": "~3.10.1",
     "socket.io": "~1.3.6",
     "angular-socket-io":"~0.7.0"
   },
