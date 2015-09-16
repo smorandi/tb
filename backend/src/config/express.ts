@@ -22,7 +22,7 @@ var helmet = require("helmet");
 var cors = require("cors");
 
 
-function init(denormalizerOptions, viewModelService, eventBus, domainService, evtCmd) {
+function init() {
     var app = express();
 
 // view engine setup
@@ -45,7 +45,7 @@ function init(denormalizerOptions, viewModelService, eventBus, domainService, ev
 
 // just for now...logging any json content of the request..
     app.use((req, res, next) => {
-        logger.trace("\n", req.body);
+        logger.trace("request-body: \n", req.body);
         next();
     });
 
@@ -66,7 +66,7 @@ function init(denormalizerOptions, viewModelService, eventBus, domainService, ev
 // Globbing routing files
     var routesFiles = utils.getGlobbedFiles(path.join(config.serverRoot, "/src/core/routes/**/*.js"));
     logger.debug("initializing routes", routesFiles);
-    routesFiles.forEach(routePath => require(path.resolve(routePath))(app, denormalizerOptions, viewModelService, eventBus, domainService, evtCmd));
+    routesFiles.forEach(routePath => require(path.resolve(routePath))(app));
 
 // catch 404 and forward to error handler
     app.use((req, res, next) => {

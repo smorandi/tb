@@ -9,23 +9,22 @@ import logger = require("../../config/logger");
 import config = require("../../config/config");
 import resourceUtils = require("../utils/resourceUtils");
 
-function init(app, options, repository, eventBus, domain, cmdSrv) {
+var viewmodelService = require("../../cqrs/viewmodelService");
+var commandService = require("../../cqrs/commandService");
+
+function getRepository() {
+    return viewmodelService.getRepository("drinks");
+}
+
+function init(app) {
     logger.trace("initializing drink routes...");
-
-    var drinksRepo = repository.extend({
-        collectionName: "drinks"
-    });
-
-    if (options.repository.type === "inmemory") {
-        drinksRepo = require("../../viewmodels/drinks/collection").repository;
-    }
 
     app.route("/drinks")
         .get((req, res, next) => {
 
             var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
 
-            drinksRepo.find({}, (err, docs) => {
+            getRepository().find({}, (err, docs) => {
                 if (err) return next(err);
 
                 res.format({
@@ -34,7 +33,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 });
             });
         }).post((req, res, next) => {
-            cmdSrv.send("createDrink").for("drink").with({payload: req.body}).go(evt => {
+            commandService.send("createDrink").for("drink").with({payload: req.body}).go(evt => {
                 if (evt.event === "commandRejected") {
                     return next(evt.payload.reason);
                 }
@@ -47,7 +46,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
 
     app.route("/drinks/:id")
         .get((req, res, next) => {
-            drinksRepo.findOne({id: req.params.id}, (err, doc) => {
+            getRepository().findOne({id: req.params.id}, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
@@ -59,7 +58,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 });
             });
         }).put((req, res, next) => {
-            cmdSrv.send("changeDrink").for("drink").instance(req.params.id).with({payload: req.body}).go(evt => {
+            commandService.send("changeDrink").for("drink").instance(req.params.id).with({payload: req.body}).go(evt => {
                 if (evt.event === "commandRejected") {
                     return next(evt.payload.reason);
                 }
@@ -73,7 +72,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 }
             });
         }).delete((req, res, next) => {
-            cmdSrv.send("deleteDrink").for("drink").instance(req.params.id).go(evt => {
+            commandService.send("deleteDrink").for("drink").instance(req.params.id).go(evt => {
                 if (evt.event === "commandRejected") {
                     return next(evt.payload.reason);
                 }

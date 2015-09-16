@@ -12,22 +12,21 @@ import config = require("../../config/config");
 import resourceUtils = require("../utils/resourceUtils");
 var hal = require("halberd");
 
-function init(app, options, repository, eventBus, domain, cmdSrv) {
+var viewmodelService = require("../../cqrs/viewmodelService");
+var commandService = require("../../cqrs/commandService");
+
+function getRepository() {
+    return viewmodelService.getRepository("baskets");
+}
+
+function init(app) {
     logger.trace("initializing basket routes...");
-
-    var basketsRepo = repository.extend({
-        collectionName: "baskets"
-    });
-
-    if (options.repository.type === "inmemory") {
-        basketsRepo = require("../../viewmodels/baskets/collection").repository;
-    }
 
     app.route("/baskets")
         .get((req, res, next) => {
             var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
 
-            basketsRepo.find({}, (err, docs) => {
+            getRepository().find({}, (err, docs) => {
                 if (err) return next(err);
 
                 res.format({
@@ -40,7 +39,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
 
     app.route("/baskets/:customerId")
         .get((req, res, next) => {
-            basketsRepo.findOne({id: req.params.customerId}, (err, doc) => {
+            getRepository().findOne({id: req.params.customerId}, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
@@ -57,7 +56,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 });
             });
         }).post((req, res, next) => {
-            cmdSrv.send("addBasketItem").for("customer").instance(req.params.customerId).with({payload: req.body}).go(evt => {
+            commandService.send("addBasketItem").for("customer").instance(req.params.customerId).with({payload: req.body}).go(evt => {
                 if (evt.event === "commandRejected") {
                     return next(evt.payload.reason);
                 }
@@ -69,7 +68,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
 
     app.route("/baskets/:customerId/:basketItemId")
         .get((req, res, next) => {
-            basketsRepo.findOne({id: req.params.customerId}, (err, doc) => {
+            getRepository().findOne({id: req.params.customerId}, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
@@ -84,7 +83,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 });
             });
         }).delete((req, res, next) => {
-            cmdSrv.send("removeBasketItem").for("customer").instance(req.params.customerId).with({payload: req.params.basketItemId}).go(evt => {
+            commandService.send("removeBasketItem").for("customer").instance(req.params.customerId).with({payload: req.params.basketItemId}).go(evt => {
                 if (evt.event === "commandRejected") {
                     return next(evt.payload.reason);
                 }

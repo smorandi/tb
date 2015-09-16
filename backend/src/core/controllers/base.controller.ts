@@ -9,7 +9,7 @@ import engine = require("../../engine/engine");
 import logger = require("../../config/logger");
 import config = require("../../config/config");
 
-var eventBus = require("../../emitter/emitter");
+var eventBus = require("../utils/eventBus");
 var hal = require("halberd");
 
 class BaseController {

@@ -14,7 +14,7 @@ var utils = require("./utils");
 var config = require("./config");
 var helmet = require("helmet");
 var cors = require("cors");
-function init(denormalizerOptions, viewModelService, eventBus, domainService, evtCmd) {
+function init() {
     var app = express();
     // view engine setup
     app.set("views", path.join(config.serverRoot, "/core/views"));
@@ -31,7 +31,7 @@ function init(denormalizerOptions, viewModelService, eventBus, domainService, ev
     app.use(bodyParser.urlencoded({ extended: false }));
     // just for now...logging any json content of the request..
     app.use(function (req, res, next) {
-        logger.trace("\n", req.body);
+        logger.trace("request-body: \n", req.body);
         next();
     });
     //use cors to allow everything (for now)
@@ -47,7 +47,7 @@ function init(denormalizerOptions, viewModelService, eventBus, domainService, ev
     // Globbing routing files
     var routesFiles = utils.getGlobbedFiles(path.join(config.serverRoot, "/src/core/routes/**/*.js"));
     logger.debug("initializing routes", routesFiles);
-    routesFiles.forEach(function (routePath) { return require(path.resolve(routePath))(app, denormalizerOptions, viewModelService, eventBus, domainService, evtCmd); });
+    routesFiles.forEach(function (routePath) { return require(path.resolve(routePath))(app); });
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
         var err = new Error("Not Found");

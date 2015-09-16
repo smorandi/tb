@@ -5,16 +5,12 @@
 "use strict";
 
 import logger = require("../../config/logger");
-import config = require("../../config/config");
-import engine = require("../../engine/engine");
 import AdminController = require("../controllers/admin.controller");
 
-var hal = require("halberd");
-
-function init(app, options, repository, eventBus) {
+function init(app) {
     logger.trace("initializing admin routes...")
 
-    var controller = new AdminController(repository, eventBus, null, null);
+    var controller = new AdminController();
 
     app.route("/admin").get((req, res, next) => controller.getAsResource(req, res, next));
     app.route("/admin/replays").post((req, res, next) => controller.replay(req, res, next));

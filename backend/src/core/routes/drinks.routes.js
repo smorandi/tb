@@ -1,20 +1,22 @@
+/**
+ * Created by Stefano on 24.07.2015.
+ */
 /// <reference path="../../../typings/tsd.d.ts" />
 "use strict";
 var logger = require("../../config/logger");
 var config = require("../../config/config");
 var resourceUtils = require("../utils/resourceUtils");
-function init(app, options, repository, eventBus, domain, cmdSrv) {
+var viewmodelService = require("../../cqrs/viewmodelService");
+var commandService = require("../../cqrs/commandService");
+function getRepository() {
+    return viewmodelService.getRepository("drinks");
+}
+function init(app) {
     logger.trace("initializing drink routes...");
-    var drinksRepo = repository.extend({
-        collectionName: "drinks"
-    });
-    if (options.repository.type === "inmemory") {
-        drinksRepo = require("../../viewmodels/drinks/collection").repository;
-    }
     app.route("/drinks")
         .get(function (req, res, next) {
         var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
-        drinksRepo.find({}, function (err, docs) {
+        getRepository().find({}, function (err, docs) {
             if (err)
                 return next(err);
             res.format({
@@ -23,7 +25,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
             });
         });
     }).post(function (req, res, next) {
-        cmdSrv.send("createDrink").for("drink").with({ payload: req.body }).go(function (evt) {
+        commandService.send("createDrink").for("drink").with({ payload: req.body }).go(function (evt) {
             if (evt.event === "commandRejected") {
                 return next(evt.payload.reason);
             }
@@ -34,7 +36,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
     });
     app.route("/drinks/:id")
         .get(function (req, res, next) {
-        drinksRepo.findOne({ id: req.params.id }, function (err, doc) {
+        getRepository().findOne({ id: req.params.id }, function (err, doc) {
             if (err)
                 return next(err);
             if (!doc || doc.length === 0)
@@ -46,7 +48,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
             });
         });
     }).put(function (req, res, next) {
-        cmdSrv.send("changeDrink").for("drink").instance(req.params.id).with({ payload: req.body }).go(function (evt) {
+        commandService.send("changeDrink").for("drink").instance(req.params.id).with({ payload: req.body }).go(function (evt) {
             if (evt.event === "commandRejected") {
                 return next(evt.payload.reason);
             }
@@ -54,12 +56,12 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
                 res.format({
                     "application/hal+json": function () { return res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud")); },
-                    "application/json": function () { return res.json(evt.payload); },
+                    "application/json": function () { return res.json(evt.payload); }
                 });
             }
         });
     }).delete(function (req, res, next) {
-        cmdSrv.send("deleteDrink").for("drink").instance(req.params.id).go(function (evt) {
+        commandService.send("deleteDrink").for("drink").instance(req.params.id).go(function (evt) {
             if (evt.event === "commandRejected") {
                 return next(evt.payload.reason);
             }

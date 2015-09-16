@@ -5,18 +5,15 @@
 "use strict";
 
 import express = require("express");
-import engine = require("../../engine/engine");
+import engine = require("../engine/engine");
 import logger = require("../../config/logger");
 import config = require("../../config/config");
 import BaseController = require("./base.controller");
 
 var hal = require("halberd");
+var denormalizerService = require("../../cqrs/denormalizerService");
 
-class AdminController extends BaseController {
-    constructor(repository:any, eventBus:any, domainService:any, cmdService:any) {
-        super(repository, eventBus, domainService, cmdService);
-    }
-
+class AdminController {
     private createResource(req:express.Request):any {
         var self:string = req.protocol + "://" + req.headers["host"] + config.urls.admin;
 
@@ -29,7 +26,7 @@ class AdminController extends BaseController {
     }
 
     private asResource(req:express.Request, asHal:boolean):any {
-        return asHal ? this.createResource(req) :  engine.engine;
+        return asHal ? this.createResource(req) : engine.engine;
     }
 
     private handleResponse(req:express.Request, res:express.Response) {
@@ -60,9 +57,12 @@ class AdminController extends BaseController {
 
     public replay(req:express.Request, res:express.Response, next:Function):void {
         logger.info("replaying events...");
-        this.eventBus.emit("replay");
+        denormalizerService.replay(err => {
+            if (err) return next(err);
 
-        res.status(202).end();
+            engine.initDashboard();
+            res.status(202).end();
+        });
     }
 }
 

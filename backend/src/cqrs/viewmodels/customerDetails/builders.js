@@ -1,6 +1,6 @@
 var _ = require("lodash");
 var denormalizer = require("cqrs-eventdenormalizer");
-var logger = require("../../config/logger");
+var logger = require("../../../config/logger");
 
 var customerCreatedVB = denormalizer.defineViewBuilder({
     name: "customerCreated",

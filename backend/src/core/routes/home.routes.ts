@@ -9,10 +9,10 @@ import logger = require("../../config/logger");
 import config = require("../../config/config");
 import HomeController = require("../controllers/home.controller");
 
-function init(app, viewModelOptions, repository, eventBus, domain, cmdSrv) {
+function init(app) {
     logger.trace("initializing home routes...")
 
-    var controller = new HomeController(repository, eventBus, domain, cmdSrv);
+    var controller = new HomeController();
 
     app.route(config.urls.home).get((req, res, next) => controller.getAsResource(req, res, next));
 }

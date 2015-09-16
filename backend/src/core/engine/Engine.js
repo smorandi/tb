@@ -1,6 +1,11 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/**
+ * Created by Stefano on 23.08.2015.
+ */
+/// <reference path="../../../typings/tsd.d.ts" />
 "use strict";
-var logger = require("../config/logger");
+var logger = require("../../config/logger");
+var config = require("../../config/config");
+var viewmodelService = require("../../cqrs/viewmodelService");
 var Engine = (function () {
     function Engine() {
         this.status = "initial";
@@ -15,20 +20,20 @@ var Engine = (function () {
     };
     Engine.prototype.activate = function () {
         var _this = this;
-        logger.info("engine activated...");
+        logger.debug("engine activated...");
         this.status = "activated";
         this.lastChangeDate = new Date();
         timer = setInterval(function () { return _this.loop(); }, this.updateInterval);
     };
     Engine.prototype.deactivate = function () {
-        logger.info("engine deactivated...");
+        logger.debug("engine deactivated...");
         clearInterval(timer);
         this.status = "deactivated";
         this.lastChangeDate = new Date();
     };
     Engine.prototype.initDashboard = function () {
-        logger.info("initializing dashboard...");
-        repository.find({}, function (err, docs) {
+        logger.debug("initializing dashboard...");
+        viewmodelService.getRepository("drinks").find({}, function (err, docs) {
             if (err) {
                 logger.error("error in retrieving drinks", err);
             }
@@ -45,8 +50,8 @@ var Engine = (function () {
         });
     };
     Engine.prototype.recalculateDashboard = function () {
-        logger.info("recalculating dashboard...");
-        repository.find({}, function (err, docs) {
+        logger.debug("recalculating dashboard...");
+        viewmodelService.getRepository("drinks").find({}, function (err, docs) {
             if (err) {
                 logger.error("error in retrieving drinks", err);
             }
@@ -66,8 +71,8 @@ var Engine = (function () {
         return exports.dashboard;
     };
     Engine.prototype.emitDashboard = function () {
-        logger.info("emitting dashboard...");
-        wsIO.sockets.emit("dashboard", exports.dashboard);
+        logger.debug("emitting dashboard...");
+        wsIO.sockets.emit(config.websocketChannel_dashboard, exports.dashboard);
     };
     Engine.prototype.loop = function () {
         this.recalculateDashboard();
@@ -75,7 +80,6 @@ var Engine = (function () {
     };
     return Engine;
 })();
-var repository;
 var wsIO;
 var timer;
 exports.engine = new Engine();
@@ -84,11 +88,6 @@ function setWSIO(io) {
     wsIO = io;
 }
 exports.setWSIO = setWSIO;
-function setRepository(repo) {
-    repository = repo;
-    initDashboard();
-}
-exports.setRepository = setRepository;
 function initDashboard() {
     exports.engine.initDashboard();
 }

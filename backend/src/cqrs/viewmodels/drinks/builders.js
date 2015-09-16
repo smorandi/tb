@@ -1,5 +1,5 @@
 var denormalizer = require("cqrs-eventdenormalizer");
-var logger = require("../../config/logger");
+var logger = require("../../../config/logger");
 
 var drinkChangedVB = denormalizer.defineViewBuilder({
     name: "drinkChanged",

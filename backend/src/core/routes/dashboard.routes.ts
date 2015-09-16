@@ -8,9 +8,9 @@ import express = require("express");
 import logger = require("../../config/logger");
 import config = require("../../config/config");
 import resourceUtils = require("../utils/resourceUtils");
-import engine = require("../../engine/engine");
+import engine = require("../engine/engine");
 
-function init(app, viewModelOptions, repository, eventBus, cqrs_domainService, cqrs_cmdService) {
+function init(app) {
     logger.trace("initializing dashboard routes...");
 
     app.route("/dashboard")

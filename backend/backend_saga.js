@@ -1,6 +1,6 @@
 var http = require("http");
 var logger = require("./src/config/logger");
-var eventBus = require("./src/emitter/emitter");
+var eventBus = require("./src/core/utils/eventBus");
 var config = require("./src/config/config");
 var viewmodel = require("viewmodel");
 var utils = require("./src/config/utils");

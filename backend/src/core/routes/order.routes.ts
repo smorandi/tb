@@ -9,21 +9,19 @@ import _ = require("lodash");
 import logger = require("../../config/logger");
 import config = require("../../config/config");
 import resourceUtils = require("../utils/resourceUtils");
+var viewmodelService = require("../../cqrs/viewmodelService");
+var commandService = require("../../cqrs/commandService");
 
-function init(app, options, repository, eventBus, domain, cmdSrv) {
+function getRepository() {
+    return viewmodelService.getRepository("orders");
+}
+
+function init(app) {
     logger.trace("initializing basket routes...");
-
-    var ordersRepo = repository.extend({
-        collectionName: "orders"
-    });
-
-    if (options.repository.type === "inmemory") {
-        ordersRepo = require("../../viewmodels/orders/collection").repository;
-    }
 
     app.route("/orders")
         .get((req, res, next) => {
-            ordersRepo.find({}, (err, docs) => {
+            getRepository().find({}, (err, docs) => {
                 if (err) return next(err);
 
                 var baseUrl = resourceUtils.createBaseUrl(req, config.urls.orders);
@@ -37,7 +35,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
 
     app.route("/orders/:customerId")
         .get((req, res, next) => {
-            ordersRepo.findOne({id: req.params.id}, (err, doc) => {
+            getRepository().findOne({id: req.params.id}, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
@@ -50,7 +48,7 @@ function init(app, options, repository, eventBus, domain, cmdSrv) {
                 });
             });
         }).post((req, res, next) => {
-            cmdSrv.send("makeOrder").for("customer").instance(req.params.customerId).go(evt => {
+            commandService.send("makeOrder").for("customer").instance(req.params.customerId).go(evt => {
                 if (evt.event === "commandRejected") {
                     return next(evt.payload.reason);
                 }

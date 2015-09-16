@@ -12,11 +12,7 @@ import BaseController = require("./base.controller");
 
 var hal = require("halberd");
 
-class HomeController extends BaseController {
-    constructor(repository:any, eventBus:any, domainService:any, cmdService:any) {
-        super(repository, eventBus, domainService, cmdService);
-    }
-
+class HomeController {
     private createResource(req:express.Request):any {
         var root:string = req.protocol + "://" + req.headers["host"];
 

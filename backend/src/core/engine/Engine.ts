@@ -1,19 +1,19 @@
 /**
  * Created by Stefano on 23.08.2015.
  */
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 "use strict";
 
-import logger = require("../config/logger");
+import logger = require("../../config/logger");
+import config = require("../../config/config");
 import _ = require("lodash");
+
+var viewmodelService = require("../../cqrs/viewmodelService");
 
 class Engine {
     private status:string = "initial";
     private lastChangeDate:Date = new Date();
     private updateInterval:number = 5000;
-
-    //constructor() {
-    //}
 
     public getStatus():string {
         return this.status;
@@ -24,7 +24,7 @@ class Engine {
     }
 
     public activate():void {
-        logger.info("engine activated...")
+        logger.debug("engine activated...")
 
         this.status = "activated";
         this.lastChangeDate = new Date();
@@ -32,7 +32,7 @@ class Engine {
     }
 
     public deactivate():void {
-        logger.info("engine deactivated...")
+        logger.debug("engine deactivated...")
         clearInterval(timer);
 
         this.status = "deactivated";
@@ -40,8 +40,8 @@ class Engine {
     }
 
     public initDashboard() {
-        logger.info("initializing dashboard...");
-        repository.find({}, (err, docs) => {
+        logger.debug("initializing dashboard...");
+        viewmodelService.getRepository("drinks").find({}, (err, docs) => {
             if (err) {
                 logger.error("error in retrieving drinks", err);
             }
@@ -61,8 +61,8 @@ class Engine {
     }
 
     private recalculateDashboard():void {
-        logger.info("recalculating dashboard...");
-        repository.find({}, (err, docs) => {
+        logger.debug("recalculating dashboard...");
+        viewmodelService.getRepository("drinks").find({}, (err, docs) => {
             if (err) {
                 logger.error("error in retrieving drinks", err);
             }
@@ -86,8 +86,8 @@ class Engine {
     }
 
     private emitDashboard() {
-        logger.info("emitting dashboard...");
-        wsIO.sockets.emit("dashboard", dashboard);
+        logger.debug("emitting dashboard...");
+        wsIO.sockets.emit(config.websocketChannel_dashboard, dashboard);
     }
 
     private loop() {
@@ -96,7 +96,6 @@ class Engine {
     }
 }
 
-var repository:any;
 var wsIO:SocketIO.Server;
 var timer:NodeJS.Timer;
 export var engine = new Engine();
@@ -104,11 +103,6 @@ export var dashboard = [];
 
 export function setWSIO(io:SocketIO.Server) {
     wsIO = io;
-}
-
-export function setRepository(repo:any) {
-    repository = repo;
-    initDashboard();
 }
 
 export function initDashboard() {
