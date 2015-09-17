@@ -25,9 +25,10 @@ export var urls = {
     dashboard: "/dashboard",
     drinks: "/drinks",
     customers: "/customers",
+    admins: "/admins",
     baskets: "/baskets",
     orders: "/orders",
-    admin: "/admin",
+    system: "/system",
 };
 
 export var serverRoot = path.join(__dirname + "/../..");

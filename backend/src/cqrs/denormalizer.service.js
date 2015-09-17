@@ -7,8 +7,8 @@ var _ = require("lodash");
 var async = require("async");
 var cqrs_denormalizer = require("cqrs-eventdenormalizer");
 
-var cmdService = require("./commandService");
-var domainService = require("./domainService");
+var cmdService = require("./command.service");
+var domainService = require("./domain.service");
 var config = require("../config/config");
 var eventBus = require("../core/utils/eventBus");
 var logger = require("../config/logger");
@@ -42,7 +42,8 @@ function init(callback) {
             callback(err);
         }
         else if (warnings) {
-            callback(null, warnings);
+            // treat warnings as errors...
+            callback(warnings);
         }
         else {
             onInit();

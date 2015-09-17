@@ -5,7 +5,7 @@
 
 var _ = require("lodash");
 var cqrs_domain = require("cqrs-domain");
-var cmdService = require("./commandService");
+var cmdService = require("./command.service");
 var config = require("../config/config");
 var eventBus = require("../core/utils/eventBus");
 var logger = require("../config/logger");

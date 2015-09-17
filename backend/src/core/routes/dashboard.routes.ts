@@ -13,7 +13,7 @@ import engine = require("../engine/engine");
 function init(app) {
     logger.trace("initializing dashboard routes...");
 
-    app.route("/dashboard")
+    app.route(config.urls.dashboard)
         .get((req, res, next) => {
             res.format({
                 "application/json": () =>  res.json(engine.dashboard)

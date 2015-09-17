@@ -9,19 +9,16 @@ import _ = require("lodash");
 import logger = require("../../config/logger");
 import config = require("../../config/config");
 import resourceUtils = require("../utils/resourceUtils");
-var viewmodelService = require("../../cqrs/viewmodelService");
-var commandService = require("../../cqrs/commandService");
 
-function getRepository() {
-    return viewmodelService.getRepository("orders");
-}
+var ordersCollection = require("../../cqrs/viewmodels/orders/collection");
+var commandService = require("../../cqrs/command.service");
 
 function init(app) {
     logger.trace("initializing basket routes...");
 
-    app.route("/orders")
+    app.route(config.urls.orders)
         .get((req, res, next) => {
-            getRepository().find({}, (err, docs) => {
+            ordersCollection.findViewModels({}, (err, docs) => {
                 if (err) return next(err);
 
                 var baseUrl = resourceUtils.createBaseUrl(req, config.urls.orders);
@@ -33,9 +30,9 @@ function init(app) {
             });
         });
 
-    app.route("/orders/:customerId")
+    app.route(config.urls.orders + "/:customerId")
         .get((req, res, next) => {
-            getRepository().findOne({id: req.params.id}, (err, doc) => {
+            ordersCollection.loadViewModel({id: req.params.id}, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
@@ -49,7 +46,7 @@ function init(app) {
             });
         }).post((req, res, next) => {
             commandService.send("makeOrder").for("customer").instance(req.params.customerId).go(evt => {
-                if (evt.event === "commandRejected") {
+                if (evt.name === "commandRejected") {
                     return next(evt.payload.reason);
                 }
                 else {

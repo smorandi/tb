@@ -20,9 +20,10 @@ exports.urls = {
     dashboard: "/dashboard",
     drinks: "/drinks",
     customers: "/customers",
+    admins: "/admins",
     baskets: "/baskets",
     orders: "/orders",
-    admin: "/admin"
+    system: "/system"
 };
 exports.serverRoot = path.join(__dirname + "/../..");
 //=============================================================================

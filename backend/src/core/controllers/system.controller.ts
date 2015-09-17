@@ -11,11 +11,11 @@ import config = require("../../config/config");
 import BaseController = require("./base.controller");
 
 var hal = require("halberd");
-var denormalizerService = require("../../cqrs/denormalizerService");
+var denormalizerService = require("../../cqrs/denormalizer.service");
 
-class AdminController {
+class SystemController {
     private createResource(req:express.Request):any {
-        var self:string = req.protocol + "://" + req.headers["host"] + config.urls.admin;
+        var self:string = req.protocol + "://" + req.headers["host"] + config.urls.system;
 
         var resource = new hal.Resource(engine.engine, self);
         resource.link("replay", self + "/replays");
@@ -66,4 +66,4 @@ class AdminController {
     }
 }
 
-export = AdminController;
+export = SystemController;

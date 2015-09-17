@@ -6,9 +6,8 @@ var _ = require("lodash");
 var async = require("async");
 var app = require("./src/config/express")();
 
-var domainService = require("./src/cqrs/domainService");
-var denormalizerService = require("./src/cqrs/denormalizerService");
-var viewmodelService = require("./src/cqrs/viewmodelService");
+var domainService = require("./src/cqrs/domain.service");
+var denormalizerService = require("./src/cqrs/denormalizer.service");
 
 var logger = require("./src/config/logger");
 var eventBus = require("./src/core/utils/eventBus");
@@ -23,10 +22,6 @@ var bootstrap = [
     function (callback) {
         logger.info("initialize domain-service...");
         domainService.init(callback);
-    },
-    function (callback) {
-        logger.info("initialize viewmodel-service...");
-        viewmodelService.init(callback);
     },
     function (callback) {
         logger.info("initialize denormalizer-service...");

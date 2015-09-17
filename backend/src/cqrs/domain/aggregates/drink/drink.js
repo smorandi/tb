@@ -17,7 +17,8 @@ var drink = domain.defineAggregate({
         category: "category",
         basePrice: "price",
         bottomPrice: 0,
-        topPrice: 100
+        topPrice: 100,
+        priceStep: 0.1
     });
 
 var createDrinkCmd = domain.defineCommand({
@@ -31,7 +32,6 @@ var createDrinkCmd = domain.defineCommand({
 
 var changeDrinkCmd = domain.defineCommand({
     name: "changeDrink",
-    revision: "payload._revision",
     existing:true,
 }, function (data, aggregate) {
     aggregate.apply("drinkChanged", data);

@@ -3,9 +3,10 @@
 var _ = require("lodash");
 var domain = require("cqrs-domain");
 var uuid = require("node-uuid");
+var validationService = require("../../../validation.service");
 
-var customer = domain.defineAggregate({
-        name: "customer",
+var user = domain.defineAggregate({
+        name: "user",
         defaultCommandPayload: "payload",
         defaultEventPayload: "payload",
         defaultPreConditionPayload: "payload"
@@ -15,18 +16,21 @@ var customer = domain.defineAggregate({
         lastname: "lastname",
         loginname: "loginname",
         password: "password",
-        basket: [],
-        orders: [],
     });
 
 // ----------------------------------------------------------------
-// create
+// create customer
 // ----------------------------------------------------------------
 var createCustomerCmd = domain.defineCommand({
     name: "createCustomer",
     existing: false,
 }, function (data, aggregate) {
-    aggregate.apply("customerCreated", _.defaults(data, aggregate.attributes));
+    _.defaults(data, aggregate.attributes);
+    data.type = "customer";
+    data.basket = [];
+    data.orders = [];
+
+    aggregate.apply("customerCreated", data);
 });
 
 var customerCreatedEvt = domain.defineEvent({
@@ -37,20 +41,40 @@ var customerCreatedEvt = domain.defineEvent({
     });
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+// ----------------------------------------------------------------
+// create admin
+// ----------------------------------------------------------------
+var createAdminCmd = domain.defineCommand({
+    name: "createAdmin",
+    existing: false,
+}, function (data, aggregate) {
+    _.defaults(data, aggregate.attributes);
+    data.type = "admin";
+
+    aggregate.apply("adminCreated", data);
+});
+
+var adminCreatedEvt = domain.defineEvent({
+        name: "adminCreated"
+    },
+    function (data, aggregate) {
+        aggregate.set(data);
+    });
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 // ----------------------------------------------------------------
 // change
 // ----------------------------------------------------------------
-var changeCustomerCmd = domain.defineCommand({
-    name: "changeCustomer",
-    revision: "payload._revision",
+var changeUserCmd = domain.defineCommand({
+    name: "changeUser",
     existing: true,
 }, function (data, aggregate) {
-    aggregate.apply("customerChanged", data);
+    aggregate.apply("userChanged", data);
 });
 
-var customerChangedEvt = domain.defineEvent({
-        name: "customerChanged"
+var userChangedEvt = domain.defineEvent({
+        name: "userChanged"
     },
     function (data, aggregate) {
         aggregate.set(data);
@@ -60,14 +84,14 @@ var customerChangedEvt = domain.defineEvent({
 // ----------------------------------------------------------------
 // delete
 // ----------------------------------------------------------------
-var deleteCustomerCmd = domain.defineCommand({
-    name: "deleteCustomer",
+var deleteUserCmd = domain.defineCommand({
+    name: "deleteUser",
 }, function (data, aggregate) {
-    aggregate.apply("customerDeleted", data);
+    aggregate.apply("userDeleted", data);
 });
 
-var customerDeletedEvt = domain.defineEvent({
-        name: "customerDeleted"
+var userDeletedEvt = domain.defineEvent({
+        name: "userDeleted"
     },
     function (data, aggregate) {
         aggregate.destroy();
@@ -149,8 +173,44 @@ var orderMadeEvt = domain.defineEvent({
     });
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+var createUserPrecondition_mandatoryAttributesSet = domain.definePreCondition({
+    name: ["createAdmin", "createCustomer"],
+    description: "mandatory attributes must be set",
+}, function (data, aggregate) {
+    if (!data.loginname) {
+        throw new Error();
+    }
+    if (!data.password) {
+        throw new Error();
+    }
+});
 
-var makeOrderPrecondition = domain.definePreCondition({
+var createUserPrecondition_uniqueLoginName = domain.definePreCondition({
+    name: ["createAdmin", "createCustomer"],
+    description: "loginname already exists",
+}, function (data, aggregate) {
+    validationService.isUniqueLoginName(data.loginname, function (err, isUnique) {
+        if (err) {
+            throw err;
+        }
+        else if (!isUnique) {
+            throw new Error();
+        }
+        else {
+            // all ok, loginname is unique...
+        }
+    });
+});
+
+var changeUserPrecondition_allowedChanges = domain.definePreCondition({
+    name: "changeUser",
+    description: "change is not allowed",
+}, function (data, aggregate) {
+    //only firstname, lastname, loginname and password can be changed!!!
+    // --> check here...
+});
+
+var makeOrderPrecondition_basketNotEmpty = domain.definePreCondition({
     name: "makeOrder",
     description: "basket must not be empty",
 }, function (data, aggregate) {
@@ -160,10 +220,16 @@ var makeOrderPrecondition = domain.definePreCondition({
 });
 
 
-module.exports = [customer,
+module.exports = [user,
     createCustomerCmd, customerCreatedEvt,
-    changeCustomerCmd, customerChangedEvt,
-    deleteCustomerCmd, customerDeletedEvt,
+    createAdminCmd, adminCreatedEvt,
+    changeUserCmd, userChangedEvt,
+    deleteUserCmd, userDeletedEvt,
     addBasketItemCmd, basketItemAddedEvt,
     removeBasketItemCmd, basketItemRemovedEvt,
-    makeOrderCmd, orderMadeEvt, makeOrderPrecondition];
+    makeOrderCmd, orderMadeEvt,
+    // preconditions
+    createUserPrecondition_mandatoryAttributesSet,
+    createUserPrecondition_uniqueLoginName,
+    changeUserPrecondition_allowedChanges,
+    makeOrderPrecondition_basketNotEmpty];

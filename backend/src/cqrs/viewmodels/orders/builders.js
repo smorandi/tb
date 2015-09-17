@@ -4,28 +4,30 @@ var logger = require("../../../config/logger");
 
 var customerCreatedVB = denormalizer.defineViewBuilder({
     name: "customerCreated",
-    aggregate: "customer",
+    aggregate: "user",
     id: "aggregate.id"
 }, function (data, vm) {
-    logger.info("customerCreated (vm.repository.collectionName) -> " + vm.repository.collectionName);
+    logger.info("customerCreated in collection: " + vm.repository.collectionName);
     vm.set("orders", []);
 });
 
 var customerDeletedVB = denormalizer.defineViewBuilder({
     name: "customerDeleted",
-    aggregate: "customer",
-    id: "aggregate.id"
+    aggregate: "user",
+    id: "aggregate.id",
+    autoCreate: false,
 }, function (data, vm) {
-    logger.info("customerDeleted (vm.repository.collectionName) -> " + vm.repository.collectionName);
+    logger.info("customerDeleted in collection: " + vm.repository.collectionName);
     vm.destroy();
 });
 
 var orderMadeVB = denormalizer.defineViewBuilder({
     name: "orderMade",
-    aggregate: "customer",
-    id: "aggregate.id"
+    aggregate: "user",
+    id: "aggregate.id",
+    autoCreate: false,
 }, function (order, vm) {
-    logger.info("orderMadeVB (vm.repository.collectionName) -> " + vm.repository.collectionName);
+    logger.info("orderMade in collection: " + vm.repository.collectionName);
 
     var drinkCollection = require("../drinks/collection");
 

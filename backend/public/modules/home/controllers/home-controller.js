@@ -19,8 +19,10 @@ var home;
             this.socketService = socketService;
             this.homeResource = homeResource;
             this.dashboard = dashboard;
+            //public pages:{ [key: string]: IPage; } = {};
             this.pages = [];
             $log.info("HomeController called with client-url: '" + $location.path() + "'");
+            //$scope["dashboard"] = ["der fisch"];
             if (this.homeResource.$has("admin")) {
                 this.pushPage("admin");
             }
@@ -30,6 +32,16 @@ var home;
             if (this.homeResource.$has("customers")) {
                 this.pushPage("customers");
             }
+            //if (this.homeResource.$has("dashboard")) {
+            //    this.homeResource.$get("dashboard").then(res => {
+            //        $log.info("dashboard resolved...");
+            //        $scope["dashboard"] = res;
+            //    });
+            //}
+            //socketService.on("dashboard", data => {
+            //    $log.info("HomeController --> " + JSON.stringify(data));
+            //    $scope["dashboard"] = data;
+            //});
         }
         HomeController.getPageForRel = function (rel) {
             switch (rel) {
@@ -57,6 +69,7 @@ var home;
         HomeController.prototype.go = function (page) {
             this.$state.go(page.state);
         };
+        //public dashboard = [];
         HomeController.$inject = ["$log", "$location", "$scope", "$state", "socketService", "homeResource", "dashboard"];
         return HomeController;
     })();

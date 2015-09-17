@@ -4,28 +4,30 @@ var logger = require("../../../config/logger");
 
 var customerCreatedVB = denormalizer.defineViewBuilder({
     name: "customerCreated",
-    aggregate: "customer",
+    aggregate: "user",
     id: "aggregate.id"
 }, function (data, vm) {
-    logger.info("customerCreated (vm.repository.collectionName) -> " + vm.repository.collectionName);
+    logger.info("customerCreated in collection: " + vm.repository.collectionName);
     vm.set("basket", []);
 });
 
-var customerDeletedVB = denormalizer.defineViewBuilder({
-    name: "customerDeleted",
-    aggregate: "customer",
-    id: "aggregate.id"
+var userDeletedVB = denormalizer.defineViewBuilder({
+    name: "userDeleted",
+    aggregate: "user",
+    id: "aggregate.id",
+    autoCreate: false,
 }, function (data, vm) {
-    logger.info("customerDeleted (vm.repository.collectionName) -> " + vm.repository.collectionName);
+    logger.info("userDeleted deleted in collection: " + vm.repository.collectionName);
     vm.destroy();
 });
 
 var basketItemAddedVB = denormalizer.defineViewBuilder({
     name: "basketItemAdded",
-    aggregate: "customer",
-    id: "aggregate.id"
+    aggregate: "user",
+    id: "aggregate.id",
+    autoCreate: false,
 }, function (basketItem, vm) {
-    logger.info("basketItemAdded (vm.repository.collectionName) -> " + vm.repository.collectionName, basketItem);
+    logger.info("basketItemAdded in collection: " + vm.repository.collectionName, basketItem);
 
     var drinkCollection = require("../drinks/collection");
     drinkCollection.loadViewModel(basketItem.item.id, function (err, vm) {
@@ -41,10 +43,11 @@ var basketItemAddedVB = denormalizer.defineViewBuilder({
 
 var basketItemRemovedVB = denormalizer.defineViewBuilder({
     name: "basketItemRemoved",
-    aggregate: "customer",
-    id: "aggregate.id"
+    aggregate: "user",
+    id: "aggregate.id",
+    autoCreate: false,
 }, function (id, vm) {
-    logger.info("basketItemRemoved (vm.repository.collectionName) -> " + vm.repository.collectionName, id);
+    logger.info("basketItemRemoved in collection: " + vm.repository.collectionName, id);
 
     _.remove(vm.get(), function (item) {
         return item.id === id;
@@ -53,14 +56,15 @@ var basketItemRemovedVB = denormalizer.defineViewBuilder({
 
 var orderMadeVB = denormalizer.defineViewBuilder({
     name: "orderMade",
-    aggregate: "customer",
-    id: "aggregate.id"
+    aggregate: "user",
+    id: "aggregate.id",
+    autoCreate: false,
 }, function (order, vm) {
-    logger.info("orderMadeVB (vm.repository.collectionName) -> " + vm.repository.collectionName, order);
+    logger.info("orderMade in collection: " + vm.repository.collectionName, order);
 
     // clear basket...
     vm.set("basket", []);
 });
 
 
-module.exports = [customerCreatedVB, customerDeletedVB, basketItemAddedVB, basketItemRemovedVB, orderMadeVB];
+module.exports = [customerCreatedVB, userDeletedVB, basketItemAddedVB, basketItemRemovedVB, orderMadeVB];

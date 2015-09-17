@@ -9,22 +9,18 @@ import logger = require("../../config/logger");
 import config = require("../../config/config");
 import resourceUtils = require("../utils/resourceUtils");
 
-var viewmodelService = require("../../cqrs/viewmodelService");
-var commandService = require("../../cqrs/commandService");
-
-function getRepository() {
-    return viewmodelService.getRepository("drinks");
-}
+var commandService = require("../../cqrs/command.service");
+var drinksCollection = require("../../cqrs/viewmodels/drinks/collection");
 
 function init(app) {
     logger.trace("initializing drink routes...");
 
-    app.route("/drinks")
+    app.route(config.urls.drinks)
         .get((req, res, next) => {
 
             var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
 
-            getRepository().find({}, (err, docs) => {
+            drinksCollection.findViewModels({}, (err, docs) => {
                 if (err) return next(err);
 
                 res.format({
@@ -34,7 +30,7 @@ function init(app) {
             });
         }).post((req, res, next) => {
             commandService.send("createDrink").for("drink").with({payload: req.body}).go(evt => {
-                if (evt.event === "commandRejected") {
+                if (evt.name === "commandRejected") {
                     return next(evt.payload.reason);
                 }
                 else {
@@ -44,9 +40,9 @@ function init(app) {
         });
 
 
-    app.route("/drinks/:id")
+    app.route(config.urls.drinks + "/:id")
         .get((req, res, next) => {
-            getRepository().findOne({id: req.params.id}, (err, doc) => {
+            drinksCollection.loadViewModel({id: req.params.id}, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
@@ -63,7 +59,7 @@ function init(app) {
                     return next(evt.payload.reason);
                 }
                 else {
-                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
 
                     res.format({
                         "application/hal+json": () => res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud")),

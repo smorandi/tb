@@ -5,7 +5,7 @@
 "use strict";
 var logger = require("../../config/logger");
 var config = require("../../config/config");
-var viewmodelService = require("../../cqrs/viewmodelService");
+var drinksCollection = require("../../cqrs/viewmodels/drinks/collection");
 var Engine = (function () {
     function Engine() {
         this.status = "initial";
@@ -33,7 +33,7 @@ var Engine = (function () {
     };
     Engine.prototype.initDashboard = function () {
         logger.debug("initializing dashboard...");
-        viewmodelService.getRepository("drinks").find({}, function (err, docs) {
+        drinksCollection.findViewModels({}, function (err, docs) {
             if (err) {
                 logger.error("error in retrieving drinks", err);
             }
@@ -51,7 +51,7 @@ var Engine = (function () {
     };
     Engine.prototype.recalculateDashboard = function () {
         logger.debug("recalculating dashboard...");
-        viewmodelService.getRepository("drinks").find({}, function (err, docs) {
+        drinksCollection.findViewModels({}, function (err, docs) {
             if (err) {
                 logger.error("error in retrieving drinks", err);
             }
@@ -100,4 +100,4 @@ function deactivate() {
     exports.engine.deactivate();
 }
 exports.deactivate = deactivate;
-//# sourceMappingURL=engine.js.map
+//# sourceMappingURL=Engine.js.map

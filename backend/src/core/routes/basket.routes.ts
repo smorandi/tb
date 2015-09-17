@@ -12,21 +12,17 @@ import config = require("../../config/config");
 import resourceUtils = require("../utils/resourceUtils");
 var hal = require("halberd");
 
-var viewmodelService = require("../../cqrs/viewmodelService");
-var commandService = require("../../cqrs/commandService");
-
-function getRepository() {
-    return viewmodelService.getRepository("baskets");
-}
+var basketsCollection = require("../../cqrs/viewmodels/baskets/collection");
+var commandService = require("../../cqrs/command.service");
 
 function init(app) {
     logger.trace("initializing basket routes...");
 
-    app.route("/baskets")
+    app.route(config.urls.baskets)
         .get((req, res, next) => {
             var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
 
-            getRepository().find({}, (err, docs) => {
+            basketsCollection.findViewModels({}, (err, docs) => {
                 if (err) return next(err);
 
                 res.format({
@@ -37,9 +33,9 @@ function init(app) {
         });
 
 
-    app.route("/baskets/:customerId")
+    app.route(config.urls.baskets + "/:customerId")
         .get((req, res, next) => {
-            getRepository().findOne({id: req.params.customerId}, (err, doc) => {
+            basketsCollection.loadViewModel({id: req.params.customerId}, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
@@ -57,7 +53,7 @@ function init(app) {
             });
         }).post((req, res, next) => {
             commandService.send("addBasketItem").for("customer").instance(req.params.customerId).with({payload: req.body}).go(evt => {
-                if (evt.event === "commandRejected") {
+                if (evt.name === "commandRejected") {
                     return next(evt.payload.reason);
                 }
                 else {
@@ -66,9 +62,9 @@ function init(app) {
             });
         });
 
-    app.route("/baskets/:customerId/:basketItemId")
+    app.route(config.urls.baskets + "/:customerId/:basketItemId")
         .get((req, res, next) => {
-            getRepository().findOne({id: req.params.customerId}, (err, doc) => {
+            basketsCollection.loadViewModel({id: req.params.customerId}, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
@@ -84,7 +80,7 @@ function init(app) {
             });
         }).delete((req, res, next) => {
             commandService.send("removeBasketItem").for("customer").instance(req.params.customerId).with({payload: req.params.basketItemId}).go(evt => {
-                if (evt.event === "commandRejected") {
+                if (evt.name === "commandRejected") {
                     return next(evt.payload.reason);
                 }
                 else {

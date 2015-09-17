@@ -8,7 +8,7 @@ import logger = require("../../config/logger");
 import config = require("../../config/config");
 import _ = require("lodash");
 
-var viewmodelService = require("../../cqrs/viewmodelService");
+var drinksCollection = require("../../cqrs/viewmodels/drinks/collection");
 
 class Engine {
     private status:string = "initial";
@@ -41,7 +41,7 @@ class Engine {
 
     public initDashboard() {
         logger.debug("initializing dashboard...");
-        viewmodelService.getRepository("drinks").find({}, (err, docs) => {
+        drinksCollection.findViewModels({}, (err, docs) => {
             if (err) {
                 logger.error("error in retrieving drinks", err);
             }
@@ -62,7 +62,7 @@ class Engine {
 
     private recalculateDashboard():void {
         logger.debug("recalculating dashboard...");
-        viewmodelService.getRepository("drinks").find({}, (err, docs) => {
+        drinksCollection.findViewModels({}, (err, docs) => {
             if (err) {
                 logger.error("error in retrieving drinks", err);
             }
