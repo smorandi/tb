@@ -64,7 +64,7 @@ function init(app) {
 
     app.route(config.urls.baskets + "/:customerId/:basketItemId")
         .get((req, res, next) => {
-            basketsCollection.loadViewModel({id: req.params.customerId}, (err, doc) => {
+            basketsCollection.loadViewModel(req.params.customerId, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 

@@ -33,7 +33,7 @@ function init(app) {
     });
     app.route(config.urls.drinks + "/:id")
         .get(function (req, res, next) {
-        drinksCollection.loadViewModel({ id: req.params.id }, function (err, doc) {
+        drinksCollection.loadViewModel(req.params.id, function (err, doc) {
             if (err)
                 return next(err);
             if (!doc || doc.length === 0)

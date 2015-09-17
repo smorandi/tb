@@ -43,7 +43,7 @@ function init(app) {
 
     app.route(config.urls.customers + "/:id")
         .get((req, res, next) => {
-            customersCollection.loadViewModel({id: req.params.id}, (err, doc) => {
+            customersCollection.loadViewModel(req.params.id, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 

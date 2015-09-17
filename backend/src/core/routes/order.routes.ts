@@ -32,7 +32,7 @@ function init(app) {
 
     app.route(config.urls.orders + "/:customerId")
         .get((req, res, next) => {
-            ordersCollection.loadViewModel({id: req.params.id}, (err, doc) => {
+            ordersCollection.loadViewModel(req.params.id, (err, doc) => {
                 if (err) return next(err);
                 if (!doc || doc.length === 0) return res.status(404).end();
 
