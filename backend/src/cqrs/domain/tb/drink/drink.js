@@ -21,6 +21,8 @@ var drink = domain.defineAggregate({
         maxPrice: 0,
         priceStep: 0,
         priceTicks: [],
+        creationDate: null,
+        modificationDate: null
     });
 
 var createDrink = domain.defineCommand({
@@ -29,6 +31,7 @@ var createDrink = domain.defineCommand({
 }, function (data, aggregate) {
     //enrich data with what we have in the aggregate atm...
     data = _.defaults(data, aggregate.attributes);
+    data.creationDate = new Date();
     data.priceTicks = [new models.PriceTick(data.basePrice, 0, "initial")];
     aggregate.apply("drinkCreated", data);
 });
@@ -44,6 +47,7 @@ var changeDrink = domain.defineCommand({
     name: "changeDrink",
     existing: true,
 }, function (data, aggregate) {
+    data.modificationDate = new Date();
     aggregate.apply("drinkChanged", data);
 });
 

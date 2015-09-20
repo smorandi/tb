@@ -9,7 +9,8 @@ var _ = require("lodash");
 var async = require("async");
 var models = require("../../cqrs/models/models");
 var eventBus = require("../utils/eventBus");
-var drinksCollection = require("../../cqrs/viewmodels/drinks/collection");
+//var drinksCollection = require("../../cqrs/viewmodels/drinks/collection");
+var pricingCollection = require("../../cqrs/viewmodels/pricing/collection");
 var dashboardCollection = require("../../cqrs/viewmodels/dashboard/collection");
 var ordersCollection = require("../../cqrs/viewmodels/orders/collection");
 var commandService = require("../../cqrs/command.service");
@@ -18,21 +19,31 @@ var listener = function ocl(event) {
     if (event.name === "orderConfirmed") {
         var order = event.payload;
         var drinks = _.map(order.orderItems, "item");
-        _.forEach(drinks, function (drink) {
-            drinksCollection.loadViewModel(drink.id, function (err, doc) {
+        var commands = [];
+        _.forEach(order.orderItems, function (orderItem) {
+            pricingCollection.loadViewModel(orderItem.item.id, function (err, doc) {
                 var drink = doc.toJSON();
-                var currentPrice = drink.priceTicks[0].price;
+                var currentPrice = drink.price;
                 var priceStep = drink.priceStep;
                 var maxPrice = drink.maxPrice;
-                var newPrice = Math.min(currentPrice + priceStep, maxPrice);
+                var newPrice = Math.min(currentPrice + (priceStep * orderItem.number), maxPrice);
                 var priceEntry = new models.PriceEntry(newPrice, "order confirmed recalculation");
-                commandService.send("changePrice").for("drink").instance(drink.id).with({ payload: priceEntry }).go(function (event) {
-                    logger.info("priceChanged");
-                });
+                commands.push(commandService.send("changePrice").for("drink").instance(drink.id).with({ payload: priceEntry }));
             });
+        });
+        sendCommandsSynced(commands, function (err) {
         });
     }
 };
+function sendCommandsSynced(sendCommandFns, callback) {
+    async.eachSeries(sendCommandFns, function (cmd, callback) {
+        cmd.go(function (event) {
+            callback(null);
+        });
+    }, function (err) {
+        callback(err);
+    });
+}
 var Engine = (function () {
     function Engine() {
         this.status = "idle";
@@ -76,71 +87,65 @@ var Engine = (function () {
             callback(null, event.payload);
         });
     };
-    Engine.prototype.recalculateDashboard = function (callback) {
+    Engine.prototype.recalculatePriceDecrease = function (callback) {
         logger.debug("decreasing Prices...");
-        drinksCollection.findViewModels({}, function (err, docs) {
-            if (err) {
-                logger.error("error in retrieving drinks", err);
-                callback(err);
-            }
-            else {
-                var tasks = [];
-                docs.forEach(function (doc, index, drinks) {
-                    var drink = doc.toJSON();
-                    var currentPrice = drink.priceTicks[0].price;
-                    var priceStep = drink.priceStep;
-                    var minPrice = drink.minPrice;
-                    var newPrice = Math.max(currentPrice - priceStep, minPrice);
-                    var priceEntry = new models.PriceEntry(newPrice, "recalculation loop");
-                    tasks.push(function b(callback) {
-                        commandService.send("changePrice").for("drink").instance(drink.id).with({ payload: priceEntry }).go(function (event) {
-                            logger.trace("priceChanged for: " + drink.id);
-                            callback(null);
-                        });
-                    });
-                });
-                async.series(tasks, function (err, results) {
-                    logger.info("all prices changed");
+        if (!this.isActive()) {
+            callback(null);
+        }
+        else {
+            pricingCollection.findViewModels({}, function (err, docs) {
+                if (err) {
+                    logger.error("error in retrieving drinks", err);
                     callback(err);
-                });
-            }
-        });
+                }
+                else {
+                    var timebase = new Date().getTime();
+                    var commands = [];
+                    docs.forEach(function (doc) {
+                        var drink = doc.toJSON();
+                        if (drink.priceReductionTimeBase !== null) {
+                            logger.info(drink.priceReductionTimeBase);
+                            var drinkTimeBase = drink.priceReductionTimeBase.getTime();
+                            // only do this for any drinks which have not been ordered since more than 10s...
+                            if ((timebase - drinkTimeBase) > 10000) {
+                                var currentPrice = drink.price;
+                                var priceStep = drink.priceStep;
+                                var minPrice = drink.minPrice;
+                                var newPrice = Math.max(currentPrice - priceStep, minPrice);
+                                var priceEntry = new models.PriceEntry(newPrice, "price reduction loop");
+                                commands.push(commandService.send("changePrice").for("drink").instance(drink.id).with({ payload: priceEntry }));
+                            }
+                        }
+                    });
+                    sendCommandsSynced(commands, callback);
+                }
+            });
+        }
     };
     Engine.prototype.resetPrices = function (callback) {
-        drinksCollection.findViewModels({}, function (err, docs) {
+        pricingCollection.findViewModels({}, function (err, docs) {
             if (err) {
                 logger.error("error in retrieving drinks", err);
                 callback(err);
             }
             else {
-                var tasks = [];
-                docs.forEach(function (doc, index, drinks) {
-                    var drink = doc.toJSON();
-                    tasks.push(function b(callback) {
-                        commandService.send("resetPrice").for("drink").instance(drink.id).go(function (event) {
-                            logger.trace("price reset for: " + drink.id);
-                            callback(null);
-                        });
-                    });
+                var commands = [];
+                docs.forEach(function (doc) {
+                    commands.push(commandService.send("resetPrice").for("drink").instance(doc.toJSON().id));
                 });
-                async.series(tasks, function (err, results) {
-                    logger.trace("all prices changed");
-                    callback(null);
-                });
+                sendCommandsSynced(commands, callback);
             }
         });
     };
     Engine.prototype.emitDashboard = function () {
         logger.debug("emitting dashboard...");
         dashboardCollection.findViewModels({}, function (err, docs) {
-            var dashboard = _.map(docs, function (doc) {
-                return doc.toJSON();
-            });
-            webSocketService.broadcast(config.websocketChannel_dashboard, dashboard);
+            var drinksInJson = _.invoke(docs, "toJSON");
+            webSocketService.broadcast(config.websocketChannel_dashboard, drinksInJson);
         });
     };
     Engine.prototype.loop = function () {
-        this.recalculateDashboard(function (err) {
+        this.recalculatePriceDecrease(function (err) {
             if (err) {
                 logger.error("error: ", err);
             }

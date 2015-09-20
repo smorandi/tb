@@ -20,7 +20,7 @@ var engine = domain.defineAggregate({
 var startEngine = domain.defineCommand({
     name: "startEngine",
 }, function (data, aggregate) {
-    var data = aggregate.attributes;
+    var data = _.cloneDeep(aggregate.attributes);
     data.status = "started";
     data.event = new models.Event("engineStarted");
     aggregate.apply("engineStarted", data);
@@ -36,7 +36,7 @@ var engineStarted = domain.defineEvent({
 var stopEngine = domain.defineCommand({
     name: "stopEngine",
 }, function (data, aggregate) {
-    var data = aggregate.attributes;
+    var data = _.cloneDeep(aggregate.attributes);
     data.status = "idle";
     data.event = new models.Event("engineStopped");
     aggregate.apply("engineStopped", data);

@@ -4,6 +4,8 @@
 "use strict";
 
 var drinksCollection = require("../cqrs/viewmodels/drinks/collection");
+var ordersCollection = require("../cqrs/viewmodels/orders/collection");
+var dashboardCollection = require("../cqrs/viewmodels/dashboard/collection");
 
 var models = require("./models/models");
 var logger = require("../config/logger");
@@ -18,6 +20,31 @@ function orderContainsDrinkId(order, id) {
 function ordersContainsOrderId(order) {
     return _.find(orders, {id: order.id}) !== undefined;
 }
+
+function getDateOfLastOrderContainingDrink(id, callback) {
+    dashboardCollection.loadViewModel(id, function (err, doc) {
+        if (err) {
+            callback(err);
+        }
+        else {
+            callback(null, doc.toJSON().lastOrderTimestamp);
+        }
+    });
+}
+
+//function getNewPriceForDrink(id, callback) {
+//    getTimeOfLastOrderContainingDrink(id, function (err, date) {
+//        if (err) {
+//            callback(err);
+//        }
+//        else {
+//            var lastOrderTime = date.getTime();
+//            var currentTime = (new Date()).getTime();
+//
+//            if((currentTime - lastOrderTime) > 1000)
+//        }
+//    });
+//}
 
 function enrichOrderWithCurrentPrice(order, callback) {
     var id = order.id;

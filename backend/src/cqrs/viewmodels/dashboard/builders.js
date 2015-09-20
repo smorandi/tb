@@ -1,6 +1,5 @@
 var denormalizer = require("cqrs-eventdenormalizer");
 var logger = require("../../../config/logger");
-var pricingService = require("../../pricing.service");
 
 var drinkCreated = denormalizer.defineViewBuilder({
     name: "drinkCreated",
@@ -15,7 +14,6 @@ var drinkCreated = denormalizer.defineViewBuilder({
     vm.set("tags", data.tags);
     vm.set("quantity", data.quantity);
     vm.set("tick", data.priceTicks[0]);
-    vm.set("lastOrderTimestamp", null);
     vm.set("price", data.priceTicks[0].price);
     vm.set("lowestPrice", null);
     vm.set("highestPrice", null);
@@ -65,17 +63,4 @@ var priceChanged = denormalizer.defineViewBuilder({
     vm.set("price", newPrice);
 });
 
-var orderConfirmed = denormalizer.defineViewBuilder({
-    name: "orderConfirmed",
-    aggregate: "user",
-    query: {},
-}, function (order, vm) {
-    logger.info("orderConfirmed in collection: " + vm.repository.collectionName);
-
-    var drinkId = vm.get("id");
-    if (pricingService.orderContainsDrinkId(order, drinkId)) {
-        vm.set("lastOrderTimestamp", order.timestamp);
-    }
-});
-
-module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged, orderConfirmed];
+module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged];

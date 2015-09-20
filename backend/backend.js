@@ -42,30 +42,19 @@ var bootstrap = [
         webSocketService.init(server, callback);
     },
     function (callback) {
-
-        logger.info("initialize engine...");
-        engine.resetPrices(function (err) {
-            if (err) {
-                callback(err);
-            }
-            else {
-                //engine.activate();
-
-                callback(null);
-            }
-        });
+        logger.info("deactivate engine...");
+        engine.deactivate(callback);
     },
-
+    function (callback) {
+        logger.info("reset prices...");
+        engine.resetPrices(callback);
+    }
 ];
 
 logger.info("start bootstrapping...");
-async.waterfall(bootstrap, function (err, warnings) {
+async.series(bootstrap, function (err) {
     if (err) {
         logger.error("bootstrap errors", err);
-        process.exit(1);
-    }
-    else if (warnings) {
-        logger.warn("bootstrap warnings", warnings);
         process.exit(1);
     }
     else {

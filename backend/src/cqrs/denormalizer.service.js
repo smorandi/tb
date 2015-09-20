@@ -21,14 +21,14 @@ function onInit() {
     // on receiving an event from domain pass it to the denormalizer to handle it...
     logger.trace("onInit - hook on event-bus domain-events-channel");
     eventBus.on(config.eventBusChannel_domainEvent, function (evt) {
-        logger.info("event-bus -> denormalizer -> handle():  " + evt.name, evt);
+        logger.info("event-bus (domain-event) -> denormalizer -> handle():  " + evt.name, evt);
         cqrs_denormalizerService.handle(evt);
     });
 
     // on receiving an event from denormalizer pass it to the event-bus to handle it...
     logger.trace("onInit - hook on denormalizer-events");
     cqrs_denormalizerService.onEvent(function (evt) {
-        logger.debug("denormalizer -> cmd-service: " + evt.name, evt);
+        logger.debug("denormalizer -> event-bus (denormalizer-event): " + evt.name, evt);
         eventBus.emit(config.eventBusChannel_denormalizerEvent, evt);
     });
 }
@@ -58,24 +58,13 @@ function replay(callback) {
         function (callback) {
             logger.trace("clearing view-models...");
             cqrs_denormalizerService.clear(function (err) {
-                if (err) {
-                    callback(err);
-                }
-                else {
-                    callback(null);
-                }
+                callback(err);
             });
         },
-        function(callback) {
+        function (callback) {
             logger.trace("retrieving events...");
             domainService.eventStore.getEvents(function (err, evts) {
-                if (err) {
-                    logger.error("error on retrieving events: ", err);
-                    callback(err);
-                }
-                else {
-                    callback(null, evts);
-                }
+                callback(null, evts);
             });
         },
         function (evts, callback) {

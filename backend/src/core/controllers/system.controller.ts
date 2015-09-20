@@ -48,14 +48,14 @@ class SystemController {
 
     public activateEngine(req:express.Request, res:express.Response, next:Function):void {
         logger.info("activating engine...");
-        engine.activate((err, engine) => {
+        engine.activate((err) => {
             this.handleResponse(req, res, next);
         });
     }
 
     public deactivateEngine(req:express.Request, res:express.Response, next:Function):void {
         logger.info("deactivating engine...");
-        engine.deactivate((err, engine) => {
+        engine.deactivate((err) => {
             this.handleResponse(req, res, next);
         });
     }

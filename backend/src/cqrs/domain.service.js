@@ -26,9 +26,6 @@ function onInit() {
             if (err) {
                 logger.error("command error: ", err);
             }
-            else {
-                logger.info("command handled: " + command.name);
-            }
         });
     });
 
