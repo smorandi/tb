@@ -38,10 +38,7 @@ export var serverRoot = path.join(__dirname + "/../..");
 //-----------------------------------------------------------------------------
 export var eventBusChannel_command:string = "command";
 export var eventBusChannel_domainEvent:string = "domain-event";
-//NOTE: must be "event" because the evented-command module requires the channel to be called "event"
-export var eventBusChannel_denormalizerEvent:string = "event";
-export var eventBusChannel_replay:string = "replay";
-export var eventBusChannel_replayed:string = "replayed";
+export var eventBusChannel_denormalizerEvent:string = "denormalizer-event";
 
 //=============================================================================
 // WebSocket configurations...
@@ -56,7 +53,7 @@ export var websocketChannel_dashboard:string = "dashboard";
 // since they might get overwritten otherwise...
 
 var _domainOptions = {
-    domainPath: serverRoot + "/src/cqrs/domain/aggregates",
+    domainPath: serverRoot + "/src/cqrs/domain/tb",
     eventStore: {
         type: "mongodb",
         host: "localhost",                          // optional
@@ -73,7 +70,7 @@ export function getDomainOptions() {
 }
 
 var _viewModelOptions = {
-    denormalizerPath:serverRoot + "/src/cqrs/viewmodels",
+    denormalizerPath: serverRoot + "/src/cqrs/viewmodels",
     repository: {
         type: "inMemory",
         dbName: "viewmodel"
@@ -108,4 +105,21 @@ var _defaultEvtDefinitions = {
 };
 export function getDefaultEvtDefinitions() {
     return _.clone(_defaultEvtDefinitions);
+}
+
+var _sagaOptions = {
+    sagaPath: serverRoot + "/src/cqrs/domain/tb/sagas",
+
+    //sagaStore: {
+    //    type: "mongodb",
+    //    host: "localhost",                          // optional
+    //    port: 27017,                                // optional
+    //    dbName: "domain",                           // optional
+    //    collectionName: "sagas",                    // optional
+    //    timeout: 10000                              // optional
+    //},
+};
+
+export function getSagaOptions() {
+    return _.clone(_sagaOptions);
 }

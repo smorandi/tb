@@ -7,7 +7,6 @@ var _ = require("lodash");
 var async = require("async");
 var cqrs_denormalizer = require("cqrs-eventdenormalizer");
 
-var cmdService = require("./command.service");
 var domainService = require("./domain.service");
 var config = require("../config/config");
 var eventBus = require("../core/utils/eventBus");
@@ -30,7 +29,7 @@ function onInit() {
     logger.trace("onInit - hook on denormalizer-events");
     cqrs_denormalizerService.onEvent(function (evt) {
         logger.debug("denormalizer -> cmd-service: " + evt.name, evt);
-        cmdService.emit(config.eventBusChannel_denormalizerEvent, evt);
+        eventBus.emit(config.eventBusChannel_denormalizerEvent, evt);
     });
 }
 

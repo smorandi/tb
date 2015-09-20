@@ -30,12 +30,9 @@ function init(app) {
             });
         }).post((req, res, next) => {
             commandService.send("createDrink").for("drink").with({payload: req.body}).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+                commandService.handleCommandRejection(evt, next, function () {
                     res.status(202).end();
-                }
+                });
             });
         });
 
@@ -55,26 +52,20 @@ function init(app) {
             });
         }).put((req, res, next) => {
             commandService.send("changeDrink").for("drink").instance(req.params.id).with({payload: req.body}).go(evt => {
-                if (evt.event === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+                commandService.handleCommandRejection(evt, next, function () {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
 
                     res.format({
                         "application/hal+json": () => res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud")),
                         "application/json": () => res.json(evt.payload),
                     });
-                }
+                });
             });
         }).delete((req, res, next) => {
             commandService.send("deleteDrink").for("drink").instance(req.params.id).go(evt => {
-                if (evt.event === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+                commandService.handleCommandRejection(evt, next, function () {
                     res.status(204).end();
-                }
+                });
             });
         });
 }

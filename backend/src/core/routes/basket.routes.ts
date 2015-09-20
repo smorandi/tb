@@ -45,20 +45,17 @@ function init(app) {
                 res.format({
                     "application/hal+json": () => {
                         var resource = resourceUtils.createCollectionResource(baseUrl, basketItems, "c", "d");
-                        resource.link("makeOrder", resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId));
+                        resource.link("createOrder", resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId));
                         res.json(resource);
                     },
                     "application/json": () =>  res.json(basketItems)
                 });
             });
         }).post((req, res, next) => {
-            commandService.send("addBasketItem").for("customer").instance(req.params.customerId).with({payload: req.body}).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+            commandService.send("addBasketItem").for("user").instance(req.params.customerId).with({payload: req.body}).go(evt => {
+                commandService.handleCommandRejection(evt, next, function () {
                     res.status(202).end();
-                }
+                });
             });
         });
 
@@ -79,13 +76,10 @@ function init(app) {
                 });
             });
         }).delete((req, res, next) => {
-            commandService.send("removeBasketItem").for("customer").instance(req.params.customerId).with({payload: req.params.basketItemId}).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+            commandService.send("removeBasketItem").for("user").instance(req.params.customerId).with({payload: req.params.basketItemId}).go(evt => {
+                commandService.handleCommandRejection(evt, next, function () {
                     res.status(204).end();
-                }
+                });
             });
         });
 }

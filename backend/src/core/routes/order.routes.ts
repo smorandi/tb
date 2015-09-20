@@ -45,13 +45,10 @@ function init(app) {
                 });
             });
         }).post((req, res, next) => {
-            commandService.send("makeOrder").for("customer").instance(req.params.customerId).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+            commandService.send("createOrder").for("user").instance(req.params.customerId).go(evt => {
+                commandService.handleCommandRejection(evt, next, function () {
                     res.status(202).end();
-                }
+                });
             });
         });
 }

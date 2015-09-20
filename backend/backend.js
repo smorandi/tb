@@ -8,6 +8,9 @@ var app = require("./src/config/express")();
 
 var domainService = require("./src/cqrs/domain.service");
 var denormalizerService = require("./src/cqrs/denormalizer.service");
+var sagaService = require("./src/cqrs/saga.service");
+var webSocketService = require("./src/cqrs/websocket.service");
+var commandService = require("./src/cqrs/command.service");
 
 var logger = require("./src/config/logger");
 var eventBus = require("./src/core/utils/eventBus");
@@ -15,7 +18,6 @@ var config = require("./src/config/config");
 var utils = require("./src/config/utils");
 var engine = require("./src/core/engine/engine");
 var server = http.createServer(app);
-var wsio = require("socket.io").listen(server);
 
 
 var bootstrap = [
@@ -28,51 +30,51 @@ var bootstrap = [
         denormalizerService.init(callback);
     },
     function (callback) {
+        logger.info("initialize saga-service...");
+        sagaService.init(callback);
+    },
+    function (callback) {
         logger.info("replay events...");
         denormalizerService.replay(callback);
     },
     function (callback) {
-        logger.info("initialize engine...");
-        engine.setWSIO(wsio);
-        engine.initDashboard();
-        //engine.activate();
-
-        callback(null);
+        logger.info("initialize websocket-service...");
+        webSocketService.init(server, callback);
     },
+    function (callback) {
+
+        logger.info("initialize engine...");
+        engine.resetPrices(function (err) {
+            if (err) {
+                callback(err);
+            }
+            else {
+                //engine.activate();
+
+                callback(null);
+            }
+        });
+    },
+
 ];
 
 logger.info("start bootstrapping...");
 async.waterfall(bootstrap, function (err, warnings) {
     if (err) {
         logger.error("bootstrap errors", err);
+        process.exit(1);
     }
     else if (warnings) {
         logger.warn("bootstrap warnings", warnings);
+        process.exit(1);
     }
     else {
         logger.info("bootstrapping finished");
-        initListeners();
+        server.on("error", onServerError);
+        server.on("listening", onServerListening);
         server.listen(config.port);
     }
 });
-
-
-function initListeners() {
-    server.on("error", onServerError);
-    server.on("listening", onServerListening);
-    wsio.on("connection", onWebsocketConnection);
-}
-
-function onWebsocketConnection(socket) {
-    socket.on("event", function (data) {
-        logger.debug("websocket connection");
-    });
-    socket.on("disconnect", function () {
-        logger.debug("websocket disconnected");
-    });
-
-    logger.debug("client connected: ");
-}
 
 /**
  * Event listener for HTTP server "error" event.

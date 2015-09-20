@@ -10,57 +10,60 @@ import logger = require("../../config/logger");
 import config = require("../../config/config");
 import BaseController = require("./base.controller");
 
+var engineCollection = require("../../cqrs/viewmodels/engine/collection");
+
 var hal = require("halberd");
 var denormalizerService = require("../../cqrs/denormalizer.service");
 
 class SystemController {
-    private createResource(req:express.Request):any {
+    private createResource(req:express.Request, callback:any):any {
         var self:string = req.protocol + "://" + req.headers["host"] + config.urls.system;
 
-        var resource = new hal.Resource(engine.engine, self);
-        resource.link("replay", self + "/replays");
-        resource.link("activate", self + "/activations");
-        resource.link("deactivate", self + "/deactivations");
-
-        return resource;
+        engineCollection.loadViewModel("engine", function (err, doc) {
+            var resource = new hal.Resource(doc.toJSON(), self);
+            resource.link("replay", self + "/replays");
+            resource.link("activate", self + "/activations");
+            resource.link("deactivate", self + "/deactivations");
+            callback(null, resource)
+        });
     }
 
-    private asResource(req:express.Request, asHal:boolean):any {
-        return asHal ? this.createResource(req) : engine.engine;
-    }
-
-    private handleResponse(req:express.Request, res:express.Response) {
-        res.format({
-            "application/hal+json": () =>  res.json(this.asResource(req, true)),
-            "application/json": () =>  res.json(this.asResource(req, false))
+    private handleResponse(req:express.Request, res:express.Response, next:Function) {
+        this.createResource(req, function (err, resource) {
+            if (err) {
+                next(err);
+            }
+            else {
+                res.format({
+                    "application/hal+json": () =>  res.json(resource),
+                    "application/json": () =>  res.json(resource)
+                });
+            }
         });
     }
 
     public getAsResource(req:express.Request, res:express.Response, next:Function):void {
-        this.handleResponse(req, res);
+        this.handleResponse(req, res, next);
     }
 
     public activateEngine(req:express.Request, res:express.Response, next:Function):void {
         logger.info("activating engine...");
-        engine.activate();
-
-        this.handleResponse(req, res);
+        engine.activate((err, engine) => {
+            this.handleResponse(req, res, next);
+        });
     }
 
     public deactivateEngine(req:express.Request, res:express.Response, next:Function):void {
         logger.info("deactivating engine...");
-        engine.deactivate();
-
-        this.handleResponse(req, res);
+        engine.deactivate((err, engine) => {
+            this.handleResponse(req, res, next);
+        });
     }
-
 
     public replay(req:express.Request, res:express.Response, next:Function):void {
         logger.info("replaying events...");
         denormalizerService.replay(err => {
             if (err) return next(err);
-
-            engine.initDashboard();
             res.status(202).end();
         });
     }

@@ -23,12 +23,9 @@ function init(app) {
         });
     }).post(function (req, res, next) {
         commandService.send("createDrink").for("drink").with({ payload: req.body }).go(function (evt) {
-            if (evt.name === "commandRejected") {
-                return next(evt.payload.reason);
-            }
-            else {
+            commandService.handleCommandRejection(evt, next, function () {
                 res.status(202).end();
-            }
+            });
         });
     });
     app.route(config.urls.drinks + "/:id")
@@ -46,25 +43,19 @@ function init(app) {
         });
     }).put(function (req, res, next) {
         commandService.send("changeDrink").for("drink").instance(req.params.id).with({ payload: req.body }).go(function (evt) {
-            if (evt.event === "commandRejected") {
-                return next(evt.payload.reason);
-            }
-            else {
+            commandService.handleCommandRejection(evt, next, function () {
                 var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
                 res.format({
                     "application/hal+json": function () { return res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud")); },
                     "application/json": function () { return res.json(evt.payload); }
                 });
-            }
+            });
         });
     }).delete(function (req, res, next) {
         commandService.send("deleteDrink").for("drink").instance(req.params.id).go(function (evt) {
-            if (evt.event === "commandRejected") {
-                return next(evt.payload.reason);
-            }
-            else {
+            commandService.handleCommandRejection(evt, next, function () {
                 res.status(204).end();
-            }
+            });
         });
     });
 }

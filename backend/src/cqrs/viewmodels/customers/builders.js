@@ -65,7 +65,7 @@ var basketItemRemovedVB = denormalizer.defineViewBuilder({
 });
 
 var orderMadeVB = denormalizer.defineViewBuilder({
-    name: "orderMade",
+    name: "orderCreated",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
@@ -85,10 +85,35 @@ var orderMadeVB = denormalizer.defineViewBuilder({
     });
 
     vm.get("orders").push(order);
-
-    // clear basket...
     vm.set("basket", []);
 });
 
+var orderConfirmedVB = denormalizer.defineViewBuilder({
+    name: "orderConfirmed",
+    aggregate: "user",
+    id: "aggregate.id",
+    autoCreate: false,
+}, function (enrichedOrder, vm) {
+    logger.info("orderMade in collection: " + vm.repository.collectionName);
 
-module.exports = [customerCreatedVB, customerChangedVB, customerDeletedVB, basketItemAddedVB, basketItemRemovedVB, orderMadeVB];
+    var drinkCollection = require("../drinks/collection");
+
+    enrichedOrder.orderItems.forEach(function (orderItem) {
+        drinkCollection.loadViewModel(orderItem.item.id, function (err, vm) {
+            if (err) {
+                logger.error("Error: ", err);
+            } else {
+                orderItem.item = vm.toJSON();
+            }
+        });
+    });
+
+    _.remove(vm.get("orders"), function (pendingOrder) {
+        return pendingOrder.id === enrichedOrder.id;
+    });
+    vm.get("orders").push(enrichedOrder);
+});
+
+
+
+module.exports = [customerCreatedVB, customerChangedVB, customerDeletedVB, basketItemAddedVB, basketItemRemovedVB, orderMadeVB, orderConfirmedVB];

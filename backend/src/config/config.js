@@ -31,10 +31,7 @@ exports.serverRoot = path.join(__dirname + "/../..");
 //-----------------------------------------------------------------------------
 exports.eventBusChannel_command = "command";
 exports.eventBusChannel_domainEvent = "domain-event";
-//NOTE: must be "event" because the evented-command module requires the channel to be called "event"
-exports.eventBusChannel_denormalizerEvent = "event";
-exports.eventBusChannel_replay = "replay";
-exports.eventBusChannel_replayed = "replayed";
+exports.eventBusChannel_denormalizerEvent = "denormalizer-event";
 //=============================================================================
 // WebSocket configurations...
 //-----------------------------------------------------------------------------
@@ -45,7 +42,7 @@ exports.websocketChannel_dashboard = "dashboard";
 // make sure to provide defensive coding by functions that _clone_ the configs
 // since they might get overwritten otherwise...
 var _domainOptions = {
-    domainPath: exports.serverRoot + "/src/cqrs/domain/aggregates",
+    domainPath: exports.serverRoot + "/src/cqrs/domain/tb",
     eventStore: {
         type: "mongodb",
         host: "localhost",
@@ -97,4 +94,11 @@ function getDefaultEvtDefinitions() {
     return _.clone(_defaultEvtDefinitions);
 }
 exports.getDefaultEvtDefinitions = getDefaultEvtDefinitions;
+var _sagaOptions = {
+    sagaPath: exports.serverRoot + "/src/cqrs/domain/tb/sagas"
+};
+function getSagaOptions() {
+    return _.clone(_sagaOptions);
+}
+exports.getSagaOptions = getSagaOptions;
 //# sourceMappingURL=config.js.map

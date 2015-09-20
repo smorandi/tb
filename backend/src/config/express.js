@@ -48,20 +48,28 @@ function init() {
     var routesFiles = utils.getGlobbedFiles(path.join(config.serverRoot, "/src/core/routes/**/*.js"));
     logger.debug("initializing routes", routesFiles);
     routesFiles.forEach(function (routePath) { return require(path.resolve(routePath))(app); });
-    // catch 404 and forward to error handler
+    // catch 404 and forward error handler
     app.use(function (req, res, next) {
         var err = new Error("Not Found");
-        err["status"] = 404;
+        err.status = 404;
         next(err);
     });
-    // error handlers
-    // generic shitty error handler. but will do for now...
+    // error handlers...
+    // handling domain validation and businessrule errors (enriching and passing them to the next layer)
     app.use(function (err, req, res, next) {
-        res.status(err.status || 500);
-        var message = err.message || err;
-        var stack = err.stack || new Error()["stack"];
-        res.json(err);
-        logger.error(message, err);
+        if (err.name === "BusinessRuleError" ||
+            err.name === "ValidationError") {
+            err.status = 400;
+        }
+        next(err);
+    });
+    // end of line...analyse what error we got and return any infos to the client...
+    app.use(function (err, req, res, next) {
+        var status = err.status || 500;
+        // we are not using the status in the content itself, we put it into the response header...
+        delete (err.status);
+        logger.error("application error: ", err);
+        res.status(status).json(err);
     });
     return app;
 }

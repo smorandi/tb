@@ -4,6 +4,7 @@ var _ = require("lodash");
 var domain = require("cqrs-domain");
 var uuid = require("node-uuid");
 var validationService = require("../../../validation.service");
+var models = require("../../../models/models");
 
 var user = domain.defineAggregate({
         name: "user",
@@ -21,7 +22,7 @@ var user = domain.defineAggregate({
 // ----------------------------------------------------------------
 // create customer
 // ----------------------------------------------------------------
-var createCustomerCmd = domain.defineCommand({
+var createCustomer = domain.defineCommand({
     name: "createCustomer",
     existing: false,
 }, function (data, aggregate) {
@@ -33,7 +34,7 @@ var createCustomerCmd = domain.defineCommand({
     aggregate.apply("customerCreated", data);
 });
 
-var customerCreatedEvt = domain.defineEvent({
+var customerCreated = domain.defineEvent({
         name: "customerCreated"
     },
     function (data, aggregate) {
@@ -44,7 +45,7 @@ var customerCreatedEvt = domain.defineEvent({
 // ----------------------------------------------------------------
 // create admin
 // ----------------------------------------------------------------
-var createAdminCmd = domain.defineCommand({
+var createAdmin = domain.defineCommand({
     name: "createAdmin",
     existing: false,
 }, function (data, aggregate) {
@@ -54,7 +55,7 @@ var createAdminCmd = domain.defineCommand({
     aggregate.apply("adminCreated", data);
 });
 
-var adminCreatedEvt = domain.defineEvent({
+var adminCreated = domain.defineEvent({
         name: "adminCreated"
     },
     function (data, aggregate) {
@@ -66,14 +67,14 @@ var adminCreatedEvt = domain.defineEvent({
 // ----------------------------------------------------------------
 // change
 // ----------------------------------------------------------------
-var changeUserCmd = domain.defineCommand({
+var changeUser = domain.defineCommand({
     name: "changeUser",
     existing: true,
 }, function (data, aggregate) {
     aggregate.apply("userChanged", data);
 });
 
-var userChangedEvt = domain.defineEvent({
+var userChanged = domain.defineEvent({
         name: "userChanged"
     },
     function (data, aggregate) {
@@ -84,13 +85,13 @@ var userChangedEvt = domain.defineEvent({
 // ----------------------------------------------------------------
 // delete
 // ----------------------------------------------------------------
-var deleteUserCmd = domain.defineCommand({
+var deleteUser = domain.defineCommand({
     name: "deleteUser",
 }, function (data, aggregate) {
     aggregate.apply("userDeleted", data);
 });
 
-var userDeletedEvt = domain.defineEvent({
+var userDeleted = domain.defineEvent({
         name: "userDeleted"
     },
     function (data, aggregate) {
@@ -101,15 +102,15 @@ var userDeletedEvt = domain.defineEvent({
 // ----------------------------------------------------------------
 // add item to basket
 // ----------------------------------------------------------------
-var addBasketItemCmd = domain.defineCommand({
+var addBasketItem = domain.defineCommand({
     name: "addBasketItem",
     existing: true,
 }, function (data, aggregate) {
-    var basketItem = {id: uuid.v4().toString(), item: {id: data.drinkId}, number: data.number};
+    var basketItem = new models.BasketItem(uuid.v4().toString(), {id: data.drinkId}, data.number);
     aggregate.apply("basketItemAdded", basketItem);
 });
 
-var basketItemAddedEvt = domain.defineEvent({
+var basketItemAdded = domain.defineEvent({
         name: "basketItemAdded"
     },
     function (basketItem, aggregate) {
@@ -120,19 +121,19 @@ var basketItemAddedEvt = domain.defineEvent({
 // ----------------------------------------------------------------
 // remove item from basket
 // ----------------------------------------------------------------
-var removeBasketItemCmd = domain.defineCommand({
+var removeBasketItem = domain.defineCommand({
     name: "removeBasketItem",
     existing: true,
-}, function (id, aggregate) {
-    aggregate.apply("basketItemRemoved", id);
+}, function (basketItemId, aggregate) {
+    aggregate.apply("basketItemRemoved", basketItemId);
 });
 
-var basketItemRemovedEvt = domain.defineEvent({
+var basketItemRemoved = domain.defineEvent({
         name: "basketItemRemoved"
     },
-    function (id, aggregate) {
+    function (basketItemId, aggregate) {
         _.remove(aggregate.get("basket"), function (item) {
-            return item.id === id;
+            return item.id === basketItemId;
         });
     });
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -140,30 +141,24 @@ var basketItemRemovedEvt = domain.defineEvent({
 // ----------------------------------------------------------------
 // make order
 // ----------------------------------------------------------------
-var makeOrderCmd = domain.defineCommand({
-    name: "makeOrder",
+var createOrder = domain.defineCommand({
+    name: "createOrder",
     exists: true
 }, function (data, aggregate) {
-
-    var id = uuid.v4().toString();
-    var timestamp = new Date();
     var basket = aggregate.get("basket");
 
     var orderItems = [];
     basket.forEach(function (basketItem) {
-        orderItems.push({item: {id: basketItem.item.id}, number: basketItem.number});
+        var orderItem = new models.OrderItem({id: basketItem.item.id}, basketItem.number);
+        orderItems.push(orderItem);
     });
 
-    // ==========================================================================
-    // ========>> here we need to fetch the current price for the order !!!!!!!!!
-    // ==========================================================================
-
-    var order = {id: id, timestamp: timestamp, orderItems: orderItems};
-    aggregate.apply("orderMade", order);
+    var order = new models.Order(uuid.v4().toString(), "pending", orderItems, new Date());
+    aggregate.apply("orderCreated", order);
 });
 
-var orderMadeEvt = domain.defineEvent({
-        name: "orderMade"
+var orderCreated = domain.defineEvent({
+        name: "orderCreated"
     },
     function (order, aggregate) {
         aggregate.get("orders").push(order);
@@ -171,9 +166,30 @@ var orderMadeEvt = domain.defineEvent({
         // clear the basket...
         aggregate.set("basket", []);
     });
+
+var confirmOrder = domain.defineCommand({
+    name: "confirmOrder",
+    exists: true
+}, function (enrichedOrder, aggregate) {
+    enrichedOrder.status = "confirmed";
+
+    aggregate.apply("orderConfirmed", enrichedOrder);
+});
+
+var orderConfirmed = domain.defineEvent({
+        name: "orderConfirmed"
+    },
+    function (enrichedOrder, aggregate) {
+        _.remove(aggregate.get("orders"), function (pendingOrder) {
+            return pendingOrder.id === enrichedOrder.id;
+        });
+
+        aggregate.get("orders").push(enrichedOrder);
+    });
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-var createUserPrecondition_mandatoryAttributesSet = domain.definePreCondition({
+
+var precondition_createUser_mandatoryAttributesSet = domain.definePreCondition({
     name: ["createAdmin", "createCustomer"],
     description: "mandatory attributes must be set",
 }, function (data, aggregate) {
@@ -185,7 +201,7 @@ var createUserPrecondition_mandatoryAttributesSet = domain.definePreCondition({
     }
 });
 
-var createUserPrecondition_uniqueLoginName = domain.definePreCondition({
+var precondition_createUser_loginNameMustBeUnique = domain.definePreCondition({
     name: ["createAdmin", "createCustomer"],
     description: "loginname already exists",
 }, function (data, aggregate) {
@@ -202,7 +218,7 @@ var createUserPrecondition_uniqueLoginName = domain.definePreCondition({
     });
 });
 
-var changeUserPrecondition_allowedChanges = domain.definePreCondition({
+var precondition_changeUser_allowedChanges = domain.definePreCondition({
     name: "changeUser",
     description: "change is not allowed",
 }, function (data, aggregate) {
@@ -210,8 +226,9 @@ var changeUserPrecondition_allowedChanges = domain.definePreCondition({
     // --> check here...
 });
 
-var makeOrderPrecondition_basketNotEmpty = domain.definePreCondition({
-    name: "makeOrder",
+
+var businessRule_makeOrder_basketMustNotBeEmpty = domain.definePreCondition({
+    name: ["createOrder"],
     description: "basket must not be empty",
 }, function (data, aggregate) {
     if (aggregate.get("basket").length === 0) {
@@ -219,17 +236,18 @@ var makeOrderPrecondition_basketNotEmpty = domain.definePreCondition({
     }
 });
 
-
 module.exports = [user,
-    createCustomerCmd, customerCreatedEvt,
-    createAdminCmd, adminCreatedEvt,
-    changeUserCmd, userChangedEvt,
-    deleteUserCmd, userDeletedEvt,
-    addBasketItemCmd, basketItemAddedEvt,
-    removeBasketItemCmd, basketItemRemovedEvt,
-    makeOrderCmd, orderMadeEvt,
+    createCustomer, customerCreated,
+    createAdmin, adminCreated,
+    changeUser, userChanged,
+    deleteUser, userDeleted,
+    addBasketItem, basketItemAdded,
+    removeBasketItem, basketItemRemoved,
+    createOrder, orderCreated,
+    confirmOrder, orderConfirmed,
     // preconditions
-    createUserPrecondition_mandatoryAttributesSet,
-    createUserPrecondition_uniqueLoginName,
-    changeUserPrecondition_allowedChanges,
-    makeOrderPrecondition_basketNotEmpty];
+    precondition_createUser_mandatoryAttributesSet,
+    precondition_createUser_loginNameMustBeUnique,
+    precondition_changeUser_allowedChanges,
+    // business rules...
+    businessRule_makeOrder_basketMustNotBeEmpty];

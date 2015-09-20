@@ -1,7 +1,7 @@
 var denormalizer = require("cqrs-eventdenormalizer");
 var logger = require("../../../config/logger");
 
-var drinkCreatedVB = denormalizer.defineViewBuilder({
+var drinkCreated = denormalizer.defineViewBuilder({
     name: "drinkCreated",
     aggregate: "drink",
     id: "aggregate.id"
@@ -10,7 +10,7 @@ var drinkCreatedVB = denormalizer.defineViewBuilder({
     vm.set(data);
 });
 
-var drinkChangedVB = denormalizer.defineViewBuilder({
+var drinkChanged = denormalizer.defineViewBuilder({
     name: "drinkChanged",
     aggregate: "drink",
     id: "aggregate.id",
@@ -20,7 +20,7 @@ var drinkChangedVB = denormalizer.defineViewBuilder({
     vm.set(data);
 });
 
-var drinkDeletedVB = denormalizer.defineViewBuilder({
+var drinkDeleted = denormalizer.defineViewBuilder({
     name: "drinkDeleted",
     aggregate: "drink",
     id: "aggregate.id",
@@ -30,4 +30,14 @@ var drinkDeletedVB = denormalizer.defineViewBuilder({
     vm.destroy();
 });
 
-module.exports = [drinkCreatedVB, drinkChangedVB, drinkDeletedVB];
+var priceChanged = denormalizer.defineViewBuilder({
+    name: "priceChanged",
+    aggregate: "drink",
+    id: "aggregate.id",
+    autoCreate: false,
+}, function (priceTick, vm) {
+    logger.info("priceChanged in collection: " + vm.repository.collectionName);
+    vm.get("priceTicks").unshift(priceTick);
+});
+
+module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged];

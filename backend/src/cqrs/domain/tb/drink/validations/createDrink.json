@@ -1,0 +1,34 @@
+{
+  "title": "createDrink",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "createDrink"
+    },
+    "payload": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "drink.properties"
+        },
+        {
+          "required": [
+            "name",
+            "description",
+            "quantity",
+            "category",
+            "basePrice",
+            "minPrice",
+            "maxPrice",
+            "priceStep"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "payload"
+  ]
+}
