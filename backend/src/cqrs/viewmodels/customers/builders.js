@@ -12,7 +12,7 @@ var customerCreatedVB = denormalizer.defineViewBuilder({
 });
 
 var customerChangedVB = denormalizer.defineViewBuilder({
-    name: "customerChanged",
+    name: "userChanged",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
@@ -22,7 +22,7 @@ var customerChangedVB = denormalizer.defineViewBuilder({
 });
 
 var customerDeletedVB = denormalizer.defineViewBuilder({
-    name: "customerDeleted",
+    name: "userDeleted",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,

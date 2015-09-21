@@ -15,6 +15,7 @@ var eventBus = require("../utils/eventBus");
 //var drinksCollection = require("../../cqrs/viewmodels/drinks/collection");
 var pricingCollection = require("../../cqrs/viewmodels/pricing/collection");
 var dashboardCollection = require("../../cqrs/viewmodels/dashboard/collection");
+var engineCollection = require("../../cqrs/viewmodels/engine/collection");
 var ordersCollection = require("../../cqrs/viewmodels/orders/collection");
 var commandService = require("../../cqrs/command.service");
 var webSocketService = require("../../cqrs/websocket.service");
@@ -59,9 +60,7 @@ function sendCommandsSynced(sendCommandFns, callback) {
 
 class Engine {
     private status:string = "idle";
-    private activationDate:Date = null;
-    private lastChangeDate:Date = new Date();
-    private updateInterval:number = 5000;
+    private recalculationInterval:number = 5000;
 
     constructor() {
     }
@@ -70,26 +69,65 @@ class Engine {
         return this.status;
     }
 
-    public getLastChangeDate():Date {
-        return this.lastChangeDate;
-    }
-
     public isActive() {
-        return this.activationDate !== null;
+        return this.status === "started";
     }
 
-    public getActiveSince() {
-        return this.activationDate ? ((new Date()).getTime() - this.activationDate.getTime()) : -1;
+    private createEngine(callback) {
+        commandService.send("createEngine").for("engine").instance("engine").go(event => {
+            logger.debug("engine created...")
+            this.status = event.payload.status;
+            this.recalculationInterval = event.payload.recalculationInterval;
+            callback(null, event.payload);
+        });
+    }
+
+    public restoreState(callback) {
+        engineCollection.findViewModels({id: "engine"}, (err, docs) => {
+            if (err) {
+                callback(err);
+            }
+            else if (_.isEmpty(docs)) {
+                this.createEngine(callback);
+            }
+            else {
+                this.status = docs[0].toJSON().status;
+                this.recalculationInterval = docs[0].toJSON().recalculationInterval;
+                callback(null);
+            }
+        });
+    }
+
+    private restartLoop() {
+        clearInterval(timer);
+
+        if (this.isActive()) {
+            timer = setInterval(() => this.loop((err) => {
+                if (err) {
+                    logger.error("error in loop: ", err);
+                }
+                else {
+                    logger.trace("loop completed");
+                }
+            }), this.recalculationInterval);
+        }
+    }
+
+    public changePriceReductionInterval(payload, callback) {
+        commandService.send("changePriceReductionInterval").for("engine").instance("engine").with({payload: payload}).go(event => {
+            logger.debug("interval changed...")
+            this.recalculationInterval = event.payload.recalculationInterval;
+            this.restartLoop();
+            callback(null, event.payload);
+        });
     }
 
     public activate(callback:any):void {
         commandService.send("startEngine").for("engine").instance("engine").go(event => {
             eventBus.on(config.eventBusChannel_denormalizerEvent, listener);
-            logger.debug("engine activated...")
-            this.status = "activated";
-            this.lastChangeDate = new Date();
-            this.activationDate = new Date();
-            timer = setInterval(() => this.loop(), this.updateInterval);
+            logger.debug("engine activated...", this.recalculationInterval);
+            this.status = event.payload.status;
+            this.restartLoop();
             callback(null, event.payload);
         });
     }
@@ -101,8 +139,6 @@ class Engine {
             clearInterval(timer);
 
             this.status = "idle";
-            this.activationDate = null;
-            this.lastChangeDate = new Date();
             callback(null, event.payload);
         });
     }
@@ -129,7 +165,7 @@ class Engine {
                             var drinkTimeBase = drink.priceReductionTimeBase.getTime();
 
                             // only do this for any drinks which have not been ordered since more than 10s...
-                            if ((timebase - drinkTimeBase) > 10000) {
+                            if ((timebase - drinkTimeBase) > 1000) {
                                 var currentPrice = drink.price;
                                 var priceStep = drink.priceStep;
                                 var minPrice = drink.minPrice;
@@ -165,26 +201,37 @@ class Engine {
         });
     }
 
-    private emitDashboard() {
+    private emitDashboard(callback) {
         logger.debug("emitting dashboard...");
 
         dashboardCollection.findViewModels({}, function (err, docs) {
-            var drinksInJson = _.invoke(docs, "toJSON");
-
-            webSocketService.broadcast(config.websocketChannel_dashboard, drinksInJson);
+            if (err) {
+                callback(err);
+            }
+            else if (_.isEmpty(docs)) {
+                logger.debug("nothing to emit...");
+                callback(null);
+            }
+            else {
+                webSocketService.broadcast(config.websocketChannel_dashboard, _.invoke(docs, "toJSON"));
+                callback(null);
+            }
         })
     }
 
-    private loop() {
-        this.recalculatePriceDecrease(function (err) {
-            if (err) {
-                logger.error("error: ", err);
-            }
-        });
-        this.emitDashboard();
+    private loop(callback) {
+        var tasks = [
+            (callback) => {
+                this.recalculatePriceDecrease(callback);
+            },
+            (callback) => {
+                this.emitDashboard(callback);
+            },
+        ];
+        async.series(tasks, callback);
     }
 }
 
 var timer:NodeJS.Timer;
-var engine = new Engine();
-export = engine;
+export =
+new Engine();

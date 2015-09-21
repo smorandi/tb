@@ -54,6 +54,7 @@ export var websocketChannel_dashboard:string = "dashboard";
 
 var _domainOptions = {
     domainPath: serverRoot + "/src/cqrs/domain/tb",
+    commandRejectedEventName: "rejectedCommand",
     eventStore: {
         type: "mongodb",
         host: "localhost",                          // optional
@@ -71,10 +72,24 @@ export function getDomainOptions() {
 
 var _viewModelOptions = {
     denormalizerPath: serverRoot + "/src/cqrs/viewmodels",
+    //commandRejectedEventName: "rejectedCommand",
     repository: {
-        type: "inMemory",
+        type: "mongodb",
         dbName: "viewmodel"
+    },
+    revisionGuard: {
+        queueTimeout: 1000,                         // optional, timeout for non-handled events in the internal in-memory queue
+        queueTimeoutMaxLoops: 5,                     // optional, maximal loop count for non-handled event in the internal in-memory queue
+
+        type: "mongodb",
+        //host: 'localhost',                          // optional
+        //port: 6379,                                 // optional
+        //db: 0,                                      // optional
+        prefix: "viewmodel_revision",               // optional
+        //timeout: 10000                              // optional
+        // password: 'secret'                          // optional
     }
+
 };
 export function getViewModelOptions() {
     return _.clone(_viewModelOptions);

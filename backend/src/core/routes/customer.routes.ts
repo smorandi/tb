@@ -20,61 +20,60 @@ function init(app) {
     app.route(config.urls.customers)
         .get((req, res, next) => {
             customersCollection.findViewModels({}, (err, docs) => {
-                if (err) return next(err);
+                if (err) {
+                    return next(err);
+                }
+                else {
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers);
 
-                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers);
-
-                res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud")),
-                    "application/json": () =>  res.json(docs)
-                });
+                    res.format({
+                        "application/hal+json": () =>  res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud")),
+                        "application/json": () =>  res.json(docs)
+                    });
+                }
             });
         }).post((req, res, next) => {
             commandService.send("createCustomer").for("user").with({payload: req.body}).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+                commandService.handleCommandRejection(evt, next, function () {
                     res.status(202).end();
-                }
+                });
             });
         });
 
 
     app.route(config.urls.customers + "/:id")
         .get((req, res, next) => {
-            customersCollection.loadViewModel(req.params.id, (err, doc) => {
-                if (err) return next(err);
-                if (!doc || doc.length === 0) return res.status(404).end();
+            customersCollection.findViewModels({id: req.params.id}, (err, docs) => {
+                if (err) {
+                    return next(err);
+                }
+                else if (_.isEmpty(docs)) {
+                    return res.status(404).end()
+                }
+                else {
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers + "/" + req.params.id);
 
-                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers + "/" + req.params.id);
-
-                res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createResource(baseUrl, doc, "ud")),
-                    "application/json": () =>  res.json(doc)
-                });
+                    res.format({
+                        "application/hal+json": () =>  res.json(resourceUtils.createResource(baseUrl, docs[0], "ud")),
+                        "application/json": () =>  res.json(docs[0])
+                    });
+                }
             });
         }).put((req, res, next) => {
             commandService.send("changeUser").for("user").instance(req.params.id).with({payload: req.body}).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+                commandService.handleCommandRejection(evt, next, function () {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers);
                     res.format({
                         "application/hal+json": () => res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud")),
                         "application/json": () => res.json(evt.payload),
                     });
-                }
+                });
             });
         }).delete((req, res, next) => {
             commandService.send("deleteUser").for("user").instance(req.params.id).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+                commandService.handleCommandRejection(evt, next, function () {
                     res.status(204).end();
-                }
+                });
             });
         });
 }

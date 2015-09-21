@@ -21,10 +21,11 @@ class SystemController {
 
         engineCollection.loadViewModel("engine", function (err, doc) {
             var resource = new hal.Resource(doc.toJSON(), self);
+            resource.link("changeInterval", self);
             resource.link("replay", self + "/replays");
             resource.link("activate", self + "/activations");
             resource.link("deactivate", self + "/deactivations");
-            callback(null, resource)
+            callback(null, resource);
         });
     }
 
@@ -44,6 +45,13 @@ class SystemController {
 
     public getAsResource(req:express.Request, res:express.Response, next:Function):void {
         this.handleResponse(req, res, next);
+    }
+
+    public updateEngine(req:express.Request, res:express.Response, next:Function):void {
+        logger.info("updating engine...");
+        engine.changePriceReductionInterval(req.body, (err) => {
+            this.handleResponse(req, res, next);
+        });
     }
 
     public activateEngine(req:express.Request, res:express.Response, next:Function):void {

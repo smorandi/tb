@@ -43,6 +43,7 @@ exports.websocketChannel_dashboard = "dashboard";
 // since they might get overwritten otherwise...
 var _domainOptions = {
     domainPath: exports.serverRoot + "/src/cqrs/domain/tb",
+    commandRejectedEventName: "rejectedCommand",
     eventStore: {
         type: "mongodb",
         host: "localhost",
@@ -60,9 +61,19 @@ function getDomainOptions() {
 exports.getDomainOptions = getDomainOptions;
 var _viewModelOptions = {
     denormalizerPath: exports.serverRoot + "/src/cqrs/viewmodels",
+    //commandRejectedEventName: "rejectedCommand",
     repository: {
-        type: "inMemory",
+        type: "mongodb",
         dbName: "viewmodel"
+    },
+    revisionGuard: {
+        queueTimeout: 1000,
+        queueTimeoutMaxLoops: 5,
+        type: "mongodb",
+        //host: 'localhost',                          // optional
+        //port: 6379,                                 // optional
+        //db: 0,                                      // optional
+        prefix: "viewmodel_revision"
     }
 };
 function getViewModelOptions() {

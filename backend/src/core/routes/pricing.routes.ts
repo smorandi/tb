@@ -24,7 +24,7 @@ function init(app) {
                     })
                 }
             });
-        })
+        });
 }
 
 export = init;

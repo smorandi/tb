@@ -40,4 +40,15 @@ var priceChanged = denormalizer.defineViewBuilder({
     vm.get("priceTicks").unshift(priceTick);
 });
 
-module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged];
+var priceReset = denormalizer.defineViewBuilder({
+    name: "priceReset",
+    aggregate: "drink",
+    id: "aggregate.id",
+    autoCreate: false,
+}, function (priceTick, vm) {
+    logger.info("priceReset in collection: " + vm.repository.collectionName);
+    vm.get("priceTicks").unshift(priceTick);
+});
+
+
+module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged, priceReset];

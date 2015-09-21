@@ -2,6 +2,9 @@ var denormalizer = require("cqrs-eventdenormalizer");
 var logger = require("../../../config/logger");
 var pricingService = require("../../pricing.service");
 
+var i = 0;
+
+
 var drinkCreated = denormalizer.defineViewBuilder({
     name: "drinkCreated",
     aggregate: "drink",
@@ -18,7 +21,7 @@ var drinkCreated = denormalizer.defineViewBuilder({
     vm.set("priceStep", data.priceStep);
     vm.set("minPrice", data.minPrice);
     vm.set("maxPrice", data.maxPrice);
-    vm.set("priceReductionTimeBase", null);
+    vm.set("priceReductionTimeBase", data.creationDate);
 });
 
 var drinkChanged = denormalizer.defineViewBuilder({
@@ -28,14 +31,9 @@ var drinkChanged = denormalizer.defineViewBuilder({
     autoCreate: false,
 }, function (data, vm) {
     logger.info("drinkChanged in collection: " + vm.repository.collectionName);
-    vm.set("name", data.name);
-    vm.set("category", data.category);
-    vm.set("tags", data.tags);
-    vm.set("quantity", data.quantity);
-    vm.set("minPrice", data.minPrice);
-    vm.set("maxPrice", data.maxPrice);
-    vm.set("basePrice", data.basePrice);
-    vm.set("priceStep", data.priceStep);
+    vm.set(data);
+    vm.set("price", vm.get("price"));
+    vm.set("priceReductionTimeBase", data.modificationDate);
 });
 
 var drinkDeleted = denormalizer.defineViewBuilder({
@@ -55,6 +53,17 @@ var priceChanged = denormalizer.defineViewBuilder({
     autoCreate: false,
 }, function (priceTick, vm) {
     logger.info("priceChanged in collection: " + vm.repository.collectionName);
+    vm.set("price", priceTick.price);
+    vm.set("priceReductionTimeBase", priceTick.timestamp);
+});
+
+var priceReset = denormalizer.defineViewBuilder({
+    name: "priceReset",
+    aggregate: "drink",
+    id: "aggregate.id",
+    autoCreate: false,
+}, function (priceTick, vm) {
+    logger.info("priceReset in collection: " + vm.repository.collectionName);
     vm.set("price", priceTick.price);
 });
 
@@ -90,4 +99,12 @@ var engineStopped = denormalizer.defineViewBuilder({
     vm.set("priceReductionTimeBase", null);
 });
 
-module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged, orderConfirmed, engineStarted, engineStopped];
+var priceTickRequested = denormalizer.defineViewBuilder({
+    name: "priceTickRequested",
+    aggregate: "engine",
+    query: {},
+}, function (engine, vm) {
+    logger.info("priceTickRequested in collection: " + vm.repository.collectionName);
+});
+
+module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged, priceReset, orderConfirmed, engineStarted, engineStopped];

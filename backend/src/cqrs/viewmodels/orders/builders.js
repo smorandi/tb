@@ -1,8 +1,10 @@
 var _ = require("lodash");
 var denormalizer = require("cqrs-eventdenormalizer");
+var async = require("async");
 var logger = require("../../../config/logger");
+var drinkCollection = require("../drinks/collection");
 
-var customerCreatedVB = denormalizer.defineViewBuilder({
+var customerCreated = denormalizer.defineViewBuilder({
     name: "customerCreated",
     aggregate: "user",
     id: "aggregate.id"
@@ -11,7 +13,7 @@ var customerCreatedVB = denormalizer.defineViewBuilder({
     vm.set("orders", []);
 });
 
-var customerDeletedVB = denormalizer.defineViewBuilder({
+var customerDeleted = denormalizer.defineViewBuilder({
     name: "customerDeleted",
     aggregate: "user",
     id: "aggregate.id",
@@ -21,7 +23,7 @@ var customerDeletedVB = denormalizer.defineViewBuilder({
     vm.destroy();
 });
 
-var orderMadeVB = denormalizer.defineViewBuilder({
+var orderCreated = denormalizer.defineViewBuilder({
     name: "orderCreated",
     aggregate: "user",
     id: "aggregate.id",
@@ -29,22 +31,20 @@ var orderMadeVB = denormalizer.defineViewBuilder({
 }, function (order, vm) {
     logger.info("orderMade in collection: " + vm.repository.collectionName);
 
-    var drinkCollection = require("../drinks/collection");
-
-    order.orderItems.forEach(function (orderItem) {
-        drinkCollection.loadViewModel(orderItem.item.id, function (err, vm) {
-            if (err) {
-                logger.error("Error: ", err);
-            } else {
-                orderItem.item = vm.toJSON();
-            }
-        });
-    });
+    //order.orderItems.forEach(function (orderItem) {
+    //    drinkCollection.loadViewModel(orderItem.item.id, function (err, vm) {
+    //        if (err) {
+    //            logger.error("Error: ", err);
+    //        } else {
+    //            orderItem.item = vm.toJSON();
+    //        }
+    //    });
+    //});
 
     vm.get("orders").push(order);
 });
 
-var orderConfirmedVB = denormalizer.defineViewBuilder({
+var orderConfirmed = denormalizer.defineViewBuilder({
     name: "orderConfirmed",
     aggregate: "user",
     id: "aggregate.id",
@@ -52,23 +52,29 @@ var orderConfirmedVB = denormalizer.defineViewBuilder({
 }, function (enrichedOrder, vm) {
     logger.info("orderConfirmed in collection: " + vm.repository.collectionName);
 
-    var drinkCollection = require("../drinks/collection");
+    //var series = [];
+    //enrichedOrder.orderItems.forEach(function (orderItem) {
+    //    series.push(function (callback) {
+    //        drinkCollection.loadViewModel(orderItem.item.id, function (err, doc) {
+    //            if (err) {
+    //                callback(err);
+    //            } else {
+    //                orderItem.item = doc.toJSON();
+    //                callback(null);
+    //            }
+    //        });
+    //    });
+    //});
+    //
+    //async.series(series, function (err) {
+    //    _.remove(vm.get("orders"), "id", enrichedOrder.id);
+    //    vm.get("orders").push(enrichedOrder);
+    //    callback(err);
+    //});
 
-    enrichedOrder.orderItems.forEach(function (orderItem) {
-        drinkCollection.loadViewModel(orderItem.item.id, function (err, vm) {
-            if (err) {
-                logger.error("Error: ", err);
-            } else {
-                orderItem.item = vm.toJSON();
-            }
-        });
-    });
-
-    _.remove(vm.get("orders"), function (pendingOrder) {
-        return pendingOrder.id === enrichedOrder.id;
-    });
+    _.remove(vm.get("orders"), "id", enrichedOrder.id);
     vm.get("orders").push(enrichedOrder);
 });
 
 
-module.exports = [customerCreatedVB, customerDeletedVB, orderMadeVB, orderConfirmedVB];
+module.exports = [customerCreated, customerDeleted, orderCreated, orderConfirmed];

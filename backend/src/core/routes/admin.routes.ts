@@ -20,61 +20,63 @@ function init(app) {
     app.route(config.urls.admins)
         .get((req, res, next) => {
             adminsCollection.findViewModels({}, (err, docs) => {
-                if (err) return next(err);
+                if (err) {
+                    return next(err);
+                }
+                else if (_.isEmpty(docs)) {
+                    return res.status(404).end()
+                }
+                else {
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
 
-                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
-
-                res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud")),
-                    "application/json": () =>  res.json(docs)
-                });
+                    res.format({
+                        "application/hal+json": () =>  res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud")),
+                        "application/json": () =>  res.json(docs)
+                    });
+                }
             });
         }).post((req, res, next) => {
             commandService.send("createAdmin").for("user").with({payload: req.body}).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+                commandService.handleCommandRejection(evt, next, function () {
                     res.status(202).end();
-                }
+                });
             });
         });
 
 
     app.route(config.urls.admins + "/:id")
         .get((req, res, next) => {
-            adminsCollection.loadViewModel(req.params.id, (err, doc) => {
-                if (err) return next(err);
-                if (!doc || doc.length === 0) return res.status(404).end();
+            adminsCollection.findViewModels({id: req.params.id}, (err, docs) => {
+                if (err) {
+                    return next(err);
+                }
+                else if (_.isEmpty(docs)) {
+                    return res.status(404).end()
+                }
+                else {
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins + "/" + req.params.id);
 
-                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins + "/" + req.params.id);
-
-                res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createResource(baseUrl, doc, "ud")),
-                    "application/json": () =>  res.json(doc)
-                });
+                    res.format({
+                        "application/hal+json": () =>  res.json(resourceUtils.createResource(baseUrl, docs[0], "ud")),
+                        "application/json": () =>  res.json(docs[0])
+                    });
+                }
             });
         }).put((req, res, next) => {
             commandService.send("changeUser").for("user").instance(req.params.id).with({payload: req.body}).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
-                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
+                commandService.handleCommandRejection(evt, next, function () {
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers);
                     res.format({
                         "application/hal+json": () => res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud")),
                         "application/json": () => res.json(evt.payload),
                     });
-                }
+                });
             });
         }).delete((req, res, next) => {
             commandService.send("deleteUser").for("user").instance(req.params.id).go(evt => {
-                if (evt.name === "commandRejected") {
-                    return next(evt.payload.reason);
-                }
-                else {
+                commandService.handleCommandRejection(evt, next, function () {
                     res.status(204).end();
-                }
+                });
             });
         });
 }

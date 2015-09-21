@@ -34,12 +34,17 @@ var bootstrap = [
         sagaService.init(callback);
     },
     function (callback) {
+        // replay is not strictly necessary...only if we use an in-memory db
         logger.info("replay events...");
         denormalizerService.replay(callback);
     },
     function (callback) {
         logger.info("initialize websocket-service...");
         webSocketService.init(server, callback);
+    },
+    function (callback) {
+        logger.info("restore engine-state...");
+        engine.restoreState(callback);
     },
     function (callback) {
         logger.info("deactivate engine...");

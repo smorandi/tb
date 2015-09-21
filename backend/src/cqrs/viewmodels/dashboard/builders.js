@@ -15,8 +15,10 @@ var drinkCreated = denormalizer.defineViewBuilder({
     vm.set("quantity", data.quantity);
     vm.set("tick", data.priceTicks[0]);
     vm.set("price", data.priceTicks[0].price);
-    vm.set("lowestPrice", null);
-    vm.set("highestPrice", null);
+    vm.set("lowestPrice", data.priceTicks[0].price);
+    vm.set("highestPrice", data.priceTicks[0].price);
+    vm.set("allTimeHigh", data.priceTicks[0].price);
+    vm.set("allTimeLow", data.priceTicks[0].price);
 });
 
 var drinkChanged = denormalizer.defineViewBuilder({
@@ -50,17 +52,53 @@ var priceChanged = denormalizer.defineViewBuilder({
 }, function (priceTick, vm) {
     logger.info("priceChanged in collection: " + vm.repository.collectionName);
 
+    vm.set("tick", priceTick);
+    var newPrice = priceTick.price;
+    vm.set("price", newPrice);
+
     var lowestPrice = vm.get("lowestPrice");
     var highestPrice = vm.get("highestPrice");
 
-    var newPrice = priceTick.price;
-    var lowestPrice = lowestPrice ? Math.min(lowestPrice, newPrice) : newPrice;
-    var highestPrice = highestPrice ? Math.max(highestPrice, newPrice) : newPrice;
+    var newLowestPrice = lowestPrice ? Math.min(lowestPrice, newPrice) : newPrice;
+    var newHighestPrice = highestPrice ? Math.max(highestPrice, newPrice) : newPrice;
 
-    vm.set("lowestPrice", lowestPrice);
-    vm.set("highestPrice", highestPrice);
-    vm.set("tick", priceTick);
-    vm.set("price", newPrice);
+    vm.set("lowestPrice", newLowestPrice);
+    vm.set("highestPrice", newHighestPrice);
+
+
+    var allTimeLow = vm.get("allTimeLow");
+    var allTimeHigh = vm.get("allTimeHigh");
+
+    var newAllTimeLow = allTimeLow ? Math.min(allTimeLow, newLowestPrice) : newLowestPrice;
+    var newAllTimeHigh = allTimeHigh ? Math.max(allTimeHigh, newHighestPrice) : newHighestPrice;
+
+    vm.set("allTimeLow", newAllTimeLow);
+    vm.set("allTimeHigh", newAllTimeHigh);
 });
 
-module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged];
+var priceReset = denormalizer.defineViewBuilder({
+    name: "priceReset",
+    aggregate: "drink",
+    id: "aggregate.id",
+    autoCreate: false,
+}, function (priceTick, vm) {
+    logger.info("priceReset in collection: " + vm.repository.collectionName);
+
+    vm.set("tick", priceTick);
+    var newPrice = priceTick.price;
+    vm.set("price", newPrice);
+
+    vm.set("lowestPrice", newPrice);
+    vm.set("highestPrice", newPrice);
+
+    var allTimeLow = vm.get("allTimeLow");
+    var allTimeHigh = vm.get("allTimeHigh");
+
+    var newAllTimeLow = allTimeLow ? Math.min(allTimeLow, newPrice) : newPrice;
+    var newAllTimeHigh = allTimeHigh ? Math.max(allTimeHigh, newPrice) : newPrice;
+
+    vm.set("allTimeLow", newAllTimeLow);
+    vm.set("allTimeHigh", newAllTimeHigh);
+});
+
+module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged, priceReset];

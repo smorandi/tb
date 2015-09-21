@@ -23,33 +23,41 @@ function init(app) {
             var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
 
             basketsCollection.findViewModels({}, (err, docs) => {
-                if (err) return next(err);
-
-                res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createCollectionResource(baseUrl, docs)),
-                    "application/json": () =>  res.json(docs)
-                });
+                if (err) {
+                    return next(err);
+                }
+                else {
+                    res.format({
+                        "application/hal+json": () =>  res.json(resourceUtils.createCollectionResource(baseUrl, docs)),
+                        "application/json": () =>  res.json(docs)
+                    });
+                }
             });
         });
 
 
     app.route(config.urls.baskets + "/:customerId")
         .get((req, res, next) => {
-            basketsCollection.loadViewModel({id: req.params.customerId}, (err, doc) => {
-                if (err) return next(err);
-                if (!doc || doc.length === 0) return res.status(404).end();
+            basketsCollection.findViewModels({id: req.params.customerId}, (err, docs) => {
+                if (err) {
+                    return next(err);
+                }
+                else if (_.isEmpty(docs)) {
+                    return res.status(404).end()
+                }
+                else {
+                    var basketItems = docs[0].get("basket");
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId);
 
-                var basketItems = doc.get("basket");
-                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId);
-
-                res.format({
-                    "application/hal+json": () => {
-                        var resource = resourceUtils.createCollectionResource(baseUrl, basketItems, "c", "d");
-                        resource.link("createOrder", resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId));
-                        res.json(resource);
-                    },
-                    "application/json": () =>  res.json(basketItems)
-                });
+                    res.format({
+                        "application/hal+json": () => {
+                            var resource = resourceUtils.createCollectionResource(baseUrl, basketItems, "c", "d");
+                            resource.link("createOrder", resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId));
+                            res.json(resource);
+                        },
+                        "application/json": () =>  res.json(basketItems)
+                    });
+                }
             });
         }).post((req, res, next) => {
             commandService.send("addBasketItem").for("user").instance(req.params.customerId).with({payload: req.body}).go(evt => {
@@ -61,19 +69,25 @@ function init(app) {
 
     app.route(config.urls.baskets + "/:customerId/:basketItemId")
         .get((req, res, next) => {
-            basketsCollection.loadViewModel(req.params.customerId, (err, doc) => {
-                if (err) return next(err);
-                if (!doc || doc.length === 0) return res.status(404).end();
+            basketsCollection.findViewModels({id: req.params.customerId}, (err, docs) => {
+                if (err) {
+                    return next(err);
+                }
+                else if (_.isEmpty(docs)) {
+                    return res.status(404).end()
+                }
+                else {
 
-                var basketItems = doc.get("basket");
-                var basketItem = _.find(basketItems, (item:any) => item.id === req.params.basketItemId);
+                    var basketItems = docs[0].get("basket");
+                    var basketItem = _.find(basketItems, (item:any) => item.id === req.params.basketItemId);
 
-                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId + "/" + req.params.basketItemId);
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId + "/" + req.params.basketItemId);
 
-                res.format({
-                    "application/hal+json": () =>  res.json(resourceUtils.createResource(baseUrl, basketItem, "d")),
-                    "application/json": () =>  res.json(basketItem)
-                });
+                    res.format({
+                        "application/hal+json": () =>  res.json(resourceUtils.createResource(baseUrl, basketItem, "d")),
+                        "application/json": () =>  res.json(basketItem)
+                    });
+                }
             });
         }).delete((req, res, next) => {
             commandService.send("removeBasketItem").for("user").instance(req.params.customerId).with({payload: req.params.basketItemId}).go(evt => {

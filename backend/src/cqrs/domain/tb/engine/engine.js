@@ -17,6 +17,22 @@ var engine = domain.defineAggregate({
         return "engine";
     });
 
+var createEngine = domain.defineCommand({
+    name: "createEngine",
+}, function (data, aggregate) {
+    var data = _.cloneDeep(aggregate.attributes);
+    data.status = "idle";
+    data.event = new models.Event("engineCreated");
+    aggregate.apply("engineCreated", data);
+});
+
+var engineCreated = domain.defineEvent({
+        name: "engineCreated"
+    },
+    function (data, aggregate) {
+        aggregate.set(data);
+    });
+
 var startEngine = domain.defineCommand({
     name: "startEngine",
 }, function (data, aggregate) {
@@ -49,23 +65,39 @@ var engineStopped = domain.defineEvent({
         aggregate.set(data);
     });
 
-var changeRecalculationInterval = domain.defineCommand({
-    name: "changeRecalculationInterval",
+var changePriceReductionInterval = domain.defineCommand({
+    name: "changePriceReductionInterval",
     existing: true,
 }, function (data, aggregate) {
-    data.event = new models.Event("recalculationIntervalChanged");
-    aggregate.apply("recalculationIntervalChanged", data);
+    data.event = new models.Event("priceReductionIntervalChanged");
+    aggregate.apply("priceReductionIntervalChanged", data);
 });
 
-var recalculationIntervalChanged = domain.defineEvent({
-        name: "recalculationIntervalChanged"
+var priceReductionIntervalChanged = domain.defineEvent({
+        name: "priceReductionIntervalChanged"
     },
     function (data, aggregate) {
         aggregate.set(data);
     });
 
+var requestPriceTick = domain.defineCommand({
+    name: "requestPriceTick",
+    existing: true,
+}, function (data, aggregate) {
+    data.event = new models.Event("priceTickRequest");
+    aggregate.apply("priceTickRequested", data);
+});
+
+var priceTickRequested = domain.defineEvent({
+        name: "priceTickRequested"
+    },
+    function (data, aggregate) {
+        aggregate.set(data);
+    });
 
 module.exports = [engine,
-    changeRecalculationInterval, recalculationIntervalChanged,
+    createEngine, engineCreated,
+    changePriceReductionInterval, priceReductionIntervalChanged,
     startEngine, engineStarted,
-    stopEngine, engineStopped];
+    stopEngine, engineStopped,
+    requestPriceTick, priceTickRequested];

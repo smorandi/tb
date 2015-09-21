@@ -54,20 +54,19 @@ function enrichOrderWithCurrentPrice(order, callback) {
     drinksCollection.findViewModels({}, function (err, docs) {
         if (err) {
             callback(err);
-            return;
         }
         else if (_.isEmpty(docs)) {
             callback(new Error("no drinks found for orderItem"));
-            return;
         }
         else {
-            var drinks = _.map(docs, function (doc) {
-                return doc.toJSON();
-            });
+            var drinks = _.invoke(docs, "toJSON");
 
             _.forEach(orderItems, function (orderItem) {
-                var currentPrice = _.result(_.find(drinks, {id: orderItem.item.id}), "priceTicks[0].price");
-                orderItem.price = orderItem.number * currentPrice;
+                var drink = _.find(drinks, {id: orderItem.item.id});
+
+                orderItem.item.price = drink.priceTicks[0].price;
+                orderItem.item.name = drink.name;
+                orderItem.price = orderItem.number * drink.priceTicks[0].price;
                 order.totalPrice += orderItem.price;
             });
 

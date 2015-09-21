@@ -12,6 +12,7 @@ var eventBus = require("../utils/eventBus");
 //var drinksCollection = require("../../cqrs/viewmodels/drinks/collection");
 var pricingCollection = require("../../cqrs/viewmodels/pricing/collection");
 var dashboardCollection = require("../../cqrs/viewmodels/dashboard/collection");
+var engineCollection = require("../../cqrs/viewmodels/engine/collection");
 var ordersCollection = require("../../cqrs/viewmodels/orders/collection");
 var commandService = require("../../cqrs/command.service");
 var webSocketService = require("../../cqrs/websocket.service");
@@ -47,31 +48,69 @@ function sendCommandsSynced(sendCommandFns, callback) {
 var Engine = (function () {
     function Engine() {
         this.status = "idle";
-        this.activationDate = null;
-        this.lastChangeDate = new Date();
-        this.updateInterval = 5000;
+        this.recalculationInterval = 5000;
     }
     Engine.prototype.getStatus = function () {
         return this.status;
     };
-    Engine.prototype.getLastChangeDate = function () {
-        return this.lastChangeDate;
-    };
     Engine.prototype.isActive = function () {
-        return this.activationDate !== null;
+        return this.status === "started";
     };
-    Engine.prototype.getActiveSince = function () {
-        return this.activationDate ? ((new Date()).getTime() - this.activationDate.getTime()) : -1;
+    Engine.prototype.createEngine = function (callback) {
+        var _this = this;
+        commandService.send("createEngine").for("engine").instance("engine").go(function (event) {
+            logger.debug("engine created...");
+            _this.status = event.payload.status;
+            _this.recalculationInterval = event.payload.recalculationInterval;
+            callback(null, event.payload);
+        });
+    };
+    Engine.prototype.restoreState = function (callback) {
+        var _this = this;
+        engineCollection.findViewModels({ id: "engine" }, function (err, docs) {
+            if (err) {
+                callback(err);
+            }
+            else if (_.isEmpty(docs)) {
+                _this.createEngine(callback);
+            }
+            else {
+                _this.status = docs[0].toJSON().status;
+                _this.recalculationInterval = docs[0].toJSON().recalculationInterval;
+                callback(null);
+            }
+        });
+    };
+    Engine.prototype.restartLoop = function () {
+        var _this = this;
+        clearInterval(timer);
+        if (this.isActive()) {
+            timer = setInterval(function () { return _this.loop(function (err) {
+                if (err) {
+                    logger.error("error in loop: ", err);
+                }
+                else {
+                    logger.trace("loop completed");
+                }
+            }); }, this.recalculationInterval);
+        }
+    };
+    Engine.prototype.changePriceReductionInterval = function (payload, callback) {
+        var _this = this;
+        commandService.send("changePriceReductionInterval").for("engine").instance("engine").with({ payload: payload }).go(function (event) {
+            logger.debug("interval changed...");
+            _this.recalculationInterval = event.payload.recalculationInterval;
+            _this.restartLoop();
+            callback(null, event.payload);
+        });
     };
     Engine.prototype.activate = function (callback) {
         var _this = this;
         commandService.send("startEngine").for("engine").instance("engine").go(function (event) {
             eventBus.on(config.eventBusChannel_denormalizerEvent, listener);
-            logger.debug("engine activated...");
-            _this.status = "activated";
-            _this.lastChangeDate = new Date();
-            _this.activationDate = new Date();
-            timer = setInterval(function () { return _this.loop(); }, _this.updateInterval);
+            logger.debug("engine activated...", _this.recalculationInterval);
+            _this.status = event.payload.status;
+            _this.restartLoop();
             callback(null, event.payload);
         });
     };
@@ -82,8 +121,6 @@ var Engine = (function () {
             eventBus.removeListener(config.eventBusChannel_denormalizerEvent, listener);
             clearInterval(timer);
             _this.status = "idle";
-            _this.activationDate = null;
-            _this.lastChangeDate = new Date();
             callback(null, event.payload);
         });
     };
@@ -107,7 +144,7 @@ var Engine = (function () {
                             logger.info(drink.priceReductionTimeBase);
                             var drinkTimeBase = drink.priceReductionTimeBase.getTime();
                             // only do this for any drinks which have not been ordered since more than 10s...
-                            if ((timebase - drinkTimeBase) > 10000) {
+                            if ((timebase - drinkTimeBase) > 1000) {
                                 var currentPrice = drink.price;
                                 var priceStep = drink.priceStep;
                                 var minPrice = drink.minPrice;
@@ -137,24 +174,36 @@ var Engine = (function () {
             }
         });
     };
-    Engine.prototype.emitDashboard = function () {
+    Engine.prototype.emitDashboard = function (callback) {
         logger.debug("emitting dashboard...");
         dashboardCollection.findViewModels({}, function (err, docs) {
-            var drinksInJson = _.invoke(docs, "toJSON");
-            webSocketService.broadcast(config.websocketChannel_dashboard, drinksInJson);
-        });
-    };
-    Engine.prototype.loop = function () {
-        this.recalculatePriceDecrease(function (err) {
             if (err) {
-                logger.error("error: ", err);
+                callback(err);
+            }
+            else if (_.isEmpty(docs)) {
+                logger.debug("nothing to emit...");
+                callback(null);
+            }
+            else {
+                webSocketService.broadcast(config.websocketChannel_dashboard, _.invoke(docs, "toJSON"));
+                callback(null);
             }
         });
-        this.emitDashboard();
+    };
+    Engine.prototype.loop = function (callback) {
+        var _this = this;
+        var tasks = [
+            function (callback) {
+                _this.recalculatePriceDecrease(callback);
+            },
+            function (callback) {
+                _this.emitDashboard(callback);
+            },
+        ];
+        async.series(tasks, callback);
     };
     return Engine;
 })();
 var timer;
-var engine = new Engine();
-module.exports = engine;
+module.exports = new Engine();
 //# sourceMappingURL=Engine.js.map

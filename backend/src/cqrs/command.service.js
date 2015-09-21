@@ -20,7 +20,7 @@ cqrs_cmdService.on("command", function(command) {
 });
 
 cqrs_cmdService.handleCommandRejection = function (event, next, fn) {
-    if (event[config.getDefaultEvtDefinitions().name] === "commandRejected") {
+    if (event[config.getDefaultEvtDefinitions().name] === "rejectedCommand") {
         next(event[config.getDefaultEvtDefinitions().payload].reason);
     }
     else {

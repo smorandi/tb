@@ -100,15 +100,15 @@ var resetPrice = domain.defineCommand({
     var reason = "reset";
     var priceTick = new models.PriceTick(newPrice, delta, reason);
 
-    aggregate.apply("priceChanged", priceTick);
+    aggregate.apply("priceReset", priceTick);
 });
 
-//var priceReset = domain.defineEvent({
-//        name: "priceReset"
-//    },
-//    function (priceTick, aggregate) {
-//        aggregate.get("priceTicks").unshift(priceTick);
-//    });
+var priceReset = domain.defineEvent({
+        name: "priceReset"
+    },
+    function (priceTick, aggregate) {
+        aggregate.get("priceTicks").unshift(priceTick);
+    });
 //
 //
 //=============================================================================
@@ -160,7 +160,7 @@ module.exports = [drink,
     changeDrink, drinkChanged,
     deleteDrink, drinkDeleted,
     changePrice, priceChanged,
-    resetPrice,
+    resetPrice, priceReset,
     // preconditions
     precondition_price_mustBeGreaterThanOrEqualMinPrice,
     precondition_price_mustBeLowerThanOrEqualMaxPrice,

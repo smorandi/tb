@@ -1,6 +1,7 @@
 var _ = require("lodash");
 var denormalizer = require("cqrs-eventdenormalizer");
 var logger = require("../../../config/logger");
+var dashboardCollection = require("../dashboard/collection");
 
 var customerCreatedVB = denormalizer.defineViewBuilder({
     name: "customerCreated",
@@ -26,19 +27,19 @@ var basketItemAddedVB = denormalizer.defineViewBuilder({
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
-}, function (basketItem, vm) {
+}, function (basketItem, vm, callback) {
     logger.info("basketItemAdded in collection: " + vm.repository.collectionName, basketItem);
 
-    var drinkCollection = require("../drinks/collection");
-    drinkCollection.loadViewModel(basketItem.item.id, function (err, vm) {
+    dashboardCollection.loadViewModel(basketItem.item.id, function (err, doc) {
         if (err) {
-            logger.error("Error: ", err);
+            callback(err);
         } else {
-            basketItem.item = vm.toJSON();
+            basketItem.item = doc.toJSON();
+            vm.get("basket").push(basketItem);
+            callback(null);
         }
     });
 
-    vm.get("basket").push(basketItem);
 });
 
 var basketItemRemovedVB = denormalizer.defineViewBuilder({
@@ -49,9 +50,7 @@ var basketItemRemovedVB = denormalizer.defineViewBuilder({
 }, function (id, vm) {
     logger.info("basketItemRemoved in collection: " + vm.repository.collectionName, id);
 
-    _.remove(vm.get(), function (item) {
-        return item.id === id;
-    });
+    _.remove(vm.get("basket"), "id", id);
 });
 
 var orderMadeVB = denormalizer.defineViewBuilder({
