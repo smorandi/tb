@@ -1,0 +1,37 @@
+{
+  "name": "tb",
+  "version": "0.0.1",
+  "private": true,
+  "main": "tb-server.js",
+  "scripts": {
+    "start": "node ./tb-server.js"
+  },
+  "dependencies": {
+    "async": "^1.4.2",
+    "basic-auth": "^1.0.3",
+    "body-parser": "^1.13.3",
+    "cookie-parser": "^1.3.5",
+    "cors": "^2.7.1",
+    "cqrs-domain": "^1.10.9",
+    "cqrs-eventdenormalizer": "^1.9.8",
+    "cqrs-saga": "^1.6.10",
+    "evented-command": "^1.0.2",
+    "eventemitter2": "^0.4.14",
+    "express": "^4.13.3",
+    "glob": "^5.0.14",
+    "halberd": "^0.2.0",
+    "hbs": "^3.1.1",
+    "helmet": "^0.10.0",
+    "lodash": "^3.10.1",
+    "log4js": "^0.6.26",
+    "mongodb": "^2.0.43",
+    "node-uuid": "^1.4.3",
+    "serve-favicon": "^2.3.0",
+    "socket.io": "^1.3.6",
+    "viewmodel": "^1.5.6",
+    "custom-error-generator": "7.0.0",
+    "http-custom-errors": "8.0.0"
+  },
+  "devDependencies": {
+  }
+}
