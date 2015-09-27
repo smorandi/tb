@@ -7,7 +7,7 @@ var engineCreated = denormalizer.defineViewBuilder({
     aggregate: "engine",
     id: "aggregate.id",
 }, function (data, vm) {
-    logger.info("engineStarted in collection: " + vm.repository.collectionName);
+    logger.debug("engineCreated in collection: " + vm.repository.collectionName);
     vm.set(data);
     vm.set("events", [data.event]);
 });
@@ -18,7 +18,7 @@ var engineStarted = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("engineStarted in collection: " + vm.repository.collectionName);
+    logger.debug("engineStarted in collection: " + vm.repository.collectionName);
     vm.set(data);
     vm.get("events").unshift(data.event);
 });
@@ -29,7 +29,7 @@ var engineStopped = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("engineStopped in collection: " + vm.repository.collectionName);
+    logger.debug("engineStopped in collection: " + vm.repository.collectionName);
     vm.set(data);
     vm.get("events").unshift(data.event);
 });
@@ -40,7 +40,7 @@ var priceReductionIntervalChanged = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("priceReductionIntervalChanged in collection: " + vm.repository.collectionName);
+    logger.debug("priceReductionIntervalChanged in collection: " + vm.repository.collectionName);
     vm.set(data);
     vm.get("events").unshift(data.event);
 });

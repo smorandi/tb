@@ -2,7 +2,7 @@
 
 var _ = require("lodash");
 var domain = require("cqrs-domain");
-var models = require("../../../models/models");
+var models = require("../../../../core/models/models");
 
 var engine = domain.defineAggregate({
         name: "engine",
@@ -12,9 +12,7 @@ var engine = domain.defineAggregate({
     },
     {
         status: "idle",
-        recalculationInterval: 5000,
-    }).defineAggregateIdGenerator(function () {
-        return "engine";
+        priceReductionInterval: 5000,
     });
 
 var createEngine = domain.defineCommand({
@@ -35,6 +33,7 @@ var engineCreated = domain.defineEvent({
 
 var startEngine = domain.defineCommand({
     name: "startEngine",
+    existing: true,
 }, function (data, aggregate) {
     var data = _.cloneDeep(aggregate.attributes);
     data.status = "started";
@@ -51,6 +50,7 @@ var engineStarted = domain.defineEvent({
 
 var stopEngine = domain.defineCommand({
     name: "stopEngine",
+    existing: true,
 }, function (data, aggregate) {
     var data = _.cloneDeep(aggregate.attributes);
     data.status = "idle";

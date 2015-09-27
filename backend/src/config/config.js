@@ -1,20 +1,24 @@
 /**
  * Created by Stefano on 25.07.2015.
  */
-/// <reference path="../../typings/tsd.d.ts" />
 "use strict";
+
 var path = require("path");
 var _ = require("lodash");
+
 exports.db = {
     uri: "mongodb://localhost:27017/tb",
     options: null
 };
+
 exports.app = {
     title: "Trinkbörse",
     description: "blah blah",
     keywords: "xxx"
 };
+
 exports.port = process.env.PORT || 3000;
+
 exports.urls = {
     home: "/home",
     dashboard: "/dashboard",
@@ -23,24 +27,50 @@ exports.urls = {
     admins: "/admins",
     baskets: "/baskets",
     orders: "/orders",
-    system: "/system"
+    system: "/system",
+    pricing: "/pricing"
 };
+
 exports.serverRoot = path.join(__dirname + "/../..");
+
+//=============================================================================
+// Content-Types...
+//-----------------------------------------------------------------------------
+exports.contentTypes = {
+    json: "application/json",
+    hal: "application/hal+json"
+};
+
+//=============================================================================
+// Content-Types...
+//-----------------------------------------------------------------------------
+exports.userTypes = {
+    root: "root",
+    admin: "admin",
+    customer: "customer"
+};
+
 //=============================================================================
 // EventBus configurations...
 //-----------------------------------------------------------------------------
 exports.eventBusChannel_command = "command";
 exports.eventBusChannel_domainEvent = "domain-event";
 exports.eventBusChannel_denormalizerEvent = "denormalizer-event";
+
 //=============================================================================
 // WebSocket configurations...
 //-----------------------------------------------------------------------------
 exports.websocketChannel_dashboard = "dashboard";
+
+
 //=============================================================================
 // CQRS configurations...
 //-----------------------------------------------------------------------------
 // make sure to provide defensive coding by functions that _clone_ the configs
 // since they might get overwritten otherwise...
+
+
+// Domain-----------------------------------
 var _domainOptions = {
     domainPath: exports.serverRoot + "/src/cqrs/domain/tb",
     commandRejectedEventName: "rejectedCommand",
@@ -52,13 +82,43 @@ var _domainOptions = {
         eventsCollectionName: "events",
         snapshotsCollectionName: "snapshots",
         transactionsCollectionName: "transactions",
-        timeout: 10000 // optional
+        timeout: 10000
     }
 };
+
 function getDomainOptions() {
     return _.clone(_domainOptions);
 }
+
 exports.getDomainOptions = getDomainOptions;
+
+// Sagas-----------------------------------
+var _sagaOptions = {
+    sagaPath: exports.serverRoot + "/src/cqrs/domain/tb/sagas",
+    sagaStore: {
+        type: "mongodb",
+        host: "localhost",
+        port: 27017,
+        dbName: "domain",
+        collectionName: "sagas",
+        timeout: 10000
+    },
+    revisionGuard: {
+        type: "mongodb",
+        host: "localhost",
+        port: 27017,
+        prefix: "saga_revision",
+        timeout: 10000
+    }
+};
+
+function getSagaOptions() {
+    return _.clone(_sagaOptions);
+}
+
+exports.getSagaOptions = getSagaOptions;
+
+// View Models-----------------------------------
 var _viewModelOptions = {
     denormalizerPath: exports.serverRoot + "/src/cqrs/viewmodels",
     //commandRejectedEventName: "rejectedCommand",
@@ -67,19 +127,20 @@ var _viewModelOptions = {
         dbName: "viewmodel"
     },
     revisionGuard: {
-        queueTimeout: 1000,
-        queueTimeoutMaxLoops: 5,
         type: "mongodb",
-        //host: 'localhost',                          // optional
-        //port: 6379,                                 // optional
-        //db: 0,                                      // optional
+        host: "localhost",
+        port: 27017,
         prefix: "viewmodel_revision"
     }
 };
+
 function getViewModelOptions() {
     return _.clone(_viewModelOptions);
 }
+
 exports.getViewModelOptions = getViewModelOptions;
+
+// Commands-----------------------------------
 var _defaultCmdDefinitions = {
     id: "id",
     name: "name",
@@ -88,10 +149,14 @@ var _defaultCmdDefinitions = {
     payload: "payload",
     revision: "aggregate.revision"
 };
+
 function getDefaultCmdDefinitions() {
     return _.clone(_defaultCmdDefinitions);
 }
+
 exports.getDefaultCmdDefinitions = getDefaultCmdDefinitions;
+
+// Events-----------------------------------
 var _defaultEvtDefinitions = {
     correlationId: "commandId",
     id: "id",
@@ -101,15 +166,9 @@ var _defaultEvtDefinitions = {
     payload: "payload",
     revision: "aggregate.revision"
 };
+
 function getDefaultEvtDefinitions() {
     return _.clone(_defaultEvtDefinitions);
 }
+
 exports.getDefaultEvtDefinitions = getDefaultEvtDefinitions;
-var _sagaOptions = {
-    sagaPath: exports.serverRoot + "/src/cqrs/domain/tb/sagas"
-};
-function getSagaOptions() {
-    return _.clone(_sagaOptions);
-}
-exports.getSagaOptions = getSagaOptions;
-//# sourceMappingURL=config.js.map

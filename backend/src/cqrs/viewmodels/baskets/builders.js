@@ -3,32 +3,32 @@ var denormalizer = require("cqrs-eventdenormalizer");
 var logger = require("../../../config/logger");
 var dashboardCollection = require("../dashboard/collection");
 
-var customerCreatedVB = denormalizer.defineViewBuilder({
+var customerCreated = denormalizer.defineViewBuilder({
     name: "customerCreated",
     aggregate: "user",
     id: "aggregate.id"
 }, function (data, vm) {
-    logger.info("customerCreated in collection: " + vm.repository.collectionName);
+    logger.debug("customerCreated in collection: " + vm.repository.collectionName);
     vm.set("basket", []);
 });
 
-var userDeletedVB = denormalizer.defineViewBuilder({
+var userDeleted = denormalizer.defineViewBuilder({
     name: "userDeleted",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("userDeleted deleted in collection: " + vm.repository.collectionName);
+    logger.debug("userDeleted deleted in collection: " + vm.repository.collectionName);
     vm.destroy();
 });
 
-var basketItemAddedVB = denormalizer.defineViewBuilder({
+var basketItemAdded = denormalizer.defineViewBuilder({
     name: "basketItemAdded",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
 }, function (basketItem, vm, callback) {
-    logger.info("basketItemAdded in collection: " + vm.repository.collectionName, basketItem);
+    logger.debug("basketItemAdded in collection: " + vm.repository.collectionName, basketItem);
 
     dashboardCollection.loadViewModel(basketItem.item.id, function (err, doc) {
         if (err) {
@@ -42,28 +42,28 @@ var basketItemAddedVB = denormalizer.defineViewBuilder({
 
 });
 
-var basketItemRemovedVB = denormalizer.defineViewBuilder({
+var basketItemRemoved = denormalizer.defineViewBuilder({
     name: "basketItemRemoved",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
 }, function (id, vm) {
-    logger.info("basketItemRemoved in collection: " + vm.repository.collectionName, id);
+    logger.debug("basketItemRemoved in collection: " + vm.repository.collectionName, id);
 
     _.remove(vm.get("basket"), "id", id);
 });
 
-var orderMadeVB = denormalizer.defineViewBuilder({
+var orderMade = denormalizer.defineViewBuilder({
     name: "orderMade",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
 }, function (order, vm) {
-    logger.info("orderMade in collection: " + vm.repository.collectionName, order);
+    logger.debug("orderMade in collection: " + vm.repository.collectionName, order);
 
     // clear basket...
     vm.set("basket", []);
 });
 
 
-module.exports = [customerCreatedVB, userDeletedVB, basketItemAddedVB, basketItemRemovedVB, orderMadeVB];
+module.exports = [customerCreated, userDeleted, basketItemAdded, basketItemRemoved, orderMade];

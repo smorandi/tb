@@ -9,7 +9,7 @@ var customerCreated = denormalizer.defineViewBuilder({
     aggregate: "user",
     id: "aggregate.id"
 }, function (data, vm) {
-    logger.info("customerCreated in collection: " + vm.repository.collectionName);
+    logger.debug("customerCreated in collection: " + vm.repository.collectionName);
     vm.set("orders", []);
 });
 
@@ -19,7 +19,7 @@ var customerDeleted = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("customerDeleted in collection: " + vm.repository.collectionName);
+    logger.debug("customerDeleted in collection: " + vm.repository.collectionName);
     vm.destroy();
 });
 
@@ -29,7 +29,7 @@ var orderCreated = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (order, vm) {
-    logger.info("orderMade in collection: " + vm.repository.collectionName);
+    logger.debug("orderMade in collection: " + vm.repository.collectionName);
 
     //order.orderItems.forEach(function (orderItem) {
     //    drinkCollection.loadViewModel(orderItem.item.id, function (err, vm) {
@@ -50,7 +50,7 @@ var orderConfirmed = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (enrichedOrder, vm) {
-    logger.info("orderConfirmed in collection: " + vm.repository.collectionName);
+    logger.debug("orderConfirmed in collection: " + vm.repository.collectionName);
 
     //var series = [];
     //enrichedOrder.orderItems.forEach(function (orderItem) {

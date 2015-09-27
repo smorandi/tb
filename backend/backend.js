@@ -6,53 +6,25 @@ var _ = require("lodash");
 var async = require("async");
 var app = require("./src/config/express")();
 
-var domainService = require("./src/cqrs/domain.service");
-var denormalizerService = require("./src/cqrs/denormalizer.service");
-var sagaService = require("./src/cqrs/saga.service");
-var webSocketService = require("./src/cqrs/websocket.service");
-var commandService = require("./src/cqrs/command.service");
+var domainService = require("./src/core/services/domain.service.js");
+var denormalizerService = require("./src/core/services/denormalizer.service.js");
+var sagaService = require("./src/core/services/saga.service.js");
+var webSocketService = require("./src/core/services/websocket.service.js");
 
+var systemService = require("./src/core/services/system.service.js");
 var logger = require("./src/config/logger");
-var eventBus = require("./src/core/utils/eventBus");
 var config = require("./src/config/config");
 var utils = require("./src/config/utils");
-var engine = require("./src/core/engine/engine");
 var server = http.createServer(app);
-
 
 var bootstrap = [
     function (callback) {
-        logger.info("initialize domain-service...");
-        domainService.init(callback);
-    },
-    function (callback) {
-        logger.info("initialize denormalizer-service...");
-        denormalizerService.init(callback);
-    },
-    function (callback) {
-        logger.info("initialize saga-service...");
-        sagaService.init(callback);
-    },
-    function (callback) {
-        // replay is not strictly necessary...only if we use an in-memory db
-        logger.info("replay events...");
-        denormalizerService.replay(callback);
+        logger.info("initialize the system...");
+        systemService.init(callback);
     },
     function (callback) {
         logger.info("initialize websocket-service...");
         webSocketService.init(server, callback);
-    },
-    function (callback) {
-        logger.info("restore engine-state...");
-        engine.restoreState(callback);
-    },
-    function (callback) {
-        logger.info("deactivate engine...");
-        engine.deactivate(callback);
-    },
-    function (callback) {
-        logger.info("reset prices...");
-        engine.resetPrices(callback);
     }
 ];
 

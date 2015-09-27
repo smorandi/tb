@@ -1,209 +1,266 @@
 /**
  * Created by Stefano on 23.08.2015.
  */
-/// <reference path="../../../typings/tsd.d.ts" />
 "use strict";
-var logger = require("../../config/logger");
-var config = require("../../config/config");
+
 var _ = require("lodash");
 var async = require("async");
-var models = require("../../cqrs/models/models");
+var logger = require("../../config/logger");
+var config = require("../../config/config");
+var models = require("../models/models");
 var eventBus = require("../utils/eventBus");
-//var drinksCollection = require("../../cqrs/viewmodels/drinks/collection");
 var pricingCollection = require("../../cqrs/viewmodels/pricing/collection");
 var dashboardCollection = require("../../cqrs/viewmodels/dashboard/collection");
 var engineCollection = require("../../cqrs/viewmodels/engine/collection");
-var ordersCollection = require("../../cqrs/viewmodels/orders/collection");
-var commandService = require("../../cqrs/command.service");
-var webSocketService = require("../../cqrs/websocket.service");
-var listener = function ocl(event) {
+var commandService = require("../services/command.service.js");
+var webSocketService = require("../services/websocket.service.js");
+
+
+var engineStatus = "idle";
+var engineRecalculationInterval = 5000;
+var timer;
+var orderConfirmedListener = function ocl(event) {
     if (event.name === "orderConfirmed") {
         var order = event.payload;
         var drinks = _.map(order.orderItems, "item");
+
         var commands = [];
         _.forEach(order.orderItems, function (orderItem) {
             pricingCollection.loadViewModel(orderItem.item.id, function (err, doc) {
                 var drink = doc.toJSON();
+
                 var currentPrice = drink.price;
                 var priceStep = drink.priceStep;
                 var maxPrice = drink.maxPrice;
                 var newPrice = Math.min(currentPrice + (priceStep * orderItem.number), maxPrice);
+
                 var priceEntry = new models.PriceEntry(newPrice, "order confirmed recalculation");
-                commands.push(commandService.send("changePrice").for("drink").instance(drink.id).with({ payload: priceEntry }));
+
+                commands.push(commandService.send("changePrice").for("drink").instance(drink.id).with({payload: priceEntry}));
             });
         });
-        sendCommandsSynced(commands, function (err) {
+
+        commandService.sendCommands(commands, function (err) {
+            logger.error(err, err);
         });
     }
 };
-function sendCommandsSynced(sendCommandFns, callback) {
-    async.eachSeries(sendCommandFns, function (cmd, callback) {
-        cmd.go(function (event) {
-            callback(null);
-        });
-    }, function (err) {
-        callback(err);
+
+function isStarted() {
+    return engineStatus === "started";
+}
+
+function getStatus() {
+    return engineStatus;
+}
+
+
+function createEngine(callback) {
+    commandService.send("createEngine").for("engine").instance("engine").go(function (event) {
+        logger.debug("engine created")
+        callback(null, event.payload);
     });
 }
-var Engine = (function () {
-    function Engine() {
-        this.status = "idle";
-        this.recalculationInterval = 5000;
-    }
-    Engine.prototype.getStatus = function () {
-        return this.status;
-    };
-    Engine.prototype.isActive = function () {
-        return this.status === "started";
-    };
-    Engine.prototype.createEngine = function (callback) {
-        var _this = this;
-        commandService.send("createEngine").for("engine").instance("engine").go(function (event) {
-            logger.debug("engine created...");
-            _this.status = event.payload.status;
-            _this.recalculationInterval = event.payload.recalculationInterval;
-            callback(null, event.payload);
-        });
-    };
-    Engine.prototype.restoreState = function (callback) {
-        var _this = this;
-        engineCollection.findViewModels({ id: "engine" }, function (err, docs) {
-            if (err) {
-                callback(err);
-            }
-            else if (_.isEmpty(docs)) {
-                _this.createEngine(callback);
-            }
-            else {
-                _this.status = docs[0].toJSON().status;
-                _this.recalculationInterval = docs[0].toJSON().recalculationInterval;
-                callback(null);
-            }
-        });
-    };
-    Engine.prototype.restartLoop = function () {
-        var _this = this;
-        clearInterval(timer);
-        if (this.isActive()) {
-            timer = setInterval(function () { return _this.loop(function (err) {
+
+function syncWithDB(callback) {
+    engineCollection.findViewModels({id: "engine"}, {limit: 1}, function (err, docs) {
+        if (err) {
+            callback(err);
+        }
+        else if (_.isEmpty(docs)) {
+            logger.debug("no engine found - creating new engine")
+            createEngine(function (err, data) {
+                if (err) {
+                    callback(err);
+                }
+                else {
+                    engineStatus = data.status;
+                    engineRecalculationInterval = data.priceReductionInterval;
+                    callback(null);
+                }
+            });
+        }
+        else {
+            engineStatus = docs[0].toJSON().status;
+            engineRecalculationInterval = docs[0].toJSON().priceReductionInterval;
+            callback(null);
+        }
+    });
+}
+
+function init(callback) {
+    var tasks = [
+        function (callback) {
+            logger.debug("syncronizing with DB...")
+            syncWithDB(callback);
+        },
+        function (callback) {
+            logger.debug("stopping the engine...")
+            stopEngine(callback);
+        },
+        function (callback) {
+            logger.debug("resetting prices...")
+            resetPrices(callback);
+        },
+    ];
+    async.series(tasks, callback);
+}
+
+function loop(callback) {
+    var tasks = [
+        function (callback) {
+            recalculatePriceDecrease(callback);
+        },
+        function (callback) {
+            emitDashboard(callback);
+        },
+    ];
+    async.series(tasks, callback);
+}
+
+function restartLoop() {
+    clearInterval(timer);
+
+    if (isStarted()) {
+        timer = setInterval(function () {
+            loop(function (err) {
                 if (err) {
                     logger.error("error in loop: ", err);
                 }
                 else {
                     logger.trace("loop completed");
                 }
-            }); }, this.recalculationInterval);
-        }
-    };
-    Engine.prototype.changePriceReductionInterval = function (payload, callback) {
-        var _this = this;
-        commandService.send("changePriceReductionInterval").for("engine").instance("engine").with({ payload: payload }).go(function (event) {
-            logger.debug("interval changed...");
-            _this.recalculationInterval = event.payload.recalculationInterval;
-            _this.restartLoop();
-            callback(null, event.payload);
-        });
-    };
-    Engine.prototype.activate = function (callback) {
-        var _this = this;
+            })
+        }, engineRecalculationInterval);
+    }
+}
+
+function changePriceReductionInterval(interval, callback) {
+    commandService.send("changePriceReductionInterval").for("engine").instance("engine").with({payload: {priceReductionInterval: interval}}).go(function (event) {
+        logger.debug("interval changed")
+        engineRecalculationInterval = event.payload.priceReductionInterval;
+        restartLoop();
+        callback(null, event.payload);
+    });
+}
+
+function startEngine(callback) {
+    if (!isStarted()) {
         commandService.send("startEngine").for("engine").instance("engine").go(function (event) {
-            eventBus.on(config.eventBusChannel_denormalizerEvent, listener);
-            logger.debug("engine activated...", _this.recalculationInterval);
-            _this.status = event.payload.status;
-            _this.restartLoop();
+            eventBus.on(config.eventBusChannel_denormalizerEvent, orderConfirmedListener);
+            logger.debug("engine started", engineRecalculationInterval);
+            engineStatus = event.payload.status;
+            restartLoop();
             callback(null, event.payload);
         });
-    };
-    Engine.prototype.deactivate = function (callback) {
-        var _this = this;
+    }
+    else {
+        callback(null);
+    }
+}
+
+function stopEngine(callback) {
+    if (isStarted()) {
         commandService.send("stopEngine").for("engine").instance("engine").go(function (event) {
-            logger.debug("engine deactivated...");
-            eventBus.removeListener(config.eventBusChannel_denormalizerEvent, listener);
+            logger.debug("engine stopped")
+            eventBus.removeListener(config.eventBusChannel_denormalizerEvent, orderConfirmedListener);
             clearInterval(timer);
-            _this.status = "idle";
+
+            engineStatus = "idle";
             callback(null, event.payload);
         });
-    };
-    Engine.prototype.recalculatePriceDecrease = function (callback) {
-        logger.debug("decreasing Prices...");
-        if (!this.isActive()) {
+    }
+    else {
+        callback(null);
+    }
+}
+
+function resetPrices(callback) {
+    pricingCollection.findViewModels({}, function (err, docs) {
+        if (err) {
+            logger.error("error in retrieving drinks", err);
+            callback(err);
+        }
+        else if (_.isEmpty(docs)) {
+            logger.debug("no drinks found to reset prices for");
             callback(null);
         }
         else {
-            pricingCollection.findViewModels({}, function (err, docs) {
-                if (err) {
-                    logger.error("error in retrieving drinks", err);
-                    callback(err);
-                }
-                else {
-                    var timebase = new Date().getTime();
-                    var commands = [];
-                    docs.forEach(function (doc) {
-                        var drink = doc.toJSON();
-                        if (drink.priceReductionTimeBase !== null) {
-                            logger.info(drink.priceReductionTimeBase);
-                            var drinkTimeBase = drink.priceReductionTimeBase.getTime();
-                            // only do this for any drinks which have not been ordered since more than 10s...
-                            if ((timebase - drinkTimeBase) > 1000) {
-                                var currentPrice = drink.price;
-                                var priceStep = drink.priceStep;
-                                var minPrice = drink.minPrice;
-                                var newPrice = Math.max(currentPrice - priceStep, minPrice);
-                                var priceEntry = new models.PriceEntry(newPrice, "price reduction loop");
-                                commands.push(commandService.send("changePrice").for("drink").instance(drink.id).with({ payload: priceEntry }));
-                            }
-                        }
-                    });
-                    sendCommandsSynced(commands, callback);
-                }
+            var commands = [];
+            docs.forEach(function (doc) {
+                commands.push(commandService.send("resetPrice").for("drink").instance(doc.toJSON().id));
+            });
+
+            commandService.sendCommands(commands, function (err) {
+                logger.debug("prices reset");
+                callback(err);
             });
         }
-    };
-    Engine.prototype.resetPrices = function (callback) {
+    });
+}
+
+function emitDashboard(callback) {
+    logger.debug("emitting dashboard...");
+
+    dashboardCollection.findViewModels({}, function (err, docs) {
+        if (err) {
+            callback(err);
+        }
+        else if (_.isEmpty(docs)) {
+            logger.debug("nothing to emit.");
+            callback(null);
+        }
+        else {
+            webSocketService.broadcast(config.websocketChannel_dashboard, _.invoke(docs, "toJSON"));
+            callback(null);
+        }
+    })
+}
+
+function recalculatePriceDecrease(callback) {
+    logger.debug("decreasing prices...");
+    if (!isStarted()) {
+        callback(null);
+    }
+    else {
         pricingCollection.findViewModels({}, function (err, docs) {
             if (err) {
                 logger.error("error in retrieving drinks", err);
                 callback(err);
             }
             else {
+                var timebase = new Date().getTime();
                 var commands = [];
                 docs.forEach(function (doc) {
-                    commands.push(commandService.send("resetPrice").for("drink").instance(doc.toJSON().id));
+                    var drink = doc.toJSON();
+
+                    if (drink.priceReductionTimeBase !== null) {
+                        logger.info(drink.priceReductionTimeBase);
+                        var drinkTimeBase = drink.priceReductionTimeBase.getTime();
+
+                        // only do this for any drinks which have not been ordered since more than 10s...
+                        if ((timebase - drinkTimeBase) > 1000) {
+                            var currentPrice = drink.price;
+                            var priceStep = drink.priceStep;
+                            var minPrice = drink.minPrice;
+                            var newPrice = Math.max(currentPrice - priceStep, minPrice);
+
+                            var priceEntry = new models.PriceEntry(newPrice, "price reduction loop");
+
+                            commands.push(commandService.send("changePrice").for("drink").instance(drink.id).with({payload: priceEntry}));
+                        }
+                    }
                 });
-                sendCommandsSynced(commands, callback);
+
+                commandService.sendCommands(commands, callback);
             }
         });
-    };
-    Engine.prototype.emitDashboard = function (callback) {
-        logger.debug("emitting dashboard...");
-        dashboardCollection.findViewModels({}, function (err, docs) {
-            if (err) {
-                callback(err);
-            }
-            else if (_.isEmpty(docs)) {
-                logger.debug("nothing to emit...");
-                callback(null);
-            }
-            else {
-                webSocketService.broadcast(config.websocketChannel_dashboard, _.invoke(docs, "toJSON"));
-                callback(null);
-            }
-        });
-    };
-    Engine.prototype.loop = function (callback) {
-        var _this = this;
-        var tasks = [
-            function (callback) {
-                _this.recalculatePriceDecrease(callback);
-            },
-            function (callback) {
-                _this.emitDashboard(callback);
-            },
-        ];
-        async.series(tasks, callback);
-    };
-    return Engine;
-})();
-var timer;
-module.exports = new Engine();
-//# sourceMappingURL=Engine.js.map
+    }
+}
+
+module.exports = {
+    init: init,
+    start: startEngine,
+    stop: stopEngine,
+    changePriceReductionInterval: changePriceReductionInterval
+};

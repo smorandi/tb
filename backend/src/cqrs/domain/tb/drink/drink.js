@@ -2,7 +2,7 @@
 
 var _ = require("lodash");
 var domain = require("cqrs-domain");
-var models = require("../../../models/models");
+var models = require("../../../../core/models/models");
 
 var drink = domain.defineAggregate({
         name: "drink",
@@ -31,7 +31,9 @@ var createDrink = domain.defineCommand({
 }, function (data, aggregate) {
     //enrich data with what we have in the aggregate atm...
     data = _.defaults(data, aggregate.attributes);
+    data.id = aggregate.id;
     data.creationDate = new Date();
+    data.modificationDate = null;
     data.priceTicks = [new models.PriceTick(data.basePrice, 0, "initial")];
     aggregate.apply("drinkCreated", data);
 });

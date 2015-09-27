@@ -11,6 +11,7 @@ var drinks;
             this.utilsService = utilsService;
             this.drinkResource = drinkResource;
             $log.info("DrinkEditController called with client-url: " + $location.path());
+            //as we cannot directly edit the read-only instance of resource, we clone it...
             this.drink = JSON.parse(JSON.stringify(drinkResource));
         }
         DrinkEditController.prototype.updateDrink = function () {

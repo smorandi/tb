@@ -6,7 +6,7 @@ var drinkCreated = denormalizer.defineViewBuilder({
     aggregate: "drink",
     id: "aggregate.id"
 }, function (data, vm) {
-    logger.info("drinkCreated in collection: " + vm.repository.collectionName);
+    logger.debug("drinkCreated in collection: " + vm.repository.collectionName);
 
     vm.set("id", vm.id);
     vm.set("name", data.name);
@@ -27,7 +27,8 @@ var drinkChanged = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("drinkChanged in collection: " + vm.repository.collectionName);
+    logger.debug("drinkChanged in collection: " + vm.repository.collectionName);
+
     vm.set("name", data.name);
     vm.set("category", data.category);
     vm.set("tags", data.tags);
@@ -40,7 +41,7 @@ var drinkDeleted = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("drinkDeleted in collection: " + vm.repository.collectionName);
+    logger.debug("drinkDeleted in collection: " + vm.repository.collectionName);
     vm.destroy();
 });
 
@@ -50,7 +51,7 @@ var priceChanged = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (priceTick, vm) {
-    logger.info("priceChanged in collection: " + vm.repository.collectionName);
+    logger.debug("priceChanged in collection: " + vm.repository.collectionName);
 
     vm.set("tick", priceTick);
     var newPrice = priceTick.price;
@@ -82,7 +83,7 @@ var priceReset = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (priceTick, vm) {
-    logger.info("priceReset in collection: " + vm.repository.collectionName);
+    logger.debug("priceReset in collection: " + vm.repository.collectionName);
 
     vm.set("tick", priceTick);
     var newPrice = priceTick.price;

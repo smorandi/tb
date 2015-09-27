@@ -1,15 +1,25 @@
 /**
  * Created by Stefano on 25.07.2015.
  */
-/// <reference path="../../../typings/tsd.d.ts" />
 "use strict";
 var logger = require("../../config/logger");
 var config = require("../../config/config");
 var HomeController = require("../controllers/home.controller");
+var requireLogin = require("../services/auth.service.js").requireLogin;
+var requireAdmin = require("../services/auth.service.js").requireAdmin;
+var router = require("express").Router();
+
 function init(app) {
     logger.trace("initializing home routes...");
+
+    app.use(config.urls.home, router);
+
     var controller = new HomeController();
-    app.route(config.urls.home).get(function (req, res, next) { return controller.getAsResource(req, res, next); });
+
+    router.route("/")
+        .get(function (req, res, next) {
+            return controller.getAsResource(req, res, next);
+        });
 }
+
 module.exports = init;
-//# sourceMappingURL=home.routes.js.map

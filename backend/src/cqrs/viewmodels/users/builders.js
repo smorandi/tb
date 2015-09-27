@@ -2,42 +2,42 @@ var _ = require("lodash");
 var denormalizer = require("cqrs-eventdenormalizer");
 var logger = require("../../../config/logger");
 
-var adminCreatedVB = denormalizer.defineViewBuilder({
+var adminCreated = denormalizer.defineViewBuilder({
     name: "adminCreated",
     aggregate: "user",
     id: "aggregate.id"
 }, function (data, vm) {
-    logger.info("adminCreated in collection: " + vm.repository.collectionName);
+    logger.debug("adminCreated in collection: " + vm.repository.collectionName);
     vm.set(data);
 });
 
-var customerCreatedVB = denormalizer.defineViewBuilder({
+var customerCreated = denormalizer.defineViewBuilder({
     name: "customerCreated",
     aggregate: "user",
     id: "aggregate.id"
 }, function (data, vm) {
-    logger.info("customerCreated in collection: " + vm.repository.collectionName);
+    logger.debug("customerCreated in collection: " + vm.repository.collectionName);
     vm.set(data);
 });
 
-var userChangedVB = denormalizer.defineViewBuilder({
+var userChanged = denormalizer.defineViewBuilder({
     name: "userChanged",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("userChanged in collection: " + vm.repository.collectionName);
+    logger.debug("userChanged in collection: " + vm.repository.collectionName);
     vm.set(data);
 });
 
-var userDeletedVB = denormalizer.defineViewBuilder({
+var userDeleted = denormalizer.defineViewBuilder({
     name: "userDeleted",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("userDeleted in collection: " + vm.repository.collectionName);
+    logger.debug("userDeleted in collection: " + vm.repository.collectionName);
     vm.destroy();
 });
 
-module.exports = [adminCreatedVB, customerCreatedVB, userChangedVB, userDeletedVB];
+module.exports = [adminCreated, customerCreated, userChanged, userDeleted];

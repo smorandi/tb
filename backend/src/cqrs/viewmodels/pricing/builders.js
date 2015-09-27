@@ -1,6 +1,6 @@
 var denormalizer = require("cqrs-eventdenormalizer");
 var logger = require("../../../config/logger");
-var pricingService = require("../../pricing.service");
+var pricingService = require("../../../core/services/pricing.service.js");
 
 var i = 0;
 
@@ -10,12 +10,10 @@ var drinkCreated = denormalizer.defineViewBuilder({
     aggregate: "drink",
     id: "aggregate.id"
 }, function (data, vm) {
-    logger.info("drinkCreated in collection: " + vm.repository.collectionName);
+    logger.debug("drinkCreated in collection: " + vm.repository.collectionName);
+
     vm.set("id", vm.id);
     vm.set("name", data.name);
-    vm.set("category", data.category);
-    vm.set("tags", data.tags);
-    vm.set("quantity", data.quantity);
     vm.set("price", data.priceTicks[0].price);
     vm.set("basePrice", data.basePrice);
     vm.set("priceStep", data.priceStep);
@@ -30,8 +28,10 @@ var drinkChanged = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("drinkChanged in collection: " + vm.repository.collectionName);
-    vm.set(data);
+    logger.debug("drinkChanged in collection: " + vm.repository.collectionName);
+
+    vm.set("id", vm.id);
+    vm.set("name", data.name);
     vm.set("price", vm.get("price"));
     vm.set("priceReductionTimeBase", data.modificationDate);
 });
@@ -42,7 +42,7 @@ var drinkDeleted = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (data, vm) {
-    logger.info("drinkDeleted in collection: " + vm.repository.collectionName);
+    logger.debug("drinkDeleted in collection: " + vm.repository.collectionName);
     vm.destroy();
 });
 
@@ -52,7 +52,7 @@ var priceChanged = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (priceTick, vm) {
-    logger.info("priceChanged in collection: " + vm.repository.collectionName);
+    logger.debug("priceChanged in collection: " + vm.repository.collectionName);
     vm.set("price", priceTick.price);
     vm.set("priceReductionTimeBase", priceTick.timestamp);
 });
@@ -63,7 +63,7 @@ var priceReset = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (priceTick, vm) {
-    logger.info("priceReset in collection: " + vm.repository.collectionName);
+    logger.debug("priceReset in collection: " + vm.repository.collectionName);
     vm.set("price", priceTick.price);
 });
 
@@ -72,7 +72,7 @@ var orderConfirmed = denormalizer.defineViewBuilder({
     aggregate: "user",
     query: {},
 }, function (order, vm) {
-    logger.info("orderConfirmed in collection: " + vm.repository.collectionName);
+    logger.debug("orderConfirmed in collection: " + vm.repository.collectionName);
 
     var drinkId = vm.get("id");
     if (pricingService.orderContainsDrinkId(order, drinkId)) {
@@ -86,7 +86,7 @@ var engineStarted = denormalizer.defineViewBuilder({
     aggregate: "engine",
     query: {},
 }, function (engine, vm) {
-    logger.info("engineStarted in collection: " + vm.repository.collectionName);
+    logger.debug("engineStarted in collection: " + vm.repository.collectionName);
     vm.set("priceReductionTimeBase", engine.event.timestamp);
 });
 
@@ -95,7 +95,7 @@ var engineStopped = denormalizer.defineViewBuilder({
     aggregate: "engine",
     query: {},
 }, function (engine, vm) {
-    logger.info("engineStopped in collection: " + vm.repository.collectionName);
+    logger.debug("engineStopped in collection: " + vm.repository.collectionName);
     vm.set("priceReductionTimeBase", null);
 });
 
@@ -104,7 +104,7 @@ var priceTickRequested = denormalizer.defineViewBuilder({
     aggregate: "engine",
     query: {},
 }, function (engine, vm) {
-    logger.info("priceTickRequested in collection: " + vm.repository.collectionName);
+    logger.debug("priceTickRequested in collection: " + vm.repository.collectionName);
 });
 
 module.exports = [drinkCreated, drinkChanged, drinkDeleted, priceChanged, priceReset, orderConfirmed, engineStarted, engineStopped];

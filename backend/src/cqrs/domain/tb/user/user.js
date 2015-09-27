@@ -3,8 +3,8 @@
 var _ = require("lodash");
 var domain = require("cqrs-domain");
 var uuid = require("node-uuid");
-var validationService = require("../../../validation.service");
-var models = require("../../../models/models");
+var validationService = require("../../../../core/services/validation.service.js");
+var models = require("../../../../core/models/models");
 
 var user = domain.defineAggregate({
         name: "user",
@@ -27,9 +27,12 @@ var createCustomer = domain.defineCommand({
     existing: false,
 }, function (data, aggregate) {
     _.defaults(data, aggregate.attributes);
+    data.id = aggregate.id;
     data.type = "customer";
     data.basket = [];
     data.orders = [];
+    data.creationDate = new Date();
+    data.modificationDate = null;
 
     aggregate.apply("customerCreated", data);
 });
@@ -50,7 +53,10 @@ var createAdmin = domain.defineCommand({
     existing: false,
 }, function (data, aggregate) {
     _.defaults(data, aggregate.attributes);
+    data.id = aggregate.id;
     data.type = "admin";
+    data.creationDate = new Date();
+    data.modificationDate = null;
 
     aggregate.apply("adminCreated", data);
 });
@@ -71,6 +77,8 @@ var changeUser = domain.defineCommand({
     name: "changeUser",
     existing: true,
 }, function (data, aggregate) {
+    data.modificationDate = new Date();
+
     aggregate.apply("userChanged", data);
 });
 
@@ -106,7 +114,10 @@ var addBasketItem = domain.defineCommand({
     name: "addBasketItem",
     existing: true,
 }, function (data, aggregate) {
-    var basketItem = new models.BasketItem(uuid.v4().toString(), {id: data.drinkId}, data.number);
+
+    var basketItemId = uuid.v4().toString();
+    var basketItem = new models.BasketItem(basketItemId, {id: data.drinkId}, data.number);
+
     aggregate.apply("basketItemAdded", basketItem);
 });
 
@@ -153,7 +164,8 @@ var createOrder = domain.defineCommand({
         orderItems.push(orderItem);
     });
 
-    var order = new models.Order(uuid.v4().toString(), "pending", orderItems, new Date());
+    var orderId = uuid.v4().toString();
+    var order = new models.Order(orderId, "pending", orderItems, new Date());
     aggregate.apply("orderCreated", order);
 });
 
@@ -192,28 +204,32 @@ var orderConfirmed = domain.defineEvent({
 var precondition_createUser_mandatoryAttributesSet = domain.definePreCondition({
     name: ["createAdmin", "createCustomer"],
     description: "mandatory attributes must be set",
-}, function (data, aggregate) {
+}, function (data, aggregate, callback) {
     if (!data.loginname) {
-        throw new Error();
+        callback(new Error());
     }
-    if (!data.password) {
-        throw new Error();
+    else if (!data.password) {
+        callback(new Error());
+    }
+    else {
+        callback(null);
     }
 });
 
 var precondition_createUser_loginNameMustBeUnique = domain.definePreCondition({
     name: ["createAdmin", "createCustomer"],
     description: "loginname already exists",
-}, function (data, aggregate) {
+}, function (data, aggregate, callback) {
     validationService.isUniqueLoginName(data.loginname, function (err, isUnique) {
         if (err) {
-            throw err;
+            callback(err);
         }
         else if (!isUnique) {
-            throw new Error();
+            callback(new Error());
         }
         else {
             // all ok, loginname is unique...
+            callback(null);
         }
     });
 });
@@ -221,18 +237,22 @@ var precondition_createUser_loginNameMustBeUnique = domain.definePreCondition({
 var precondition_changeUser_allowedChanges = domain.definePreCondition({
     name: "changeUser",
     description: "change is not allowed",
-}, function (data, aggregate) {
+}, function (data, aggregate, callback) {
     //only firstname, lastname, loginname and password can be changed!!!
     // --> check here...
+    callback(null);
 });
 
 
 var businessRule_makeOrder_basketMustNotBeEmpty = domain.definePreCondition({
     name: ["createOrder"],
     description: "basket must not be empty",
-}, function (data, aggregate) {
+}, function (data, aggregate, callback) {
     if (aggregate.get("basket").length === 0) {
-        throw new Error();
+        callback(new Error());
+    }
+    else {
+        callback(null);
     }
 });
 

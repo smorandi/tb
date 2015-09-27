@@ -9,6 +9,7 @@ i18n:
 
 concepts & paradigmas:
 - REST & Hateoas API
+- Event-Sourced CQRS
 - responsive design: desktop (manager), mobile (customer)
 - SPA
 

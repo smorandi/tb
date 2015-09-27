@@ -1,6 +1,6 @@
 // we are not using sagas atm...
 
-var pricingService = require("../../../../pricing.service");
+var pricingService = require("../../../../../core/services/pricing.service.js");
 var logger = require("../../../../../config/logger");
 
 var orderCreatedSaga = require("cqrs-saga").defineSaga({// event to match...
