@@ -1,0 +1,69 @@
+{
+  "id": "4157f60e-9ffd-3067-2246-eb65ccd3f56c",
+  "name": "tb-orders",
+  "timestamp": 1441900257563,
+  "order": [
+    "34c1b473-09ed-437b-a395-1a969d75ad96",
+    "db505010-0336-3b3b-963c-0613f77f143d",
+    "a99b4df7-38cb-fead-cbf5-e7562310b085",
+    "77d5ee4a-c0c3-6758-acd8-713ecc314235"
+  ],
+  "requests": [
+    {
+      "collectionId": "4157f60e-9ffd-3067-2246-eb65ccd3f56c",
+      "id": "34c1b473-09ed-437b-a395-1a969d75ad96",
+      "name": "List Orders (Json)",
+      "description": "",
+      "url": "http://localhost:3000/orders",
+      "method": "GET",
+      "headers": "Accept: application/json\nAuthorization: Basic cm9vdDpyb290\n",
+      "data": "{\n  \"drinkId\": \"drink1\",\n  \"number\": \"3\"\n}",
+      "dataMode": "params",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443369188153
+    },
+    {
+      "collectionId": "4157f60e-9ffd-3067-2246-eb65ccd3f56c",
+      "id": "77d5ee4a-c0c3-6758-acd8-713ecc314235",
+      "name": "Create Order",
+      "description": "",
+      "url": "http://localhost:3000/orders/customer0",
+      "method": "POST",
+      "headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Basic cm9vdDpyb290\n",
+      "data": "",
+      "dataMode": "raw",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443369249825
+    },
+    {
+      "collectionId": "4157f60e-9ffd-3067-2246-eb65ccd3f56c",
+      "id": "a99b4df7-38cb-fead-cbf5-e7562310b085",
+      "name": "Read Orders (Json)",
+      "description": "",
+      "url": "http://localhost:3000/orders/customer0",
+      "method": "GET",
+      "headers": "Accept: application/json\nAuthorization: Basic cm9vdDpyb290\n",
+      "data": "{\n  \"drinkId\": \"drink1\",\n  \"number\": \"3\"\n}",
+      "dataMode": "params",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443369240057
+    },
+    {
+      "collectionId": "4157f60e-9ffd-3067-2246-eb65ccd3f56c",
+      "id": "db505010-0336-3b3b-963c-0613f77f143d",
+      "name": "List Orders (HAL+Json)",
+      "description": "",
+      "url": "http://localhost:3000/orders",
+      "method": "GET",
+      "headers": "Accept: application/hal+json\nAuthorization: Basic cm9vdDpyb290\n",
+      "data": "{\n  \"drinkId\": \"drink1\",\n  \"number\": \"3\"\n}",
+      "dataMode": "params",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443369200449
+    }
+  ]
+}

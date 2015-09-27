@@ -1,0 +1,99 @@
+{
+  "id": "a46d903f-624e-b933-a0f5-5a3986c625e6",
+  "name": "tb-baskets",
+  "timestamp": 1441895468582,
+  "order": [
+    "51e8ac1d-f8fe-a07d-6836-b75bc7c5e717",
+    "a0fd902e-b40e-59ae-4e4d-cbc2aee642e2",
+    "d840afb7-c620-1217-4664-9bf241599525",
+    "fb7a9232-c2ab-8fb2-a00a-a7d4411fa37e",
+    "e8f0c56d-e2eb-f94a-9839-43132e0bdd2e",
+    "96a0ac04-2b28-aa83-2229-1287e968bfc8"
+  ],
+  "requests": [
+    {
+      "collectionId": "a46d903f-624e-b933-a0f5-5a3986c625e6",
+      "id": "51e8ac1d-f8fe-a07d-6836-b75bc7c5e717",
+      "name": "List Baskets (Json)",
+      "description": "",
+      "url": "http://localhost:3000/baskets",
+      "method": "GET",
+      "headers": "Accept: application/json\nAuthorization: Basic cm9vdDpyb290\n",
+      "data": [],
+      "dataMode": "params",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443367939657
+    },
+    {
+      "collectionId": "a46d903f-624e-b933-a0f5-5a3986c625e6",
+      "id": "96a0ac04-2b28-aa83-2229-1287e968bfc8",
+      "name": "Remove Item From Basket",
+      "description": "",
+      "url": "http://localhost:3000/baskets/customer0/3679e970-ab1d-498d-839f-d4f9772de99c",
+      "method": "DELETE",
+      "headers": "Authorization: Basic cm9vdDpyb290\n",
+      "data": "",
+      "dataMode": "raw",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443368986957
+    },
+    {
+      "collectionId": "a46d903f-624e-b933-a0f5-5a3986c625e6",
+      "id": "a0fd902e-b40e-59ae-4e4d-cbc2aee642e2",
+      "name": "List Baskets (HAL+Json)",
+      "description": "",
+      "url": "http://localhost:3000/baskets",
+      "method": "GET",
+      "headers": "Accept: application/hal+json\nAuthorization: Basic cm9vdDpyb290\n",
+      "data": [],
+      "dataMode": "params",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443367926753
+    },
+    {
+      "collectionId": "a46d903f-624e-b933-a0f5-5a3986c625e6",
+      "id": "d840afb7-c620-1217-4664-9bf241599525",
+      "name": "Read Basket (Json)",
+      "description": "",
+      "url": "http://localhost:3000/baskets/customer0",
+      "method": "GET",
+      "headers": "Accept: application/json\nAuthorization: Basic cm9vdDpyb290\n",
+      "data": [],
+      "dataMode": "params",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443367956672
+    },
+    {
+      "collectionId": "a46d903f-624e-b933-a0f5-5a3986c625e6",
+      "id": "e8f0c56d-e2eb-f94a-9839-43132e0bdd2e",
+      "name": "Add Item To Basket",
+      "description": "",
+      "url": "http://localhost:3000/baskets/customer0",
+      "method": "POST",
+      "headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Basic cm9vdDpyb290\n",
+      "data": "{\n  \"drinkId\": \"drink1\",\n  \"number\": \"3\"\n}",
+      "dataMode": "raw",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443368004368
+    },
+    {
+      "collectionId": "a46d903f-624e-b933-a0f5-5a3986c625e6",
+      "id": "fb7a9232-c2ab-8fb2-a00a-a7d4411fa37e",
+      "name": "Read Basket (HAL+Json)",
+      "description": "",
+      "url": "http://localhost:3000/baskets/customer0",
+      "method": "GET",
+      "headers": "Accept: application/hal+json\nAuthorization: Basic cm9vdDpyb290\n",
+      "data": [],
+      "dataMode": "params",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1443367967248
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "22279894-10fd-a4b0-e84c-c5f6939c4b7e",
+  "name": "tb-dashboard",
+  "timestamp": 1442522386186,
+  "requests": [
+    {
+      "collectionId": "22279894-10fd-a4b0-e84c-c5f6939c4b7e",
+      "id": "0cc00f45-7128-9363-85ab-5a06775afd70",
+      "name": "Get Dashboard (Json)",
+      "description": "",
+      "url": "http://localhost:3000/dashboard",
+      "method": "GET",
+      "headers": "Accept: application/json\n",
+      "data": [],
+      "dataMode": "params",
+      "timestamp": 0,
+      "responses": [],
+      "version": 2
+    }
+  ]
+}
