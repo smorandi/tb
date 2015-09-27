@@ -1,0 +1,46 @@
+{
+  "title": "drink.properties",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "description": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "string"
+    },
+    "category": {
+      "enum": [
+        "alcoholic",
+        "non-alcoholic"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "basePrice": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum": false
+    },
+    "minPrice": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum": false
+    },
+    "maxPrice": {
+      "type": "number"
+    },
+    "priceStep": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum": false
+    }
+  }
+}

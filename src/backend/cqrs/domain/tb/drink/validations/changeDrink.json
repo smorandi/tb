@@ -1,0 +1,22 @@
+{
+  "title": "changeDrink",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "changeDrink"
+    },
+    "payload": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "drink.properties"
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "payload"
+  ]
+}
