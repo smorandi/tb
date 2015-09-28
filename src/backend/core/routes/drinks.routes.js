@@ -24,22 +24,24 @@ function init(app) {
 
     //// authentication middleware defaults for this router...
     router.use(requireLogin, requireAdmin);
-    //router.param("id", requireMatchingUserId);
 
     router.route("/")
         .get(function (req, res, next) {
-            var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
             drinksCollection.findViewModels({}, function (err, docs) {
-                if (err)
-                    return next(err);
-                res.format({
-                    "application/hal+json": function () {
-                        return res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud"));
-                    },
-                    "application/json": function () {
-                        return res.json(docs);
-                    }
-                });
+                if (err) {
+                    next(err);
+                }
+                else {
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
+                    res.format({
+                        "application/hal+json": function () {
+                            res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud"));
+                        },
+                        "application/json": function () {
+                            res.json(docs);
+                        }
+                    });
+                }
             });
         })
         .post(function (req, res, next) {
@@ -52,20 +54,24 @@ function init(app) {
 
     router.route("/:id")
         .get(function (req, res, next) {
-            drinksCollection.loadViewModel(req.params.id, function (err, doc) {
-                if (err)
-                    return next(err);
-                if (!doc || doc.length === 0)
-                    return res.status(404).end();
-                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
-                res.format({
-                    "application/hal+json": function () {
-                        return res.json(resourceUtils.createResource(baseUrl, doc, "ud"));
-                    },
-                    "application/json": function () {
-                        return res.json(doc);
-                    }
-                });
+            drinksCollection.findViewModels({id: req.params.id}, {limit: 1}, function (err, docs) {
+                if (err) {
+                    next(err);
+                }
+                else if (_.isEmpty(docs)) {
+                    next(new HTTPErrors.NotFoundError("Drink with id '%s' not found", req.params.id));
+                }
+                else {
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
+                    res.format({
+                        "application/hal+json": function () {
+                            res.json(resourceUtils.createResource(baseUrl, docs, "ud"));
+                        },
+                        "application/json": function () {
+                            res.json(docs);
+                        }
+                    });
+                }
             });
         })
         .put(function (req, res, next) {
@@ -74,10 +80,10 @@ function init(app) {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
                     res.format({
                         "application/hal+json": function () {
-                            return res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud"));
+                            res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud"));
                         },
                         "application/json": function () {
-                            return res.json(evt.payload);
+                            res.json(evt.payload);
                         }
                     });
                 });

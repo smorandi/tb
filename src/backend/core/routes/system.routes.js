@@ -29,26 +29,26 @@ function init(app) {
 
     router.route("/")
         .get(function (req, res, next) {
-            return controller.getAsResource(req, res, next);
+            controller.getAsResource(req, res, next);
         })
         .put(function (req, res, next) {
-            return controller.changePriceReductionInterval(req, res, next);
+            controller.changePriceReductionInterval(req, res, next);
         });
 
     router.route("/replays").post(function (req, res, next) {
-        return controller.replay(req, res, next);
+        controller.replay(req, res, next);
     });
 
     router.route("/engineStarts").put(function (req, res, next) {
-        return controller.startEngine(req, res, next);
+        controller.startEngine(req, res, next);
     });
 
     router.route("/engineStops").put(function (req, res, next) {
-        return controller.stopEngine(req, res, next);
+        controller.stopEngine(req, res, next);
     });
 
     router.route("/reinitializations").post(function (req, res, next) {
-        return controller.reInitialize(req, res, next);
+        controller.reInitialize(req, res, next);
     });
 }
 

@@ -13,6 +13,7 @@ var resourceUtils = require("../../utils/resourceUtils");
 var commandService = require("../../services/command.service.js");
 var requireLogin = require("../../services/auth.service.js").requireLogin;
 var requireAdmin = require("../../services/auth.service.js").requireAdmin;
+var requireCustomer = require("../../services/auth.service.js").requireAdmin;
 var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
 
 var basketsCollection = require("../../cqrs/viewmodels/baskets/collection");
@@ -35,10 +36,10 @@ function init(app) {
                 else {
                     res.format({
                         "application/hal+json": function () {
-                            return res.json(resourceUtils.createCollectionResource(baseUrl, docs));
+                            res.json(resourceUtils.createCollectionResource(baseUrl, docs));
                         },
                         "application/json": function () {
-                            return res.json(docs);
+                            res.json(docs);
                         }
                     });
                 }
@@ -47,12 +48,12 @@ function init(app) {
 
     router.route("/:customerId")
         .get(function (req, res, next) {
-            basketsCollection.findViewModels({id: req.params.customerId}, function (err, docs) {
+            basketsCollection.findViewModels({id: req.params.customerId}, {limit: 1}, function (err, docs) {
                 if (err) {
-                    return next(err);
+                    next(err);
                 }
                 else if (_.isEmpty(docs)) {
-                    return res.status(404).end();
+                    next(new HTTPErrors.NotFoundError("Basket for customer '%s' not found", req.user.loginname));
                 }
                 else {
                     var basketItems = docs[0].get("basket");
@@ -64,13 +65,13 @@ function init(app) {
                             res.json(resource);
                         },
                         "application/json": function () {
-                            return res.json(basketItems);
+                            res.json(basketItems);
                         }
                     });
                 }
             });
         })
-        .post(function (req, res, next) {
+        .post(requireCustomer, requireMatchingUserId, function (req, res, next) {
             commandService.send("addBasketItem").for("user").instance(req.params.customerId).with({payload: req.body}).go(function (evt) {
                 commandService.handleCommandRejection(evt, next, function () {
                     res.status(202).end();
@@ -80,25 +81,23 @@ function init(app) {
 
     router.route("/:customerId/:basketItemId")
         .get(function (req, res, next) {
-            basketsCollection.findViewModels({id: req.params.customerId}, function (err, docs) {
+            basketsCollection.findViewModels({id: req.params.customerId}, {limit: 1}, function (err, docs) {
                 if (err) {
-                    return next(err);
+                    next(err);
                 }
                 else if (_.isEmpty(docs)) {
-                    return res.status(404).end();
+                    next(new HTTPErrors.NotFoundError("Basket for customer '%s' not found", req.user.loginname));
                 }
                 else {
                     var basketItems = docs[0].get("basket");
-                    var basketItem = _.find(basketItems, function (item) {
-                        return item.id === req.params.basketItemId;
-                    });
+                    var basketItem = _.find(basketItems, "item.id", req.params.basketItemId);
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId + "/" + req.params.basketItemId);
                     res.format({
                         "application/hal+json": function () {
-                            return res.json(resourceUtils.createResource(baseUrl, basketItem, "d"));
+                            res.json(resourceUtils.createResource(baseUrl, basketItem, "d"));
                         },
                         "application/json": function () {
-                            return res.json(basketItem);
+                            res.json(basketItem);
                         }
                     });
                 }

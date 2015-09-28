@@ -27,19 +27,16 @@ function init(app) {
         .get(function (req, res, next) {
             adminsCollection.findViewModels({}, function (err, docs) {
                 if (err) {
-                    return next(err);
-                }
-                else if (_.isEmpty(docs)) {
-                    return res.json([]);
+                    next(err);
                 }
                 else {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
                     res.format({
                         "application/hal+json": function () {
-                            return res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud"));
+                            res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud"));
                         },
                         "application/json": function () {
-                            return res.json(docs);
+                            res.json(docs);
                         }
                     });
                 }
@@ -55,21 +52,22 @@ function init(app) {
 
     router.route("/:id")
         .get(function (req, res, next) {
-            adminsCollection.findViewModels({id: req.params.id}, function (err, docs) {
+            adminsCollection.findViewModels({id: req.params.id}, {limit: 1}, function (err, docs) {
                 if (err) {
                     return next(err);
                 }
                 else if (_.isEmpty(docs)) {
-                    return res.status(404).end();
+                    next(new HTTPErrors.NotFoundError("User with id '%s' not found", req.params.id));
                 }
                 else {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins + "/" + req.params.id);
+                    var resource = _.isEmpty(docs) ? null : docs[0];
                     res.format({
                         "application/hal+json": function () {
-                            return res.json(resourceUtils.createResource(baseUrl, docs[0], "ud"));
+                            res.json(resourceUtils.createResource(baseUrl, resource, "ud"));
                         },
                         "application/json": function () {
-                            return res.json(docs[0]);
+                            res.json(resource);
                         }
                     });
                 }
@@ -81,10 +79,10 @@ function init(app) {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
                     res.format({
                         "application/hal+json": function () {
-                            return res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud"));
+                            res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud"));
                         },
                         "application/json": function () {
-                            return res.json(evt.payload);
+                            res.json(evt.payload);
                         }
                     });
                 });

@@ -31,16 +31,16 @@ function init(app) {
         .get(requireAdmin, function (req, res, next) {
             ordersCollection.findViewModels({}, function (err, docs) {
                 if (err) {
-                    return next(err);
+                    next(err);
                 }
                 else {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.orders);
                     res.format({
                         "application/hal+json": function () {
-                            return res.json(resourceUtils.createCollectionResource(baseUrl, docs));
+                            res.json(resourceUtils.createCollectionResource(baseUrl, docs));
                         },
                         "application/json": function () {
-                            return res.json(docs);
+                            res.json(docs);
                         }
                     });
                 }
@@ -49,28 +49,28 @@ function init(app) {
 
     router.route("/:customerId")
         .get(function (req, res, next) {
-            ordersCollection.findViewModels({id: req.params.id}, function (err, docs) {
+            ordersCollection.findViewModels({id: req.params.customerId}, {limit: 1}, function (err, docs) {
                 if (err) {
-                    return next(err);
+                    next(err);
                 }
                 else if (_.isEmpty(docs)) {
-                    return res.status(404).end();
+                    next(new HTTPErrors.NotFoundError("Orders for customer '%s' not found", req.user.loginname));
                 }
                 else {
                     var orders = docs[0].get("orders");
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId);
                     res.format({
                         "application/hal+json": function () {
-                            return res.json(resourceUtils.createCollectionResource(baseUrl, orders));
+                            res.json(resourceUtils.createCollectionResource(baseUrl, orders));
                         },
                         "application/json": function () {
-                            return res.json(orders);
+                            res.json(orders);
                         }
                     });
                 }
             });
         })
-        .post(requireCustomer, function (req, res, next) {
+        .post(requireCustomer, requireMatchingUserId, function (req, res, next) {
             commandService.send("createOrder").for("user").instance(req.params.customerId).go(function (evt) {
                 commandService.handleCommandRejection(evt, next, function () {
                     res.status(202).end();

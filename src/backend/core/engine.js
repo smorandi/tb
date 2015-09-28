@@ -186,9 +186,8 @@ function resetPrices(callback) {
             callback(null);
         }
         else {
-            var commands = [];
-            docs.forEach(function (doc) {
-                commands.push(commandService.send("resetPrice").for("drink").instance(doc.toJSON().id));
+            var commands = _.map(docs, function (doc) {
+                return commandService.send("resetPrice").for("drink").instance(doc.toJSON().id);
             });
 
             commandService.sendCommands(commands, function (err) {
