@@ -5,8 +5,9 @@
 
 var log4js = require("log4js");
 var _ = require("lodash");
+var config = require("../config");
 
-var config = {
+var configuration = {
     appenders: [
         {
             //"category": "console",
@@ -17,13 +18,13 @@ var config = {
             }
         }
     ],
-    replaceConsole: true
+    replaceConsole: false
 }
 
-log4js.configure(config);
+log4js.configure(configuration);
 
 var logger = log4js.getLogger();
-logger.setLevel("debug");
+logger.setLevel(config.logger.level);
 
 
 // special handling and function overrides for logger because if passed in an array of errors it will not be

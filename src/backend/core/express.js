@@ -28,7 +28,7 @@ function init() {
 
     // Enable logger (log4js)
     app.use(log4js.connectLogger(logger, {
-        level: "auto",
+        level: config.logger.connectLevel,
         format: ":method :url :status :req[Accept] :res[Content-Type]"
     }));
     app.use(bodyParser.json());
@@ -55,7 +55,7 @@ function init() {
     // Globbing routing files
     var routesFiles = utils.getGlobbedFiles(path.join(__dirname, "/routes/**/*.js"));
 
-    logger.debug("initializing routes", routesFiles);
+    logger.debug("initializing routes...\n", routesFiles);
     routesFiles.forEach(function (routePath) {
         return require(path.resolve(routePath))(app);
     });

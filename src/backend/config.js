@@ -6,6 +6,11 @@
 var path = require("path");
 var _ = require("lodash");
 
+exports.logger = {
+    level: "info",
+    connectLevel: "debug"
+};
+
 exports.db = {
     uri: "mongodb://localhost:27017/tb",
     options: null
@@ -17,8 +22,11 @@ exports.app = {
     keywords: "xxx"
 };
 
-exports.port = process.env.PORT || 3000;
-
+exports.server= {
+    port: process.env.PORT || 3000,
+    host: "localhost",
+    backlog: 511,
+}
 exports.urls = {
     root: "/root",
     home: "/home",
@@ -83,7 +91,7 @@ var _domainOptions = {
         eventsCollectionName: "events",
         snapshotsCollectionName: "snapshots",
         transactionsCollectionName: "transactions",
-        timeout: 10000
+        timeout: 1000
     }
 };
 
