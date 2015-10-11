@@ -20,6 +20,7 @@ exports.app = {
 exports.port = process.env.PORT || 3000;
 
 exports.urls = {
+    root: "/root",
     home: "/home",
     dashboard: "/dashboard",
     drinks: "/drinks",

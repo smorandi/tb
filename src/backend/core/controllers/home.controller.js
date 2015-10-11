@@ -7,18 +7,18 @@ var hal = require("halberd");
 var config = require("../../config");
 var logger = require("../../utils/logger");
 var authService = require("../../services/auth.service");
+var resourceUtils = require("../../utils/resourceUtils");
 
 var HomeController = (function () {
     function HomeController() {
     }
 
     HomeController.prototype.createResource = function (req, callback) {
-        var root = req.protocol + "://" + req.headers.host;
+        var root = resourceUtils.createBaseUrl(req, "");
         var resource = new hal.Resource({}, root + config.urls.home);
-        //resource.link("drinks", root + config.urls.drinks);
-        //resource.link("customers", root + config.urls.customers);
         resource.link("dashboard", root + config.urls.dashboard);
         resource.link("registerCustomer", root + config.urls.customers);
+        resource.link("root", root + config.urls.root);
         authService.authenticate(req, function (err, isAuthenticated, isAdmin, isRoot, user) {
             if (err) {
                 callback(err);
@@ -44,25 +44,11 @@ var HomeController = (function () {
         });
     };
 
-    HomeController.prototype.asResource = function (req, asHal, callback) {
-        return asHal ? this.createResource(req, callback) : callback(null, {});
-    };
-
     HomeController.prototype.getAsResource = function (req, res, next) {
         var _this = this;
         res.format({
             "application/hal+json": function () {
-                return _this.asResource(req, true, function (err, resource) {
-                    if (err) {
-                        next(err);
-                    }
-                    else {
-                        res.json(resource);
-                    }
-                });
-            },
-            "application/json": function () {
-                return _this.asResource(req, false, function (err, resource) {
+                return _this.createResource(req, function (err, resource) {
                     if (err) {
                         next(err);
                     }

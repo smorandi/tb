@@ -15,19 +15,24 @@ var requireLogin = require("../../services/auth.service.js").requireLogin;
 var requireAdmin = require("../../services/auth.service.js").requireAdmin;
 var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
 
-var HomeController = require("../controllers/home.controller.js");
-
 function init(app) {
-    logger.trace("initializing home routes...");
+    logger.trace("initializing root routes...");
 
-    app.use(config.urls.home, router);
-    router.use(requireLogin);
-
-    var controller = new HomeController();
+    app.use(config.urls.root, router);
 
     router.route("/")
         .get(function (req, res, next) {
-            return controller.getAsResource(req, res, next);
+            var root = resourceUtils.createBaseUrl(req, "");
+            var resource = new hal.Resource({}, root + config.urls.root);
+            resource.link("dashboard", root + config.urls.dashboard);
+            resource.link("home", root + config.urls.home);
+            resource.link("registerCustomer", root + config.urls.customers);
+
+            res.format({
+                "application/hal+json": function () {
+                    res.json(resource);
+                }
+            });
         });
 }
 

@@ -1,0 +1,21 @@
+{
+  "id": "c50fe3f2-5432-1832-28a6-e1fc0d764ae0",
+  "name": "tb-root",
+  "timestamp": 1444553966234,
+  "requests": [
+    {
+      "collectionId": "c50fe3f2-5432-1832-28a6-e1fc0d764ae0",
+      "id": "e1bca79c-eb22-82b8-bbc0-50760a5b6b3d",
+      "name": "Get Root (JAL+Json)",
+      "description": "",
+      "url": "http://localhost:3000/root",
+      "method": "GET",
+      "headers": "Accept: application/hal+json\n",
+      "data": [],
+      "dataMode": "params",
+      "timestamp": 0,
+      "responses": [],
+      "version": 2
+    }
+  ]
+}
