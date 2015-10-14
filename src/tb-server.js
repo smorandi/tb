@@ -3,17 +3,19 @@
  */
 "use strict";
 
+var _ = require("lodash");
 var logger = require("./backend/utils/logger");
 var serverService = require("./backend/services/server.service");
 
-logger.info("starting server...");
-serverService.startServer(true, function (err) {
+
+var doClear = _.includes(process.argv, "--clear");
+var doPopulate = _.includes(process.argv, "--populate");
+
+serverService.startServer(doClear, doPopulate, function (err) {
     if (err) {
         logger.error("error while starting server\n", err);
         process.exit(1);
     }
-    else
-    {
-
+    else {
     }
 });

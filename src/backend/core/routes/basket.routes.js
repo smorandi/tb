@@ -13,7 +13,7 @@ var resourceUtils = require("../../utils/resourceUtils");
 var commandService = require("../../services/command.service.js");
 var requireLogin = require("../../services/auth.service.js").requireLogin;
 var requireAdmin = require("../../services/auth.service.js").requireAdmin;
-var requireCustomer = require("../../services/auth.service.js").requireAdmin;
+var requireCustomer = require("../../services/auth.service.js").requireCustomer;
 var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
 
 var basketsCollection = require("../../cqrs/viewmodels/baskets/collection");
@@ -71,7 +71,7 @@ function init(app) {
                 }
             });
         })
-        .post(requireCustomer, requireMatchingUserId, function (req, res, next) {
+        .post(requireCustomer, function (req, res, next) {
             commandService.send("addBasketItem").for("user").instance(req.params.customerId).with({payload: req.body}).go(function (evt) {
                 commandService.handleCommandRejection(evt, next, function () {
                     res.status(202).end();

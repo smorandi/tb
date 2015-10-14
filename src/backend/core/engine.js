@@ -89,6 +89,8 @@ function syncWithDB(callback) {
 }
 
 function init(callback) {
+    logger.info("initialize engine");
+
     var tasks = [
         function (callback) {
             logger.debug("syncronizing with DB...")

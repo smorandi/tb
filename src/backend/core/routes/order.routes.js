@@ -70,7 +70,7 @@ function init(app) {
                 }
             });
         })
-        .post(requireCustomer, requireMatchingUserId, function (req, res, next) {
+        .post(requireCustomer, function (req, res, next) {
             commandService.send("createOrder").for("user").instance(req.params.customerId).go(function (evt) {
                 commandService.handleCommandRejection(evt, next, function () {
                     res.status(202).end();

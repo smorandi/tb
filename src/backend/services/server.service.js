@@ -15,25 +15,17 @@ var server = http.createServer(express);
 var webSocketService = require("./websocket.service.js");
 var systemService = require("./system.service.js");
 
-function startServer(reInit, callback) {
+function startServer(clear, populate, callback) {
+    logger.info("starting the server");
+
     var bootstrap = [
         function (callback) {
-            logger.info("initialize the system...");
-            systemService.init(callback);
+            systemService.init(clear, populate, callback);
         },
         function (callback) {
-            logger.info("initialize websocket-service...");
             webSocketService.init(server, callback);
         }
     ];
-
-    if (reInit) {
-        bootstrap.push(
-            function (callback) {
-                logger.info("re-initialize system...");
-                systemService.reInit(callback);
-            });
-    }
 
     async.series(bootstrap, function (err) {
         if (err) {
@@ -57,7 +49,22 @@ function startServer(reInit, callback) {
                     logger.info(" |___/\\___|_|    \\_/ \\___|_|    |_|   \\__,_|_| |_|_| |_|_|_| |_|\\__, |");
                     logger.info("                                                                 __/ |");
                     logger.info("                                                                |___/ ");
-                    logger.info("server running. listening on " + bind)
+
+                    var startupString = "server started";
+                    if (clear && populate) {
+                        startupString += " (cleared & populated)"
+                    }
+                    else if (clear) {
+                        startupString += " (cleared)"
+                    }
+                    else if (populate) {
+                        startupString += " (populated)"
+                    }
+                    else {
+                        startupString += " (default)"
+                    }
+
+                    logger.info(startupString + " -> listening on " + bind)
                     callback(null);
                 }
             });
@@ -66,7 +73,12 @@ function startServer(reInit, callback) {
 }
 
 function stopServer(callback) {
-    server.close(callback);
+    logger.info("stoping the server");
+
+    server.close(function (err) {
+        logger.info("server stopped");
+        callback(err);
+    });
 }
 
 module.exports = {

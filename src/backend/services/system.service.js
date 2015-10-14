@@ -26,7 +26,9 @@ function changePriceReductionInterval(interval, callback) {
     engine.changePriceReductionInterval(interval, callback);
 }
 
-function init(callback) {
+function initCQRSServices(callback) {
+    logger.info("initialize CQRS services");
+
     var tasks = [
         function (callback) {
             logger.info("initialize domain-service");
@@ -39,57 +41,41 @@ function init(callback) {
         function (callback) {
             logger.info("initialize saga-service");
             sagaService.init(callback);
-        },
-        function (callback) {
-            // replay is not strictly necessary...only if we use an in-memory db
-            logger.info("replay events");
-            replay(callback);
-        },
-        function (callback) {
-            logger.info("initialize the engine");
-            engine.init(callback);
         }
     ];
 
-    async.series(tasks, function (err) {
-        callback(err)
-    });
-};
+    async.series(tasks, callback);
+}
 
 function clearAll(callback) {
-    logger.info("clearing everything...");
+    logger.info("clearing all databases");
 
     var tasks = [
         function (callback) {
-            domainService.clear(function (err) {
-                callback(err);
-            });
+            logger.info("clearing domain DB ");
+            domainService.clear(callback);
         },
         function (callback) {
-            sagaService.clear(function (err) {
-                callback(err);
-            });
+            logger.info("clearing saga DB ");
+            sagaService.clear(callback);
         },
         function (callback) {
-            denormalizerService.clear(function (err) {
-                callback(err);
-            });
+            logger.info("clearing denormalizer DB ");
+            denormalizerService.clear(callback);
         }
     ];
 
-    async.series(tasks, function (err) {
-        callback(err);
-    });
+    async.series(tasks, callback);
 };
 
 
 function replay(callback) {
+    logger.info("replay events");
+
     var tasks = [
         function (callback) {
             logger.trace("clearing view-models...");
-            denormalizerService.clear(function (err) {
-                callback(err);
-            });
+            denormalizerService.clear(callback);
         },
         function (callback) {
             logger.trace("retrieving events...");
@@ -100,43 +86,35 @@ function replay(callback) {
         function (evts, callback) {
             logger.trace("replaying events...");
             var eventPayload = _.map(evts, "payload");
-            denormalizerService.replay(eventPayload, function (err) {
-                callback(err);
-            });
+            denormalizerService.replay(eventPayload, callback);
         }
     ];
 
-    async.waterfall(tasks, function (err) {
-        callback(err);
-    });
+    async.waterfall(tasks, callback);
 }
 
 
 function reInit(callback) {
+    logger.info("re-initialize DB (with standard-set)");
+
     var tasks = [
         function (callback) {
-            clearAll(function (err) {
-                callback(err);
-            });
+            clearAll(callback);
         },
         function (callback) {
-            init(function (err) {
-                callback(err);
-            });
+            createStandardSet(callback);
         },
         function (callback) {
-            createStandardSet(function (err) {
-                callback(err);
-            });
-        }
+            engine.init(callback);
+        },
     ];
 
-    async.series(tasks, function (err) {
-        callback(err);
-    });
+    async.series(tasks, callback);
 };
 
 function createStandardSet(callback) {
+    logger.info("creating standard-set");
+
     var admin0 = new models.Admin("admin", "admin", "admin", "admin");
     var customer0 = new models.Customer("customer", "customer", "customer", "customer");
     var drink0 = new models.Drink("Gin Tonic", "a supi ginny tonic", "3dl", "alcoholic", ["gin", "alcoholic"], 10, 4, 15, 0.1);
@@ -148,15 +126,49 @@ function createStandardSet(callback) {
     commands.push(commandService.send("createDrink").for("drink").instance("drink0").with({payload: drink0}));
     commands.push(commandService.send("createDrink").for("drink").instance("drink1").with({payload: drink1}));
 
-    commandService.sendCommands(commands, function (err) {
-        callback(err);
-    });
+    commandService.sendCommands(commands, callback);
 }
+
+function init(clear, populate, callback) {
+    logger.info("initialize the system - clear=%s, populate=%s", clear, populate);
+
+    var tasks = [];
+
+    tasks.push(function (callback) {
+        initCQRSServices(callback);
+    });
+
+    // either we clear or replay...
+    if (clear) {
+        tasks.push(function (callback) {
+            clearAll(callback);
+        });
+    }
+    else {
+        tasks.push(function (callback) {
+            // replay is actually not strictly necessary...only if we use an in-memory db
+            // (however, it does not hurt either, performance loss is neglectible)
+            replay(callback);
+        });
+    }
+
+    if (populate) {
+        tasks.push(function (callback) {
+            createStandardSet(callback);
+        });
+    }
+
+    tasks.push(function (callback) {
+        engine.init(callback);
+    });
+
+    async.series(tasks, callback);
+};
 
 module.exports = {
     init: init,
-    replay: replay,
     reInit: reInit,
+    replay: replay,
     startEngine: startEngine,
     stopEngine: stopEngine,
     changePriceReductionInterval: changePriceReductionInterval,

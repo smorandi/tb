@@ -32,6 +32,8 @@ function broadcast(channel, data) {
 }
 
 function init(server, callback) {
+    logger.info("initialize websocket-service");
+
     webSocket = socketIO.listen(server);
     webSocket.on("connection", onWebsocketConnection);
     callback(null);
