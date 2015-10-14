@@ -46,16 +46,13 @@ var HomeController = (function () {
 
     HomeController.prototype.getAsResource = function (req, res, next) {
         var _this = this;
-        res.format({
-            "application/hal+json": function () {
-                return _this.createResource(req, function (err, resource) {
-                    if (err) {
-                        next(err);
-                    }
-                    else {
-                        res.json(resource);
-                    }
-                });
+
+        _this.createResource(req, function (err, resource) {
+            if (err) {
+                next(err);
+            }
+            else {
+                res.form(resource, null);
             }
         });
     };

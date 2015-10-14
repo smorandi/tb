@@ -11,14 +11,15 @@ var logger = require("../../utils/logger");
 var config = require("../../config");
 var resourceUtils = require("../../utils/resourceUtils");
 var commandService = require("../../services/command.service.js");
-var requireLogin = require("../../services/auth.service.js").requireLogin;
-var requireAdmin = require("../../services/auth.service.js").requireAdmin;
-var requireCustomer = require("../../services/auth.service.js").requireCustomer;
-var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
+
+var requireLogin = require("../middlewares/auth.middleware").requireLogin;
+var requireAdmin = require("../middlewares/auth.middleware").requireAdmin;
+var requireCustomer = require("../middlewares/auth.middleware").requireCustomer;
+var requireMatchingUserId = require("../middlewares/auth.middleware").requireMatchingUserId;
 
 var basketsCollection = require("../../cqrs/viewmodels/baskets/collection");
 
-function init(app) {
+module.exports = function (app) {
     logger.trace("initializing basket routes...");
     app.use(config.urls.baskets, router);
 
@@ -30,19 +31,9 @@ function init(app) {
         .get(requireAdmin, function (req, res, next) {
             var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
             basketsCollection.findViewModels({}, function (err, docs) {
-                if (err) {
-                    return next(err);
-                }
-                else {
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createCollectionResource(baseUrl, docs));
-                        },
-                        "application/json": function () {
-                            res.json(docs);
-                        }
-                    });
-                }
+                err ?
+                    next(err) :
+                    res.form(resourceUtils.createCollectionResource(baseUrl, docs), docs);
             });
         });
 
@@ -58,25 +49,18 @@ function init(app) {
                 else {
                     var basketItems = docs[0].get("basket");
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId);
-                    res.format({
-                        "application/hal+json": function () {
-                            var resource = resourceUtils.createCollectionResource(baseUrl, basketItems, "c", "d");
-                            resource.link("createOrder", resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId));
-                            res.json(resource);
-                        },
-                        "application/json": function () {
-                            res.json(basketItems);
-                        }
-                    });
+                    res.form(function () {
+                        var resource = resourceUtils.createCollectionResource(baseUrl, basketItems, "c", "d");
+                        resource.link("createOrder", resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId));
+                        return resource;
+                    }, basketItems);
                 }
             });
         })
         .post(requireCustomer, function (req, res, next) {
-            commandService.send("addBasketItem").for("user").instance(req.params.customerId).with({payload: req.body}).go(function (evt) {
-                commandService.handleCommandRejection(evt, next, function () {
-                    res.status(202).end();
-                });
-            });
+            commandService.send("addBasketItem").for("user").instance(req.params.customerId).with({payload: req.body}).go(res.handleEvent(function (evt) {
+                res.status(202).end();
+            }));
         });
 
     router.route("/:customerId/:basketItemId")
@@ -92,23 +76,13 @@ function init(app) {
                     var basketItems = docs[0].get("basket");
                     var basketItem = _.find(basketItems, "item.id", req.params.basketItemId);
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId + "/" + req.params.basketItemId);
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createResource(baseUrl, basketItem, "d"));
-                        },
-                        "application/json": function () {
-                            res.json(basketItem);
-                        }
-                    });
+                    res.form(resourceUtils.createResource(baseUrl, basketItem, "d"), basketItem);
                 }
             });
         })
         .delete(function (req, res, next) {
-            commandService.send("removeBasketItem").for("user").instance(req.params.customerId).with({payload: req.params.basketItemId}).go(function (evt) {
-                commandService.handleCommandRejection(evt, next, function () {
-                    res.status(204).end();
-                });
-            });
+            commandService.send("removeBasketItem").for("user").instance(req.params.customerId).with({payload: req.params.basketItemId}).go(res.handleEvent(function (evt) {
+                res.status(204).end();
+            }));
         });
 }
-module.exports = init;

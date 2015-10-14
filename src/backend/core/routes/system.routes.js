@@ -11,13 +11,14 @@ var logger = require("../../utils/logger");
 var config = require("../../config");
 var resourceUtils = require("../../utils/resourceUtils");
 var commandService = require("../../services/command.service.js");
-var requireLogin = require("../../services/auth.service.js").requireLogin;
-var requireAdmin = require("../../services/auth.service.js").requireAdmin;
-var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
+
+var requireLogin = require("../middlewares/auth.middleware").requireLogin;
+var requireAdmin = require("../middlewares/auth.middleware").requireAdmin;
+var requireMatchingUserId = require("../middlewares/auth.middleware").requireMatchingUserId;
 
 var SystemController = require("../controllers/system.controller.js");
 
-function init(app) {
+module.exports = function (app) {
     logger.trace("initializing system routes...");
 
     app.use(config.urls.system, router);
@@ -51,5 +52,3 @@ function init(app) {
         controller.reInitialize(req, res, next);
     });
 }
-
-module.exports = init;

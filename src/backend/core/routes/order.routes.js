@@ -11,14 +11,15 @@ var logger = require("../../utils/logger");
 var config = require("../../config");
 var resourceUtils = require("../../utils/resourceUtils");
 var commandService = require("../../services/command.service.js");
-var requireLogin = require("../../services/auth.service.js").requireLogin;
-var requireAdmin = require("../../services/auth.service.js").requireAdmin;
-var requireCustomer = require("../../services/auth.service.js").requireCustomer;
-var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
+
+var requireLogin = require("../middlewares/auth.middleware").requireLogin;
+var requireAdmin = require("../middlewares/auth.middleware").requireAdmin;
+var requireCustomer = require("../middlewares/auth.middleware").requireCustomer;
+var requireMatchingUserId = require("../middlewares/auth.middleware").requireMatchingUserId;
 
 var ordersCollection = require("../../cqrs/viewmodels/orders/collection");
 
-function init(app) {
+module.exports = function (app) {
     logger.trace("initializing order routes...");
 
     app.use(config.urls.orders, router);
@@ -35,14 +36,7 @@ function init(app) {
                 }
                 else {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.orders);
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createCollectionResource(baseUrl, docs));
-                        },
-                        "application/json": function () {
-                            res.json(docs);
-                        }
-                    });
+                    res.form(resourceUtils.createCollectionResource(baseUrl, docs), docs);
                 }
             });
         });
@@ -59,24 +53,13 @@ function init(app) {
                 else {
                     var orders = docs[0].get("orders");
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId);
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createCollectionResource(baseUrl, orders));
-                        },
-                        "application/json": function () {
-                            res.json(orders);
-                        }
-                    });
+                    res.form(resourceUtils.createCollectionResource(baseUrl, orders), orders);
                 }
             });
         })
         .post(requireCustomer, function (req, res, next) {
-            commandService.send("createOrder").for("user").instance(req.params.customerId).go(function (evt) {
-                commandService.handleCommandRejection(evt, next, function () {
-                    res.status(202).end();
-                });
-            });
+            commandService.send("createOrder").for("user").instance(req.params.customerId).go(res.handleEvent(function (evt) {
+                res.status(202).end();
+            }));
         });
 }
-
-module.exports = init;

@@ -15,7 +15,7 @@ var requireLogin = require("../../services/auth.service.js").requireLogin;
 var requireAdmin = require("../../services/auth.service.js").requireAdmin;
 var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
 
-function init(app) {
+module.exports = function (app) {
     logger.trace("initializing root routes...");
 
     app.use(config.urls.root, router);
@@ -28,12 +28,6 @@ function init(app) {
             resource.link("home", root + config.urls.home);
             resource.link("registerCustomer", root + config.urls.customers);
 
-            res.format({
-                "application/hal+json": function () {
-                    res.json(resource);
-                }
-            });
+            res.form(resource);
         });
 }
-
-module.exports = init;

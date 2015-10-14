@@ -10,13 +10,14 @@ var logger = require("../../utils/logger");
 var config = require("../../config");
 var resourceUtils = require("../../utils/resourceUtils");
 var commandService = require("../../services/command.service.js");
-var requireLogin = require("../../services/auth.service.js").requireLogin;
-var requireAdmin = require("../../services/auth.service.js").requireAdmin;
-var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
+
+var requireLogin = require("../middlewares/auth.middleware").requireLogin;
+var requireAdmin = require("../middlewares/auth.middleware").requireAdmin;
+var requireMatchingUserId = require("../middlewares/auth.middleware").requireMatchingUserId;
 
 var customersCollection = require("../../cqrs/viewmodels/customers/collection");
 
-function init(app) {
+module.exports = function (app) {
     logger.trace("initializing customer routes...");
 
     app.use(config.urls.customers, router);
@@ -33,28 +34,19 @@ function init(app) {
                 }
                 else {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers);
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud"));
-                        },
-                        "application/json": function () {
-                            res.json(docs);
-                        }
-                    });
+                    res.form(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud"), docs);
                 }
             });
         })
         .post(function (req, res, next) {
-            commandService.send("createCustomer").for("user").with({payload: req.body}).go(function (evt) {
-                commandService.handleCommandRejection(evt, next, function () {
-                    res.status(202).end();
-                });
-            });
+            commandService.send("createCustomer").for("user").with({payload: req.body}).go(res.handleEvent(function (evt) {
+                res.status(202).end();
+            }));
         });
 
     router.route("/:id")
         .get(requireMatchingUserId, function (req, res, next) {
-            customersCollection.findViewModels({id: req.params.id}, function (err, docs) {
+            customersCollection.findViewModels({id: req.params.id}, {limit: 1}, function (err, docs) {
                 if (err) {
                     next(err);
                 }
@@ -63,39 +55,19 @@ function init(app) {
                 }
                 else {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers + "/" + req.params.id);
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createResource(baseUrl, docs[0], "ud"));
-                        },
-                        "application/json": function () {
-                            res.json(docs[0]);
-                        }
-                    });
+                    res.form(resourceUtils.createResource(baseUrl, docs[0], "ud"), docs[0]);
                 }
             });
         })
         .put(function (req, res, next) {
-            commandService.send("changeUser").for("user").instance(req.params.id).with({payload: req.body}).go(function (evt) {
-                commandService.handleCommandRejection(evt, next, function () {
-                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers);
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud"));
-                        },
-                        "application/json": function () {
-                            res.json(evt.payload);
-                        }
-                    });
-                });
-            });
+            commandService.send("changeUser").for("user").instance(req.params.id).with({payload: req.body}).go(res.handleEvent(function (evt) {
+                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers);
+                res.form(resourceUtils.createResource(baseUrl, evt.payload, "ud"), evt.payload);
+            }));
         })
         .delete(function (req, res, next) {
-            commandService.send("deleteUser").for("user").instance(req.params.id).go(function (evt) {
-                commandService.handleCommandRejection(evt, next, function () {
-                    res.status(204).end();
-                });
-            });
+            commandService.send("deleteUser").for("user").instance(req.params.id).go(res.handleEvent(function (evt) {
+                res.status(204).end();
+            }));
         });
 }
-
-module.exports = init;

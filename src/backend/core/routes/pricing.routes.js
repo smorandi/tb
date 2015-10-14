@@ -11,13 +11,14 @@ var logger = require("../../utils/logger");
 var config = require("../../config");
 var resourceUtils = require("../../utils/resourceUtils");
 var commandService = require("../../services/command.service.js");
-var requireLogin = require("../../services/auth.service.js").requireLogin;
-var requireAdmin = require("../../services/auth.service.js").requireAdmin;
-var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
+
+var requireLogin = require("../middlewares/auth.middleware").requireLogin;
+var requireAdmin = require("../middlewares/auth.middleware").requireAdmin;
+var requireMatchingUserId = require("../middlewares/auth.middleware").requireMatchingUserId;
 
 var pricingCollection = require("../../cqrs/viewmodels/pricing/collection");
 
-function init(app) {
+module.exports = function (app) {
     logger.trace("initializing pricing routes...");
 
     app.use(config.urls.pricing, router);
@@ -27,14 +28,8 @@ function init(app) {
 
     router.route("/")
         .get(function (req, res, next) {
-            res.format({
-                "application/json": function () {
-                    pricingCollection.findViewModels({}, function (err, docs) {
-                        res.json(_.invoke(docs, "toJSON"));
-                    });
-                }
+            pricingCollection.findViewModels({}, function (err, docs) {
+                res.json(_.invoke(docs, "toJSON"));
             });
         });
 }
-
-module.exports = init;

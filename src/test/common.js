@@ -7,6 +7,13 @@ var config = require("../backend/config");
 var url = require("url");
 var path = require("path");
 
+
+var traverson = require("traverson");
+var JsonHalAdapter = require("traverson-hal");
+// register the traverson-hal plug-in for media type "application/hal+json"
+traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
+exports.traverson = traverson;
+
 var serverUrl = "http://" + config.server.host + ":" + config.server.port + "/";
 
 exports.rootUrl = url.resolve(serverUrl, config.urls.root);

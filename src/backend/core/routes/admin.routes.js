@@ -12,11 +12,12 @@ var config = require("../../config");
 var resourceUtils = require("../../utils/resourceUtils");
 var adminsCollection = require("../../cqrs/viewmodels/admins/collection");
 var commandService = require("../../services/command.service.js");
-var requireLogin = require("../../services/auth.service.js").requireLogin;
-var requireAdmin = require("../../services/auth.service.js").requireAdmin;
-var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
 
-function init(app) {
+var requireLogin = require("../middlewares/auth.middleware").requireLogin;
+var requireAdmin = require("../middlewares/auth.middleware").requireAdmin;
+var requireMatchingUserId = require("../middlewares/auth.middleware").requireMatchingUserId;
+
+module.exports = function (app) {
     logger.trace("initializing admin routes...");
     app.use(config.urls.admins, router);
 
@@ -31,23 +32,14 @@ function init(app) {
                 }
                 else {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud"));
-                        },
-                        "application/json": function () {
-                            res.json(docs);
-                        }
-                    });
+                    res.form(resourceUtils.createCollectionResource(baseUrl, docs, "c", "ud"), docs);
                 }
             });
         })
         .post(function (req, res, next) {
-            commandService.send("createAdmin").for("user").with({payload: req.body}).go(function (evt) {
-                commandService.handleCommandRejection(evt, next, function () {
-                    res.status(202).end();
-                });
-            });
+            commandService.send("createAdmin").for("user").with({payload: req.body}).go(res.handleEvent(function (evt) {
+                res.status(202).end();
+            }));
         });
 
     router.route("/:id")
@@ -61,40 +53,19 @@ function init(app) {
                 }
                 else {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins + "/" + req.params.id);
-                    var resource = _.isEmpty(docs) ? null : docs[0];
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createResource(baseUrl, resource, "ud"));
-                        },
-                        "application/json": function () {
-                            res.json(resource);
-                        }
-                    });
+                    res.form(resourceUtils.createResource(baseUrl, docs[0], "ud"), docs[0]);
                 }
             });
         })
         .put(function (req, res, next) {
-            commandService.send("changeUser").for("user").instance(req.params.id).with({payload: req.body}).go(function (evt) {
-                commandService.handleCommandRejection(evt, next, function () {
-                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
-                    res.format({
-                        "application/hal+json": function () {
-                            res.json(resourceUtils.createResource(baseUrl, evt.payload, "ud"));
-                        },
-                        "application/json": function () {
-                            res.json(evt.payload);
-                        }
-                    });
-                });
-            });
+            commandService.send("changeUser").for("user").instance(req.params.id).with({payload: req.body}).go(res.handleEvent(function (evt) {
+                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
+                res.form(resourceUtils.createResource(baseUrl, evt.payload, "ud"), evt.payload);
+            }));
         })
         .delete(function (req, res, next) {
-            commandService.send("deleteUser").for("user").instance(req.params.id).go(function (evt) {
-                commandService.handleCommandRejection(evt, next, function () {
-                    res.status(204).end();
-                });
-            });
+            commandService.send("deleteUser").for("user").instance(req.params.id).go(res.handleEvent(function (evt) {
+                res.status(204).end();
+            }));
         });
 }
-
-module.exports = init;

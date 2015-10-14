@@ -3,6 +3,8 @@
  */
 "use strict";
 
+var helmet = require("helmet");
+var cors = require("cors");
 var express = require("express");
 var path = require("path");
 var favicon = require("serve-favicon");
@@ -12,8 +14,9 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var utils = require("./../utils/utils");
 var config = require("./../config");
-var helmet = require("helmet");
-var cors = require("cors");
+
+var formMiddleware = require("./middlewares/form.middleware.js");
+var cmdevtMiddleware = require("./middlewares/cmdevt.middleware.js");
 
 function init() {
     var app = express();
@@ -51,6 +54,9 @@ function init() {
     app.disable("x-powered-by");
     app.use(cookieParser());
     app.use(express.static(path.join(config.serverRoot, "/public")));
+
+    app.use(formMiddleware);
+    app.use(cmdevtMiddleware);
 
     // Globbing routing files
     var routesFiles = utils.getGlobbedFiles(path.join(__dirname, "/routes/**/*.js"));

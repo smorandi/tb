@@ -18,6 +18,7 @@ after(function (done) {
     serverService.stopServer(done);
 });
 
+
 common.importTest("server-tests", __dirname, "./server/server.test");
 common.importTest("resource-tests", __dirname, "./resources/root.test");
 common.importTest("customer-tests", __dirname, "./customer/customer.test");

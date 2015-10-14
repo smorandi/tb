@@ -17,20 +17,15 @@ var requireMatchingUserId = require("../../services/auth.service.js").requireMat
 
 var dashboardCollection = require("../../cqrs/viewmodels/dashboard/collection");
 
-function init(app) {
+module.exports = function (app) {
     logger.trace("initializing dashboard routes...");
 
     app.use(config.urls.dashboard, router);
 
     router.route("/")
         .get(function (req, res, next) {
-            res.format({
-                "application/json": function () {
-                    dashboardCollection.findViewModels({}, function (err, docs) {
-                        err ? next(err) : res.json(_.invoke(docs, "toJSON"));
-                    });
-                }
+            dashboardCollection.findViewModels({}, function (err, docs) {
+                err ? next(err) : res.json(_.invoke(docs, "toJSON"));
             });
         });
 }
-module.exports = init;

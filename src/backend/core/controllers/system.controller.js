@@ -43,14 +43,7 @@ var SystemController = (function () {
                 next(err);
             }
             else {
-                res.format({
-                    "application/hal+json": function () {
-                        return res.json(resource);
-                    },
-                    "application/json": function () {
-                        return res.json(resource);
-                    }
-                });
+                res.form(resource, resource);
             }
         });
     };

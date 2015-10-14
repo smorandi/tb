@@ -31,6 +31,16 @@ cqrs_cmdService.handleCommandRejection = function (event, next, fn) {
     }
 }
 
+cqrs_cmdService.handler = function (event) {
+    if (event[config.getDefaultEvtDefinitions().name] === "rejectedCommand") {
+        next(event[config.getDefaultEvtDefinitions().payload].reason);
+    }
+    else {
+        fn();
+    }
+}
+
+
 cqrs_cmdService.sendCommands = function (sendCommandFns, callback) {
     async.eachSeries(sendCommandFns, function (cmd, callback) {
             cmd.go(function (event) {
