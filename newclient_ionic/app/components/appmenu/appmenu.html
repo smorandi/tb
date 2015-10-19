@@ -1,0 +1,40 @@
+<ion-side-menus>
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-dark">
+            <ion-nav-back-button class="button-icon ion-arrow-left-c">
+            </ion-nav-back-button>
+            <ion-nav-title>{{appmenu.title}}</ion-nav-title>
+            <ion-nav-buttons side="primary">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"ng-click="appmenu.toggleLeft()"></button>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right">
+                <div ng-switch on="appmenu.state">
+                    <div ng-switch-when="loggedOn">
+                        <button class="button button-icon icon ion-person"></button>
+                        <button class="button button-icon icon ion-log-out"></button>
+                    </div>
+                    <div ng-switch-when="loggedOff">
+                        <button class="button button-icon icon ion-person-add"></button>
+                        <button class="button button-icon icon ion-log-in" ng-click="appmenu.klickOn()"></button>
+                    </div>
+                </div>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+
+        <ion-nav-view name="pageContent"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <!--<ion-side-menu expose-aside-when="large" side="left">-->
+    <ion-side-menu side="left">
+        <ion-header-bar class="bar-positive">
+            <h1 class="title">Menu</h1>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list">
+                <div class="item" ng-repeat="menuitem in appmenu.list.menuList">
+                    <button class="button button-clear button-dark button-full" ui-sref="{{menuitem.href}}">{{menuitem.name}}</button>
+                </div>
+            </div>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

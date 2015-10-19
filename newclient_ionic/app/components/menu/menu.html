@@ -1,0 +1,15 @@
+<ion-tabs class="tabs-dark tabs-icon-only">
+
+    <ion-tab title="Profil" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline" ui-sref="appMenu.customermenu.profil({ id: menu.customer })">
+        <ion-nav-view name="profil-tab"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="Orders" icon-on="ion-social-buffer" icon-off="ion-social-buffer-outline" ui-sref="appMenu.customermenu.orders({ id: menu.customer })">
+        <ion-nav-view name="orders-tab"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="Basket" icon-on="ion-ios-cart" icon-off="ion-ios-cart-outline" ui-sref="appMenu.customermenu.basket({ id: menu.customer })">
+        <ion-nav-view name="basket-tab"></ion-nav-view>
+    </ion-tab>
+
+</ion-tabs>

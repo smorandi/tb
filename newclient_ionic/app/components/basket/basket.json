@@ -1,0 +1,20 @@
+[
+  {
+    "id" : "basket1",
+    "name" : "bier",
+    "price" : "1.00",
+    "nr" : "1"
+  },
+  {
+    "id" : "basket2",
+    "name" : "wasser",
+    "price" : "1.00",
+    "nr" : "2"
+  },
+  {
+    "id" : "basket3",
+    "name" : "wein",
+    "price" : "1.00",
+    "nr" : "2"
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "_id": "56056bbb3b91418c1fe4d0fd",
+    "id": "56056bbb3b91418c1fe4d0fd",
+    "name": "Test",
+    "category": "alcoholic",
+    "tags": [],
+    "quantity": "5",
+    "tick": {
+      "price": 1,
+      "delta": 0,
+      "reason": "reset",
+      "timestamp": "2015-09-28T05:02:20.931Z"
+    },
+    "price": 1,
+    "lowestPrice": 1,
+    "highestPrice": 1,
+    "allTimeHigh": 1,
+    "allTimeLow": 1,
+    "commitStamp": 1443416540959,
+    "_hash": "5608c9dce2a87fe01dedfc59"
+  },
+  {
+    "_id": "56056bbb3b91418c1fe4d0fd",
+    "id": "56056bbb3b91418c1fe4d0fd",
+    "name": "Test",
+    "category": "alcoholic",
+    "tags": [],
+    "quantity": "5",
+    "tick": {
+      "price": 1,
+      "delta": 0,
+      "reason": "reset",
+      "timestamp": "2015-09-28T05:02:20.931Z"
+    },
+    "price": 1,
+    "lowestPrice": 1,
+    "highestPrice": 1,
+    "allTimeHigh": 1,
+    "allTimeLow": 1,
+    "commitStamp": 1443416540959,
+    "_hash": "5608c9dce2a87fe01dedfc59"
+  },
+  {
+    "_id": "56056bbb3b91418c1fe4d0fd",
+    "id": "56056bbb3b91418c1fe4d0fd",
+    "name": "Test",
+    "category": "alcoholic",
+    "tags": [],
+    "quantity": "5",
+    "tick": {
+      "price": 1,
+      "delta": 0,
+      "reason": "reset",
+      "timestamp": "2015-09-28T05:02:20.931Z"
+    },
+    "price": 1,
+    "lowestPrice": 1,
+    "highestPrice": 1,
+    "allTimeHigh": 1,
+    "allTimeLow": 1,
+    "commitStamp": 1443416540959,
+    "_hash": "5608c9dce2a87fe01dedfc59"
+  }
+]

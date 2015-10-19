@@ -1,0 +1,26 @@
+<ion-modal-view ng-controller="LoginController as login">
+    <ion-header-bar>
+        <h1 class="title">{{login.title}}</h1>
+        <button class="button button-clear" ng-click="login.loginClose()"><span class="icon ion-close"></span>
+        </button>
+    </ion-header-bar>
+    <ion-content>
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Username</span>
+                    <input type="text" ng-model="login.user.name">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Password</span>
+                    <input type="password" ng-model="login.user.password">
+                </label>
+            </div>
+            <div class="padding">
+                <button class="button button-block button-positive" ng-click="login.checkUser()">
+                    log in
+                </button>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>
+

@@ -1,0 +1,79 @@
+<ion-view cache-view="false">
+    <ion-content>
+        <div class="list card" ng-repeat="item in dashboard.list.data">
+            <div class="item item-avatar">
+                <div class="row">
+                    <div class="col-25">
+                        <i class="icon ion-arrow-graph-up-right"></i>
+                    </div>
+                    <div class="col-50 col-center">
+                        <h2 class="-align-center">{{item.name}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="item item-body">
+                <div class="row">
+                    <div class="col-10">
+                        <i class="icon ion-android-arrow-dropup"></i>
+                    </div>
+                    <div class="col-25">
+                        <p>highest price</p>
+                    </div>
+                    <div class="col-50">
+                        <p>{{item.highestPrice}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <i class="icon ion-android-arrow-dropdown"></i>
+                    </div>
+                    <div class="col-25">
+                        <p>lowest price</p>
+                    </div>
+                    <div class="col-50">
+                        <p>{{item.lowestPrice}}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-10">
+                        <i class="icon ion-android-arrow-dropup"></i>
+                    </div>
+                    <div class="col-25">
+                        <p>all time highest price</p>
+                    </div>
+                    <div class="col-50 col-center">
+                        <p>{{item.allTimeHigh}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <i class="icon ion-android-arrow-dropdown"></i>
+                    </div>
+                    <div class="col-25">
+                        <p>all time lowest price</p>
+                    </div>
+                    <div class="col-50 col-center">
+                        <p>{{item.allTimeLow}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#">
+                    <i class="ion-android-cart"></i>
+                    add
+                </a>
+                <a class="tab-item" href="#">
+                    <i class="icon ion-chatbox"></i>
+                    comment
+                </a>
+                <a class="tab-item" href="#">
+                    <i class="icon ion-ios-eye-outline"></i>
+                    watch
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+
+
