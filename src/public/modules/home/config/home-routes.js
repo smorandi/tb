@@ -5,24 +5,26 @@ var home;
     "use strict";
     angular.module("home").config(["$stateProvider", "$urlRouterProvider",
         function ($stateProvider, $urlRouterProvider) {
-            // Redirect to home view when route not found
-            $urlRouterProvider.otherwise("/dashboard");
             // Home state routing
             $stateProvider.
-                state("home", {
+                state("root.home", {
                 abstract: true,
-                url: "/",
+                url: "/home",
                 templateUrl: "modules/home/views/home.html",
                 controller: "HomeController",
                 controllerAs: "vm",
                 resolve: {
-                    apiService: "apiService",
-                    homeResource: function ($log, apiService) {
+                    homeResource: function ($log, rootResource) {
+                        if (!rootResource.$has("home")) {
+                            $log.info("no home link found. returning empty array...");
+                            return [];
+                        }
                         $log.info("resolving home-resource...");
-                        return apiService.$load().then(function (res) {
-                            $log.info("home-resource resolved...");
+                        var x = rootResource.$get("home").then(function (res) {
+                            $log.info("drinks-resource resolved...");
                             return res;
                         });
+                        return x;
                     }
                 }
             });

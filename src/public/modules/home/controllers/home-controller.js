@@ -11,66 +11,19 @@ var home;
         return Page;
     })();
     var HomeController = (function () {
-        function HomeController($log, $location, $scope, $state, socketService, homeResource, dashboard) {
+        function HomeController($log, $location, $scope, $state, socketService, homeResource) {
             this.$log = $log;
             this.$location = $location;
             this.$scope = $scope;
             this.$state = $state;
             this.socketService = socketService;
             this.homeResource = homeResource;
-            this.dashboard = dashboard;
-            //public pages:{ [key: string]: IPage; } = {};
-            this.pages = [];
             $log.info("HomeController called with client-url: '" + $location.path() + "'");
-            //$scope["dashboard"] = ["der fisch"];
-            if (this.homeResource.$has("admin")) {
-                this.pushPage("admin");
-            }
-            if (this.homeResource.$has("drinks")) {
-                this.pushPage("drinks");
-            }
-            if (this.homeResource.$has("customers")) {
-                this.pushPage("customers");
-            }
-            //if (this.homeResource.$has("dashboard")) {
-            //    this.homeResource.$get("dashboard").then(res => {
-            //        $log.info("dashboard resolved...");
-            //        $scope["dashboard"] = res;
-            //    });
-            //}
-            //socketService.on("dashboard", data => {
-            //    $log.info("HomeController --> " + JSON.stringify(data));
-            //    $scope["dashboard"] = data;
-            //});
         }
-        HomeController.getPageForRel = function (rel) {
-            switch (rel) {
-                case "admin":
-                    return new Page("Admin", "home.admin");
-                case "drinks":
-                    return new Page("Drinks", "home.drinks.overview.list");
-                case "customers":
-                    return new Page("Customers", "home.customers.overview.list");
-                default:
-                    return null;
-            }
-        };
-        HomeController.prototype.pushPage = function (rel) {
-            var page = HomeController.getPageForRel(rel);
-            if (page === null) {
-                this.$log.warn("no page for: " + rel);
-            }
-            else {
-                this.$log.warn("pushing page: " + rel + " -> " + page.name + "@" + page.state);
-                this.pages.push(page);
-            }
-            return page;
-        };
         HomeController.prototype.go = function (page) {
             this.$state.go(page.state);
         };
-        //public dashboard = [];
-        HomeController.$inject = ["$log", "$location", "$scope", "$state", "socketService", "homeResource", "dashboard"];
+        HomeController.$inject = ["$log", "$location", "$scope", "$state", "socketService", "homeResource"];
         return HomeController;
     })();
     angular.module("home").controller("HomeController", HomeController);

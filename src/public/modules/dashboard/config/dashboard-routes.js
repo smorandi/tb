@@ -4,16 +4,26 @@ var home;
 (function (home) {
     "use strict";
     angular.module("dashboard").config(function ($stateProvider) {
-        $stateProvider.state("home.dashboard", {
-            url: "dashboard",
+        $stateProvider.state("root.dashboard", {
+            url: "/dashboard",
             views: {
-                "@home": {
+                "@root": {
                     templateUrl: "modules/dashboard/views/dashboard.html",
                     controller: "DashboardController",
-                    controllerAs: "vm",
+                    controllerAs: "vm"
                 }
             },
-            resolve: {},
+            resolve: {}
+        }).state("root.home.dashboard", {
+            url: "/dashboard",
+            views: {
+                "@root": {
+                    templateUrl: "modules/dashboard/views/dashboard.html",
+                    controller: "DashboardController",
+                    controllerAs: "vm"
+                }
+            },
+            resolve: {}
         });
     });
 })(home || (home = {}));

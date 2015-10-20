@@ -42,4 +42,12 @@ function getGlobbedFiles(globPatterns, removeRoot) {
     return output;
 };
 
-module.exports = {getGlobbedFiles: getGlobbedFiles};
+function getArgValue(argKey, def) {
+    var ak  = argKey + "=";
+    var x = _.findWhere(process.argv, ak);
+    var pattern = new RegExp("(^"+ak+")(.*)","");
+
+    return x ? pattern.exec(x)[2] : def;
+}
+
+module.exports = {getGlobbedFiles: getGlobbedFiles, getArgValue: getArgValue};

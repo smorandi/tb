@@ -5,9 +5,10 @@
 
 var path = require("path");
 var _ = require("lodash");
+var utils = require("./utils/utils");
 
 exports.logger = {
-    level: "info",
+    level: utils.getArgValue("--level", "info"),
     connectLevel: "debug"
 };
 
@@ -22,7 +23,7 @@ exports.app = {
     keywords: "xxx"
 };
 
-exports.server= {
+exports.server = {
     port: process.env.PORT || 3000,
     host: "localhost",
     backlog: 511,
