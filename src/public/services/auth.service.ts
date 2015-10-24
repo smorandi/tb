@@ -12,6 +12,11 @@ module services {
             this.token = this.$window.btoa(username + ":" + password);
         }
 
+        public clearToken() {
+            this.$log.info("token cleared");
+            this.token = null;
+        }
+
         public getToken():string {
             return this.token;
         }

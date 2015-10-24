@@ -19,8 +19,8 @@ module modules {
         .factory("authService", ($window, $log) => {
             return new services.AuthService($window, $log);
         })
-        .factory("pageService", $log => {
-            return new services.PageService($log);
+        .factory("menuService", ($log, $state, authService) => {
+            return new services.MenuService($log, $state, authService);
         })
         .factory("myHttpInterceptor", ($q, authService:services.AuthService) => {
             return {
@@ -54,10 +54,22 @@ module modules {
             $httpProvider.interceptors.push("myHttpInterceptor");
         }])
         .directive("header", directives.HeaderDirective)
-        .run(($log, $rootScope, $injector, utilsService:services.UtilsService, authService:services.AuthService) => {
+        .run(($log, $rootScope, $state, utilsService:services.UtilsService, authService:services.AuthService) => {
             $rootScope.$on("$stateChangeStart",
                 (event, toState, toParams, fromState, fromParams) => {
                     $log.info("transition: " + fromState.name + " -> " + toState.name);
+                    //if (toState.redirectTo) {
+                    //    $log.info("redirectTo: " + toState.redirectTo);
+                    //    event.preventDefault();
+                    //    $state.go(toState.redirectTo, toParams)
+                    //}
+                });
+            $rootScope.$on('$stateChangeSuccess',
+                function (event, toState, toParams, fromState, fromParams) {
+                    if (toState.redirectTo) {
+                        $log.info("redirectTo: " + toState.redirectTo);
+                        $state.go(toState.redirectTo, toParams)
+                    }
                 });
             $rootScope.$on("$stateChangeError",
                 (event, toState, toParams, fromState, fromParams, error) => {
@@ -66,7 +78,7 @@ module modules {
                     if (error.status === 401) {
                         utilsService.alert("NOT Authorized! calling with token now...");
                         authService.setToken("admin", "admin");
-                        $injector.get("$state").go(toState, toParams, {relative: fromState});
+                        $state.go(toState, toParams, {relative: fromState});
                     }
                     else {
                         utilsService.alert(error);

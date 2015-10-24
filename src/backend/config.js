@@ -35,6 +35,7 @@ exports.urls = {
     drinks: "/drinks",
     customers: "/customers",
     admins: "/admins",
+    users: "/users",
     baskets: "/baskets",
     orders: "/orders",
     system: "/system",

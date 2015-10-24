@@ -5,23 +5,21 @@ module modules {
 
     angular.module("app").config(["$stateProvider", "$urlRouterProvider",
         ($stateProvider, $urlRouterProvider) => {
-            // Redirect to home view when route not found
             $urlRouterProvider.otherwise("/dashboard");
 
-            // Home state routing
             $stateProvider
                 .state("root", {
-                    abstract: true,
                     url: "",
                     templateUrl: "modules/root/root.html",
+                    abstract: true,
                     resolve: {
                         apiService: "apiService",
-                        pageService: "pageService",
-                        rootResource: ($log, apiService:services.ApiService, pageService:services.PageService) => {
+                        menuService: "menuService",
+                        rootResource: ($log, apiService:services.ApiService, menuService:services.MenuService) => {
                             $log.info("resolving root-resource...");
                             return apiService.$load().then(res => {
                                 $log.info("root-resource resolved...");
-                                pageService.setResource(res);
+                                menuService.setResource(res);
                                 return res;
                             });
                         }
@@ -38,9 +36,10 @@ module modules {
                 })
                 .state("root.home", {
                     url: "/home",
+                    redirectTo: "root.dashboard",
                     resolve: {
-                        pageService: "pageService",
-                        homeResource: ($log, rootResource, pageService:services.PageService) => {
+                        menuService: "menuService",
+                        homeResource: ($log, rootResource, menuService:services.MenuService) => {
                             $log.info("resolving home-resource...");
 
                             if (!rootResource.$has("home")) {
@@ -50,21 +49,12 @@ module modules {
 
                             return rootResource.$get("home").then(res => {
                                 $log.info("home-resource resolved...");
-                                pageService.setResource(res);
+                                menuService.setResource(res);
                                 return res;
                             });
                         },
                     },
                 })
-                //.state("root.home.dashboard", {
-                //    url: "/dashboard",
-                //    views: {
-                //        "content@root": {
-                //            templateUrl: "modules/dashboard/dashboard.html",
-                //            controller: "DashboardController as vm",
-                //        }
-                //    }
-                //})
                 .state("root.home.system", {
                     url: "/system",
                     views: {

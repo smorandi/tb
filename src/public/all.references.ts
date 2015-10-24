@@ -6,7 +6,7 @@
 /// <reference path="./api/models.ts" />
 /// <reference path="./api/constants.ts" />
 
-/// <reference path="./services/page.service.ts" />
+/// <reference path="./services/menu.service.ts" />
 /// <reference path="./services/api.service.ts" />
 /// <reference path="./services/auth.service.ts" />
 /// <reference path="./services/utils.service.ts" />

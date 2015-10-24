@@ -39,7 +39,6 @@ var basketItemAdded = denormalizer.defineViewBuilder({
             callback(null);
         }
     });
-
 });
 
 var basketItemRemoved = denormalizer.defineViewBuilder({

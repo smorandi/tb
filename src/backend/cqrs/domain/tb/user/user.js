@@ -67,6 +67,29 @@ var adminCreated = domain.defineEvent({
     function (data, aggregate) {
         aggregate.set(data);
     });
+
+// ----------------------------------------------------------------
+// create root
+// ----------------------------------------------------------------
+var createRoot = domain.defineCommand({
+    name: "createRoot",
+    existing: false,
+}, function (data, aggregate) {
+    _.defaults(data, aggregate.attributes);
+    data.id = aggregate.id;
+    data.type = "root";
+    data.creationDate = new Date();
+    data.modificationDate = null;
+
+    aggregate.apply("rootCreated", data);
+});
+
+var rootCreated = domain.defineEvent({
+        name: "rootCreated"
+    },
+    function (data, aggregate) {
+        aggregate.set(data);
+    });
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -259,6 +282,7 @@ var businessRule_makeOrder_basketMustNotBeEmpty = domain.definePreCondition({
 module.exports = [user,
     createCustomer, customerCreated,
     createAdmin, adminCreated,
+    createRoot, rootCreated,
     changeUser, userChanged,
     deleteUser, userDeleted,
     addBasketItem, basketItemAdded,

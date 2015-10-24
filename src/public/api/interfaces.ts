@@ -6,4 +6,11 @@ module interfaces {
         name:string;
         state:string;
     }
+
+    export interface ILoginInfo {
+        loggedIn:boolean;
+        loginname:string;
+        numberOfBasketItems:number;
+        hasRegistrationPage:boolean;
+    }
 }

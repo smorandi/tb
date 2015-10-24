@@ -8,16 +8,13 @@ var authService = require("../../services/auth.service");
 var config = require("../../config");
 
 exports.requireLogin = function (req, res, next) {
-    authService.authenticate(req, function (err, isAuthenticated, isAdmin, isRoot, user) {
+    authService.authenticate(req, function (err, isAdmin, isRoot, user) {
         if (err) {
             next(err);
         }
-        else if (isAuthenticated) {
+        else {
             req.user = user;
             next();
-        }
-        else {
-            next(new HTTPErrors.UnauthorizedError("Basic-auth header missing"));
         }
     });
 }
@@ -43,6 +40,10 @@ exports.requireUserType = function (req, res, next, type) {
 
 exports.requireAdmin = function (req, res, next) {
     exports.requireUserType(req, res, next, config.userTypes.admin);
+}
+
+exports.requireRoot = function (req, res, next) {
+    exports.requireUserType(req, res, next, config.userTypes.root);
 }
 
 exports.requireCustomer = function (req, res, next) {

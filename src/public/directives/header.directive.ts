@@ -2,11 +2,16 @@
 
 module directives {
 
-    export function HeaderDirective(pageService:services.PageService):ng.IDirective {
+    export function HeaderDirective(menuService:services.MenuService):ng.IDirective {
+
         return {
             templateUrl: "directives/header.html",
-            link: (scope:ng.IScope) => {
-                scope["pages"] = pageService.getPages();
+            link: (scope:any) => {
+                scope.vm = {
+                    menu: menuService.getMenu(),
+                    login: () => menuService.login(),
+                    logout: () => menuService.logout(),
+                };
             }
         };
     }

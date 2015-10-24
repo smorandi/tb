@@ -1,4 +1,4 @@
-///<reference path="../../../typings/tsd.d.ts" />
+///<reference path="../../all.references.ts" />
 
 module modules {
     "use strict";
