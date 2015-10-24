@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="root">
+<html lang="en" data-ng-app="app">
 <head>
     <title>client</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -8,12 +8,12 @@
     <!-- inject:html -->
     <!-- endinject -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="lib/bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="lib/bower_components/angular-motion/dist/angular-motion.css">
-    <link rel="stylesheet" href="lib/bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="assets/lib/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/lib/bower_components/angular-motion/dist/angular-motion.css">
+    <link rel="stylesheet" href="assets/lib/bower_components/font-awesome/css/font-awesome.css">
     <!-- endbower -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="modules/home/css/home.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <!-- endinject -->
 </head>
 <body>
@@ -23,48 +23,54 @@
 </div>
 
 <!-- bower:js -->
-<script src="lib/bower_components/jquery/dist/jquery.js"></script>
-<script src="lib/bower_components/angular/angular.js"></script>
-<script src="lib/bower_components/angular-animate/angular-animate.js"></script>
-<script src="lib/bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script src="lib/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="lib/bower_components/angular-strap/dist/angular-strap.js"></script>
-<script src="lib/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
-<script src="lib/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="lib/bower_components/angular-resource/angular-resource.js"></script>
-<script src="lib/bower_components/rfc6570/rfc6570.js"></script>
-<script src="lib/bower_components/angular-hal/angular-hal.js"></script>
-<script src="lib/bower_components/lodash/lodash.js"></script>
+<script src="assets/lib/bower_components/jquery/dist/jquery.js"></script>
+<script src="assets/lib/bower_components/angular/angular.js"></script>
+<script src="assets/lib/bower_components/angular-animate/angular-animate.js"></script>
+<script src="assets/lib/bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="assets/lib/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="assets/lib/bower_components/angular-strap/dist/angular-strap.js"></script>
+<script src="assets/lib/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+<script src="assets/lib/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="assets/lib/bower_components/angular-resource/angular-resource.js"></script>
+<script src="assets/lib/bower_components/rfc6570/rfc6570.js"></script>
+<script src="assets/lib/bower_components/angular-hal/angular-hal.js"></script>
+<script src="assets/lib/bower_components/lodash/lodash.js"></script>
 
-<script src="lib/bower_components/angular-socket-io/socket.js"></script>
+<script src="assets/lib/bower_components/angular-socket-io/socket.js"></script>
 <!-- endbower -->
-<script src="./lib/socket.io.js"></script>
+<script src="assets/lib/socket.io.js"></script>
 
 
 
 <!-- inject:js -->
-<script src="modules/drinks/drinks-module.js"></script>
-<script src="modules/drinks/config/drinks-routes.js"></script>
+<script src="api/models.js"></script>
+<script src="api/interfaces.js"></script>
+<script src="api/constants.js"></script>
+
+<script src="services/api.service.js"></script>
+<script src="services/auth.service.js"></script>
+<script src="services/utils.service.js"></script>
+<script src="services/page.service.js"></script>
+<script src="services/socket.service.js"></script>
+<script src="services/dashboard.service.js"></script>
+
+<script src="directives/header.directive.js"></script>
+
+
+<script src="modules/drinks/drinks.module.js"></script>
 <script src="modules/drinks/controllers/drink-view-controller.js"></script>
 <script src="modules/drinks/controllers/drink-list-controller.js"></script>
 <script src="modules/drinks/controllers/drink-edit-controller.js"></script>
 <script src="modules/drinks/controllers/drink-create-controller.js"></script>
 
-<script src="modules/admin/admin-module.js"></script>
-<script src="modules/admin/config/admin-routes.js"></script>
-<script src="modules/admin/controllers/admin-controller.js"></script>
+<script src="modules/system/system.module.js"></script>
+<script src="modules/system/system.controller.js"></script>
 
-<script src="modules/dashboard/dashboard-module.js"></script>
-<script src="modules/dashboard/config/dashboard-routes.js"></script>
-<script src="modules/dashboard/controllers/dashboard-controller.js"></script>
+<script src="modules/dashboard/dashboard.module.js"></script>
+<script src="modules/dashboard/dashboard.controller.js"></script>
 
-<script src="modules/home/home-module.js"></script>
-<script src="modules/home/config/home-routes.js"></script>
-<script src="modules/home/controllers/home-controller.js"></script>
-
-<script src="modules/root/root-module.js"></script>
-<script src="modules/root/config/root-routes.js"></script>
-<script src="modules/root/controllers/root-controller.js"></script>
+<script src="modules/app.module.js"></script>
+<script src="modules/app.routes.js"></script>
 
 <!-- endinject -->
 </body>

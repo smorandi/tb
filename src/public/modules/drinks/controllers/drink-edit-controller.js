@@ -1,5 +1,4 @@
-///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../../home/home-module.ts" />
+///<reference path="../../../all.references.ts" />
 var drinks;
 (function (drinks) {
     "use strict";

@@ -36,7 +36,7 @@ var startEngine = domain.defineCommand({
     existing: true,
 }, function (data, aggregate) {
     var data = _.cloneDeep(aggregate.attributes);
-    data.status = "started";
+    data.status = "running";
     data.event = new models.Event("engineStarted");
     aggregate.apply("engineStarted", data);
 });

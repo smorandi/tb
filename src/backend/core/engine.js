@@ -47,7 +47,7 @@ var orderConfirmedListener = function ocl(event) {
 };
 
 function isStarted() {
-    return engineStatus === "started";
+    return engineStatus === "running";
 }
 
 function getStatus() {

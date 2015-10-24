@@ -1,5 +1,4 @@
-///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../../home/home-module.ts" />
+///<reference path="../../../all.references.ts" />
 var drinks;
 (function (drinks) {
     "use strict";
@@ -14,10 +13,10 @@ var drinks;
             this.drink = drinkResource;
         }
         DrinkViewController.prototype.canDelete = function () {
-            return this.drink === undefined ? false : this.drink.$has("delete");
+            return this.drink ? this.drink.$has("delete") : false;
         };
         DrinkViewController.prototype.canEdit = function () {
-            return this.drink === undefined ? false : this.drink.$has("update");
+            return this.drink ? this.drink.$has("update") : false;
         };
         DrinkViewController.prototype.deleteDrink = function (event) {
             var _this = this;

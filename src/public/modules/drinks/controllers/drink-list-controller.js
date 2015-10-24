@@ -1,16 +1,14 @@
-///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../../home/home-module.ts" />
+///<reference path="../../../all.references.ts" />
 var drinks;
 (function (drinks) {
     "use strict";
     var DrinkListController = (function () {
-        function DrinkListController($log, $location, $scope, $state, $stateParams, apiService, utilsService, drinksResource, drinkResources) {
+        function DrinkListController($log, $location, $scope, $state, $stateParams, utilsService, drinksResource, drinkResources) {
             this.$log = $log;
             this.$location = $location;
             this.$scope = $scope;
             this.$state = $state;
             this.$stateParams = $stateParams;
-            this.apiService = apiService;
             this.utilsService = utilsService;
             this.drinksResource = drinksResource;
             this.drinkResources = drinkResources;
@@ -42,12 +40,12 @@ var drinks;
             }
         };
         DrinkListController.prototype.createNewDrink = function () {
-            this.$state.go("home.drinks.newDrink");
+            this.$state.go("root.home.drinks.newDrink");
         };
         DrinkListController.prototype.viewDrink = function (drink) {
-            this.$state.go("home.drinks.overview.list.detail", { id: drink.id });
+            this.$state.go("root.home.drinks.overview.list.detail", { id: drink.id });
         };
-        DrinkListController.$inject = ["$log", "$location", "$scope", "$state", "$stateParams", "apiService", "utilsService", "drinksResource", "drinkResources"];
+        DrinkListController.$inject = ["$log", "$location", "$scope", "$state", "$stateParams", "utilsService", "drinksResource", "drinkResources"];
         return DrinkListController;
     })();
     angular.module("drinks").controller("DrinkListController", DrinkListController);

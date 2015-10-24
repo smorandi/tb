@@ -1,5 +1,4 @@
-///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../../home/home-module.ts" />
+///<reference path="../../../all.references.ts" />
 
 module drinks {
     "use strict";
@@ -9,7 +8,7 @@ module drinks {
 
         public static $inject = ["$log", "$location", "$state", "utilsService", "drinkResource"];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:home.UtilsService, private drinkResource) {
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:services.UtilsService, private drinkResource) {
             $log.info("DrinkEditController called with client-url: " + $location.path());
 
             //as we cannot directly edit the read-only instance of resource, we clone it...

@@ -17,7 +17,6 @@ var HomeController = (function () {
         var root = resourceUtils.createBaseUrl(req, "");
         var resource = new hal.Resource({}, root + config.urls.home);
         resource.link("dashboard", root + config.urls.dashboard);
-        resource.link("registerCustomer", root + config.urls.customers);
         resource.link("root", root + config.urls.root);
         authService.authenticate(req, function (err, isAuthenticated, isAdmin, isRoot, user) {
             if (err) {
@@ -39,6 +38,9 @@ var HomeController = (function () {
                     resource.link("basket", root + config.urls.baskets + "/" + user.id);
                     resource.link("orders", root + config.urls.orders + "/" + user.id);
                 }
+            }
+            else {
+                resource.link("registerCustomer", root + config.urls.customers);
             }
             callback(null, resource);
         });

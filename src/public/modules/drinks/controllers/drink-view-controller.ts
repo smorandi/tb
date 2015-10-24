@@ -1,25 +1,24 @@
-///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../../home/home-module.ts" />
+///<reference path="../../../all.references.ts" />
 
 module drinks {
     "use strict";
 
     class DrinkViewController {
-        drink:any;
+        public drink:any;
 
         public static $inject = ["$log", "$location", "$state", "utilsService", "drinkResource"];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:home.UtilsService, private drinkResource) {
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:services.UtilsService, private drinkResource) {
             $log.info("DrinkViewController called with client-url: " + $location.path());
             this.drink = drinkResource;
         }
 
         public canDelete():void {
-            return this.drink === undefined ? false : this.drink.$has("delete");
+            return this.drink ? this.drink.$has("delete") : false;
         }
 
         public canEdit():void {
-            return this.drink === undefined ? false : this.drink.$has("update");
+            return this.drink ? this.drink.$has("update") : false;
         }
 
         public deleteDrink(event:Event):void {

@@ -1,5 +1,4 @@
-///<reference path="../../../../typings/tsd.d.ts" />
-///<reference path="../../home/home-module.ts" />
+///<reference path="../../../all.references.ts" />
 var drinks;
 (function (drinks) {
     "use strict";
@@ -16,7 +15,7 @@ var drinks;
             var _this = this;
             this.drinksResource.$post("create", {}, this.drink).then(function (res) {
                 _this.utilsService.alert("The drink has been updated!");
-                _this.$state.go(".list", {}, { relative: _this.$state.get("home.drinks.overview"), reload: true });
+                _this.$state.go(".list", {}, { relative: _this.$state.get("root.home.drinks.overview"), reload: true });
             }).catch(function (err) {
                 _this.utilsService.alert(JSON.stringify(err, undefined, 2));
             });
