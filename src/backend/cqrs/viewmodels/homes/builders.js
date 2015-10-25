@@ -60,7 +60,7 @@ var basketItemAdded = denormalizer.defineViewBuilder({
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
-}, function (basketItem, vm, callback) {
+}, function (basketItem, vm) {
     logger.debug("basketItemAdded in collection: " + vm.repository.collectionName, basketItem);
     vm.set("numberOfBasketItems", vm.get("numberOfBasketItems") + 1);
 });

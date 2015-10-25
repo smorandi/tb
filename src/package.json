@@ -35,7 +35,6 @@
   "devDependencies": {
     "expect.js": "^0.3.1",
     "mocha": "^2.3.3",
-    "superagent": "^1.4.0",
     "http-status": "^0.2.0",
     "traverson": "^3.0.0",
     "traverson-hal": "^4.0.0"

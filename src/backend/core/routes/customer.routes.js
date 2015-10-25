@@ -14,6 +14,7 @@ var commandService = require("../../services/command.service.js");
 var requireLogin = require("../middlewares/auth.middleware").requireLogin;
 var requireAdmin = require("../middlewares/auth.middleware").requireAdmin;
 var requireMatchingUserId = require("../middlewares/auth.middleware").requireMatchingUserId;
+var requireMatchingUserIdByKey = require("../middlewares/auth.middleware").requireMatchingUserIdByKey;
 
 var customersCollection = require("../../cqrs/viewmodels/customers/collection");
 
@@ -23,11 +24,10 @@ module.exports = function (app) {
     app.use(config.urls.customers, router);
 
     // authentication middleware defaults for this router...
-    router.use(requireLogin);
-    router.param("id", requireMatchingUserId);
+    // NO defaults for this router!
 
     router.route("/")
-        .get(requireAdmin, function (req, res, next) {
+        .get(requireLogin, requireAdmin, function (req, res, next) {
             customersCollection.findViewModels({}, function (err, docs) {
                 if (err) {
                     next(err);
@@ -45,7 +45,7 @@ module.exports = function (app) {
         });
 
     router.route("/:id")
-        .get(requireMatchingUserId, function (req, res, next) {
+        .get(requireLogin, requireMatchingUserIdByKey("id"), function (req, res, next) {
             customersCollection.findViewModels({id: req.params.id}, {limit: 1}, function (err, docs) {
                 if (err) {
                     next(err);
@@ -59,13 +59,13 @@ module.exports = function (app) {
                 }
             });
         })
-        .put(function (req, res, next) {
+        .put(requireLogin, requireMatchingUserIdByKey("id"), function (req, res, next) {
             commandService.send("changeUser").for("user").instance(req.params.id).with({payload: req.body}).go(res.handleEvent(function (evt) {
                 var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers);
                 res.form(resourceUtils.createResource(baseUrl, evt.payload, "ud"), evt.payload);
             }));
         })
-        .delete(function (req, res, next) {
+        .delete(requireLogin, requireMatchingUserIdByKey("id"), function (req, res, next) {
             commandService.send("deleteUser").for("user").instance(req.params.id).go(res.handleEvent(function (evt) {
                 res.status(204).end();
             }));

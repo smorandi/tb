@@ -6,6 +6,7 @@
 var _ = require("lodash");
 var hal = require("halberd");
 var router = require("express").Router();
+var HTTPErrors = require("http-custom-errors");
 
 var logger = require("../../utils/logger");
 var config = require("../../config");
@@ -55,7 +56,7 @@ module.exports = function (app) {
                 }
                 else {
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.drinks);
-                    res.form(resourceUtils.createResource(baseUrl, docs, "ud"), docs);
+                    res.form(resourceUtils.createResource(baseUrl, docs[0], "ud"), docs[0]);
                 }
             });
         })

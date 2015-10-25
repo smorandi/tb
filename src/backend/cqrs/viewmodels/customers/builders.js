@@ -68,7 +68,7 @@ var orderMade = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (order, vm) {
-    logger.debug("orderMade in collection: " + vm.repository.collectionName);
+    logger.debug("orderCreated in collection: " + vm.repository.collectionName);
 
     var drinkCollection = require("../drinks/collection");
 

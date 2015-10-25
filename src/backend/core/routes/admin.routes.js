@@ -6,6 +6,7 @@
 var _ = require("lodash");
 var hal = require("halberd");
 var router = require("express").Router();
+var HTTPErrors = require("http-custom-errors");
 
 var logger = require("../../utils/logger");
 var config = require("../../config");
@@ -52,7 +53,7 @@ module.exports = function (app) {
                     next(new HTTPErrors.NotFoundError("User with id '%s' not found", req.params.id));
                 }
                 else {
-                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins + "/" + req.params.id);
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
                     res.form(resourceUtils.createResource(baseUrl, docs[0], "ud"), docs[0]);
                 }
             });

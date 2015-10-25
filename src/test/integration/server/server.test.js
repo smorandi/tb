@@ -3,7 +3,6 @@
  */
 var assert = require("assert");
 var expect = require("expect.js");
-var superagent = require("superagent");
 var serverService = require("../../../backend/services/server.service.js");
 var config = require("../../../backend/config");
 var common = require("./../../common");

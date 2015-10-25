@@ -29,7 +29,7 @@ var orderCreated = denormalizer.defineViewBuilder({
     id: "aggregate.id",
     autoCreate: false,
 }, function (order, vm) {
-    logger.debug("orderMade in collection: " + vm.repository.collectionName);
+    logger.debug("orderCreated in collection: " + vm.repository.collectionName);
 
     //order.orderItems.forEach(function (orderItem) {
     //    drinkCollection.loadViewModel(orderItem.item.id, function (err, vm) {

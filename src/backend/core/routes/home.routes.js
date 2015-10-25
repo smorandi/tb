@@ -6,6 +6,7 @@
 var _ = require("lodash");
 var hal = require("halberd");
 var router = require("express").Router();
+var HTTPErrors = require("http-custom-errors");
 
 var logger = require("../../utils/logger");
 var config = require("../../config");
@@ -53,6 +54,9 @@ module.exports = function (app) {
                                 resource.link("customers", root + config.urls.customers);
                                 resource.link("customerBaskets", root + config.urls.baskets);
                                 resource.link("customerOrders", root + config.urls.orders);
+                                if(isRoot) {
+                                    resource.link("users", root + config.urls.users);
+                                }
                             }
                             else {
                                 resource.link("profile", root + config.urls.customers + "/" + user.id);

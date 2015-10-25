@@ -64,3 +64,20 @@ exports.requireMatchingUserId = function (req, res, next, id) {
         next(new HTTPErrors.ForbiddenError("Id mismatch"));
     }
 }
+
+exports.requireMatchingUserIdByKey = function (paramIdKey) {
+    return function (req, res, next) {
+        // if the ids match, we can continue...
+        if (req.user.id === req.params[paramIdKey]) {
+            next();
+        }
+        // if the ids don't match, but we are admin (or root), we can continue...
+        else if (req.user.type === config.userTypes.admin || req.user.type === config.userTypes.root) {
+            next();
+        }
+        // otherwise, well, bye bye...
+        else {
+            next(new HTTPErrors.ForbiddenError("Id mismatch"));
+        }
+    }
+}

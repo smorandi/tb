@@ -3,7 +3,6 @@
  */
 var assert = require("assert");
 var expect = require("expect.js");
-var superagent = require("superagent");
 var serverService = require("../../backend/services/server.service.js");
 var config = require("../../backend/config");
 var common = require("./../common");
@@ -19,6 +18,11 @@ after(function (done) {
 });
 
 
+// general server tests...
 common.importTest("server-tests", __dirname, "./server/server.test");
-common.importTest("resource-tests", __dirname, "./resources/root.test");
-common.importTest("customer-tests", __dirname, "./customer/customer.test");
+
+// all tests on resource level...
+common.importTest("resource-tests", __dirname, "./resources/_all.test");
+
+// tests for use-cases...
+common.importTest("use-cases-tests", __dirname, "./use-cases/_all.test");

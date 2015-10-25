@@ -115,16 +115,19 @@ function reInit(callback) {
 function createStandardSet(callback) {
     logger.info("creating standard-set");
 
-    var root0 = new models.Root("root", "root", "root", "root");
-    var admin0 = new models.Admin("admin", "admin", "admin", "admin");
-    var customer0 = new models.Customer("customer", "customer", "customer", "customer");
+    var root = new models.Root("root", "root", "root", "root");
+
+    var admin = new models.Admin("admin", "admin", "admin", "admin");
+
+    var customer = new models.Customer("customer", "customer", "customer", "customer");
+
     var drink0 = new models.Drink("Gin Tonic", "a supi ginny tonic", "3dl", "alcoholic", ["gin", "alcoholic"], 10, 4, 15, 0.1);
     var drink1 = new models.Drink("Coffee", "wakey wakey", "3dl", "non-alcoholic", ["coffee", "non-alcoholic"], 4, 2.5, 6, 0.2);
 
     var commands = [];
-    commands.push(commandService.send("createRoot").for("user").instance("root0").with({payload: root0}));
-    commands.push(commandService.send("createAdmin").for("user").instance("admin0").with({payload: admin0}));
-    commands.push(commandService.send("createCustomer").for("user").instance("customer0").with({payload: customer0}));
+    commands.push(commandService.send("createRoot").for("user").instance("root").with({payload: root}));
+    commands.push(commandService.send("createAdmin").for("user").instance("admin").with({payload: admin}));
+    commands.push(commandService.send("createCustomer").for("user").instance("customer").with({payload: customer}));
     commands.push(commandService.send("createDrink").for("drink").instance("drink0").with({payload: drink0}));
     commands.push(commandService.send("createDrink").for("drink").instance("drink1").with({payload: drink1}));
 

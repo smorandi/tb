@@ -5,34 +5,32 @@
 
 var expect = require("expect.js");
 var url = require("url");
-var superagent = require("superagent");
 var status = require("http-status");
 var common = require("../../common");
 
-describe("root-tests", function () {
-    it("can get root", function (done) {
-        common.traverson
-            .from(common.rootUrl)
-            .getResource(function (err, resource) {
-                expect(err).not.to.be.ok();
-                expect(resource).to.be.ok();
-                done();
-            });
-    });
+it("can get root", function (done) {
+    common.traverson
+        .from(common.urls.root)
+        .addRequestOptions(common.headers.accept.hal)
+        .getResource(function (err, res) {
+            expect(err).not.to.be.ok();
+            expect(res).to.be.ok();
 
-    it("root contains expected links", function (done) {
-        common.traverson
-            .from(common.rootUrl)
-            .getResource(function (err, resource) {
-                expect(err).not.to.be.ok();
-                expect(resource).to.be.ok();
+            done();
+        });
+});
 
-                expect(resource).to.have.property("_links");
-                expect(resource._links).to.have.property("dashboard");
-                expect(resource._links).to.have.property("registerCustomer");
-                expect(resource._links).to.have.property("home");
+it("root resource has correct structure", function (done) {
+    common.traverson
+        .from(common.urls.root)
+        .addRequestOptions(common.headers.accept.hal)
+        .getResource(function (err, res) {
+            expect(err).not.to.be.ok();
+            expect(res).to.be.ok();
 
-                done();
-            });
-    });
+            expect(res).to.only.have.keys("_links");
+            expect(res._links).to.only.have.keys("self", "dashboard", "registerCustomer", "home");
+
+            done();
+        });
 });
