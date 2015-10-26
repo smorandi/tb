@@ -6,7 +6,7 @@
 var _ = require("lodash");
 var async = require("async");
 var logger = require("../utils/logger");
-var config = require("../utils/logger");
+var config = require("../config");
 var models = require("./models");
 var eventBus = require("../services/eventbus.service.js");
 var commandService = require("../services/command.service.js");
@@ -24,7 +24,6 @@ var orderConfirmedListener = function ocl(event) {
         var order = event.payload;
         var drinks = _.map(order.orderItems, "item");
 
-        var commands = [];
         _.forEach(order.orderItems, function (orderItem) {
             pricingCollection.loadViewModel(orderItem.item.id, function (err, doc) {
                 var drink = doc.toJSON();
@@ -36,12 +35,14 @@ var orderConfirmedListener = function ocl(event) {
 
                 var priceEntry = new models.PriceEntry(newPrice, "order confirmed recalculation");
 
+                var commands = [];
                 commands.push(commandService.send("changePrice").for("drink").instance(drink.id).with({payload: priceEntry}));
+                commandService.sendCommands(commands, function (err) {
+                    if(err) {
+                        logger.error(err);
+                    }
+                });
             });
-        });
-
-        commandService.sendCommands(commands, function (err) {
-            logger.error(err, err);
         });
     }
 };

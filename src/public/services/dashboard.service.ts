@@ -15,6 +15,7 @@ module services {
                 });
             });
 
+            $log.info("registering websocket on dashboard-channel");
             socketService.getSocket().on("dashboard", data => {
                 this.dashboard.length = 0;
                 data.forEach(item => this.dashboard.push(item));

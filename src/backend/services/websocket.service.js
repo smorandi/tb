@@ -23,7 +23,7 @@ function onWebsocketConnection(socket) {
         logger.debug("websocket disconnected");
     });
 
-    logger.debug("client connected: ");
+    logger.debug("client connected");
 }
 
 

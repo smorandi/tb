@@ -9,22 +9,38 @@
     <div class="panel-body">
         <table class="table table-striped table-hover">
             <th>
-                Name
-            </th>
-            <th>
                 ID
             </th>
             <th>
-                Base Price
+                Name
             </th>
             <th>
-                Current Price
+                Price
+            </th>
+            <th>
+                Delta
+            </th>
+            <th>
+                Lowest Price
+            </th>
+            <th>
+                Highest Price
+            </th>
+            <th>
+                All Time Low
+            </th>
+            <th>
+                All Time High
             </th>
             <tr ng-repeat="item in vm.db | filter: vm.query">
-                <td>{{item.name}}</td>
                 <td>{{item.id}}</td>
-                <td>{{item.basePrice}}</td>
-                <td>{{item.currentPrice}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.tick.delta}}</td>
+                <td>{{item.lowestPrice}}</td>
+                <td>{{item.highestPrice}}</td>
+                <td>{{item.allTimeLow}}</td>
+                <td>{{item.allTimeHigh}}</td>
             </tr>
         </table>
     </div>
