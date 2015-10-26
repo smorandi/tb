@@ -22,12 +22,12 @@ var SystemController = (function () {
             if (err) {
                 callback(err);
             }
-            else if(_.isEmpty(docs)) {
+            else if (_.isEmpty(docs)) {
                 callback(new HTTPErrors.NotFoundError("Engine not found"));
             }
             else {
                 var resource = new hal.Resource(docs[0].toJSON(), self);
-                resource.link("changePriceReductionInterval", self);
+                resource.link("update", self);
                 resource.link("replay", self + "/replays");
                 resource.link("startEngine", self + "/engineStarts");
                 resource.link("stopEngine", self + "/engineStops");
@@ -48,14 +48,19 @@ var SystemController = (function () {
         });
     };
 
-    SystemController.prototype.getAsResource = function (req, res, next) {
-        this.handleResponse(req, res, next);
-    };
-
-    SystemController.prototype.changePriceReductionInterval = function (req, res, next) {
+    SystemController.prototype.update = function (req, res, next) {
         var _this = this;
-        logger.info("updating engine...");
-        systemService.changePriceReductionInterval(req.body.priceReductionInterval, function (err) {
+        logger.info("changing price reduction interval & grace period...");
+
+        var tasks = [
+            function (callback) {
+                systemService.changePriceReductionInterval(req.body.priceReductionInterval, callback);
+            },
+            function (callback) {
+                systemService.changePriceReductionGracePeriod(req.body.priceReductionGracePeriod, callback);
+            },
+        ];
+        async.series(tasks, function (err) {
             _this.handleResponse(req, res, next);
         });
     };

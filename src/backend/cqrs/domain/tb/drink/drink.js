@@ -79,7 +79,10 @@ var changePrice = domain.defineCommand({
 }, function (data, aggregate) {
 
     var currentPrice = aggregate.get("priceTicks")[0].price;
-    var priceTick = new models.PriceTick(data.price, data.price - currentPrice, data.reason);
+    var newPrice = parseFloat(data.price.toFixed(2));
+    var delta = parseFloat((data.price - currentPrice).toFixed(2));
+
+    var priceTick = new models.PriceTick(newPrice, delta, data.reason);
 
     aggregate.apply("priceChanged", priceTick);
 });
@@ -98,7 +101,7 @@ var resetPrice = domain.defineCommand({
 
     var price = aggregate.get("priceTicks")[0].price;
     var newPrice = aggregate.get("basePrice");
-    var delta = newPrice - price;
+    var delta = parseFloat((newPrice - price).toFixed(2));
     var reason = "reset";
     var priceTick = new models.PriceTick(newPrice, delta, reason);
 

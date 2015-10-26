@@ -26,6 +26,10 @@ function changePriceReductionInterval(interval, callback) {
     engine.changePriceReductionInterval(interval, callback);
 }
 
+function changePriceReductionGracePeriod(gracePeriod, callback) {
+    engine.changePriceReductionGracePeriod(gracePeriod, callback);
+}
+
 function initCQRSServices(callback) {
     logger.info("initialize CQRS services");
 
@@ -177,5 +181,6 @@ module.exports = {
     startEngine: startEngine,
     stopEngine: stopEngine,
     changePriceReductionInterval: changePriceReductionInterval,
+    changePriceReductionGracePeriod: changePriceReductionGracePeriod,
     createStandardSet: createStandardSet,
 };

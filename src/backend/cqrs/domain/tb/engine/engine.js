@@ -3,6 +3,7 @@
 var _ = require("lodash");
 var domain = require("cqrs-domain");
 var models = require("../../../../core/models");
+var config = require("../../../../config");
 
 var engine = domain.defineAggregate({
         name: "engine",
@@ -12,7 +13,8 @@ var engine = domain.defineAggregate({
     },
     {
         status: "idle",
-        priceReductionInterval: 5000,
+        priceReductionInterval: config.defaults.priceReductionInterval || 5000,
+        priceReductionGracePeriod: config.defaults.priceReductionGracePeriod || 10000
     });
 
 var createEngine = domain.defineCommand({
@@ -80,6 +82,21 @@ var priceReductionIntervalChanged = domain.defineEvent({
         aggregate.set(data);
     });
 
+var changePriceReductionGracePeriod = domain.defineCommand({
+    name: "changePriceReductionGracePeriod",
+    existing: true,
+}, function (data, aggregate) {
+    data.event = new models.Event("priceReductionGracePeriodChanged");
+    aggregate.apply("priceReductionGracePeriodChanged", data);
+});
+
+var priceReductionGracePeriodChanged = domain.defineEvent({
+        name: "priceReductionGracePeriodChanged"
+    },
+    function (data, aggregate) {
+        aggregate.set(data);
+    });
+
 var requestPriceTick = domain.defineCommand({
     name: "requestPriceTick",
     existing: true,
@@ -98,6 +115,7 @@ var priceTickRequested = domain.defineEvent({
 module.exports = [engine,
     createEngine, engineCreated,
     changePriceReductionInterval, priceReductionIntervalChanged,
+    changePriceReductionGracePeriod, priceReductionGracePeriodChanged,
     startEngine, engineStarted,
     stopEngine, engineStopped,
     requestPriceTick, priceTickRequested];

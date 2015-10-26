@@ -7,27 +7,34 @@ var path = require("path");
 var _ = require("lodash");
 var utils = require("./utils/utils");
 
+//=============================================================================
+// Defaults for application...
+//-----------------------------------------------------------------------------
+exports.defaults = {
+    priceReductionInterval: 10000,
+    priceReductionGracePeriod: 20000
+}
+
+//=============================================================================
+// Logger...
+//-----------------------------------------------------------------------------
 exports.logger = {
     level: utils.getArgValue("--level", "info"),
     connectLevel: "debug"
 };
 
-exports.db = {
-    uri: "mongodb://localhost:27017/tb",
-    options: null
-};
-
-exports.app = {
-    title: "Trinkbörse",
-    description: "blah blah",
-    keywords: "xxx"
-};
-
+//=============================================================================
+// Server...
+//-----------------------------------------------------------------------------
 exports.server = {
     port: process.env.PORT || 3000,
     host: "localhost",
     backlog: 511,
 }
+
+//=============================================================================
+// Urls...
+//-----------------------------------------------------------------------------
 exports.urls = {
     root: "/root",
     home: "/home",
@@ -53,7 +60,7 @@ exports.contentTypes = {
 };
 
 //=============================================================================
-// Content-Types...
+// User-Types...
 //-----------------------------------------------------------------------------
 exports.userTypes = {
     root: "root",
@@ -73,13 +80,11 @@ exports.eventBusChannel_denormalizerEvent = "denormalizer-event";
 //-----------------------------------------------------------------------------
 exports.websocketChannel_dashboard = "dashboard";
 
-
 //=============================================================================
 // CQRS configurations...
 //-----------------------------------------------------------------------------
 // make sure to provide defensive coding by functions that _clone_ the configs
 // since they might get overwritten otherwise...
-
 
 // Domain-----------------------------------
 var _domainOptions = {

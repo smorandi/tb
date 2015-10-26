@@ -31,10 +31,10 @@ module.exports = function (app) {
 
     router.route("/")
         .get(function (req, res, next) {
-            controller.getAsResource(req, res, next);
+            controller.handleResponse(req, res, next);
         })
         .put(function (req, res, next) {
-            controller.changePriceReductionInterval(req, res, next);
+            controller.update(req, res, next);
         });
 
     router.route("/replays").post(function (req, res, next) {

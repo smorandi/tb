@@ -45,4 +45,15 @@ var priceReductionIntervalChanged = denormalizer.defineViewBuilder({
     vm.get("events").unshift(data.event);
 });
 
-module.exports = [priceReductionIntervalChanged, engineStarted, engineStopped, engineCreated];
+var priceReductionGracePeriodChanged = denormalizer.defineViewBuilder({
+    name: "priceReductionGracePeriodChanged",
+    aggregate: "engine",
+    id: "aggregate.id",
+    autoCreate: false,
+}, function (data, vm) {
+    logger.debug("priceReductionGracePeriodChanged in collection: " + vm.repository.collectionName);
+    vm.set(data);
+    vm.get("events").unshift(data.event);
+});
+
+module.exports = [priceReductionIntervalChanged, priceReductionGracePeriodChanged, engineStarted, engineStopped, engineCreated];

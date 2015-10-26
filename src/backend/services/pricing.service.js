@@ -3,8 +3,10 @@
  */
 "use strict";
 
-var drinksCollection = require("../cqrs/viewmodels/drinks/collection");
-var dashboardCollection = require("../cqrs/viewmodels/dashboard/collection");
+var async = require("async");
+var config = require("../config");
+
+var pricingCollection = require("../cqrs/viewmodels/pricing/collection");
 
 var models = require("../core/models");
 var logger = require("../utils/logger");
@@ -19,38 +21,23 @@ function ordersContainsOrderId(order) {
     return _.find(orders, {id: order.id}) !== undefined;
 }
 
-function getDateOfLastOrderContainingDrink(id, callback) {
-    dashboardCollection.loadViewModel(id, function (err, doc) {
-        if (err) {
-            callback(err);
-        }
-        else {
-            callback(null, doc.toJSON().lastOrderTimestamp);
-        }
-    });
-}
-
 function enrichOrderWithCurrentPrice(order, callback) {
-    var id = order.id;
-    var timestamp = order.timestamp;
-    var orderItems = order.orderItems;
-
-    drinksCollection.findViewModels({}, function (err, docs) {
+    pricingCollection.findViewModels({}, function (err, docs) {
         if (err) {
             callback(err);
         }
         else if (_.isEmpty(docs)) {
-            callback(new Error("no drinks found for orderItem"));
+            callback(new Error("no drinks available"));
         }
         else {
             var drinks = _.invoke(docs, "toJSON");
 
-            _.forEach(orderItems, function (orderItem) {
+            _.forEach(order.orderItems, function (orderItem) {
                 var drink = _.find(drinks, {id: orderItem.item.id});
 
-                orderItem.item.price = drink.priceTicks[0].price;
+                orderItem.item.price = drink.price;
                 orderItem.item.name = drink.name;
-                orderItem.price = orderItem.number * drink.priceTicks[0].price;
+                orderItem.price = orderItem.number * drink.price;
                 order.totalPrice += orderItem.price;
             });
 
@@ -60,8 +47,78 @@ function enrichOrderWithCurrentPrice(order, callback) {
     });
 }
 
+function calculateNewPrice(currentPrice, priceStep, maxPrice, number) {
+    return Math.min(currentPrice + (priceStep * number), maxPrice);
+}
+
+function calculateNewPricesForDrinksInOrder(order, callback) {
+    pricingCollection.findViewModels({}, function (err, docs) {
+        if (err) {
+            callback(err);
+        }
+        else if (_.isEmpty(docs)) {
+            callback(new Error("no drinks available"));
+        }
+        else {
+            var drinkIdPriceMap = {};
+            var drinks = _.invoke(docs, "toJSON");
+
+            _.forEach(order.orderItems, function (orderItem) {
+                var drink = _.find(drinks, {id: orderItem.item.id});
+
+                if (drink) {
+                    if (drinkIdPriceMap[drink.id]) {
+                        var currentPrice = drinkIdPriceMap[drink.id];
+                        drinkIdPriceMap[drink.id] = calculateNewPrice(currentPrice, drink.priceStep, drink.maxPrice, orderItem.number);
+                    }
+                    else {
+                        drinkIdPriceMap[drink.id] = calculateNewPrice(drink.price, drink.priceStep, drink.maxPrice, orderItem.number);
+                    }
+                }
+            });
+
+            callback(null, drinkIdPriceMap);
+        }
+    });
+}
+
+function calculateNewPricesForTimebase(timebase, gracePeriod, callback) {
+    pricingCollection.findViewModels({}, function (err, docs) {
+        if (err) {
+            callback(err);
+        }
+        else if (_.isEmpty(docs)) {
+            callback(new Error("no drinks available"));
+        }
+        else {
+            var drinkIdPriceMap = {};
+            var pricingDrinks = _.invoke(docs, "toJSON");
+            _.forEach(pricingDrinks, function (pricingDrink) {
+                if (pricingDrink.priceReductionTimeBase) {
+                    var drinkTimeBase = pricingDrink.priceReductionTimeBase.getTime();
+
+                    // only do this for any drinks which have not been ordered since more than the given grace period...
+                    if ((timebase - drinkTimeBase) > gracePeriod) {
+                        var currentPrice = pricingDrink.price;
+                        var priceStep = pricingDrink.priceStep;
+                        var minPrice = pricingDrink.minPrice;
+
+                        var newPrice = Math.max(currentPrice - priceStep, minPrice);
+
+                        drinkIdPriceMap[pricingDrink.id] = newPrice;
+                    }
+                }
+            });
+
+            callback(null, drinkIdPriceMap);
+        }
+    });
+}
+
 module.exports = {
     enrichOrderWithCurrentPrice: enrichOrderWithCurrentPrice,
     orderContainsDrinkId: orderContainsDrinkId,
-    ordersContainsOrderId: ordersContainsOrderId
+    ordersContainsOrderId: ordersContainsOrderId,
+    calculateNewPricesForDrinksInOrder: calculateNewPricesForDrinksInOrder,
+    calculateNewPricesForTimebase: calculateNewPricesForTimebase
 };
