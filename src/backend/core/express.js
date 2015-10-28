@@ -80,7 +80,7 @@ function init() {
             err.name === "ValidationError") {
             err.code = 400;
         } else if (err.code === 401) {
-            res.header("WWW-Authenticate", "Basic realm='tb'");
+            //res.header("WWW-Authenticate", "Basic realm='tb'");
         }
         next(err);
     });

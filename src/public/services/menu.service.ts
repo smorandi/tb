@@ -3,18 +3,18 @@
 module services {
     export class MenuService {
         private menu:any;
-        private resource:any;
 
-        constructor(private $log:ng.ILogService, private $state:ng.ui.IStateService, private authService:services.AuthService) {
+        constructor(private $log:ng.ILogService, private $state:ng.ui.IStateService, private authService:services.AuthService, private linkService:services.LinkService) {
             this.menu = {
+                resource: null,
                 isLoggedIn: false,
                 loginname: null,
                 numberOfBasketItems: 0,
-                canRegister: false,
-                registrationPage: constants.pages.register,
-                canEditProfile: false,
-                profilePage: constants.pages.profile,
-                pages: [],
+                userType: null,
+                registerLink: constants.LINKZ.register,
+                profileLink: constants.LINKZ.profile,
+                basketLink: constants.LINKZ.basket,
+                navigationLinks: {},
             };
         }
 
@@ -23,36 +23,40 @@ module services {
         }
 
         public login() {
-            this.$state.go(constants.pages.home.state);
+            this.$state.go(constants.STATES.home);
         }
 
         public logout() {
             this.authService.clearToken();
-            this.$state.go(constants.pages.dashboard.state, {}, {reload: true});
+            this.$state.go(constants.STATES.dashboard, {}, {reload: true});
         }
 
         public setResource(resource:any) {
-            this.resource = resource;
-            this.menu.pages.length = 0;
+            this.menu.resource = resource;
+            this.menu.navigationLinks = {};
 
             //if (resource.$has("home")) {
             //    this.pages.push(new models.Page("Login", "root.home"));
             //}
 
-            this.menu.canRegister = resource.$has("registerCustomer") ? true : false;
-            this.menu.canEditProfile = resource.$has("profile") ? true : false;
+            this.menu.userType = resource.userType;
             this.menu.isLoggedIn = resource.loginname ? true : false;
-            this.menu.loginname = resource.loginname ? resource.loginname : null;
-            this.menu.numberOfBasketItems = resource.numberOfBasketItems ? resource.numberOfBasketItems : 0;
+            this.menu.loginname = resource.loginname;
+            this.menu.numberOfBasketItems = resource.numberOfBasketItems;
 
-            if (resource.$has("drinks")) {
-                this.menu.pages.push(constants.pages.drinks);
+
+            this.menu.registerLink = resource.$has(constants.RELS.register) ? constants.LINKZ.register : null;
+            this.menu.profileLink = resource.$has(constants.RELS.profile) ? constants.LINKZ.profile : null;
+            this.menu.basketLink = resource.$has(constants.RELS.basket) ? constants.LINKZ.basket : null;
+
+            if (resource.$has(constants.RELS.dashboard)) {
+                this.menu.navigationLinks[constants.RELS.dashboard] = constants.LINKZ.dashboard;
             }
-            if (resource.$has("system")) {
-                this.menu.pages.push(constants.pages.system);
+            if (resource.$has(constants.RELS.drinks)) {
+                this.menu.navigationLinks[constants.RELS.drinks] = constants.LINKZ.drinks;
             }
-            if (resource.$has("dashboard")) {
-                this.menu.pages.push(constants.pages.dashboard);
+            if (resource.$has(constants.RELS.system)) {
+                this.menu.navigationLinks[constants.RELS.system] = constants.LINKZ.system;
             }
         }
     }

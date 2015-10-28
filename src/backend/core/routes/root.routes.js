@@ -27,7 +27,7 @@ module.exports = function (app) {
             var resource = new hal.Resource({}, root + config.urls.root);
             resource.link("dashboard", root + config.urls.dashboard);
             resource.link("home", root + config.urls.home);
-            resource.link("registerCustomer", root + config.urls.customers);
+            resource.link("register", root + config.urls.customers);
 
             res.form(resource);
         });

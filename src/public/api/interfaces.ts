@@ -13,4 +13,14 @@ module interfaces {
         numberOfBasketItems:number;
         hasRegistrationPage:boolean;
     }
+
+    //interface IMapOfPages {
+    //    [key: string]: interfaces.IPage;
+    //}
+    //
+    export interface ILink {
+        rel:string;
+        name:string;
+        state:string;
+    }
 }

@@ -3,15 +3,12 @@
 module directives {
 
     export function HeaderDirective(menuService:services.MenuService):ng.IDirective {
-
         return {
             templateUrl: "directives/header.html",
             link: (scope:any) => {
-                scope.vm = {
-                    menu: menuService.getMenu(),
-                    login: () => menuService.login(),
-                    logout: () => menuService.logout(),
-                };
+                scope.menu = menuService.getMenu();
+                scope.login= () => menuService.login();
+                scope.logout= () => menuService.logout();
             }
         };
     }

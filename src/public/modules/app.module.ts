@@ -4,23 +4,26 @@ module modules {
     "use strict";
 
     angular.module("app", ["ui.router", "mgcrea.ngStrap", "drinks", "dashboard", "system", "angular-hal", "btford.socket-io"])
-        .factory("apiService", (halClient, $log) => {
+        .factory(injections.services.apiService, (halClient, $log) => {
             return new services.ApiService(halClient, $log);
         })
-        .factory("socketService", (socketFactory, $log) => {
+        .factory(injections.services.socketService, (socketFactory, $log) => {
             return new services.SocketService(socketFactory, $log);
         })
-        .factory("utilsService", ($window) => {
+        .factory(injections.services.utilsService, ($window) => {
             return new services.UtilsService($window);
         })
-        .factory("dashboardService", (apiService, socketService, $log) => {
+        .factory(injections.services.dashboardService, (apiService, socketService, $log) => {
             return new services.DashboardService(apiService, socketService, $log);
         })
-        .factory("authService", ($window, $log) => {
+        .factory(injections.services.authService, ($window, $log) => {
             return new services.AuthService($window, $log);
         })
-        .factory("menuService", ($log, $state, authService) => {
-            return new services.MenuService($log, $state, authService);
+        .factory(injections.services.linkService, ($log, $state) => {
+            return new services.LinkService($log, $state);
+        })
+        .factory(injections.services.menuService, ($log, $state, authService, linkService) => {
+            return new services.MenuService($log, $state, authService, linkService);
         })
         .factory("myHttpInterceptor", ($q, authService:services.AuthService) => {
             return {
@@ -50,10 +53,10 @@ module modules {
                 }
             };
         })
+        .directive(injections.directives.header, directives.HeaderDirective)
         .config(["$httpProvider", $httpProvider => {
             $httpProvider.interceptors.push("myHttpInterceptor");
         }])
-        .directive("header", directives.HeaderDirective)
         .run(($log, $rootScope, $state, utilsService:services.UtilsService, authService:services.AuthService) => {
             $rootScope.$on("$stateChangeStart",
                 (event, toState, toParams, fromState, fromParams) => {

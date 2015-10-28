@@ -10,19 +10,28 @@
             <a href="#/" class="navbar-brand">Trinkb&ouml;rse</a>
         </div>
         <div class="nav navbar-collapse collapse" data-bs-collapse-target>
-            <ul ng-repeat="page in vm.menu.pages" class="nav navbar-nav">
+            <ul ng-repeat="link in menu.navigationLinks" class="nav navbar-nav">
                 <li ui-sref-active="active">
-                    <a href="#" ui-sref="{{page.state}}">{{page.name}}</a>
+                    <a href="#" ui-sref="{{link.state}}">{{link.name}}</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ng-show="vm.menu.canRegister">
-                    <a href="#" ui-sref="root.registerCustomer"><span
-                            class="glyphicon glyphicon-user"></span> {{vm.menu.registrationPage.name}}</a>
+                <li ng-show="menu.registerLink">
+                    <a href="#" ui-sref="root.register"><span
+                            class="glyphicon glyphicon-envelope"></span> {{menu.registerLink.name}}</a>
                 </li>
-                <li ng-show="!vm.menu.isLoggedIn"><a href="#" ng-click="vm.login()"><span
+                <li ng-show="menu.profileLink">
+                    <a href="#" ui-sref="root.home.profile"><span
+                            class="glyphicon glyphicon-user"></span> {{menu.profileLink.name}}</a>
+                </li>
+
+                <li ng-show="menu.basketLink"><a href="#" ui-sref="root.home.basket"><span
+                        class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge">{{menu.numberOfBasketItems}}</span></a>
+
+
+                <li ng-hide="menu.isLoggedIn"><a href="#" ng-click="login()"><span
                         class="glyphicon glyphicon-log-in"></span> Login</a>
-                <li ng-show="vm.menu.isLoggedIn"><a href="#" ng-click="vm.logout()"><span
+                <li ng-show="menu.isLoggedIn"><a href="#" ng-click="logout()"><span
                         class="glyphicon glyphicon-log-out"></span> Logout</a>
                 </li>
             </ul>
