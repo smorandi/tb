@@ -4,41 +4,52 @@ module constants {
     export var ws:string = "http://localhost:3000";
     export var api:string = "http://localhost:3000/root";
 
-
-    export class RELS {
-        public static root:string = "root";
-        public static home:string = "home";
-        public static register:string = "register";
-        public static dashboard:string = "dashboard";
-        public static profile:string = "profile";
-        public static drinks:string = "drinks";
-        public static basket:string = "basket";
-        public static orders:string = "orders";
-        public static system:string = "system";
+    export module RELS {
+        export var root:string = "root";
+        export var home:string = "home";
+        export var register:string = "register";
+        export var dashboard:string = "dashboard";
+        export var profile:string = "profile";
+        export var drinks:string = "drinks";
+        export var basket:string = "basket";
+        export var orders:string = "orders";
+        export var system:string = "system";
     }
 
-    export class STATES {
-        public static root:string = "root";
-        public static register:string = "root.register";
-        public static dashboard:string = "root.dashboard";
-        public static home:string = "root.home";
-        public static profile:string = "root.home.profile";
-        public static drinks:string = "root.home.drinks.overview.list";
-        public static basket:string = "root.home.basket";
-        public static orders:string = "root.home.orders";
-        public static system:string = "root.home.system";
+    export module NAMES {
+        export var root:string = "Root";
+        export var home:string = "Home";
+        export var register:string = "Sign Up";
+        export var dashboard:string = "Dashboard";
+        export var profile:string = "Profile";
+        export var drinks:string = "Drinks";
+        export var basket:string = "Basket";
+        export var orders:string = "Orders";
+        export var system:string = "System";
     }
 
-    export class LINKZ {
-        public static root:interfaces.ILink = new models.Link(RELS.root, "Root", STATES.root);
-        public static home:interfaces.ILink = new models.Link(RELS.home, "Home", STATES.home);
-        public static register:interfaces.ILink = new models.Link(RELS.register,"Sign Up", STATES.register);
-        public static dashboard:interfaces.ILink = new models.Link(RELS.dashboard,"Dashboard", STATES.dashboard);
-        public static profile:interfaces.ILink = new models.Link(RELS.profile,"Profile", STATES.profile);
-        public static drinks:interfaces.ILink = new models.Link(RELS.drinks,"Drinks", STATES.drinks);
-        public static basket:interfaces.ILink = new models.Link(RELS.basket,"Basket", STATES.basket);
-        public static orders:interfaces.ILink = new models.Link(RELS.orders,"Orders", STATES.orders);
-        public static system:interfaces.ILink = new models.Link(RELS.system,"System", STATES.system);
+    export module STATES {
+        export var root:string = "root";
+        export var register:string = "root.register";
+        export var dashboard:string = "root.dashboard";
+        export var home:string = "root.home";
+        export var profile:string = "root.home.profile";
+        export var drinks:string = "root.home.drinks.overview.list";
+        export var basket:string = "root.home.basket";
+        export var orders:string = "root.home.orders";
+        export var system:string = "root.home.system";
+    }
+
+    export module LINKS {
+        export var root:interfaces.ILink = new models.Link(RELS.root, NAMES.root, STATES.root);
+        export var home:interfaces.ILink = new models.Link(RELS.home, NAMES.home, STATES.home);
+        export var register:interfaces.ILink = new models.Link(RELS.register,NAMES.register, STATES.register);
+        export var dashboard:interfaces.ILink = new models.Link(RELS.dashboard,NAMES.dashboard, STATES.dashboard);
+        export var profile:interfaces.ILink = new models.Link(RELS.profile,NAMES.profile, STATES.profile);
+        export var drinks:interfaces.ILink = new models.Link(RELS.drinks,NAMES.drinks, STATES.drinks);
+        export var basket:interfaces.ILink = new models.Link(RELS.basket,NAMES.basket, STATES.basket);
+        export var orders:interfaces.ILink = new models.Link(RELS.orders,NAMES.orders, STATES.orders);
+        export var system:interfaces.ILink = new models.Link(RELS.system,NAMES.system, STATES.system);
     }
 
     interface IRelToLinkMap {
@@ -46,82 +57,14 @@ module constants {
     }
 
     export var REL_TO_LINK_MAP:IRelToLinkMap = {
-        [RELS.root]: LINKZ.root,
-        [RELS.home]: LINKZ.home,
-        [RELS.register]: LINKZ.register,
-        [RELS.profile]: LINKZ.profile,
-        [RELS.dashboard]: LINKZ.dashboard,
-        [RELS.drinks]: LINKZ.drinks,
-        [RELS.system]: LINKZ.system,
-        [RELS.basket]: LINKZ.basket,
-        [RELS.orders]: LINKZ.orders,
-    }
-
-
-
-    export class LINKS {
-        public static root:string = "root";
-        public static home:string = "home";
-        public static register:string = "register";
-        public static dashboard:string = "dashboard";
-        public static profile:string = "profile";
-        public static drinks:string = "drinks";
-        public static basket:string = "basket";
-        public static orders:string = "orders";
-        public static system:string = "system";
-    }
-
-    export class NAMES {
-        public static root:string = "Root";
-        public static home:string = "Home";
-        public static register:string = "Sign Up";
-        public static dashboard:string = "Dashboard";
-        public static profile:string = "Profile";
-        public static drinks:string = "Drinks";
-        public static basket:string = "Basket";
-        public static orders:string = "Orders";
-        public static system:string = "System";
-    }
-
-    //export class PAGES {
-    //    public static home:interfaces.IPage = new models.Page("Home", STATES.home);
-    //    public static register:interfaces.IPage = new models.Page("Sign Up", STATES.register);
-    //    public static dashboard:interfaces.IPage = new models.Page("Dashboard", STATES.dashboard);
-    //    public static profile:interfaces.IPage = new models.Page("Profile", STATES.profile);
-    //    public static drinks:interfaces.IPage = new models.Page("Drinks", STATES.drinks);
-    //    public static basket:interfaces.IPage = new models.Page("Basket", STATES.basket);
-    //    public static orders:interfaces.IPage = new models.Page("Orders", STATES.orders);
-    //    public static system:interfaces.IPage = new models.Page("System", STATES.system);
-    //}
-
-    interface ILinkToStateMap {
-        [key: string]: string;
-    }
-
-    export var LINK_TO_STATE_MAP:ILinkToStateMap = {
-        [LINKS.home]: STATES.home,
-        [LINKS.register]: STATES.register,
-        [LINKS.profile]: STATES.profile,
-        [LINKS.dashboard]: STATES.dashboard,
-        [LINKS.drinks]: STATES.drinks,
-        [LINKS.system]: STATES.system,
-        [LINKS.basket]: STATES.basket,
-        [LINKS.orders]: STATES.orders,
-    }
-
-    interface ILinkToNameMap {
-        [key: string]: string;
-    }
-
-    export var LINK_TO_NAME_MAP:ILinkToNameMap = {
-        [LINKS.root]: NAMES.root,
-        [LINKS.home]: NAMES.home,
-        [LINKS.register]: NAMES.register,
-        [LINKS.profile]: NAMES.profile,
-        [LINKS.dashboard]: NAMES.dashboard,
-        [LINKS.drinks]: NAMES.drinks,
-        [LINKS.system]: NAMES.system,
-        [LINKS.basket]: NAMES.basket,
-        [LINKS.orders]: NAMES.orders,
+        [RELS.root]: LINKS.root,
+        [RELS.home]: LINKS.home,
+        [RELS.register]: LINKS.register,
+        [RELS.profile]: LINKS.profile,
+        [RELS.dashboard]: LINKS.dashboard,
+        [RELS.drinks]: LINKS.drinks,
+        [RELS.system]: LINKS.system,
+        [RELS.basket]: LINKS.basket,
+        [RELS.orders]: LINKS.orders,
     }
 }

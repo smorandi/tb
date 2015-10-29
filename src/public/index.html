@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="app">
+<html lang="en">
 <head>
     <title>client</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -41,39 +41,42 @@
 <script src="assets/lib/socket.io.js"></script>
 
 
-
 <!-- inject:js -->
-<script src="infrastructure/injections.js"></script>
+<script src="./injections.js"></script>
 
 <script src="api/models.js"></script>
 <script src="api/interfaces.js"></script>
 <script src="api/constants.js"></script>
 
-<script src="services/api.service.js"></script>
-<script src="services/auth.service.js"></script>
-<script src="services/utils.service.js"></script>
-<script src="services/menu.service.js"></script>
-<script src="services/socket.service.js"></script>
-<script src="services/dashboard.service.js"></script>
-<script src="services/link.service.js"></script>
+<script src="infrastructure/services/api.service.js"></script>
+<script src="infrastructure/services/auth.service.js"></script>
+<script src="infrastructure/services/utils.service.js"></script>
+<script src="infrastructure/services/menu.service.js"></script>
+<script src="infrastructure/services/socket.service.js"></script>
+<script src="infrastructure/services/dashboard.service.js"></script>
+<script src="infrastructure/services/navigation.service.js"></script>
+<script src="infrastructure/services/httpInterceptor.service.js"></script>
+<script src="infrastructure/directives/header.directive.js"></script>
+<script src="infrastructure/config/interceptor.config.js"></script>
+<script src="infrastructure/config/routes.config.js"></script>
+<script src="infrastructure/run/run.js"></script>
 
-<script src="directives/header.directive.js"></script>
+<script src="components/dashboard/dashboard.controller.js"></script>
+<script src="components/system/system.controller.js"></script>
+<script src="components/profile/profile.controller.js"></script>
+<script src="components/drinks/list/drink-list.controller.js"></script>
+<script src="components/drinks/details/drink-details.controller.js"></script>
+<script src="components/drinks/edit/drink-edit.controller.js"></script>
+<script src="components/drinks/create/drink-create.controller.js"></script>
 
-<script src="modules/drinks/drinks.module.js"></script>
-<script src="modules/drinks/controllers/drink-view-controller.js"></script>
-<script src="modules/drinks/controllers/drink-list-controller.js"></script>
-<script src="modules/drinks/controllers/drink-edit-controller.js"></script>
-<script src="modules/drinks/controllers/drink-create-controller.js"></script>
-
-<script src="modules/system/system.module.js"></script>
-<script src="modules/system/system.controller.js"></script>
-
-<script src="modules/dashboard/dashboard.module.js"></script>
-<script src="modules/dashboard/dashboard.controller.js"></script>
-
-<script src="modules/app.module.js"></script>
-<script src="modules/app.routes.js"></script>
-
+<script src="./app.js"></script>
 <!-- endinject -->
+
+<script>
+    angular.element(document).ready(function () {
+        angular.bootstrap(document, [injections.constants.appName]);
+    });
+</script>
+
 </body>
 </html>

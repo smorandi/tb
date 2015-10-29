@@ -27,7 +27,7 @@ function init() {
 
     // Showing stack errors
     app.set("showStackError", true);
-    app.use(favicon(path.join(config.serverRoot, "/public/favicon.ico")));
+    app.use(favicon(path.join(config.serverRoot, "/public/assets/images/favicon.ico")));
 
     // Enable logger (log4js)
     app.use(log4js.connectLogger(logger, {

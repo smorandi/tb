@@ -1,0 +1,47 @@
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+        <div class="header-row">
+            <h1>Dashboard</h1>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <table class="table table-striped table-hover">
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Delta
+            </th>
+            <th>
+                Lowest Price
+            </th>
+            <th>
+                Highest Price
+            </th>
+            <th>
+                All Time Low
+            </th>
+            <th>
+                All Time High
+            </th>
+            <tr ng-repeat="item in vm.dashboard | filter: vm.query">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.tick.delta}}</td>
+                <td>{{item.lowestPrice}}</td>
+                <td>{{item.highestPrice}}</td>
+                <td>{{item.allTimeLow}}</td>
+                <td>{{item.allTimeHigh}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
