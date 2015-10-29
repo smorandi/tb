@@ -7,53 +7,26 @@ module injections {
     }
 
     export module constants {
-        export var appName:string = "app";
+        export var appName:string = "tb";
     }
-
-    //
-    //export module Framework{
-    //    export var EventFactory:string = "EventFactory";
-    //}
-    //
-    //export module Filters{
-    //    export var DurationFilter:string = "duration";
-    //    export var FormatFilter:string = "format";
-    //}
-
-    //export module states {
-    //    export var root:string = "root";
-    //    export var register:string = "root.register";
-    //    export var dashboard:string = "root.dashboard";
-    //    export var home:string = "root.home";
-    //    export var profile:string = "root.home.profile";
-    //    export var drinks:string = "root.home.drinks.overview.list";
-    //    export var basket:string = "root.home.basket";
-    //    export var orders:string = "root.home.orders";
-    //    export var system:string = "root.home.system";
-    //}
-
-    //export module links {
-    //    export var root:string = "root";
-    //    export var home:string = "home";
-    //    export var register:string = "register";
-    //    export var dashboard:string = "dashboard";
-    //    export var profile:string = "profile";
-    //    export var drinks:string = "drinks";
-    //    export var basket:string = "basket";
-    //    export var orders:string = "orders";
-    //    export var system:string = "system";
-    //}
 
     export module controllers {
         export var dashboard:string = "dashboard-controller";
         export var profile:string = "profile-controller";
         export var system:string = "system-controller";
+        export var register:string = "register-controller";
 
         export module drinks {
             export var list:string = "drink-list-controller";
             export var details:string = "drink-details-controller";
             export var create:string = "drink-create-controller";
             export var edit:string = "drink-edit-controller";
+        }
+    }
+
+    export module templates {
+        export module register {
+            export var template:string = "components/register/register.html"
         }
     }
 
@@ -97,12 +70,6 @@ module injections {
         export var $window:string = "$window";
         export var $SCEDelegateProvider:string = "$sceDelegateProvider";
     }
-
-    //export module Plugins {
-    //    export var NetworkConnectionPlugin:string = "NetworkConnectionPlugin";
-    //    export var GlobalizationPlugin:string = "GlobalizationPlugin";
-    //    export var GeoLocationPlugin:string = "GeoLocationPlugin";
-    //}
 
     export module uiRouter {
         export var $stateProvider:string = "$stateProvider";

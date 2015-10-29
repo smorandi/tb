@@ -23,6 +23,7 @@ module services {
                 profileLink: constants.LINKS.profile,
                 basketLink: constants.LINKS.basket,
                 navigationLinks: {},
+                controlLinks: {}
             };
         }
 
@@ -35,7 +36,7 @@ module services {
         }
 
         public logout():void {
-            this.authService.clearToken();
+            this.authService.clearCredentials();
             this.$state.go(constants.STATES.dashboard, {}, {reload: true});
         }
 
@@ -45,7 +46,9 @@ module services {
 
         public setResource(resource:any) {
             this.menu.resource = resource;
+
             this.menu.navigationLinks = {};
+            this.menu.controlLinks = {};
 
             //if (resource.$has("home")) {
             //    this.pages.push(new models.Page("Login", "root.home"));
@@ -56,6 +59,16 @@ module services {
             this.menu.loginname = resource.loginname;
             this.menu.numberOfBasketItems = resource.numberOfBasketItems;
 
+
+            //if (resource.$has(constants.RELS.register)) {
+            //    this.menu.controlLinks[constants.RELS.register] = constants.LINKS.register;
+            //}
+            //if (resource.$has(constants.RELS.profile)) {
+            //    this.menu.controlLinks[constants.RELS.register] = constants.LINKS.register;
+            //}
+            //if (resource.$has(constants.RELS.basket)) {
+            //    this.menu.controlLinks[constants.RELS.register] = constants.LINKS.register;
+            //}
 
             this.menu.registerLink = resource.$has(constants.RELS.register) ? constants.LINKS.register : null;
             this.menu.profileLink = resource.$has(constants.RELS.profile) ? constants.LINKS.profile : null;
