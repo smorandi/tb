@@ -4,8 +4,6 @@
 
 module controllers {
     export class ProfileController {
-        public db = [];
-
         static $inject = [injections.angular.$log, injections.angular.$location, "profileResource"];
 
         constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private profileResource) {

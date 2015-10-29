@@ -4,6 +4,7 @@
 
 module services {
     export class AuthService {
+        private credentials:interfaces.ICredentials;
         private token:string;
 
         static $inject = [
@@ -15,13 +16,19 @@ module services {
             this.token = null;
         }
 
-        public setToken(username:string, password:string) {
-            this.token = this.$window.btoa(username + ":" + password);
+        public setCredentials(credentials:interfaces.ICredentials) {
+            this.credentials = credentials;
+            this.token = this.$window.btoa(credentials.loginname + ":" + credentials.password);
         }
 
-        public clearToken() {
-            this.$log.info("token cleared");
+        public clearCredentials() {
+            this.$log.info("credentials cleared");
+            this.credentials = null;
             this.token = null;
+        }
+
+        public getCredentials():interfaces.ICredentials {
+            return this.credentials;
         }
 
         public getToken():string {

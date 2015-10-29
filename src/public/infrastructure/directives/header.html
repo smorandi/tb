@@ -15,24 +15,31 @@
                     <a href="#" ui-sref="{{link.state}}">{{link.name}}</a>
                 </li>
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active" ng-show="menu.registerLink">
-                    <a ui-sref="root.home.profile"><span
-                            class="glyphicon glyphicon-envelope"></span> {{menu.registerLink.name}}</a>
-                </li>
-                <li ng-show="menu.profileLink">
-                    <a href="#" ui-sref="root.home.profile"><span
-                            class="glyphicon glyphicon-user"></span> {{menu.profileLink.name}}</a>
+                    <!--<a ui-sref="root.register">-->
+                        <!--<span class="glyphicon glyphicon-envelope"></span> {{menu.registerLink.name}}</a>-->
+                    <a href="#" ng-click="go(menu.registerLink)">
+                        <span class="glyphicon glyphicon-envelope"></span> {{menu.registerLink.name}}</a>
                 </li>
 
-                <li ng-show="menu.basketLink"><a href="#" ui-sref="root.home.basket"><span
-                        class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge">{{menu.numberOfBasketItems}}</span></a>
+                <li ui-sref-active="active" ng-show="menu.profileLink">
+                    <a href="#" ui-sref="root.home.profile">
+                        <span class="glyphicon glyphicon-user"></span> {{menu.profileLink.name}}</a>
+                </li>
 
+                <li ui-sref-active="active" ng-show="menu.basketLink">
+                    <a href="#" ui-sref="root.home.basket">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge">{{menu.numberOfBasketItems}}</span></a>
+                </li>
 
-                <li ng-hide="menu.isLoggedIn"><a href="#" ng-click="login()"><span
-                        class="glyphicon glyphicon-log-in"></span> Login</a>
-                <li ng-show="menu.isLoggedIn"><a href="#" ng-click="logout()"><span
-                        class="glyphicon glyphicon-log-out"></span> Logout</a>
+                <li ng-hide="menu.isLoggedIn">
+                    <a href="#" ng-click="login()"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </li>
+
+                <li ng-show="menu.isLoggedIn">
+                    <a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                 </li>
             </ul>
         </div>

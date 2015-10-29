@@ -1,8 +1,8 @@
 ///<reference path="../all.references.ts" />
 
 module models {
-    export class Page implements interfaces.IPage {
-        constructor(public name:string, public state:string) {
+    export class Credentials implements interfaces.ICredentials {
+        constructor(public loginname:string, public password:string) {
         }
     }
 
@@ -11,8 +11,8 @@ module models {
         }
     }
 
-    export class LoginInfo implements interfaces.ILoginInfo {
-        constructor(public loggedIn:boolean, public loginname:string, public numberOfBasketItems:number, public hasRegistrationPage:boolean) {
+    export class RegisterCustomer implements interfaces.IRegisterCustomer {
+        constructor(public firstname?:string, public lastname?:string, public loginname?:string, public password?:string) {
         }
     }
 }

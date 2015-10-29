@@ -9,8 +9,11 @@ module services {
         constructor(private $log:ng.ILogService, private $state:ng.ui.IStateService) {
         }
 
-        public go(state:string) {
-            this.$state.go(state);
+        //public go(rel:string) {
+        //    this.$state.go(constants.REL_TO_LINK_MAP[rel].state);
+        //}
+        public go(link:interfaces.ILink) {
+            this.$state.go(link.state);
         }
     }
 }

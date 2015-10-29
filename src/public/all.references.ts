@@ -24,6 +24,7 @@
 /// <reference path="./components/dashboard/dashboard.controller.ts" />
 /// <reference path="./components/system/system.controller.ts" />
 /// <reference path="./components/profile/profile.controller.ts" />
+/// <reference path="./components/register/register.controller.ts" />
 /// <reference path="./components/drinks/list/drink-list.controller.ts" />
 /// <reference path="./components/drinks/details/drink-details.controller.ts" />
 /// <reference path="./components/drinks/create/drink-create.controller.ts" />

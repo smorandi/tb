@@ -14,6 +14,7 @@ angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "an
     .controller(injections.controllers.dashboard, controllers.DashboardController)
     .controller(injections.controllers.profile, controllers.ProfileController)
     .controller(injections.controllers.system, controllers.SystemController)
+    .controller(injections.controllers.register, controllers.RegisterController)
     .controller(injections.controllers.drinks.list, controllers.DrinkListController)
     .controller(injections.controllers.drinks.details, controllers.DrinkDetailsController)
     .controller(injections.controllers.drinks.create, controllers.DrinkCreateController)

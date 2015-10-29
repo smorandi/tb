@@ -40,6 +40,16 @@ module config {
                         }
                     }
                 })
+                .state("root.register", {
+                    url: "/register",
+                    views: {
+                        "content@root": {
+                            templateUrl: injections.templates.register.template,
+                            controller: injections.controllers.register,
+                            controllerAs: "vm"
+                        }
+                    }
+                })
                 .state("root.home", {
                     url: "/home",
                     redirectTo: "root.dashboard",

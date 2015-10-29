@@ -35,7 +35,7 @@ module run {
 
                     if (error.status === 401) {
                         utilsService.alert("NOT Authorized! calling with token now...");
-                        authService.setToken("admin", "admin");
+                        authService.setCredentials(new models.Credentials("admin", "admin"));
                         $state.go(toState, toParams, {relative: fromState});
                     }
                     else {

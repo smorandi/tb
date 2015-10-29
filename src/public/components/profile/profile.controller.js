@@ -7,7 +7,6 @@ var controllers;
             this.$log = $log;
             this.$location = $location;
             this.profileResource = profileResource;
-            this.db = [];
             $log.info("ProfileController called with client-url: '" + $location.path() + "'");
         }
         ProfileController.$inject = [injections.angular.$log, injections.angular.$location, "profileResource"];
