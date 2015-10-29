@@ -1,12 +1,14 @@
 {
   "name": "client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "angular": "~1.4.*",
     "angular-animate": "~1.4.*",
     "angular-sanitize": "~1.4.*",
     "angular-strap": "~2.1.0",
     "angular-ui-router": "~0.2.10",
+    "angular-local-storage": "latest",
+    "ionic": "latest",
     "angular-resource": "~1.4.*",
     "angular-hal": "~0.1.5",
     "bootstrap": "~3.2.0",

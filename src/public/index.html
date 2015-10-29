@@ -8,13 +8,15 @@
     <!-- inject:html -->
     <!-- endinject -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="assets/lib/bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="assets/lib/bower_components/angular-motion/dist/angular-motion.css">
+    <link rel="stylesheet" href="assets/lib/bower_components/ionic/release/css/ionic.css">
     <link rel="stylesheet" href="assets/lib/bower_components/font-awesome/css/font-awesome.css">
-    <!-- endbower -->
-    <!-- inject:css -->
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/lib/bower_components/bootstrap/dist/css/bootstrap.css">
     <!-- endinject -->
+
+    <!-- head:js -->
+    <!-- endinject -->
+
 </head>
 <body>
 
@@ -22,54 +24,54 @@
     <div data-ui-view/>
 </div>
 
+
 <!-- bower:js -->
-<script src="assets/lib/bower_components/jquery/dist/jquery.js"></script>
 <script src="assets/lib/bower_components/angular/angular.js"></script>
 <script src="assets/lib/bower_components/angular-animate/angular-animate.js"></script>
 <script src="assets/lib/bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script src="assets/lib/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="assets/lib/bower_components/angular-strap/dist/angular-strap.js"></script>
-<script src="assets/lib/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+<script src="assets/lib/bower_components/jquery/dist/jquery.js"></script>
 <script src="assets/lib/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="assets/lib/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+<script src="assets/lib/bower_components/ionic/release/js/ionic.js"></script>
+<script src="assets/lib/bower_components/ionic/release/js/ionic-angular.js"></script>
 <script src="assets/lib/bower_components/angular-resource/angular-resource.js"></script>
 <script src="assets/lib/bower_components/rfc6570/rfc6570.js"></script>
-<script src="assets/lib/bower_components/angular-hal/angular-hal.js"></script>
 <script src="assets/lib/bower_components/lodash/lodash.js"></script>
-
 <script src="assets/lib/bower_components/angular-socket-io/socket.js"></script>
-<!-- endbower -->
-<script src="assets/lib/socket.io.js"></script>
+<script src="assets/lib/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="assets/lib/bower_components/angular-hal/angular-hal.js"></script>
+<script src="assets/lib/bower_components/angular-strap/dist/angular-strap.js"></script>
+<script src="assets/lib/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+<!-- endinject -->
 
-
-<!-- inject:js -->
-<script src="./injections.js"></script>
-
+<!-- angular:js -->
+<script src="injections.js"></script>
+<script src="infrastructure/services/utils.service.js"></script>
+<script src="infrastructure/services/socket.service.js"></script>
+<script src="infrastructure/services/navigation.service.js"></script>
+<script src="infrastructure/services/menu.service.js"></script>
+<script src="infrastructure/services/httpInterceptor.service.js"></script>
+<script src="infrastructure/services/dashboard.service.js"></script>
+<script src="infrastructure/services/auth.service.js"></script>
+<script src="infrastructure/services/api.service.js"></script>
+<script src="infrastructure/run/run.js"></script>
+<script src="infrastructure/directives/header.directive.js"></script>
+<script src="infrastructure/config/routes.config.js"></script>
+<script src="infrastructure/config/interceptor.config.js"></script>
+<script src="components/drinks/list/drink-list.controller.js"></script>
+<script src="components/drinks/edit/drink-edit.controller.js"></script>
+<script src="components/drinks/details/drink-details.controller.js"></script>
+<script src="components/drinks/create/drink-create.controller.js"></script>
+<script src="components/system/system.controller.js"></script>
+<script src="components/profile/profile.controller.js"></script>
+<script src="components/dashboard/dashboard.controller.js"></script>
 <script src="api/models.js"></script>
 <script src="api/interfaces.js"></script>
 <script src="api/constants.js"></script>
+<!-- endinject -->
 
-<script src="infrastructure/services/api.service.js"></script>
-<script src="infrastructure/services/auth.service.js"></script>
-<script src="infrastructure/services/utils.service.js"></script>
-<script src="infrastructure/services/menu.service.js"></script>
-<script src="infrastructure/services/socket.service.js"></script>
-<script src="infrastructure/services/dashboard.service.js"></script>
-<script src="infrastructure/services/navigation.service.js"></script>
-<script src="infrastructure/services/httpInterceptor.service.js"></script>
-<script src="infrastructure/directives/header.directive.js"></script>
-<script src="infrastructure/config/interceptor.config.js"></script>
-<script src="infrastructure/config/routes.config.js"></script>
-<script src="infrastructure/run/run.js"></script>
-
-<script src="components/dashboard/dashboard.controller.js"></script>
-<script src="components/system/system.controller.js"></script>
-<script src="components/profile/profile.controller.js"></script>
-<script src="components/drinks/list/drink-list.controller.js"></script>
-<script src="components/drinks/details/drink-details.controller.js"></script>
-<script src="components/drinks/edit/drink-edit.controller.js"></script>
-<script src="components/drinks/create/drink-create.controller.js"></script>
-
-<script src="./app.js"></script>
+<!-- anguapp:js -->
+<script src="app.js"></script>
 <!-- endinject -->
 
 <script>
@@ -77,6 +79,7 @@
         angular.bootstrap(document, [injections.constants.appName]);
     });
 </script>
+
 
 </body>
 </html>

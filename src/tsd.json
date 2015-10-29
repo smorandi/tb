@@ -66,7 +66,7 @@
       "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     },
     "jquery/jquery.d.ts": {
-      "commit": "766b95e9f2cfdc4ae0d3bda346c904259244166f"
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
     },
     "karma-jasmine/karma-jasmine.d.ts": {
       "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
@@ -76,6 +76,15 @@
     },
     "angularjs/angular-resource.d.ts": {
       "commit": "766b95e9f2cfdc4ae0d3bda346c904259244166f"
+    },
+    "moment/moment.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "moment/moment-node.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "toastr/toastr.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
     }
   }
 }
