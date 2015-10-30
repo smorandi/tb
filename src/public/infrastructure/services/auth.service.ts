@@ -6,14 +6,17 @@ module services {
     export class AuthService {
         private credentials:interfaces.ICredentials;
         private token:string;
+        //private mdDialog:angular.material.IDialogService;
 
         static $inject = [
             injections.angular.$log,
             injections.angular.$window,
+            //injections.material.matDialog
         ];
 
-        constructor(private $log:ng.ILogService, private $window:ng.IWindowService) {
+        constructor(private $log:ng.ILogService, private $window:ng.IWindowService ) {
             this.token = null;
+            //this.mdDialog = $mdDialog;
         }
 
         public setCredentials(credentials:interfaces.ICredentials) {

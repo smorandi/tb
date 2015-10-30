@@ -21,7 +21,7 @@ var urlApp = "http://localhost:8888";
 gulp.task('inject', function(){
     gulp.src('./public/index.html')
         .pipe(inject(gulp.src(['./public/assets/lib_head/**/*.js'], {read: false}), {relative: true, name: 'head'}))
-        .pipe(inject(gulp.src(bowerFiles(), {read: false}), {relative: true, name: 'bower'}))
+        .pipe(inject(gulp.src(bowerFiles(), {read: true}), {relative: true, name: 'bower'}))
         .pipe(inject(gulp.src(['./public/api/**/*.js', './public/components/**/*.js', './public/infrastructure/**/*.js', './public/injections.js' ],
             {read: true}).pipe(filesort()), {relative: true, name:'angular'}))
         .pipe(inject(gulp.src(['./public/app.js'], {read: false}), {relative: true, name:'anguapp'}))

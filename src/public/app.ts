@@ -1,6 +1,6 @@
 ///<reference path="./all.references.ts" />
 
-angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "angular-hal", "btford.socket-io"])
+angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "angular-hal", "btford.socket-io", "ngMaterial"])
     .service(injections.services.apiService, services.ApiService)
     .service(injections.services.socketService, services.SocketService)
     .service(injections.services.utilsService, services.UtilsService)
@@ -19,6 +19,7 @@ angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "an
     .controller(injections.controllers.drinks.details, controllers.DrinkDetailsController)
     .controller(injections.controllers.drinks.create, controllers.DrinkCreateController)
     .controller(injections.controllers.drinks.edit, controllers.DrinkEditController)
+    .controller(injections.controllers.authDialog, controllers.AuthDialogController)
 
     .config(config.InterceptorConfig)
     .config(config.RoutesConfig)

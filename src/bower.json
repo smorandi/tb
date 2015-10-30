@@ -8,14 +8,14 @@
     "angular-strap": "~2.1.0",
     "angular-ui-router": "~0.2.10",
     "angular-local-storage": "latest",
-    "ionic": "latest",
     "angular-resource": "~1.4.*",
     "angular-hal": "~0.1.5",
     "bootstrap": "~3.2.0",
     "font-awesome": "~4.2.0",
     "lodash": "~3.10.1",
-    "socket.io": "~1.3.6",
-    "angular-socket-io":"~0.7.0"
+    "socket.io": "latest",
+    "angular-socket-io": "~0.7.0",
+    "angular-material": "~0.11.4"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.*"

@@ -15,6 +15,7 @@ module injections {
         export var profile:string = "profile-controller";
         export var system:string = "system-controller";
         export var register:string = "register-controller";
+        export var authDialog:string = "authDialog-controller";
 
         export module drinks {
             export var list:string = "drink-list-controller";
@@ -46,12 +47,10 @@ module injections {
         export var socketFactory:string = "socketFactory";
     }
 
-    //export module Ionic{
-    //    export var $ionicLoading:string = "$ionicLoading";
-    //    export var $ionicPopup:string = "$ionicPopup";
-    //    export var $ionicHistory: string = "$ionicHistory";
-    //    export var $ionicConfig: string = "$ionicConfig";
-    //}
+    export module material{
+        export var sideNav:string = "$mdSidenav";
+        export var matDialog:string = "$mdDialog";
+    }
 
     export module angular {
         export var $templateCache:string = "$templateCache";

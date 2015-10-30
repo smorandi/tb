@@ -9,9 +9,9 @@
     <!-- endinject -->
     <!-- bower:css -->
     <link rel="stylesheet" href="assets/lib/bower_components/angular-motion/dist/angular-motion.css">
-    <link rel="stylesheet" href="assets/lib/bower_components/ionic/release/css/ionic.css">
     <link rel="stylesheet" href="assets/lib/bower_components/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="assets/lib/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/lib/bower_components/angular-material/angular-material.css">
     <!-- endinject -->
 
     <!-- head:js -->
@@ -24,6 +24,7 @@
     <div data-ui-view/>
 </div>
 
+<script src="assets/lib/bower_components/socket.io/socket.io.js"></script>
 
 <!-- bower:js -->
 <script src="assets/lib/bower_components/angular/angular.js"></script>
@@ -32,14 +33,14 @@
 <script src="assets/lib/bower_components/jquery/dist/jquery.js"></script>
 <script src="assets/lib/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="assets/lib/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
-<script src="assets/lib/bower_components/ionic/release/js/ionic.js"></script>
-<script src="assets/lib/bower_components/ionic/release/js/ionic-angular.js"></script>
 <script src="assets/lib/bower_components/angular-resource/angular-resource.js"></script>
 <script src="assets/lib/bower_components/rfc6570/rfc6570.js"></script>
 <script src="assets/lib/bower_components/lodash/lodash.js"></script>
 <script src="assets/lib/bower_components/angular-socket-io/socket.js"></script>
+<script src="assets/lib/bower_components/angular-aria/angular-aria.js"></script>
 <script src="assets/lib/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="assets/lib/bower_components/angular-hal/angular-hal.js"></script>
+<script src="assets/lib/bower_components/angular-material/angular-material.js"></script>
 <script src="assets/lib/bower_components/angular-strap/dist/angular-strap.js"></script>
 <script src="assets/lib/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
 <!-- endinject -->
@@ -64,7 +65,9 @@
 <script src="components/drinks/create/drink-create.controller.js"></script>
 <script src="components/system/system.controller.js"></script>
 <script src="components/profile/profile.controller.js"></script>
+<script src="components/register/register.controller.js"></script>
 <script src="components/dashboard/dashboard.controller.js"></script>
+<script src="components/authentification/authDialog.controller.js"></script>
 <script src="api/models.js"></script>
 <script src="api/interfaces.js"></script>
 <script src="api/constants.js"></script>

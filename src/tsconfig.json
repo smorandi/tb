@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES6",
     "module": "commonjs",
     "noImplicitAny": false,
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
     "declaration": false
-  }
+  },
+
+  "exclude": [
+    "node_modules",
+    "typings",
+    "public/assets/lib"
+  ]
 }

@@ -10,9 +10,10 @@ module run {
             injections.uiRouter.$stateService,
             injections.services.authService,
             injections.services.utilsService,
+            injections.material.matDialog,
         ];
 
-        constructor($log:ng.ILogService, $rootScope:ng.IRootScopeService, $state:ng.ui.IStateService, authService:services.AuthService, utilsService:services.UtilsService) {
+        constructor($log:ng.ILogService, $rootScope:ng.IRootScopeService, $state:ng.ui.IStateService, authService:services.AuthService, utilsService:services.UtilsService, $mdDialog:angular.material.IDialogService ) {
             $rootScope.$on(injections.rootScope.$stateChangeStart,
                 (event, toState, toParams, fromState, fromParams) => {
                     $log.info("transition: " + fromState.name + " -> " + toState.name);
@@ -34,9 +35,23 @@ module run {
                     $log.error("$stateChangeError: " + fromState.name + " -> " + toState.name);
 
                     if (error.status === 401) {
-                        utilsService.alert("NOT Authorized! calling with token now...");
-                        authService.setCredentials(new models.Credentials("admin", "admin"));
-                        $state.go(toState, toParams, {relative: fromState});
+                        //utilsService.alert("NOT Authorized! calling with token now...");
+
+                        $mdDialog.show({
+                            controller: controllers.AuthDialogController,
+                            controllerAs: "vm",
+                            templateUrl: 'components/authentification/authDialog.html',
+                            parent: angular.element(document.body),
+                            //targetEvent: ev,
+                            clickOutsideToClose:false
+                        })
+                            .then(function(user) {
+                                authService.setCredentials(new models.Credentials(user.name, user.pw));
+                                $state.go(toState, toParams, {relative: fromState});
+
+                            }, function() {
+                                $state.go(fromState);
+                            });
                     }
                     else {
                         utilsService.alert(error);
@@ -47,6 +62,7 @@ module run {
                     $log.error("$stateNotFound: " + fromState.name + " -> " + unfoundState.to);
                     utilsService.alert("$stateNotFound\n" + fromState.name + " -> " + unfoundState.to);
                 });
+
         }
     }
 }

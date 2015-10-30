@@ -1,4 +1,4 @@
-///<reference path="../typings/tsd.d.ts"/>
+/// <reference path="../typings/tsd.d.ts" />
 
 //inject:ts
 
@@ -22,6 +22,7 @@
 /// <reference path="./infrastructure/config/routes.config.ts" />
 
 /// <reference path="./components/dashboard/dashboard.controller.ts" />
+/// <reference path="./components/authentification/authDialog.controller.ts" />
 /// <reference path="./components/system/system.controller.ts" />
 /// <reference path="./components/profile/profile.controller.ts" />
 /// <reference path="./components/register/register.controller.ts" />

@@ -1,0 +1,31 @@
+<md-dialog aria-label="Mango (Fruit)"  ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Login</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:800px;max-height:810px; ">
+            <div class="md-dialog-content">
+                <div class="form-group">
+                    <label for="usr">Name:</label>
+                    <input type="text" class="form-control" id="usr" ng-model="vm.user.name">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="password" class="form-control" id="pwd" ng-model="vm.user.pw">
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <div class="md-actions" layout="row">
+            <md-button ng-click="vm.auth()" >
+                Login
+            </md-button>
+            <md-button ng-click="vm.cancel()" style="margin-right:20px;" >
+                Abort
+            </md-button>
+        </div>
+    </form>
+</md-dialog>
