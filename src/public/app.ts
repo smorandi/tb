@@ -1,6 +1,6 @@
 ///<reference path="./all.references.ts" />
 
-angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "angular-hal", "btford.socket-io", "ui.bootstrap"])
+angular.module(injections.constants.appName, ["ui.router", "ngAnimate", "toaster", "mgcrea.ngStrap", "angular-hal", "btford.socket-io", "ui.bootstrap"])
     .service(injections.services.apiService, services.ApiService)
     .service(injections.services.socketService, services.SocketService)
     .service(injections.services.utilsService, services.UtilsService)
@@ -10,7 +10,7 @@ angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "an
     .service(injections.services.menuService, services.MenuService)
     .service(injections.services.httpInterceptorService, services.HttpInterceptorService)
     .service(injections.services.localStorage, services.LocalStorageService)
-    .factory(injections.services.loggerService, [ '$log', ($log) => new services.LoggerService($log)])
+    .service(injections.services.loggerService, services.LoggerService)
     .directive(injections.directives.header, directives.Header)
 
     .controller(injections.controllers.dashboard, controllers.DashboardController)

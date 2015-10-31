@@ -5,13 +5,9 @@
 module services {
     export class LoggerService implements interfaces.ILogger {
 
-        constructor( private $log: angular.ILogService) {
-            toastr.options.timeOut = 4000;
-            toastr.options.showDuration = 1000;
-            toastr.options.hideDuration = 1000;
-            toastr.options.positionClass = "toast-top-center";
-            toastr.options.closeButton = true;
+        static $inject = [injections.angular.$log, injections.extServices.toaster];
 
+        constructor( private $log: angular.ILogService, private toaster:ngtoaster.IToasterService) {
         }
 
         public logWarning(message:string, id:string, title:string): void {
@@ -27,15 +23,15 @@ module services {
         }
 
         public ToastWarning(message:string, title:string): void {
-            toastr.warning(message, title);
+            this.toastr.warning(message, title);
         }
 
         public ToastInfo(message:string, title:string): void {
-            toastr.info(message, title);
+            this.toaster.info(message, title);
         }
 
         public ToastError(message:string, title:string): void {
-            toastr.error(message, title);
+            this.toaster.error(message, title);
         }
 
     }

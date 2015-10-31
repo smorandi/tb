@@ -20,9 +20,6 @@
     "angularjs/angular-resource.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     },
-    "toastr/toastr.d.ts": {
-      "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
-    },
     "socket.io/socket.io.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     },
@@ -30,6 +27,9 @@
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     },
     "angular-ui-bootstrap/angular-ui-bootstrap.d.ts": {
+      "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
+    },
+    "angularjs-toaster/angularjs-toaster.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     }
   }

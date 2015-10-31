@@ -53,15 +53,12 @@ module injections {
     export module extServices {
         export var halService:string = "halClient";
         export var socketFactory:string = "socketFactory";
+        export var toaster:string = "toaster";
     }
 
     export module bootstrap{
         export var uibModal:string = "$uibModal";
         export var uibModalInst:string = "$uibModalInstance";
-    }
-
-    export module toaster{
-        export var toaster:string = "toaster";
     }
 
     export module angular {
