@@ -19,4 +19,11 @@ module interfaces {
         loginname: string;
         password: string;
     }
+
+    export interface ILocalStorage {
+        get(key:string): any;
+        save(key:string, data:any): void;
+        remove(key:string): void;
+        clearAll(): void;
+    }
 }

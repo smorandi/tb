@@ -182,7 +182,114 @@ module config {
                             controllerAs: "vm"
                         }
                     },
-                });
+                })
+                .state("root.home.profile", {
+                    url: "/profile",
+                    views: {
+                        "content@root": {
+                            templateUrl: "components/profile/profile.html",
+                            controller: injections.controllers.profile,
+                            controllerAs: "vm"
+                        }
+                    },
+                    resolve: {
+                        profileResource: ($log, homeResource) => {
+                            $log.info("resolving profile-resource...");
+                            return homeResource.$get("profile").then(res => {
+                                $log.info("profile-resource resolved...");
+                                return res;
+                            });
+                        },
+                    },
+                })
+                .state("root.home.basket", {
+                    url: "/basket",
+                    views: {
+                        "content@root": {
+                            templateUrl: "components/basket/basket.html",
+                            controller: injections.controllers.basket,
+                            controllerAs: "vm"
+                        }
+                    },
+                    resolve: {
+                        basketResource: ($log, homeResource) => {
+                            $log.info("resolving basket-resource...");
+                            return homeResource.$get("basket").then(res => {
+                                $log.info("basket-resource resolved...");
+                                return res;
+                            });
+                        },
+                    },
+                })
+                .state("root.home.orders", {
+                    url: "/orders",
+                    abstract: true,
+                    views: {
+                        "content@root": {
+                            templateUrl: "components/orders/orders-root.html",
+                        }
+                    },
+                    resolve: {
+                        ordersResource: ($log, homeResource, $state) => {
+                            $log.info("resolving orders-resource...");
+                            return homeResource.$get("orders").then(res => {
+                                $log.info("orders-resource resolved...");
+                                return res;
+                            });
+                        },
+
+                        orderResources: ($log, ordersResource) => {
+                            $log.info("resolving order-resources...");
+                            if (!ordersResource.$has("items")) {
+                                $log.info("no order resources found. returning empty array...");
+                                return [];
+                            }
+                            return ordersResource.$get("items").then(res => {
+                                $log.info("order-resources resolved...");
+                                return res;
+                            }, err => {
+                                $log.info("no collection in ordersResource");
+                                return null;
+                            });
+                        }
+                    },
+                })
+                .state("root.home.orders.overview", {
+                    url: "",
+                    abstract: true,
+                    templateUrl: "components/orders/orders-overview.html",
+                })
+                .state("root.home.orders.overview.list", {
+                    url: "",
+                    views: {
+                        "mas@root.home.orders.overview": {
+                            templateUrl: "components/orders/list/orders-list.html",
+                            controller: injections.controllers.orders.list,
+                            controllerAs: "vm"
+                        },
+                        "det@root.home.orders.overview": {
+                            templateUrl: "components/orders/details/order-details.html",
+                        }
+                    }
+                })
+                .state("root.home.orders.overview.list.details", {
+                    url: "/:id",
+                    views: {
+                        "det@root.home.orders.overview": {
+                            templateUrl: "components/orders/details/order-details.html",
+                            controller: injections.controllers.orders.details,
+                            controllerAs: "vm"
+                        }
+                    },
+                    resolve: {
+                        utilsService: "utilsService",
+                        orderResource: ($log, orderResources:Array<any>, $location, $state:ng.ui.IStateService, $stateParams:ng.ui.IStateParamsService, utilsService:services.UtilsService) => {
+                            var orderResource = utilsService.findInArray(orderResources, dr => dr.id === $stateParams["id"]);
+                            return orderResource;
+                        },
+                    },
+                })
+            ;
         }
     }
 }

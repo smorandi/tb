@@ -9,6 +9,7 @@ angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "an
     .service(injections.services.navigationService, services.NavigationService)
     .service(injections.services.menuService, services.MenuService)
     .service(injections.services.httpInterceptorService, services.HttpInterceptorService)
+    .service(injections.services.localStorage, services.LocalStorageService)
     .directive(injections.directives.header, directives.Header)
 
     .controller(injections.controllers.dashboard, controllers.DashboardController)
@@ -20,6 +21,9 @@ angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "an
     .controller(injections.controllers.drinks.create, controllers.DrinkCreateController)
     .controller(injections.controllers.drinks.edit, controllers.DrinkEditController)
     .controller(injections.controllers.authDialog, controllers.AuthDialogController)
+    .controller(injections.controllers.basket, controllers.BasketController)
+    .controller(injections.controllers.orders.list, controllers.OrdersListController)
+    .controller(injections.controllers.orders.details, controllers.OrderDetailsController)
 
     .config(config.InterceptorConfig)
     .config(config.RoutesConfig)

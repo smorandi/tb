@@ -22,6 +22,7 @@ module services {
                 registerLink: constants.LINKS.register,
                 profileLink: constants.LINKS.profile,
                 basketLink: constants.LINKS.basket,
+                ordersLink: constants.LINKS.orders,
                 navigationLinks: {},
                 controlLinks: {}
             };
@@ -73,6 +74,7 @@ module services {
             this.menu.registerLink = resource.$has(constants.RELS.register) ? constants.LINKS.register : null;
             this.menu.profileLink = resource.$has(constants.RELS.profile) ? constants.LINKS.profile : null;
             this.menu.basketLink = resource.$has(constants.RELS.basket) ? constants.LINKS.basket : null;
+            this.menu.ordersLink = resource.$has(constants.RELS.orders) ? constants.LINKS.orders: null;
 
             if (resource.$has(constants.RELS.dashboard)) {
                 this.menu.navigationLinks[constants.RELS.dashboard] = constants.LINKS.dashboard;

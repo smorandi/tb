@@ -36,7 +36,7 @@ module constants {
         export var profile:string = "root.home.profile";
         export var drinks:string = "root.home.drinks.overview.list";
         export var basket:string = "root.home.basket";
-        export var orders:string = "root.home.orders";
+        export var orders:string = "root.home.orders.overview.list";
         export var system:string = "root.home.system";
     }
 

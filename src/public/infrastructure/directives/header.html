@@ -24,6 +24,12 @@
                         <span class="glyphicon glyphicon-envelope"></span> {{menu.registerLink.name}}</a>
                 </li>
 
+
+                <li ui-sref-active="active" ng-show="menu.ordersLink">
+                    <a href="#" ui-sref="root.home.orders.overview.list">
+                        <span class="glyphicon glyphicon-list-alt"></span> {{menu.ordersLink.name}}</a>
+                </li>
+
                 <li ui-sref-active="active" ng-show="menu.profileLink">
                     <a href="#" ui-sref="root.home.profile">
                         <span class="glyphicon glyphicon-user"></span> {{menu.profileLink.name}}</a>

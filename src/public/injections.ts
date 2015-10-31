@@ -16,12 +16,18 @@ module injections {
         export var system:string = "system-controller";
         export var register:string = "register-controller";
         export var authDialog:string = "authDialog-controller";
+        export var basket:string = "basket-controller";
 
         export module drinks {
             export var list:string = "drink-list-controller";
             export var details:string = "drink-details-controller";
             export var create:string = "drink-create-controller";
             export var edit:string = "drink-edit-controller";
+        }
+
+        export module orders {
+            export var list:string = "orders-list-controller";
+            export var details:string = "order-details-controller";
         }
     }
 
@@ -40,6 +46,7 @@ module injections {
         export var socketService:string = "socketService";
         export var utilsService:string = "utilsService";
         export var httpInterceptorService:string = "httpInterceptorService";
+        export var localStorage:string = "localStorageService";
     }
 
     export module extServices {
