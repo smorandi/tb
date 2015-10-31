@@ -14,15 +14,16 @@ module run {
             injections.services.loggerService
         ];
 
-        constructor($log:ng.ILogService, $rootScope:ng.IRootScopeService, $state:ng.ui.IStateService, authService:services.AuthService, utilsService:services.UtilsService, $uibModal:angular.ui.bootstrap.IModalService, LoggerService:services.LoggerService) {
+        constructor($log:ng.ILogService,
+                    $rootScope:ng.IRootScopeService,
+                    $state:ng.ui.IStateService,
+                    authService:services.AuthService,
+                    utilsService:services.UtilsService,
+                    $uibModal:angular.ui.bootstrap.IModalService,
+                    LoggerService:services.LoggerService) {
             $rootScope.$on(injections.rootScope.$stateChangeStart,
                 (event, toState, toParams, fromState, fromParams) => {
                     $log.info("transition: " + fromState.name + " -> " + toState.name);
-                    //if (toState.redirectTo) {
-                    //    $log.info("redirectTo: " + toState.redirectTo);
-                    //    event.preventDefault();
-                    //    $state.go(toState.redirectTo, toParams)
-                    //}
                 });
             $rootScope.$on(injections.rootScope.$stateChangeSuccess,
                 function (event, toState, toParams, fromState, fromParams) {
