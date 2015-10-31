@@ -10,6 +10,7 @@ angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "an
     .service(injections.services.menuService, services.MenuService)
     .service(injections.services.httpInterceptorService, services.HttpInterceptorService)
     .service(injections.services.localStorage, services.LocalStorageService)
+    .factory(injections.services.loggerService, [ '$log', ($log) => new services.LoggerService($log)])
     .directive(injections.directives.header, directives.Header)
 
     .controller(injections.controllers.dashboard, controllers.DashboardController)

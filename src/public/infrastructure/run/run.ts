@@ -10,10 +10,11 @@ module run {
             injections.uiRouter.$stateService,
             injections.services.authService,
             injections.services.utilsService,
-            injections.bootstrap.uibModal
+            injections.bootstrap.uibModal,
+            injections.services.loggerService
         ];
 
-        constructor($log:ng.ILogService, $rootScope:ng.IRootScopeService, $state:ng.ui.IStateService, authService:services.AuthService, utilsService:services.UtilsService, $uibModal:angular.ui.bootstrap.IModalService) {
+        constructor($log:ng.ILogService, $rootScope:ng.IRootScopeService, $state:ng.ui.IStateService, authService:services.AuthService, utilsService:services.UtilsService, $uibModal:angular.ui.bootstrap.IModalService, LoggerService:services.LoggerService) {
             $rootScope.$on(injections.rootScope.$stateChangeStart,
                 (event, toState, toParams, fromState, fromParams) => {
                     $log.info("transition: " + fromState.name + " -> " + toState.name);
@@ -36,6 +37,8 @@ module run {
 
                     //@TODO 403 message
                     if (error.status === 401) {
+
+                        LoggerService.ToastError("not authorized", "forbidden");
 
                         var modalInst = $uibModal.open({
                             controller: controllers.AuthDialogController,

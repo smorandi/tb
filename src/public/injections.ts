@@ -47,6 +47,7 @@ module injections {
         export var utilsService:string = "utilsService";
         export var httpInterceptorService:string = "httpInterceptorService";
         export var localStorage:string = "localStorageService";
+        export var loggerService:string = "loggerService"
     }
 
     export module extServices {
@@ -57,6 +58,10 @@ module injections {
     export module bootstrap{
         export var uibModal:string = "$uibModal";
         export var uibModalInst:string = "$uibModalInstance";
+    }
+
+    export module toaster{
+        export var toaster:string = "toaster";
     }
 
     export module angular {
