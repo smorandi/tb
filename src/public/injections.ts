@@ -54,9 +54,9 @@ module injections {
         export var socketFactory:string = "socketFactory";
     }
 
-    export module material{
-        export var sideNav:string = "$mdSidenav";
-        export var matDialog:string = "$mdDialog";
+    export module bootstrap{
+        export var uibModal:string = "$uibModal";
+        export var uibModalInst:string = "$uibModalInstance";
     }
 
     export module angular {

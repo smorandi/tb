@@ -10,28 +10,24 @@ module controllers {
 
         static $inject = [
             injections.angular.$log,
-            injections.material.matDialog
+            injections.bootstrap.uibModalInst
             ];
 
-        constructor( private $log:ng.ILogService, private $mdDialog:angular.material.IDialogService ) {
+        constructor( private $log:ng.ILogService, private  $uibModalInstance:angular.ui.bootstrap.IModalServiceInstance ) {
             $log.info("authDialog");
             this.user = {
                 name : "",
                 pw: ""
             };
-            this.mdDialog = $mdDialog;
-        }
-
-        public hide():void {
-            this.mdDialog.hide();
+            this.mdDialog = $uibModalInstance;
         }
 
         public cancel(): void {
-            this.mdDialog.cancel();
+            this.mdDialog.dismiss('cancel');
         }
 
         public auth() {
-            this.mdDialog.hide(this.user);
+            this.mdDialog.close(this.user);
         }
 
     }

@@ -15,7 +15,7 @@
     "lodash": "~3.10.1",
     "socket.io": "latest",
     "angular-socket-io": "~0.7.0",
-    "angular-material": "~0.11.4"
+    "angular-bootstrap": "~0.14.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.*"

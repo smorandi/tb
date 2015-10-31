@@ -1,6 +1,6 @@
 ///<reference path="./all.references.ts" />
 
-angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "angular-hal", "btford.socket-io", "ngMaterial"])
+angular.module(injections.constants.appName, ["ui.router", "mgcrea.ngStrap", "angular-hal", "btford.socket-io", "ui.bootstrap"])
     .service(injections.services.apiService, services.ApiService)
     .service(injections.services.socketService, services.SocketService)
     .service(injections.services.utilsService, services.UtilsService)

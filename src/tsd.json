@@ -23,13 +23,13 @@
     "toastr/toastr.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     },
-    "angular-material/angular-material.d.ts": {
-      "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
-    },
     "socket.io/socket.io.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     },
     "node/node.d.ts": {
+      "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
+    },
+    "angular-ui-bootstrap/angular-ui-bootstrap.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     }
   }

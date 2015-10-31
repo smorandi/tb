@@ -29,7 +29,7 @@ it("root resource has correct structure", function (done) {
             expect(res).to.be.ok();
 
             expect(res).to.only.have.keys("_links");
-            expect(res._links).to.only.have.keys("self", "dashboard", "registerCustomer", "home");
+            expect(res._links).to.only.have.keys("self", "dashboard", "register", "home");
 
             done();
         });

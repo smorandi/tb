@@ -10,10 +10,10 @@ module run {
             injections.uiRouter.$stateService,
             injections.services.authService,
             injections.services.utilsService,
-            injections.material.matDialog,
+            injections.bootstrap.uibModal
         ];
 
-        constructor($log:ng.ILogService, $rootScope:ng.IRootScopeService, $state:ng.ui.IStateService, authService:services.AuthService, utilsService:services.UtilsService, $mdDialog:angular.material.IDialogService ) {
+        constructor($log:ng.ILogService, $rootScope:ng.IRootScopeService, $state:ng.ui.IStateService, authService:services.AuthService, utilsService:services.UtilsService, $uibModal:angular.ui.bootstrap.IModalService) {
             $rootScope.$on(injections.rootScope.$stateChangeStart,
                 (event, toState, toParams, fromState, fromParams) => {
                     $log.info("transition: " + fromState.name + " -> " + toState.name);
@@ -34,24 +34,22 @@ module run {
                 (event, toState, toParams, fromState, fromParams, error) => {
                     $log.error("$stateChangeError: " + fromState.name + " -> " + toState.name);
 
+                    //@TODO 403 message
                     if (error.status === 401) {
-                        //utilsService.alert("NOT Authorized! calling with token now...");
 
-                        $mdDialog.show({
+                        var modalInst = $uibModal.open({
                             controller: controllers.AuthDialogController,
                             controllerAs: "vm",
                             templateUrl: 'components/authentification/authDialog.html',
-                            parent: angular.element(document.body),
-                            //targetEvent: ev,
-                            clickOutsideToClose:false
-                        })
-                            .then(function(user) {
-                                authService.setCredentials(new models.Credentials(user.name, user.pw));
-                                $state.go(toState, toParams, {relative: fromState});
+                        });
 
-                            }, function() {
-                                $state.go(fromState);
-                            });
+                        modalInst.result.then(function (user) {
+                            authService.setCredentials(new models.Credentials(user.name, user.pw));
+                            $state.go(toState, toParams, {relative: fromState});
+
+                        }, function () {
+                            $state.go(fromState);
+                        });
                     }
                     else {
                         utilsService.alert(error);

@@ -32,7 +32,7 @@ exports.paths = {
     toHome: ["home"],
     toBasket: ["home", "basket"],
     toOrders: ["home", "orders"],
-    toRegisterCustomer: ["registerCustomer"],
+    toRegisterCustomer: ["register"],
     toCreateBasketItem: ["home", "basket", "create"],
     toCreateOrder: ["home", "basket", "createOrder"],
     toDashboard: ["dashboard"],
