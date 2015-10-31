@@ -1,5 +1,7 @@
 ///<reference path="../all.references.ts" />
 
+"use strict";
+
 module constants {
     export var ws:string = "http://localhost:3000";
     export var api:string = "http://localhost:3000/root";
@@ -43,13 +45,13 @@ module constants {
     export module LINKS {
         export var root:interfaces.ILink = new models.Link(RELS.root, NAMES.root, STATES.root);
         export var home:interfaces.ILink = new models.Link(RELS.home, NAMES.home, STATES.home);
-        export var register:interfaces.ILink = new models.Link(RELS.register,NAMES.register, STATES.register);
-        export var dashboard:interfaces.ILink = new models.Link(RELS.dashboard,NAMES.dashboard, STATES.dashboard);
-        export var profile:interfaces.ILink = new models.Link(RELS.profile,NAMES.profile, STATES.profile);
-        export var drinks:interfaces.ILink = new models.Link(RELS.drinks,NAMES.drinks, STATES.drinks);
-        export var basket:interfaces.ILink = new models.Link(RELS.basket,NAMES.basket, STATES.basket);
-        export var orders:interfaces.ILink = new models.Link(RELS.orders,NAMES.orders, STATES.orders);
-        export var system:interfaces.ILink = new models.Link(RELS.system,NAMES.system, STATES.system);
+        export var register:interfaces.ILink = new models.Link(RELS.register, NAMES.register, STATES.register);
+        export var dashboard:interfaces.ILink = new models.Link(RELS.dashboard, NAMES.dashboard, STATES.dashboard);
+        export var profile:interfaces.ILink = new models.Link(RELS.profile, NAMES.profile, STATES.profile);
+        export var drinks:interfaces.ILink = new models.Link(RELS.drinks, NAMES.drinks, STATES.drinks);
+        export var basket:interfaces.ILink = new models.Link(RELS.basket, NAMES.basket, STATES.basket);
+        export var orders:interfaces.ILink = new models.Link(RELS.orders, NAMES.orders, STATES.orders);
+        export var system:interfaces.ILink = new models.Link(RELS.system, NAMES.system, STATES.system);
     }
 
     interface IRelToLinkMap {

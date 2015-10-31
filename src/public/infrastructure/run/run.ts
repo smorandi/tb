@@ -3,7 +3,10 @@
 "use strict";
 
 module run {
+    export var onLoggingIn:boolean = false;
+
     export class Run {
+
         static $inject = [
             injections.angular.$log,
             injections.angular.$rootScope,
@@ -20,13 +23,18 @@ module run {
                     authService:services.AuthService,
                     utilsService:services.UtilsService,
                     $uibModal:angular.ui.bootstrap.IModalService,
-                    LoggerService:services.LoggerService) {
+                    logger:services.LoggerService) {
             $rootScope.$on(injections.rootScope.$stateChangeStart,
                 (event, toState, toParams, fromState, fromParams) => {
                     $log.info("transition: " + fromState.name + " -> " + toState.name);
                 });
             $rootScope.$on(injections.rootScope.$stateChangeSuccess,
                 function (event, toState, toParams, fromState, fromParams) {
+                    //if (onLoggingIn) {
+                    //    onLoggingIn = false;
+                    //    logger.info("Login successful", "Welcome " + authService.getCredentials().loginname, enums.LogOptions.toast_only);
+                    //}
+
                     if (toState.redirectTo) {
                         $log.info("redirectTo: " + toState.redirectTo);
                         $state.go(toState.redirectTo, toParams)
@@ -39,24 +47,28 @@ module run {
                     //@TODO 403 message
                     if (error.status === 401) {
 
-                        LoggerService.ToastError("not authorized", "forbidden");
+                        logger.error("not authorized - doing a login");
 
                         var modalInst = $uibModal.open({
                             controller: controllers.AuthDialogController,
                             controllerAs: "vm",
-                            templateUrl: 'components/authentification/authDialog.html',
+                            templateUrl: 'components/login/login-dialog.html',
                         });
 
-                        modalInst.result.then(function (user) {
-                            authService.setCredentials(new models.Credentials(user.name, user.pw));
-                            $state.go(toState, toParams, {relative: fromState});
-
-                        }, function () {
+                        modalInst.result.then((credentials:interfaces.ICredentials) => {
+                            onLoggingIn = true;
+                            authService.setCredentials(new models.Credentials(credentials.loginname, credentials.password));
+                            $state.go(toState, toParams, {relative: fromState}).then(() => {
+                                logger.info("Login successful", "Welcome " + authService.getCredentials().loginname, enums.LogOptions.toast_only);
+                            }).catch(err => {
+                                logger.error("Login failed", "the provided credentials are invalid", enums.LogOptions.toast);
+                            });
+                        }, () => {
                             $state.go(fromState);
                         });
                     }
                     else {
-                        utilsService.alert(error);
+                        logger.error("", error, enums.LogOptions.toast);
                     }
                 });
             $rootScope.$on(injections.rootScope.$stateNotFound,

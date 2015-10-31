@@ -24,7 +24,11 @@
     <div data-ui-view/>
 </div>
 
+<!--NOTE: the following path has to be taken for debug ONLY-->
 <script src="assets/lib/socket.io.js"></script>
+
+<!--NOTE: the following path has to be taken for production (!)-->
+<!--<script src="/socket.io/socket.io.js"></script>-->
 
 <!-- bower:js -->
 <script src="assets/lib/bower_components/jquery/dist/jquery.js"></script>
@@ -70,10 +74,11 @@
 <script src="components/profile/profile.controller.js"></script>
 <script src="components/dashboard/dashboard.controller.js"></script>
 <script src="components/basket/basket.controller.js"></script>
-<script src="components/authentification/authDialog.controller.js"></script>
+<script src="components/login/login-dialog.controller.js"></script>
 <script src="api/models.js"></script>
 <script src="api/interfaces.js"></script>
 <script src="api/constants.js"></script>
+<script src="api/enums.js"></script>
 <!-- endinject -->
 
 <!-- anguapp:js -->

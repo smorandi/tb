@@ -3,29 +3,16 @@
 var controllers;
 (function (controllers) {
     var DashboardController = (function () {
-        function DashboardController($log, $location, dashboardService, LoggerService) {
-            this.$log = $log;
-            this.$location = $location;
+        function DashboardController(logger, dashboardService) {
+            this.logger = logger;
             this.dashboardService = dashboardService;
-            this.LoggerService = LoggerService;
             this.dashboard = [];
-            $log.info("DashboardController called with client-url: '" + $location.path() + "'");
-            LoggerService.ToastInfo("greetings from John Doe", "Welcome");
+            logger.info("DashboardController called");
             this.dashboard = dashboardService.dashboard;
-            //var y = $scope["dashboard"];
-            //$scope.$watch("dashboard", change => {
-            //    this.dashboard = change;
-            //});
-            //socketService.on("dashboard", data => {
-            //    $log.info("DashboardController --> " + JSON.stringify(data));
-            //    this.dashboard = data;
-            //});
         }
         DashboardController.$inject = [
-            injections.angular.$log,
-            injections.angular.$location,
-            injections.services.dashboardService,
-            injections.services.loggerService
+            injections.services.loggerService,
+            injections.services.dashboardService
         ];
         return DashboardController;
     })();

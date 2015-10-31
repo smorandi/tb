@@ -7,12 +7,16 @@ module services {
         public menu:any;
 
         static $inject = [
-            injections.angular.$log,
+            injections.services.loggerService,
             injections.uiRouter.$stateService,
             injections.services.authService,
             injections.services.navigationService,
         ];
-        constructor(private $log:ng.ILogService, private $state:ng.ui.IStateService, private authService:services.AuthService, private navigationService:services.NavigationService) {
+
+        constructor(private logger:services.LoggerService,
+                    private $state:ng.ui.IStateService,
+                    private authService:services.AuthService,
+                    private navigationService:services.NavigationService) {
             this.menu = {
                 resource: null,
                 isLoggedIn: false,
@@ -38,7 +42,9 @@ module services {
 
         public logout():void {
             this.authService.clearCredentials();
-            this.$state.go(constants.STATES.dashboard, {}, {reload: true});
+            this.$state.go(constants.STATES.dashboard, {}, {reload: true}).then(() => {
+                this.logger.info("Logged Out", "See you soon!", enums.LogOptions.toast);
+            });
         }
 
         public getLink(rel:string):interfaces.ILink {
@@ -74,7 +80,7 @@ module services {
             this.menu.registerLink = resource.$has(constants.RELS.register) ? constants.LINKS.register : null;
             this.menu.profileLink = resource.$has(constants.RELS.profile) ? constants.LINKS.profile : null;
             this.menu.basketLink = resource.$has(constants.RELS.basket) ? constants.LINKS.basket : null;
-            this.menu.ordersLink = resource.$has(constants.RELS.orders) ? constants.LINKS.orders: null;
+            this.menu.ordersLink = resource.$has(constants.RELS.orders) ? constants.LINKS.orders : null;
 
             if (resource.$has(constants.RELS.dashboard)) {
                 this.menu.navigationLinks[constants.RELS.dashboard] = constants.LINKS.dashboard;

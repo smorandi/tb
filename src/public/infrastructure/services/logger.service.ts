@@ -5,34 +5,65 @@
 module services {
     export class LoggerService implements interfaces.ILogger {
 
-        static $inject = [injections.angular.$log, injections.extServices.toaster];
+        static $inject = [
+            injections.angular.$log,
+            injections.extServices.toaster
+        ];
 
-        constructor( private $log: angular.ILogService, private toaster:ngtoaster.IToasterService) {
+        constructor(private $log:angular.ILogService,
+                    private toaster:ngtoaster.IToasterService) {
         }
 
-        public logWarning(message:string, id:string, title:string): void {
-
+        public debug(title:string, message?:string, logOptions?:enums.LogOptions) {
+            if (logOptions === enums.LogOptions.toast_only) {
+                this.toaster.debug(title, message);
+            }
+            else if (logOptions === enums.LogOptions.toast) {
+                this.toaster.debug(title, message);
+                this.$log.debug(title + "//" + message);
+            }
+            else {
+                this.$log.debug(title + "//" + message);
+            }
         }
 
-        public logInfo(message:string, id:string, title:string): void {
-
+        public info(title:string, message?:string, logOptions?:enums.LogOptions) {
+            if (logOptions === enums.LogOptions.toast_only) {
+                this.toaster.info(title, message);
+            }
+            else if (logOptions === enums.LogOptions.toast) {
+                this.toaster.info(title, message);
+                this.$log.info(title + "//" + message);
+            }
+            else {
+                this.$log.info(title + "//" + message);
+            }
         }
 
-        public logError(message:string, id:string, title:string): void {
-
+        public warn(title:string, message?:string, logOptions?:enums.LogOptions) {
+            if (logOptions === enums.LogOptions.toast_only) {
+                this.toaster.warning(title, message);
+            }
+            else if (logOptions === enums.LogOptions.toast) {
+                this.toaster.warning(title, message);
+                this.$log.warn(title + "//" + message);
+            }
+            else {
+                this.$log.warn(title + "//" + message);
+            }
         }
 
-        public ToastWarning(message:string, title:string): void {
-            this.toastr.warning(message, title);
+        public error(title:string, message?:string, logOptions?:enums.LogOptions) {
+            if (logOptions === enums.LogOptions.toast_only) {
+                this.toaster.error(title, message);
+            }
+            else if (logOptions === enums.LogOptions.toast) {
+                this.toaster.error(title, message);
+                this.$log.error(title + "//" + message);
+            }
+            else {
+                this.$log.error(title + "//" + message);
+            }
         }
-
-        public ToastInfo(message:string, title:string): void {
-            this.toaster.info(message, title);
-        }
-
-        public ToastError(message:string, title:string): void {
-            this.toaster.error(message, title);
-        }
-
     }
 }

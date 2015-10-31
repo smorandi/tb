@@ -1,6 +1,9 @@
 /**
  * Created by Stefano on 23.10.2015.
  */
+
+"use strict";
+
 module interfaces {
     export interface ICredentials {
         loginname:string;

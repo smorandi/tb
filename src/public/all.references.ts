@@ -7,6 +7,7 @@
 /// <reference path="./api/interfaces.ts" />
 /// <reference path="./api/models.ts" />
 /// <reference path="./api/constants.ts" />
+/// <reference path="./api/enums.ts" />
 
 /// <reference path="./infrastructure/services/menu.service.ts" />
 /// <reference path="./infrastructure/services/api.service.ts" />
@@ -24,7 +25,7 @@
 /// <reference path="./infrastructure/config/routes.config.ts" />
 
 /// <reference path="./components/dashboard/dashboard.controller.ts" />
-/// <reference path="./components/authentification/authDialog.controller.ts" />
+/// <reference path="./components/login/login-dialog.controller.ts" />
 /// <reference path="./components/system/system.controller.ts" />
 /// <reference path="./components/profile/profile.controller.ts" />
 /// <reference path="./components/register/register.controller.ts" />

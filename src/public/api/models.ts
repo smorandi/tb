@@ -1,8 +1,10 @@
 ///<reference path="../all.references.ts" />
 
+"use strict";
+
 module models {
     export class Credentials implements interfaces.ICredentials {
-        constructor(public loginname:string, public password:string) {
+        constructor(public loginname?:string, public password?:string) {
         }
     }
 
