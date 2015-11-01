@@ -30,11 +30,6 @@ module run {
                 });
             $rootScope.$on(injections.rootScope.$stateChangeSuccess,
                 function (event, toState, toParams, fromState, fromParams) {
-                    //if (onLoggingIn) {
-                    //    onLoggingIn = false;
-                    //    logger.info("Login successful", "Welcome " + authService.getCredentials().loginname, enums.LogOptions.toast_only);
-                    //}
-
                     if (toState.redirectTo) {
                         $log.info("redirectTo: " + toState.redirectTo);
                         $state.go(toState.redirectTo, toParams)

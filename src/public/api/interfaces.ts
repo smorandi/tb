@@ -1,6 +1,4 @@
-/**
- * Created by Stefano on 23.10.2015.
- */
+///<reference path="../all.references.ts" />
 
 "use strict";
 
@@ -31,11 +29,10 @@ module interfaces {
     }
 
     export interface ILogger {
-        logWarning(message:string, id:string, title:string): void;
-        logInfo(message:string, id:string, title:string): void;
-        logError(message:string, id:string, title:string): void;
-        ToastWarning(message:string, title:string): void;
-        ToastInfo(message:string, title:string): void;
-        ToastError(message:string, title:string): void;
+        error(title:string, message?:string, logOptions?:enums.LogOptions):void;
+        debug(title:string, message?:string, logOptions?:enums.LogOptions):void;
+        info(title:string, message?:string, logOptions?:enums.LogOptions):void;
+        warn(title:string, message?:string, logOptions?:enums.LogOptions):void;
+
     }
 }

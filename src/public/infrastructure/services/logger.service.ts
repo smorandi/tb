@@ -16,10 +16,10 @@ module services {
 
         public debug(title:string, message?:string, logOptions?:enums.LogOptions) {
             if (logOptions === enums.LogOptions.toast_only) {
-                this.toaster.debug(title, message);
+                this.toaster.pop(constants.toaster.info, title, message );
             }
             else if (logOptions === enums.LogOptions.toast) {
-                this.toaster.debug(title, message);
+                this.toaster.pop(constants.toaster.info, title, message);
                 this.$log.debug(title + "//" + message);
             }
             else {

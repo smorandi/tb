@@ -6,6 +6,17 @@ module constants {
     export var ws:string = "http://localhost:3000";
     export var api:string = "http://localhost:3000/root";
 
+    export module toaster {
+        export var error = "error";
+        export var success = "success";
+        export var info = "info";
+        export var warning = "warning";
+    }
+
+    export module localstorage {
+        export var credentialKey = "credentialToken";
+    }
+
     export module RELS {
         export var root:string = "root";
         export var home:string = "home";
