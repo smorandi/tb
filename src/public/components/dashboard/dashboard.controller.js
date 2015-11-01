@@ -10,6 +10,9 @@ var controllers;
             logger.info("DashboardController called");
             this.dashboard = dashboardService.dashboard;
         }
+        DashboardController.prototype.showDetails = function () {
+            this.logger.info("details", "details", enums.LogOptions.toast_only);
+        };
         DashboardController.$inject = [
             injections.services.loggerService,
             injections.services.dashboardService

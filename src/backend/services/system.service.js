@@ -5,6 +5,8 @@
 
 var async = require("async");
 var _ = require("lodash");
+var fileUrl = require("file-url");
+var path = require("path");
 var engine = require("./../core/engine");
 var logger = require("../utils/logger");
 var config = require(".././config");
@@ -125,8 +127,10 @@ function createStandardSet(callback) {
 
     var customer = new models.Customer("customer", "customer", "customer", "customer");
 
-    var drink0 = new models.Drink("Gin Tonic", "a supi ginny tonic", "3dl", "alcoholic", ["gin", "alcoholic"], 10, 4, 15, 0.1);
-    var drink1 = new models.Drink("Coffee", "wakey wakey", "3dl", "non-alcoholic", ["coffee", "non-alcoholic"], 4, 2.5, 6, 0.2);
+    var drink0 = new models.Drink("Gin Tonic", "Most favourite drink", "assets/images/drinks/cocktail.png", "3dl", "alcoholic", ["gin", "alcoholic"], 10, 4, 15, 0.1);
+    var drink1 = new models.Drink("Stärböcks", "Fine jamaican blue mountain blend", "assets/images/drinks/coffee.png", "3dl", "non-alcoholic", ["coffee", "non-alcoholic"], 4, 2.5, 6, 0.2);
+    var drink2 = new models.Drink("Duff Bräu", "Ice cold and masterly brewed", "assets/images/drinks/beer.png", "5dl", "alcoholic", ["beer", "alcoholic"], 5, 3, 9, 0.1);
+    var drink3 = new models.Drink("Faustino I.", "Red wine made of superb grapes", "assets/images/drinks/wine.png", "2dl", "alcoholic", ["wine", "alcoholic"], 4, 3, 15, 0.3);
 
     var commands = [];
     commands.push(commandService.send("createRoot").for("user").instance("root").with({payload: root}));
@@ -134,6 +138,8 @@ function createStandardSet(callback) {
     commands.push(commandService.send("createCustomer").for("user").instance("customer").with({payload: customer}));
     commands.push(commandService.send("createDrink").for("drink").instance("drink0").with({payload: drink0}));
     commands.push(commandService.send("createDrink").for("drink").instance("drink1").with({payload: drink1}));
+    commands.push(commandService.send("createDrink").for("drink").instance("drink2").with({payload: drink2}));
+    commands.push(commandService.send("createDrink").for("drink").instance("drink3").with({payload: drink3}));
 
     commandService.sendCommands(commands, callback);
 }

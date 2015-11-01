@@ -4,6 +4,10 @@
     cursor: pointer;
 }
 
+body {
+    padding-top: 30px;
+}
+
 .master-detail-wrapper {
     display: flex;
     flex-direction: row;
@@ -22,6 +26,10 @@
     flex: 5;
 }
 
+.no-gutter > [class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
 
 .header-row {
     display: flex;
@@ -29,3 +37,63 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.flex-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.flex-container.no-wrap {
+    flex-wrap: nowrap;
+}
+
+.flex-container.flex-column {
+    flex-direction: column;
+}
+
+.flex-container.flex-row {
+    flex-direction: row;
+}
+
+.flex-container.flex-row > div{
+    /*padding: 0 10px 0 0;*/
+}
+
+.flex-bottom {
+    align-items: flex-end;
+}
+
+.flex-align-self-center {
+    align-self: center;
+}
+
+.flex-align-self-right {
+    align-self: flex-end;
+}
+
+.flex-align-self-stretch {
+    align-self: stretch;
+}
+
+.flex-xxx {
+    flex: 5;
+    align-self: flex-end;
+    background-color: grey;
+    text-align: right;
+}
+
+.price-info-details {
+    display: flex;
+    /*justify-content: space-around;*/
+    /*flex-wrap: wrap;*/
+    background-color: sandybrown;
+    /*align-content: stretch;*/
+    /*align-items: stretch;*/
+    align-content: stretch;
+}
+
+.price-info-details > div{
+    /*flex:1;*/
+}
+

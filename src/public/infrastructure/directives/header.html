@@ -1,55 +1,55 @@
-<nav class="navbar navbar-inverse" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
 
-        <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Trinkb&ouml;rse</a>
-    </div>
+            <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
+                    ng-click="navCollapsed = !navCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Trinkb&ouml;rse</a>
+        </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
-        <ul ng-repeat="link in menu.navigationLinks" class="nav navbar-nav">
-            <li ui-sref-active="active">
-                <a href="#" ui-sref="{{link.state}}">{{link.name}}</a>
-            </li>
-        </ul>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
+            <ul ng-repeat="link in menu.navigationLinks" class="nav navbar-nav">
+                <li ui-sref-active="active">
+                    <a href="#" ui-sref="{{link.state}}">{{link.name}}</a>
+                </li>
+            </ul>
 
-        <ul class="nav navbar-nav navbar-right">
-            <li ui-sref-active="active" ng-show="menu.registerLink">
-                <!--<a ui-sref="root.register">-->
-                <!--<span class="glyphicon glyphicon-envelope"></span> {{menu.registerLink.name}}</a>-->
-                <a href="#" ng-click="go(menu.registerLink)">
-                    <span class="glyphicon glyphicon-envelope"></span> {{menu.registerLink.name}}</a>
-            </li>
+            <ul class="nav navbar-nav navbar-right">
+                <li ui-sref-active="active" ng-show="menu.registerLink">
+                    <a ng-href="#" ui-sref="root.register">
+                        <span class="glyphicon glyphicon-envelope"/> {{menu.registerLink.name}}</a>
+                </li>
 
+                <li ui-sref-active="active" ng-show="menu.ordersLink">
+                    <a href="#" ui-sref="root.home.orders.overview.list">
+                        <span class="glyphicon glyphicon-list-alt"/> {{menu.ordersLink.name}}</a>
+                </li>
 
-            <li ui-sref-active="active" ng-show="menu.ordersLink">
-                <a href="#" ui-sref="root.home.orders.overview.list">
-                    <span class="glyphicon glyphicon-list-alt"></span> {{menu.ordersLink.name}}</a>
-            </li>
+                <li ui-sref-active="active" ng-show="menu.profileLink">
+                    <a href="#" ui-sref="root.home.profile">
+                        <span class="glyphicon glyphicon-user"/> {{menu.profileLink.name}}</a>
+                </li>
 
-            <li ui-sref-active="active" ng-show="menu.profileLink">
-                <a href="#" ui-sref="root.home.profile">
-                    <span class="glyphicon glyphicon-user"></span> {{menu.profileLink.name}}</a>
-            </li>
+                <li ui-sref-active="active" ng-show="menu.basketLink">
+                    <a href="#" ui-sref="root.home.basket">
+                        <span class="glyphicon glyphicon-shopping-cart"/> Basket <span class="badge">{{menu.numberOfBasketItems}}</span></a>
+                </li>
 
-            <li ui-sref-active="active" ng-show="menu.basketLink">
-                <a href="#" ui-sref="root.home.basket">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge">{{menu.numberOfBasketItems}}</span></a>
-            </li>
+                <li ng-hide="menu.isLoggedIn">
+                    <a href="#" ng-click="login()"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </li>
 
-            <li ng-hide="menu.isLoggedIn">
-                <a href="#" ng-click="login()"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-            </li>
-
-            <li ng-show="menu.isLoggedIn">
-                <a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-            </li>
-        </ul>
+                <li ng-show="menu.isLoggedIn">
+                    <a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>

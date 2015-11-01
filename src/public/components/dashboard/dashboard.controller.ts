@@ -17,5 +17,9 @@ module controllers {
             logger.info("DashboardController called");
             this.dashboard = dashboardService.dashboard;
         }
+
+        public showDetails() {
+            this.logger.info("details", "details", enums.LogOptions.toast_only);
+        }
     }
 }

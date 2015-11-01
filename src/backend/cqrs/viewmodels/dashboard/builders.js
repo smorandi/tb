@@ -10,6 +10,8 @@ var drinkCreated = denormalizer.defineViewBuilder({
 
     vm.set("id", vm.id);
     vm.set("name", data.name);
+    vm.set("description", data.description);
+    vm.set("imageUrl", data.imageUrl);
     vm.set("category", data.category);
     vm.set("tags", data.tags);
     vm.set("quantity", data.quantity);
@@ -30,6 +32,8 @@ var drinkChanged = denormalizer.defineViewBuilder({
     logger.debug("drinkChanged in collection: " + vm.repository.collectionName);
 
     vm.set("name", data.name);
+    vm.set("description", data.description);
+    vm.set("imageUrl", data.imageUrl);
     vm.set("category", data.category);
     vm.set("tags", data.tags);
     vm.set("quantity", data.quantity);
