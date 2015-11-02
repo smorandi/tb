@@ -28,26 +28,26 @@
                 </li>
 
                 <li ui-sref-active="active" ng-show="menu.ordersLink">
-                    <a href="#" ui-sref="root.home.orders.overview.list">
+                    <a ng-href="#" ui-sref="root.home.orders.overview.list">
                         <span class="glyphicon glyphicon-list-alt"/> {{menu.ordersLink.name}}</a>
                 </li>
 
                 <li ui-sref-active="active" ng-show="menu.profileLink">
-                    <a href="#" ui-sref="root.home.profile">
-                        <span class="glyphicon glyphicon-user"/> {{menu.profileLink.name}}</a>
+                    <a ng-href="#" ui-sref="root.home.profile">
+                        <span class="glyphicon glyphicon-user"/> {{menu.loginname}}</a>
                 </li>
 
                 <li ui-sref-active="active" ng-show="menu.basketLink">
-                    <a href="#" ui-sref="root.home.basket">
+                    <a ng-href="#" ui-sref="root.home.basket">
                         <span class="glyphicon glyphicon-shopping-cart"/> Basket <span class="badge">{{menu.numberOfBasketItems}}</span></a>
                 </li>
 
                 <li ng-hide="menu.isLoggedIn">
-                    <a href="#" ng-click="login()"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a ng-href="#" ng-click="login()"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
 
                 <li ng-show="menu.isLoggedIn">
-                    <a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                    <a ng-href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                 </li>
             </ul>
         </div>
