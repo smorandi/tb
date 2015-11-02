@@ -20,12 +20,22 @@ module config {
                     resolve: {
                         apiService: "apiService",
                         menuService: "menuService",
-                        rootResource: ($log, apiService:services.ApiService, menuService:services.MenuService) => {
+                        authService: "authService",
+                        rootResource: ($log, apiService:services.ApiService, menuService:services.MenuService, authService:services.AuthService ) => {
                             $log.info("resolving root-resource...");
                             return apiService.$load().then(res => {
                                 $log.info("root-resource resolved...");
-                                menuService.setResource(res);
-                                return res;
+                                if(authService.getToken() && res.$has("home")){
+                                    return res.$get("home").then(resHome => {
+                                        $log.info("home-resource resolved...");
+                                        menuService.setResource(resHome);
+                                        return res;
+                                    });
+                                } else {
+                                    menuService.setResource(res);
+                                    return res;
+                                }
+
                             });
                         }
                     },
