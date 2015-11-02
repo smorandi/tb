@@ -6,102 +6,46 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="item in vm.dashboard">
+        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3" ng-repeat="item in vm.dashboard">
             <div class="thumbnail" ng-click="vm.showDetails()">
                 <img ng-src="{{item.imageUrl}}" alt="{{item.name}}">
 
                 <div class="caption">
-                    <h4>{{item.name}}</h4>
+                    <h4 class=""><strong>{{item.name}}</strong></h4>
 
-                    <p><i>{{item.description}}</i></p>
+                    <h6 class="text-muted"><em>{{item.description}}</em></h6>
 
-                    <hr>
+                    <!--<hr class="" style="margin-bottom: 0">-->
+                </div>
 
-                    <div class="flex-container flex-row">
-                        <div class="flex-container flex-column">
-                            <div class="flex-container flex-row">
-                                <div><span class="glyphicon glyphicon-open"/>{{item.allTimeHigh}}
-                                </div>
-                                <div><span class="glyphicon glyphicon-save"/>{{item.allTimeLow}}
-                                </div>
-                                <div><span class="glyphicon glyphicon-menu-up"/>{{item.highestPrice}}
-                                </div>
-                                <div><span class="glyphicon glyphicon-menu-down"/>{{item.lowestPrice}}
-                                </div>
-                            </div>
-                            <div class="flex-align-self-center"><span class="glyphicon glyphicon-menu-down"/>{{item.tick.delta}}
-                            </div>
-                        </div>
-                        <h3 class="flex-align-self-center">
-                            <small>CHF</small>
-                            {{item.price}}.-
-                        </h3>
+                <div class="price-infos-container">
+                    <div class="price-infos-history text-muted">
+                        <h6 flash="item.allTimeHigh" class="no-gutter">
+                            <span class="fa fa-angle-double-up"/>{{item.allTimeHigh}}&nbsp;&nbsp;
+                        </h6>
+                        <h6 flash="item.allTimeLow" class="no-gutter">
+                            <span class="fa fa-angle-double-down"/>{{item.allTimeLow}}&nbsp;&nbsp;
+                        </h6>
+                        <h6 flash="item.highestPrice" class="no-gutter">
+                            <span class="fa fa-angle-up"/>{{item.highestPrice}}&nbsp;&nbsp;
+                        </h6>
+                        <h6 flash="item.lowestPrice" class="no-gutter">
+                            <span class="fa fa-angle-down"/>{{item.lowestPrice}}&nbsp;&nbsp;
+                        </h6>
                     </div>
 
-                    <!--<hr>-->
-                    <!--<div class="container-fluid">-->
-                    <!--<div class="row">-->
-                    <!--<div class="col-md-2">-->
-                    <!--<div class="glyphicon glyphicon-open">{{item.allTimeHigh}}-->
-                    <!--</div>-->
-                    <!--<div class="glyphicon glyphicon-save">{{item.allTimeLow}}-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-2">-->
-                    <!--<div class="glyphicon glyphicon-menu-up">{{item.highestPrice}}-->
-                    <!--</div>-->
-                    <!--<div class="glyphicon glyphicon-menu-up">{{item.lowestPrice}}-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                    <!--<div class="glyphicon glyphicon-menu-down text-nowrap">{{item.tick.delta}}</div>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                    <!--<div class="text-nowrap">-->
-                    <!--CHF-->
-                    <!--{{item.price}}.- -->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
+                    <div class="price-infos">
+                        <h3 flash="item.tick.timestamp" class="no-gutter">
+                            <span class="fa"
+                                  ng-class="item.tick.delta > 0 ? 'text-danger fa-arrow-circle-up' : 'text-success fa-arrow-circle-down'"/>&nbsp;{{item.tick.delta}}
+                        </h3>
 
-
-                    <!--<table class="table table-responsive borderless">-->
-                    <!--<tr>-->
-                    <!--<td>-->
-                    <!--<span class="text-nowrap">-->
-                    <!--<div><span class="glyphicon glyphicon-open"/>{{item.allTimeHigh}}</div>-->
-                    <!--</span>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                    <!--<div><span class="glyphicon glyphicon-menu-up"/>{{item.highestPrice}}</div>-->
-                    <!--</td>-->
-                    <!--<td class="vert-align" rowspan=2>-->
-                    <!--<span class="text-nowrap">-->
-
-                    <!--<h3 ng-show="item.tick.delta > 0"><span class="glyphicon glyphicon-export"/>{{item.tick.delta}}-->
-                    <!--</h3>-->
-
-                    <!--<h3 ng-hide="item.tick.delta > 0"><span class="glyphicon glyphicon-import"/>{{item.tick.delta}}-->
-                    <!--</h3>-->
-                    <!--</span>-->
-                    <!--</td>-->
-                    <!--<td class="vert-align" rowspan=2>-->
-                    <!--<span class="text-nowrap">-->
-                    <!--<h3 ng-show="item.price % 1 > 0">CHF {{item.price}}</h3>-->
-                    <!--<h3 ng-hide="item.price % 1 > 0">CHF {{item.price}}.-</h3>-->
-                    <!--</span>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                    <!--<td>-->
-                    <!--<div><span class="glyphicon glyphicon-save"/>{{item.allTimeLow}}</div>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                    <!--<div><span class="glyphicon glyphicon-menu-down"/>{{item.lowestPrice}}</div>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--</table>-->
+                        <h2 flash="item.price" class="text-primary no-gutter text-nowrap">
+                            <small>CHF</small>
+                            <strong ng-show="item.price % 1 > 0">{{item.price}}</strong>
+                            <strong ng-hide="item.price % 1 > 0">{{item.price}}.-</strong>
+                        </h2>
+                    </div>
                 </div>
             </div>
         </div>

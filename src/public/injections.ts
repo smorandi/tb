@@ -4,6 +4,7 @@ module injections {
 
     export module directives {
         export var header:string = "header";
+        export var flash:string = "flash";
     }
 
     export module constants {
@@ -54,6 +55,7 @@ module injections {
         export var halService:string = "halClient";
         export var socketFactory:string = "socketFactory";
         export var toaster:string = "toaster";
+        export var lodash:string = "_";
     }
 
     export module bootstrap{

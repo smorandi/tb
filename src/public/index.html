@@ -9,8 +9,8 @@
     <!-- endinject -->
     <!-- bower:css -->
     <link rel="stylesheet" href="assets/lib/bower_components/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="assets/lib/bower_components/bootstrap-css-only/css/bootstrap.css">
     <link rel="stylesheet" href="assets/lib/bower_components/AngularJS-Toaster/toaster.css">
+    <link rel="stylesheet" href="assets/lib/bower_components/bootstrap-css-only/css/bootstrap.css">
     <!-- endinject -->
     <link rel="stylesheet" href="assets/css/main.css">
 
@@ -31,6 +31,7 @@
 <!--<script src="/socket.io/socket.io.js"></script>-->
 
 <!-- bower:js -->
+<script src="assets/lib/bower_components/jquery/dist/jquery.js"></script>
 <script src="assets/lib/bower_components/angular/angular.js"></script>
 <script src="assets/lib/bower_components/angular-animate/angular-animate.js"></script>
 <script src="assets/lib/bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -38,12 +39,13 @@
 <script src="assets/lib/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
 <script src="assets/lib/bower_components/angular-resource/angular-resource.js"></script>
 <script src="assets/lib/bower_components/rfc6570/rfc6570.js"></script>
-<script src="assets/lib/bower_components/lodash/lodash.js"></script>
 <script src="assets/lib/bower_components/angular-socket-io/socket.js"></script>
+<script src="assets/lib/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script src="assets/lib/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="assets/lib/bower_components/AngularJS-Toaster/toaster.js"></script>
-<script src="assets/lib/bower_components/jquery/dist/jquery.js"></script>
-<script src="assets/lib/bower_components/angular-hal/angular-hal.js"></script>
+<script src="assets/lib/angular-hal.js"></script>
+<script src="assets/lib/bower_components/lodash/lodash.js"></script>
+<script src="assets/lib/bower_components/angular-lodash-module/angular-lodash-module.js"></script>
 <!-- endinject -->
 
 <!-- angular:js -->
@@ -60,24 +62,25 @@
 <script src="infrastructure/services/api.service.js"></script>
 <script src="infrastructure/run/run.js"></script>
 <script src="infrastructure/directives/header.directive.js"></script>
+<script src="infrastructure/directives/flash.directive.js"></script>
 <script src="infrastructure/config/routes.config.js"></script>
 <script src="infrastructure/config/interceptor.config.js"></script>
-<script src="components/orders/list/orders-list.controller.js"></script>
-<script src="components/orders/details/order-detail.controller.js"></script>
 <script src="components/drinks/list/drink-list.controller.js"></script>
 <script src="components/drinks/edit/drink-edit.controller.js"></script>
 <script src="components/drinks/details/drink-details.controller.js"></script>
 <script src="components/drinks/create/drink-create.controller.js"></script>
+<script src="components/orders/list/orders-list.controller.js"></script>
+<script src="components/orders/details/order-detail.controller.js"></script>
 <script src="components/system/system.controller.js"></script>
-<script src="components/profile/profile.controller.js"></script>
 <script src="components/register/register.controller.js"></script>
-<script src="components/login/login-dialog.controller.js"></script>
+<script src="components/profile/profile.controller.js"></script>
 <script src="components/dashboard/dashboard.controller.js"></script>
 <script src="components/basket/basket.controller.js"></script>
+<script src="components/login/login-dialog.controller.js"></script>
 <script src="api/models.js"></script>
 <script src="api/interfaces.js"></script>
-<script src="api/enums.js"></script>
 <script src="api/constants.js"></script>
+<script src="api/enums.js"></script>
 <!-- endinject -->
 
 <!-- anguapp:js -->
