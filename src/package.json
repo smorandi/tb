@@ -4,8 +4,8 @@
   "private": true,
   "main": "tb-server.js",
   "scripts": {
-    "start": "node ./tb-server.js",
-    "start-dev": "node ./tb-server.js --clear --populate"
+    "start": "node tb-server.js",
+    "start-dev": "node tb-server.js --clear --populate"
   },
   "dependencies": {
     "async": "^1.5.0",

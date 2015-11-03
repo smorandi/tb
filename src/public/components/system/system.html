@@ -1,48 +1,38 @@
-<div class="panel panel-default">
+<div class="container-fluid">
+    <div class="page-header">
+        <h2>System
+            <small>Control the system</small>
 
-    <div class="panel-heading">
-        <div class="header-row">
-            <h1>System</h1>
-
-            <div>
-                <a class="btn btn-info" ng-click="vm.startEngine($event)">Start</a>
-                <a class="btn btn-info" ng-click="vm.stopEngine($event)">Stop</a>
-                <a class="btn btn-info" ng-click="vm.replay($event)">Replay</a>
+            <div class="btn-group pull-right" role="group" aria-label="Blah">
+                <button type="button" class="btn btn-success" ng-click="vm.startEngine($event)">Start</button>
+                <button type="button" class="btn btn-success" ng-click="vm.stopEngine($event)">Stop</button>
+                <button type="button" class="btn btn-info" ng-click="vm.replay($event)">Replay</button>
+                <button type="button" class="btn btn-danger" ng-click="vm.reinitialize($event)">Re-Initialize</button>
             </div>
-        </div>
+        </h2>
     </div>
 
-    <div class="panel-body">
-        <table class="table">
-            <tr>
-                <td>Status</td>
-                <td><span class="label"
-                          ng-class="vm.systemResource.status == 'running' ? 'label-success' : 'label-default'">{{vm.systemResource.status}}</span>
-                </td>
-            </tr>
-            <tr>
-                <td>Price Reduction Interval</td>
-                <td>{{vm.systemResource.priceReductionInterval}}</td>
-            </tr>
-            <tr>
-                <td>Price Reduction Grace Period</td>
-                <td>{{vm.systemResource.priceReductionGracePeriod}}</td>
-            </tr>
-            <tr>
-                <td>Latest Event</td>
-                <td>
-                    <li>{{vm.systemResource.event.name}}</li>
-                    <li>{{vm.systemResource.event.timestamp}}</li>
-                </td>
-            </tr>
-        </table>
-    </div>
-
+    <table class="table">
+        <tr>
+            <td>Status</td>
+            <td><span class="label"
+                      ng-class="vm.systemResource.status == 'running' ? 'label-success' : 'label-default'">{{vm.systemResource.status}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Price Reduction Interval</td>
+            <td>{{vm.systemResource.priceReductionInterval}}</td>
+        </tr>
+        <tr>
+            <td>Price Reduction Grace Period</td>
+            <td>{{vm.systemResource.priceReductionGracePeriod}}</td>
+        </tr>
+        <tr>
+            <td>Latest Event</td>
+            <td>
+                <li>{{vm.systemResource.event.name}}</li>
+                <li>{{vm.systemResource.event.timestamp}}</li>
+            </td>
+        </tr>
+    </table>
 </div>
-
-<ul class="container" ng-repeat="alert in vm.alerts">
-    <div class="alert alert-{{alert.type}} fade in">
-        <a href="#" class="close" data-dismiss="alert">&times;</a>
-        <strong>Success!</strong> {{alert.msg}}
-    </div>
-</ul>

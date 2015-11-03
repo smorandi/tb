@@ -18,8 +18,8 @@ module controllers {
             this.dashboard = dashboardService.dashboard;
         }
 
-        public showDetails() {
-            this.logger.info("details", "details", enums.LogOptions.toast_only);
+        public showDetails(item:any) {
+            this.logger.info(item.id, item.name, enums.LogOptions.toast_only);
         }
     }
 }

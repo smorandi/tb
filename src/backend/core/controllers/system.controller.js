@@ -97,15 +97,15 @@ var SystemController = (function () {
     };
 
     SystemController.prototype.reInitialize = function (req, res, next) {
+        var _this = this;
         logger.info("reinitializing...");
-
         systemService.reInit(function (err) {
             if (err) {
                 next(err);
             }
             else {
                 logger.info("reinitialized");
-                res.status(202).end();
+                _this.handleResponse(req, res, next);
             }
         });
     };

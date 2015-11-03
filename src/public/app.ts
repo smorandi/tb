@@ -14,6 +14,7 @@ angular.module(injections.constants.appName, ["lodash", "ui.router", "ngAnimate"
 
     .directive(injections.directives.header, directives.Header)
     .directive(injections.directives.flash, directives.Flash)
+    .directive(injections.directives.backImg, directives.BackImg)
 
     .controller(injections.controllers.dashboard, controllers.DashboardController)
     .controller(injections.controllers.profile, controllers.ProfileController)

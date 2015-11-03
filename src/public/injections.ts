@@ -5,6 +5,7 @@ module injections {
     export module directives {
         export var header:string = "header";
         export var flash:string = "flash";
+        export var backImg:string = "backImg";
     }
 
     export module constants {
