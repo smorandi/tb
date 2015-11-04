@@ -1,4 +1,4 @@
-/*FLASHING*/
+/*flashing used to indicate price changes*/
 @keyframes flash {
     from {
         transform: scale(1);

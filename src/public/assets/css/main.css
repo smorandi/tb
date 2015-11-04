@@ -10,7 +10,7 @@ body {
     padding-bottom: 70px;
 
     /*use a nicer font*/
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
 }
 
 hr {

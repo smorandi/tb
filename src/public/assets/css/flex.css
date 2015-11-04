@@ -55,3 +55,7 @@
 .flex-align-self-stretch {
     align-self: stretch;
 }
+
+.flex-auto {
+    flex: auto;
+}

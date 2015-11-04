@@ -26,6 +26,12 @@ var controllers;
                     return "assets/images/drinks/wine.png";
                 case "coffee":
                     return "assets/images/drinks/coffee.png";
+                case "tea":
+                    return "assets/images/drinks/tea.png";
+                case "shot":
+                    return "assets/images/drinks/shot.png";
+                case "soft":
+                    return "assets/images/drinks/soft.png";
             }
         };
         DashboardController.prototype.setFilter = function (filter) {

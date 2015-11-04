@@ -1,12 +1,18 @@
 <div ng-click="vm.showDetails(item)"
-     class="db-item flex-container-column flex-justify-content-space-between"
-     back-img="{{vm.getImageForItem(item)}}">
+     class="db-item flex-container-column flex-justify-content-space-between">
 
-    <div  class="db-text-area text-center">
-        <h3 class="no-gutter db-item-caption text-nowrap"><strong>{{item.name}}</strong></h3>
-        <h5 class="no-gutter db-item-description"><em>{{item.description}}</em></h5>
+    <div class="db-item-caption flex-container-column flex-justify-content-space-between flex-auto">
+        <div class="db-item-caption-image" back-img="{{vm.getImageForItem(item)}}">
+            <div class="db-item-caption-image-overlay"/>
+        </div>
+
+        <div class="db-item-caption-text flex-container-column flex-justify-content-center flex-auto">
+            <h3 class="text-center text-nowrap"><strong>{{item.name}}</strong>
+            </h3>
+        </div>
     </div>
-    <div class="db-price-area">
+
+    <div class="db-item-price-area">
         <div class="flex-container-column flex-justify-content-space-between flex-wrap">
             <div class="flex-container-row">
                 <h6 flash="item.allTimeHigh" class="no-gutter text-nowrap">
@@ -23,16 +29,16 @@
                 </h6>
             </div>
             <div class="flex-container-row flex-align-items-baseline flex-justify-content-space-between flex-wrap">
-                <h3 flash="item.tick.timestamp" class="no-gutter">
+                <h4 flash="item.tick.timestamp" class="no-gutter">
                                 <span class="fa"
                                       ng-class="item.tick.delta > 0 ? 'text-danger fa-arrow-circle-up' : 'text-success fa-arrow-circle-down'"></span>&nbsp;{{item.tick.delta}}
-                </h3>
+                </h4>
 
-                <h2 flash="item.price" class="text-primary no-gutter text-nowrap">
+                <h3 flash="item.price" class="text-primary no-gutter text-nowrap">
                     <small>CHF</small>
                     <strong ng-show="item.price % 1 > 0">{{item.price}}</strong>
                     <strong ng-hide="item.price % 1 > 0">{{item.price}}.-</strong>
-                </h2>
+                </h3>
             </div>
         </div>
     </div>
