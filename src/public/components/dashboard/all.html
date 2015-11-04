@@ -1,0 +1,10 @@
+<div class="row">
+    <section class="col-xs-12">
+        <h3>All Drinks</h3>
+        <hr>
+    </section>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"
+         ng-repeat="item in vm.dashboard | orderBy:'name'">
+        <div ng-include="'components/dashboard/db-item.html'"/>
+    </div>
+</div>

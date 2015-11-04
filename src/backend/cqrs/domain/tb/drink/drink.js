@@ -13,7 +13,6 @@ var drink = domain.defineAggregate({
     {
         name: "",
         description: "",
-        imageUrl: "",
         quantity: "",
         category: "",
         tags: [],

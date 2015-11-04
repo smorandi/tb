@@ -10,7 +10,7 @@ module config {
         ];
 
         constructor($stateProvider:ng.ui.IStateProvider, $urlRouterProvider:ng.ui.IUrlRouterProvider) {
-            $urlRouterProvider.otherwise("/dashboard");
+            $urlRouterProvider.otherwise("/dashboard/all");
 
             $stateProvider
                 .state("root", {
@@ -21,11 +21,11 @@ module config {
                         apiService: "apiService",
                         menuService: "menuService",
                         authService: "authService",
-                        rootResource: ($log, apiService:services.ApiService, menuService:services.MenuService, authService:services.AuthService ) => {
+                        rootResource: ($log, apiService:services.ApiService, menuService:services.MenuService, authService:services.AuthService) => {
                             $log.info("resolving root-resource...");
                             return apiService.$load().then(res => {
                                 $log.info("root-resource resolved...");
-                                if(authService.getToken() && res.$has("home")){
+                                if (authService.getToken() && res.$has("home")) {
                                     return res.$get("home").then(resHome => {
                                         $log.info("home-resource resolved...");
                                         menuService.setResource(resHome);
@@ -42,12 +42,36 @@ module config {
                 })
                 .state("root.dashboard", {
                     url: "/dashboard",
+                    abstract: true,
+                })
+                .state("root.dashboard.all", {
+                    url: "/all",
                     views: {
                         "content@root": {
                             templateUrl: "components/dashboard/dashboard.html",
                             controller: injections.controllers.dashboard,
                             controllerAs: "vm"
                         }
+                    },
+                    resolve: {
+                        filter: function () {
+                            return "all";
+                        },
+                    }
+                })
+                .state("root.dashboard.categories", {
+                    url: "/categories",
+                    views: {
+                        "content@root": {
+                            templateUrl: "components/dashboard/dashboard.html",
+                            controller: injections.controllers.dashboard,
+                            controllerAs: "vm"
+                        }
+                    },
+                    resolve: {
+                        filter: function () {
+                            return "by-category";
+                        },
                     }
                 })
                 .state("root.register", {
@@ -62,7 +86,7 @@ module config {
                 })
                 .state("root.home", {
                     url: "/home",
-                    redirectTo: "root.dashboard",
+                    redirectTo: "root.dashboard.all",
                     resolve: {
                         menuService: "menuService",
                         homeResource: ($log, rootResource, menuService:services.MenuService) => {

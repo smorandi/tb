@@ -13,8 +13,13 @@
     },
     "category": {
       "enum": [
-        "alcoholic",
-        "non-alcoholic"
+        "beer",
+        "wine",
+        "cocktail",
+        "coffee",
+        "tea",
+        "shot",
+        "soft"
       ]
     },
     "tags": {

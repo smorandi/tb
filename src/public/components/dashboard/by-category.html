@@ -1,0 +1,71 @@
+<div class="row">
+    <section class="col-xs-12">
+        <h3>Cocktail</h3>
+        <hr>
+    </section>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"
+         ng-repeat="item in vm.dashboard | filter:{'category':  'cocktail'}:true | orderBy:'name'">
+        <div ng-include="'components/dashboard/db-item.html'"/>
+    </div>
+</div>
+<div class="row">
+    <section class="col-xs-12">
+        <h3>Shot</h3>
+        <hr>
+    </section>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
+         ng-repeat="item in vm.dashboard | filter:{'category':  'shot'}:true | orderBy:'name'">
+        <div ng-include="'components/dashboard/db-item.html'"/>
+    </div>
+</div>
+<div class="row">
+    <section class="col-xs-12">
+        <h3>Tea</h3>
+        <hr>
+    </section>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
+         ng-repeat="item in vm.dashboard | filter:{'category':  'tea'}:true">
+        <div ng-include="'components/dashboard/db-item.html'"/>
+    </div>
+</div>
+<div class="row">
+    <section class="col-xs-12">
+        <h3>Soft Drink</h3>
+        <hr>
+    </section>
+
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
+         ng-repeat="item in vm.dashboard | filter:{'category':  'soft'}:true">
+        <div ng-include="'components/dashboard/db-item.html'"/>
+    </div>
+</div>
+<div class="row">
+    <section class="col-xs-12">
+        <h3>Coffee</h3>
+        <hr>
+    </section>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
+         ng-repeat="item in vm.dashboard | filter:{'category':  'coffee'}:true | orderBy:'name'">
+        <div ng-include="'components/dashboard/db-item.html'"/>
+    </div>
+</div>
+<div class="row">
+    <section class="col-xs-12">
+        <h3>Beer</h3>
+        <hr>
+    </section>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
+         ng-repeat="item in vm.dashboard | filter:{'category':  'beer'}:true | orderBy:'name'">
+        <div ng-include="'components/dashboard/db-item.html'"/>
+    </div>
+</div>
+<div class="row">
+    <section class="col-xs-12">
+        <h3>Wine</h3>
+        <hr>
+    </section>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
+         ng-repeat="item in vm.dashboard | filter:{'category':  'wine'}:true | orderBy:'name'">
+        <div ng-include="'components/dashboard/db-item.html'"/>
+    </div>
+</div>
