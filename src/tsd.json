@@ -9,10 +9,10 @@
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     },
     "angularjs/angular.d.ts": {
-      "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
+      "commit": "001ca36ba58cef903c4c063555afb07bbc36bb58"
     },
     "jquery/jquery.d.ts": {
-      "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
+      "commit": "001ca36ba58cef903c4c063555afb07bbc36bb58"
     },
     "angularjs/angular-animate.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
@@ -31,6 +31,9 @@
     },
     "angularjs-toaster/angularjs-toaster.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
+    },
+    "angular-translate/angular-translate.d.ts": {
+      "commit": "001ca36ba58cef903c4c063555afb07bbc36bb58"
     }
   }
 }

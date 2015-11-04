@@ -80,6 +80,8 @@ module injections {
         export var $timeoutService:string = "$timeout";
         export var $window:string = "$window";
         export var $SCEDelegateProvider:string = "$sceDelegateProvider";
+        export var $translateProvider:string = "$translateProvider";
+        export var translate = "pascalprecht.translate";
     }
 
     export module uiRouter {

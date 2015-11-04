@@ -1,6 +1,6 @@
 ///<reference path="./all.references.ts" />
 
-angular.module(injections.constants.appName, ["lodash", "ui.router", "ngAnimate", "toaster", "angular-hal", "btford.socket-io", "ui.bootstrap"])
+angular.module(injections.constants.appName, ["lodash", "ui.router", "ngAnimate", "toaster", "angular-hal", "btford.socket-io", "ui.bootstrap", "pascalprecht.translate"])
     .service(injections.services.apiService, services.ApiService)
     .service(injections.services.socketService, services.SocketService)
     .service(injections.services.utilsService, services.UtilsService)
@@ -30,5 +30,6 @@ angular.module(injections.constants.appName, ["lodash", "ui.router", "ngAnimate"
     .controller(injections.controllers.orders.details, controllers.OrderDetailsController)
 
     .config(config.InterceptorConfig)
+    .config(config.I18nConfig)
     .config(config.RoutesConfig)
     .run(run.Run);

@@ -122,3 +122,15 @@ gulp.task('app',
 gulp.task('build',
     ['cleanBuild', 'inject', 'minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components', 'connectDist', 'buildOpen']
 );*/
+
+gulp.task('inject_test', function(){
+    gulp.src('./public/index.html')
+        .pipe(inject(gulp.src(['./public/assets/lib_head/**/*.js'], {read: false}), {relative: true, name: 'head'}))
+        .pipe(inject(gulp.src(bowerFiles(), {read: true}), {relative: true, name: 'bower'}))
+        .pipe(inject(gulp.src(['./public/api/**/*.js', './public/components/**/*.js', './public/infrastructure/**/*.js', './public/injections.js' ],
+            {read: true}).pipe(filesort()), {relative: true, name:'angular'}))
+        .pipe(inject(gulp.src(['./public/app.js'], {read: false}), {relative: true, name:'anguapp'}))
+        .pipe(inject(gulp.src(['./public/assets/css/**/*.css'], {read: false}), {relative: true}))
+        .pipe(gulp.dest('./build'))
+        .on('error', util.log);
+});
