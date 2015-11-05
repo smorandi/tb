@@ -12,12 +12,24 @@
     flex-wrap: wrap;
 }
 
+.flex-align-content-space-between {
+    align-content: space-between;
+}
+
 .flex-align-items-baseline {
     align-items: baseline;
 }
 
 .flex-align-items-end {
     align-items: flex-end;
+}
+
+.flex-align-items-center {
+    align-items: center;
+}
+
+.flex-align-items-stretch {
+    align-items: center;
 }
 
 .flex-justify-content-end {

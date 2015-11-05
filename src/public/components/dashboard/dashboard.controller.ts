@@ -29,19 +29,19 @@ module controllers {
         public getImageForItem(item:any) {
             switch (item.category) {
                 case "beer":
-                    return "assets/images/drinks/beer.png";
+                    return "assets/images/drinks/beer.jpg";
                 case "cocktail":
-                    return "assets/images/drinks/cocktail.png";
+                    return "assets/images/drinks/cocktail.jpg";
                 case "wine":
-                    return "assets/images/drinks/wine.png";
+                    return "assets/images/drinks/wine.jpg";
                 case "coffee":
-                    return "assets/images/drinks/coffee.png";
+                    return "assets/images/drinks/coffee.jpg";
                 case "tea":
-                    return "assets/images/drinks/tea.png";
+                    return "assets/images/drinks/tea.jpg";
                 case "shot":
-                    return "assets/images/drinks/shot.png";
+                    return "assets/images/drinks/shot.jpg";
                 case "soft":
-                    return "assets/images/drinks/soft.png";
+                    return "assets/images/drinks/soft.jpg";
             }
         }
 

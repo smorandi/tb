@@ -30,3 +30,7 @@ hr {
 .no-padding {
     padding: 0;
 }
+
+.overflow-auto {
+    overflow: auto;
+}
