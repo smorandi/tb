@@ -134,7 +134,10 @@ it("customer creates order", function (done) {
 
             expect(res.statusCode).to.be(status.ACCEPTED);
 
-            done();
+            // we give it a timeout to be on the save side for the next tests.
+            // orders will change their state from pending to confirmed through the use of
+            // a saga and therefore the next test might start too soon and fail otherwise..
+            setTimeout(done, 2000);
         });
 });
 

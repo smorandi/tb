@@ -11,15 +11,15 @@ var utils = require("./utils/utils");
 // Defaults for application...
 //-----------------------------------------------------------------------------
 exports.defaults = {
-    priceReductionInterval: 10000,
-    priceReductionGracePeriod: 20000
+    priceReductionInterval: 3000,
+    priceReductionGracePeriod: 6000
 }
 
 //=============================================================================
 // Logger...
 //-----------------------------------------------------------------------------
 exports.logger = {
-    level: utils.getArgValue("--level", "info"),
+    level: utils.getValue("--level", "info"),
     connectLevel: "debug"
 };
 

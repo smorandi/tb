@@ -1,7 +1,0 @@
-"ignore": [
-  "**/.*",
-  "node_modules",
-  "app/assets/lib/*",
-  "test",
-  "tests"
-],

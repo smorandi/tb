@@ -20,9 +20,6 @@
     "angularjs/angular-resource.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     },
-    "socket.io/socket.io.d.ts": {
-      "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
-    },
     "node/node.d.ts": {
       "commit": "eb59a40d3c2f3257e34ec2ede181046230814a41"
     },
@@ -34,6 +31,12 @@
     },
     "angular-translate/angular-translate.d.ts": {
       "commit": "001ca36ba58cef903c4c063555afb07bbc36bb58"
+    },
+    "lodash/lodash.d.ts": {
+      "commit": "421d6610bdb09e1015b71f5991d7a68d079eca21"
+    },
+    "socket.io-client/socket.io-client.d.ts": {
+      "commit": "421d6610bdb09e1015b71f5991d7a68d079eca21"
     }
   }
 }

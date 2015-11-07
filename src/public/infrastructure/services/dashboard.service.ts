@@ -26,7 +26,7 @@ module services {
                 });
 
                 // add all items contained in data which are not yet in dashboard...
-                this._.forEach(data, item => {
+                this._.forEach(data, (item:any) => {
 
                     var dbItem = this._.find(this.dashboard, "id", item.id);
                     if (dbItem) {

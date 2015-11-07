@@ -3,6 +3,7 @@
  */
 "use strict";
 
+var fs = require("fs");
 var helmet = require("helmet");
 var cors = require("cors");
 var express = require("express");
@@ -20,10 +21,6 @@ var cmdevtMiddleware = require("./middlewares/cmdevt.middleware.js");
 
 function init() {
     var app = express();
-
-    // view engine setup
-    app.set("views", path.join(config.serverRoot, "/core/views"));
-    app.set("view engine", "hbs");
 
     // Showing stack errors
     app.set("showStackError", true);
@@ -59,11 +56,11 @@ function init() {
     app.use(cmdevtMiddleware);
 
     // Globbing routing files
-    var routesFiles = utils.getGlobbedFiles(path.join(__dirname, "/routes/**/*.js"));
-
+    var routesPath = path.join(__dirname, "/routes/");
+    var routesFiles = fs.readdirSync(routesPath);
     logger.debug("initializing routes...\n", routesFiles);
     routesFiles.forEach(function (routePath) {
-        return require(path.resolve(routePath))(app);
+        return require(path.resolve(routesPath, routePath))(app);
     });
 
     // catch 404 and forward error handler
