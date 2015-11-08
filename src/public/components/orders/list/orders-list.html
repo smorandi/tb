@@ -4,6 +4,25 @@
 
 
     </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tr>
+                        <th>{{ 'TIME' | translate }}</th>
+                        <th>{{ 'STATE'| translate}}</th>
+                        <th>{{ 'TOTAL' | translate }}</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="items in vm.orderResources"  ui-sref-active="selected" ui-sref="root.home.orders.overview.list.details({ id: items.id})">
+                        <td>{{items.timestamp}}</td>
+                        <td>{{items.status}}</td>
+                        <td>{{items.totalPrice}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
 </div>
