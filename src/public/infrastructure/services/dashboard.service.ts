@@ -7,18 +7,18 @@ module services {
         public dashboard:Array<any> = [];
 
         static $inject = [
-            injections.angular.$log,
+            injections.services.loggerService,
             injections.services.apiService,
             injections.services.socketService,
             injections.extServices.lodash
         ];
 
-        constructor(private $log:ng.ILogService, private apiService:services.ApiService, private socketService:services.SocketService, private _:_.LoDashStatic) {
+        constructor(private logger:services.LoggerService, private apiService:services.ApiService, private socketService:services.SocketService, private _:_.LoDashStatic) {
             apiService.$load().then(res => {
                 res.$get("dashboard").then(res => res.forEach(item => this.dashboard.push(item)));
             });
 
-            $log.info("registering websocket on dashboard-channel");
+            logger.info("registering websocket on dashboard-channel");
             socketService.socket.on("dashboard", data => {
                 // remove all items from dashboard which are not included in data anymore...
                 this._.remove(this.dashboard, item => {
@@ -49,11 +49,6 @@ module services {
                         this.dashboard.push(item);
                     }
                 });
-
-
-                //data.forEach(item => {
-                //    this.dashboard.push(item);
-                //});
             });
         }
     }

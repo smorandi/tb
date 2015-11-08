@@ -147,13 +147,15 @@ module config {
                                 $log.info("no drink resources found. returning empty array...");
                                 return [];
                             }
-                            return drinksResource.$get("items").then(res => {
-                                $log.info("drink-resources resolved...");
-                                return res;
-                            }, err => {
-                                $log.info("no collection in drinksResource");
-                                return null;
-                            });
+                            return drinksResource.$get("items")
+                                .then(res => {
+                                    $log.info("drink-resources resolved...");
+                                    return res;
+                                })
+                                .catch(err => {
+                                    $log.info("no collection in drinksResource");
+                                    return null;
+                                });
                         }
                     },
                 })
@@ -199,11 +201,6 @@ module config {
                         drinkResource: ($log, drinkResources:Array<any>, $location, $state:ng.ui.IStateService, $stateParams:ng.ui.IStateParamsService, utilsService:services.UtilsService) => {
                             var drinkResource = utilsService.findInArray(drinkResources, dr => dr.id === $stateParams["id"]);
                             return drinkResource;
-                            //$log.info("resolving drink-resource...");
-                            //return drinkResource.$get("self").then(res => {
-                            //    $log.info("drink-resource resolved...");
-                            //    return res;
-                            //});
                         },
                     },
                 })
@@ -278,13 +275,15 @@ module config {
                                 $log.info("no order resources found. returning empty array...");
                                 return [];
                             }
-                            return ordersResource.$get("items").then(res => {
-                                $log.info("order-resources resolved...");
-                                return res;
-                            }, err => {
-                                $log.info("no collection in ordersResource");
-                                return null;
-                            });
+                            return ordersResource.$get("items")
+                                .then(res => {
+                                    $log.info("order-resources resolved...");
+                                    return res;
+                                })
+                                .catch(err => {
+                                    $log.info("no collection in ordersResource");
+                                    return null;
+                                });
                         }
                     },
                 })
@@ -322,8 +321,7 @@ module config {
                             return orderResource;
                         },
                     },
-                })
-            ;
+                });
         }
     }
 }

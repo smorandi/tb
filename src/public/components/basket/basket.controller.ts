@@ -6,25 +6,23 @@ module controllers {
     export class BasketController {
         static $inject = [
             "basketResource",
-            injections.services.loggerService,
-            injections.angular.$httpService,
+            injections.services.loggerService
         ];
 
         private basketItems;
         private basketTotalPrice;
         private basket;
-        private log:services.LoggerService;
-        private http:ng.IHttpService;
 
-        constructor(private basketResource:any, private Logger:services.LoggerService, private $http:ng.IHttpService) {
-            this.log = Logger;
-            this.http = $http;
+        constructor(private basketResource:any, private logger:services.LoggerService) {
             this.basket = basketResource;
-            basketResource.$get("items").then(res =>{
+            this.basketResource.$get("items")
+                .then(res => {
                     this.basketItems = res;
                     this.computeTotal();
-                }
-            )
+                })
+                .catch(err => {
+                    this.logger.error("Failed to Remove Item", err, enums.LogOptions.toast);
+                });
         }
 
         public pricePerItem(price:number, piece:number) {
@@ -32,38 +30,41 @@ module controllers {
         }
 
         public deleteItem(id:string) {
-            for(var i = 0; i < this.basketItems.length; i++){
-                if(this.basketItems[i].id == id){
-                    var intern = this;
+            for (var i = 0; i < this.basketItems.length; i++) {
+                if (this.basketItems[i].id == id) {
                     var del = i;
-                    this.basketItems[i].$del("delete").then(function(){
-                        intern.log.info("","item removed", enums.LogOptions.toast);
-                        intern.basketItems.splice(del,1);
-                        intern.computeTotal();
-                    }, function(){
-                        this.log.error("error", "error while remove item", enums.LogOptions.toast);
-                    });
+                    this.basketItems[i].$del("delete")
+                        .then(res => {
+                            this.logger.info("", "item removed", enums.LogOptions.toast);
+                            // better would be to do this --> this.$state.reload();
+                            this.basketItems.splice(del, 1);
+                            this.computeTotal();
+                        })
+                        .catch(err => {
+                            this.logger.error("Failed to Remove Item", err, enums.LogOptions.toast);
+                        });
                 }
             }
         }
 
-        public computeTotal(){
+        public computeTotal() {
             var price = 0;
-            for(var i = 0; i < this.basketItems.length; i++){
-                price =  Number(price) + Number(this.pricePerItem(this.basketItems[i].number, this.basketItems[i].item.tick.price));
+            for (var i = 0; i < this.basketItems.length; i++) {
+                price = Number(price) + Number(this.pricePerItem(this.basketItems[i].number, this.basketItems[i].item.tick.price));
             }
             this.basketTotalPrice = price;
         }
 
-        public createOrder(){
-            var intern = this;
-            this.basket.$post("createOrder").then(function(){
-                intern.log.info("","order send", enums.LogOptions.toast);
-                intern.basketItems.splice(0, intern.basketItems.length)
-                intern.basketTotalPrice = 0;
-            }, function(){
-                intern.log.error("error","can't create order", enums.LogOptions.toast);
-            });
+        public createOrder() {
+            this.basket.$post("createOrder")
+                .then(res => {
+                    this.logger.info("", "order send", enums.LogOptions.toast);
+                    this.basketItems.splice(0, this.basketItems.length)
+                    this.basketTotalPrice = 0;
+                })
+                .catch(err => {
+                    this.logger.error("Failed to Create Order", err, enums.LogOptions.toast);
+                });
         }
     }
 }
