@@ -13,7 +13,7 @@ module services {
 
         constructor(private $log:ng.ILogService, private socketFactory:any) {
             // TODO: maybe get it from the index.html?!?
-            var myIoSocket = io.connect(constants.ws);
+            var myIoSocket = io.connect(constants.WS);
 
             this.socket = socketFactory({
                 ioSocket: myIoSocket

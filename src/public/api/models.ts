@@ -14,7 +14,21 @@ module models {
     }
 
     export class RegisterCustomer implements interfaces.IRegisterCustomer {
-        constructor(public firstname?:string, public lastname?:string, public loginname?:string, public password?:string) {
+        constructor(public firstname?:string,
+                    public lastname?:string,
+                    public loginname?:string,
+                    public password?:string) {
+        }
+    }
+
+    export class UserProfile implements interfaces.IUserProfile {
+        constructor(public firstname?:string,
+                    public lastname?:string,
+                    public loginname?:string,
+                    public password?:string,
+                    public type?:string,
+                    public creationDate?:Date,
+                    public modificationDate?:Date) {
         }
     }
 }

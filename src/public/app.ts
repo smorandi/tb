@@ -1,6 +1,6 @@
 ///<reference path="./all.references.ts" />
 
-angular.module(injections.constants.appName, ["lodash", "ui.router", "ngAnimate", "toaster", "angular-hal", "btford.socket-io", "ui.bootstrap", "pascalprecht.translate"])
+angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "ngAnimate", "toaster", "angular-hal", "btford.socket-io", "ui.bootstrap", "pascalprecht.translate"])
     .service(injections.services.apiService, services.ApiService)
     .service(injections.services.socketService, services.SocketService)
     .service(injections.services.utilsService, services.UtilsService)
@@ -9,8 +9,9 @@ angular.module(injections.constants.appName, ["lodash", "ui.router", "ngAnimate"
     .service(injections.services.navigationService, services.NavigationService)
     .service(injections.services.menuService, services.MenuService)
     .service(injections.services.httpInterceptorService, services.HttpInterceptorService)
-    .service(injections.services.localStorage, services.LocalStorageService)
+    .service(injections.services.localStorageService, services.LocalStorageService)
     .service(injections.services.loggerService, services.LoggerService)
+    .service(injections.services.modalService, services.ModalService)
 
     .directive(injections.directives.header, directives.Header)
     .directive(injections.directives.flash, directives.Flash)
@@ -24,7 +25,7 @@ angular.module(injections.constants.appName, ["lodash", "ui.router", "ngAnimate"
     .controller(injections.controllers.drinks.details, controllers.DrinkDetailsController)
     .controller(injections.controllers.drinks.create, controllers.DrinkCreateController)
     .controller(injections.controllers.drinks.edit, controllers.DrinkEditController)
-    .controller(injections.controllers.authDialog, controllers.AuthDialogController)
+    .controller(injections.controllers.loginDialog, controllers.LoginDialogController)
     .controller(injections.controllers.basket, controllers.BasketController)
     .controller(injections.controllers.orders.list, controllers.OrdersListController)
     .controller(injections.controllers.orders.details, controllers.OrderDetailsController)

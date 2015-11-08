@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>client</title>
+
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <!-- inject:head:js -->
     <!-- endinject -->
@@ -32,6 +33,8 @@
 <!--NOTE: the following path has to be taken for debug ONLY-->
 <script src="assets/lib/socket.io.js"></script>
 
+
+
 <!--NOTE: the following path has to be taken for production (!)-->
 <!--<script src="/socket.io/socket.io.js"></script>-->
 
@@ -51,11 +54,13 @@
 <script src="assets/lib/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script src="assets/lib/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="assets/lib/bower_components/AngularJS-Toaster/toaster.js"></script>
-<script src="assets/lib/angular-hal.js"></script>
+<script src="assets/lib/bower_components/valdr/valdr.js"></script>
 <script src="assets/lib/bower_components/lodash/lodash.js"></script>
 <script src="assets/lib/bower_components/angular-lodash-module/angular-lodash-module.js"></script>
 <script src="assets/lib/bower_components/angular-translate/angular-translate.js"></script>
 <script src="assets/lib/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<script src="assets/lib/angular-hal.js"></script>
+
 <!-- endinject -->
 
 <!-- angular:js -->
@@ -70,6 +75,7 @@
 <script src="infrastructure/services/dashboard.service.js"></script>
 <script src="infrastructure/services/auth.service.js"></script>
 <script src="infrastructure/services/api.service.js"></script>
+<script src="infrastructure/services/modal.service.js"></script>
 <script src="infrastructure/run/run.js"></script>
 <script src="infrastructure/directives/header.directive.js"></script>
 <script src="infrastructure/directives/flash.directive.js"></script>

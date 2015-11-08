@@ -3,7 +3,7 @@
 "use strict";
 
 module controllers {
-    export class AuthDialogController {
+    export class LoginDialogController {
         public credentials:interfaces.ICredentials = new models.Credentials();
 
         static $inject = [

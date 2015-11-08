@@ -3,17 +3,17 @@
 "use strict";
 
 module constants {
-    export var ws:string = "http://localhost:3000";
-    export var api:string = "http://localhost:3000/root";
+    export var WS:string = "http://localhost:3000";
+    export var API:string = "http://localhost:3000/root";
 
-    export module toaster {
+    export module TOASTER {
         export var error = "error";
         export var success = "success";
         export var info = "info";
         export var warning = "warning";
     }
 
-    export module localstorage {
+    export module LOCAL_STORAGE {
         export var credentialKey = "credentialToken";
     }
 

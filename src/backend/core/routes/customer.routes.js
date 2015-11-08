@@ -54,7 +54,7 @@ module.exports = function (app) {
                     next(new HTTPErrors.NotFoundError("User with id '%s' not found", req.params.id));
                 }
                 else {
-                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers + "/" + req.params.id);
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.customers);
                     res.form(resourceUtils.createResource(baseUrl, docs[0], "ud"), docs[0]);
                 }
             });

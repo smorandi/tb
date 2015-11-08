@@ -17,7 +17,7 @@ module injections {
         export var profile:string = "profile-controller";
         export var system:string = "system-controller";
         export var register:string = "register-controller";
-        export var authDialog:string = "authDialog-controller";
+        export var loginDialog:string = "loginDialog-controller";
         export var basket:string = "basket-controller";
 
         export module drinks {
@@ -48,8 +48,9 @@ module injections {
         export var socketService:string = "socketService";
         export var utilsService:string = "utilsService";
         export var httpInterceptorService:string = "httpInterceptorService";
-        export var localStorage:string = "localStorageService";
-        export var loggerService:string = "loggerService"
+        export var localStorageService:string = "localStorageService";
+        export var loggerService:string = "loggerService";
+        export var modalService:string = "modalService";
     }
 
     export module extServices {
@@ -59,7 +60,7 @@ module injections {
         export var lodash:string = "_";
     }
 
-    export module bootstrap{
+    export module bootstrap {
         export var uibModal:string = "$uibModal";
         export var uibModalInst:string = "$uibModalInstance";
     }
@@ -82,6 +83,7 @@ module injections {
         export var $SCEDelegateProvider:string = "$sceDelegateProvider";
         export var $translateProvider:string = "$translateProvider";
         export var translate = "pascalprecht.translate";
+        export var $exceptionHandler = "$exceptionHandler";
     }
 
     export module uiRouter {

@@ -21,6 +21,13 @@ module interfaces {
         password: string;
     }
 
+    export interface IUserProfile extends IRegisterCustomer {
+        type: string;
+        creationDate: Date;
+        modificationDate: Date;
+    }
+
+
     export interface ILocalStorage {
         get(key:string): any;
         save(key:string, data:any): void;

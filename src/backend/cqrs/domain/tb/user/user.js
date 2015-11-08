@@ -101,6 +101,8 @@ var changeUser = domain.defineCommand({
     existing: true,
 }, function (data, aggregate) {
     data.modificationDate = new Date();
+    data.creationDate = aggregate.get("creationDate");
+    data.type = aggregate.get("type");
 
     aggregate.apply("userChanged", data);
 });

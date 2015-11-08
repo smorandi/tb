@@ -14,7 +14,7 @@ module services {
 
         public $load():ng.IPromise<any> {
             // TODO: maybe get it from the index.html?!?
-            return this.$get(constants.api);
+            return this.$get(constants.API);
         }
 
         public $get(loc:string):ng.IPromise<any> {

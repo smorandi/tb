@@ -26,16 +26,21 @@ module config {
                             return apiService.$load().then(res => {
                                 $log.info("root-resource resolved...");
                                 if (authService.getToken() && res.$has("home")) {
-                                    return res.$get("home").then(resHome => {
-                                        $log.info("home-resource resolved...");
-                                        menuService.setResource(resHome);
-                                        return res;
-                                    });
+                                    return res.$get("home")
+                                        .then(resHome => {
+                                            $log.info("home-resource resolved...");
+                                            menuService.setResource(resHome);
+                                            return res;
+                                        })
+                                        .catch(err => {
+                                            authService.clearCredentials();
+                                            menuService.setResource(res);
+                                            return res;
+                                        });
                                 } else {
                                     menuService.setResource(res);
                                     return res;
                                 }
-
                             });
                         }
                     },
