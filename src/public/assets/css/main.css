@@ -49,16 +49,5 @@ hr {
 }
 
 .navbar-brand {
-    /*font-family: 'Indie Flower', cursive;*/
-    /*font-weight: bold;*/
-    /*font-size: xx-large;*/
-    /*background-color: yellow;*/
-    /*margin: 0;*/
-    /*padding: 0;*/
-}
-
-.navbar-default .navbar-brand:hover {
-    /*text-decoration: double;*/
-    /*background-color: yellow;*/
-    /*color: #777;*/
+    padding: 2px 0;
 }

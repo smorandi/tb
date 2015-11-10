@@ -67,7 +67,7 @@ module config {
                 })
                 .state("root.home", {
                     url: "/home",
-                    redirectTo: "root.dashboard",
+                    ["redirectTo"]: "root.dashboard",
                     resolve: {
                         menuService: "menuService",
                         homeResource: ($log, rootResource, menuService:services.MenuService) => {
