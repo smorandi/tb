@@ -30,7 +30,7 @@ module interfaces {
 
     export interface ILocalStorage {
         get(key:string): any;
-        save(key:string, data:any): void;
+        set(key:string, data:any): void;
         remove(key:string): void;
         clearAll(): void;
     }

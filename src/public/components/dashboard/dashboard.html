@@ -10,7 +10,7 @@
         <div ng-switch-when="all">
             <div ng-include="'components/dashboard/all.html'"></div>
         </div>
-        <div ng-switch-when="by-category">
+        <div ng-switch-when="category">
             <div ng-include="'components/dashboard/by-category.html'"></div>
         </div>
     </div>
@@ -32,26 +32,23 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
                 <ul class="nav navbar-nav navbar-left">
-                    <li ui-sref-active="active">
-                        <a ng-href="#" ui-sref="root.dashboard.all">
-                            <span class="fa fa-globe"/> All</a>
+                    <li ng-class="(vm.currentFilter === 'all')&& 'active'">
+                        <a ng-click="vm.setFilter('all')"><span class="fa fa-globe"/> All</a>
                     </li>
-                    <li ui-sref-active="active">
-                        <a ng-href="#" ui-sref="root.dashboard.categories">
-                            <span class="fa fa-list"/> Categories</a>
+                    <li ng-class="(vm.currentFilter === 'category')&& 'active'">
+                        <a ng-click="vm.setFilter('category')"><span class="fa fa-list"/> Categories</a>
                     </li>
                 </ul>
 
-                <div class="col-md-3 pull-right">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group">
-                            <input ng-model="vm.query" type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="input-group">
+                        <span class="input-group-addon fa fa-search"></span>
+                        <input ng-model="vm.search" type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn"><button ng-click="vm.search = ''" type="button"
+                                                              class="btn fa fa-remove"></button></span>
+                    </div>
+                </form>
             </div>
         </div>
     </nav>

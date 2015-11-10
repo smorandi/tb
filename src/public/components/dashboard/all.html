@@ -1,12 +1,16 @@
 <div class="flex-container-column">
-    <section class="">
+    <section>
         <h3>All Drinks</h3>
         <hr>
     </section>
 
-    <div class="flex-auto flex-container-row flex-wrap flex-justify-content-start">
-        <div class="flex-auto flex-container-row flex-justify-content-start"
-             ng-repeat="item in vm.dashboard | filter: {name: vm.query} | orderBy:'name'"
+    <div ng-show="filtered.length > 0" class="flex-auto flex-container-row flex-wrap flex-justify-content-start">
+        <div ng-repeat="item in filtered = (vm.dashboard | filter: {name: vm.search} | orderBy:'name')"
              ng-include="'components/dashboard/db-item.html'"/>
     </div>
+
+    <div ng-hide="filtered.length > 0" class="flex-container-row flex-wrap flex-justify-content-center">
+        <h5><em>No drinks found...</em></h5>
+    </div>
+
 </div>

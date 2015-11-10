@@ -10,7 +10,7 @@ module config {
         ];
 
         constructor($stateProvider:ng.ui.IStateProvider, $urlRouterProvider:ng.ui.IUrlRouterProvider) {
-            $urlRouterProvider.otherwise("/dashboard/all");
+            $urlRouterProvider.otherwise("/dashboard");
 
             $stateProvider
                 .state("root", {
@@ -47,36 +47,12 @@ module config {
                 })
                 .state("root.dashboard", {
                     url: "/dashboard",
-                    abstract: true,
-                })
-                .state("root.dashboard.all", {
-                    url: "/all",
                     views: {
                         "content@root": {
                             templateUrl: "components/dashboard/dashboard.html",
                             controller: injections.controllers.dashboard,
                             controllerAs: "vm"
                         }
-                    },
-                    resolve: {
-                        filter: function () {
-                            return "all";
-                        },
-                    }
-                })
-                .state("root.dashboard.categories", {
-                    url: "/categories",
-                    views: {
-                        "content@root": {
-                            templateUrl: "components/dashboard/dashboard.html",
-                            controller: injections.controllers.dashboard,
-                            controllerAs: "vm"
-                        }
-                    },
-                    resolve: {
-                        filter: function () {
-                            return "by-category";
-                        },
                     }
                 })
                 .state("root.register", {
@@ -91,7 +67,7 @@ module config {
                 })
                 .state("root.home", {
                     url: "/home",
-                    ["redirectTo"]: "root.dashboard.all",
+                    redirectTo: "root.dashboard",
                     resolve: {
                         menuService: "menuService",
                         homeResource: ($log, rootResource, menuService:services.MenuService) => {

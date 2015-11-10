@@ -3,20 +3,22 @@
 var controllers;
 (function (controllers) {
     var DashboardController = (function () {
-        function DashboardController(logger, dashboardService, $filter, $scope, filter) {
+        function DashboardController(logger, dashboardService, $filter, $scope, storage) {
             var _this = this;
             this.logger = logger;
             this.dashboardService = dashboardService;
             this.$filter = $filter;
             this.$scope = $scope;
-            this.filter = filter;
+            this.storage = storage;
             this.dashboard = [];
             this.currentFilter = "all";
             this.categories = [];
-            this.logger.info("DashboardController called", filter);
+            this.logger.info("DashboardController called");
             this.dashboard = dashboardService.dashboard;
-            this.currentFilter = filter;
+            this.currentFilter = this.storage.get(constants.LOCAL_STORAGE.dashboardFilter) || "all";
+            this.search = this.storage.get(constants.LOCAL_STORAGE.dashboardSearch) || "";
             this.$scope.$watchCollection(function () { return dashboardService.dashboard; }, function (items) { return _this.updateCategories(items); });
+            this.$scope.$watch(function () { return _this.search; }, function (search) { return _this.storage.set(constants.LOCAL_STORAGE.dashboardSearch, search); });
         }
         DashboardController.prototype.updateCategories = function (items) {
             this.categories.length = 0;
@@ -56,13 +58,14 @@ var controllers;
         };
         DashboardController.prototype.setFilter = function (filter) {
             this.currentFilter = filter;
+            this.storage.set(constants.LOCAL_STORAGE.dashboardFilter, filter);
         };
         DashboardController.$inject = [
             injections.services.loggerService,
             injections.services.dashboardService,
             injections.angular.$filter,
             injections.angular.$scope,
-            "filter"
+            injections.services.localStorageService
         ];
         return DashboardController;
     })();

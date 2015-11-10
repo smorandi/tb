@@ -20,7 +20,7 @@ module services {
         public setCredentials(credentials:interfaces.ICredentials) {
             this.credentials = credentials;
             this.token = this.$window.btoa(credentials.loginname + ":" + credentials.password);
-            this.localStorage.save(constants.LOCAL_STORAGE.credentialKey, this.token);
+            this.localStorage.set(constants.LOCAL_STORAGE.credentialKey, this.token);
         }
 
         public clearCredentials() {

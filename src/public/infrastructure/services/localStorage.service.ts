@@ -14,7 +14,7 @@ module services {
             return  JSON.parse(value);
         }
 
-        save(key:string, data):void {
+        set(key:string, data):void {
             localStorage.setItem(key, JSON.stringify(data));
         }
 

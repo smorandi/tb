@@ -7,7 +7,7 @@
 
         <div class="flex-container-row overflow-auto">
             <div ng-include="'components/dashboard/db-item.html'"
-                 ng-repeat="item in filtered = (category.items | filter: {name: vm.query})">
+                 ng-repeat="item in filtered = (category.items | filter: {name: vm.search})">
             </div>
         </div>
     </div>

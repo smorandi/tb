@@ -4,10 +4,9 @@
 
 module controllers {
     export class DashboardController {
+        public search:string;
         public dashboard:Array<any> = [];
-        public query:string;
         public currentFilter:string = "all";
-
         public categories:Array<any> = [];
 
         static $inject = [
@@ -15,19 +14,22 @@ module controllers {
             injections.services.dashboardService,
             injections.angular.$filter,
             injections.angular.$scope,
-            "filter"
+            injections.services.localStorageService
         ];
 
         constructor(private logger:services.LoggerService,
                     private dashboardService:services.DashboardService,
                     private $filter:ng.IFilterService,
                     private $scope:ng.IScope,
-                    private filter:string) {
-            this.logger.info("DashboardController called", filter);
+                    private storage:services.LocalStorageService) {
+            this.logger.info("DashboardController called");
             this.dashboard = dashboardService.dashboard;
-            this.currentFilter = filter;
+
+            this.currentFilter = this.storage.get(constants.LOCAL_STORAGE.dashboardFilter) || "all";
+            this.search = this.storage.get(constants.LOCAL_STORAGE.dashboardSearch) || "";
 
             this.$scope.$watchCollection(() => dashboardService.dashboard, items => this.updateCategories(items));
+            this.$scope.$watch(() => this.search, search => this.storage.set(constants.LOCAL_STORAGE.dashboardSearch, search));
         }
 
         private updateCategories(items:any) {
@@ -72,6 +74,7 @@ module controllers {
 
         public setFilter(filter:string) {
             this.currentFilter = filter;
+            this.storage.set(constants.LOCAL_STORAGE.dashboardFilter, filter);
         }
     }
 }

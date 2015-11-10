@@ -15,6 +15,8 @@ module constants {
 
     export module LOCAL_STORAGE {
         export var credentialKey = "credentialToken";
+        export var dashboardFilter = "dashboardFilter";
+        export var dashboardSearch = "dashboardSearch";
     }
 
     export module RELS {
@@ -44,7 +46,7 @@ module constants {
     export module STATES {
         export var root:string = "root";
         export var register:string = "root.register";
-        export var dashboard:string = "root.dashboard.all";
+        export var dashboard:string = "root.dashboard";
         export var home:string = "root.home";
         export var profile:string = "root.home.profile";
         export var drinks:string = "root.home.drinks.overview.list";
