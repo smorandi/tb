@@ -45,11 +45,11 @@
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
-                        <a ng-click="vm.edit()">
+                        <a class="action-link info" ng-click="vm.edit()">
                             <span class="fa fa-edit"/> Edit</a>
                     </li>
                     <li>
-                        <a ng-click="vm.unregister()">
+                        <a class="action-link danger" ng-click="vm.unregister()">
                             <span class="fa fa-remove"/> Unregister</a>
                     </li>
                 </ul>

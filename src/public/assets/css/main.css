@@ -34,3 +34,31 @@ hr {
 .overflow-auto {
     overflow: auto;
 }
+
+.action-link {
+    margin: 1px 1px;
+}
+.action-link.success {
+    background-color: rgba(0, 255, 0, 0.05);
+}
+.action-link.info {
+    background-color: rgba(0, 0, 255, 0.05);
+}
+.action-link.danger {
+    background-color: rgba(255, 0, 0, 0.05);
+}
+
+.navbar-brand {
+    /*font-family: 'Indie Flower', cursive;*/
+    /*font-weight: bold;*/
+    /*font-size: xx-large;*/
+    /*background-color: yellow;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+}
+
+.navbar-default .navbar-brand:hover {
+    /*text-decoration: double;*/
+    /*background-color: yellow;*/
+    /*color: #777;*/
+}

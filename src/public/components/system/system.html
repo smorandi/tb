@@ -2,13 +2,6 @@
     <div class="page-header">
         <h2>System
             <small>Control the system</small>
-
-            <div class="btn-group pull-right" role="group" aria-label="Blah">
-                <button type="button" class="btn btn-success" ng-click="vm.startEngine($event)">Start</button>
-                <button type="button" class="btn btn-success" ng-click="vm.stopEngine($event)">Stop</button>
-                <button type="button" class="btn btn-info" ng-click="vm.replay($event)">Replay</button>
-                <button type="button" class="btn btn-danger" ng-click="vm.reinitialize($event)">Re-Initialize</button>
-            </div>
         </h2>
     </div>
 
@@ -35,4 +28,41 @@
             </td>
         </tr>
     </table>
+
+
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
+                        ng-click="navCollapsed = !navCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <a class="action-link success" ng-click="vm.startEngine($event)"><span class="fa fa-play"/>
+                            Start</a>
+                    </li>
+                    <li>
+                        <a class="action-link success" ng-click="vm.stopEngine($event)"><span class="fa fa-stop"/> Stop</a>
+                    </li>
+                    <li>
+                        <a class="action-link info" ng-click="vm.replay($event)"><span class="fa fa-refresh"/>
+                            Replay</a>
+                    </li>
+                    <li>
+                        <a class="action-link danger" ng-click="vm.reinitialize($event)"><span class="fa fa-database"/>
+                            Reinitialize</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
