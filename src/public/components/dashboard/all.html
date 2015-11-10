@@ -5,7 +5,8 @@
     </section>
 
     <div class="flex-auto flex-container-row flex-wrap flex-justify-content-start">
-        <div class="flex-auto flex-container-row flex-justify-content-start" ng-repeat="item in vm.dashboard | orderBy:'name'"
+        <div class="flex-auto flex-container-row flex-justify-content-start"
+             ng-repeat="item in vm.dashboard | filter: {name: vm.query} | orderBy:'name'"
              ng-include="'components/dashboard/db-item.html'"/>
     </div>
 </div>

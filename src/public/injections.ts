@@ -84,6 +84,7 @@ module injections {
         export var $translateProvider:string = "$translateProvider";
         export var translate = "pascalprecht.translate";
         export var $exceptionHandler = "$exceptionHandler";
+        export var $filter = "$filter"
     }
 
     export module uiRouter {

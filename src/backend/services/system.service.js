@@ -15,6 +15,7 @@ var domainService = require("./domain.service.js");
 var sagaService = require("./saga.service.js");
 var commandService = require("./command.service.js");
 var models = require("../core/models");
+var dashboardService = require("../services/dashboard.service");
 
 function startEngine(callback) {
     engine.start(callback);
@@ -93,7 +94,10 @@ function replay(callback) {
             logger.trace("replaying events...");
             var eventPayload = _.map(evts, "payload");
             denormalizerService.replay(eventPayload, callback);
-        }
+        },
+        function (callback) {
+            dashboardService.emitDashboard(callback);
+        },
     ];
 
     async.waterfall(tasks, callback);
@@ -105,6 +109,9 @@ function reInit(callback) {
 
     var tasks = [
         function (callback) {
+            engine.stop(callback);
+        },
+        function (callback) {
             clearAll(callback);
         },
         function (callback) {
@@ -112,6 +119,9 @@ function reInit(callback) {
         },
         function (callback) {
             engine.init(callback);
+        },
+        function (callback) {
+            dashboardService.emitDashboard(callback);
         },
     ];
 
