@@ -240,6 +240,10 @@ module config {
                 })
                 .state("root.home.basket", {
                     url: "/basket",
+                    abstract: true,
+                })
+                .state("root.home.basket.tile", {
+                    url: "/tile",
                     views: {
                         "content@root": {
                             templateUrl: "components/basket/basket.html",
@@ -255,7 +259,32 @@ module config {
                                 return res;
                             });
                         },
+                        filter: function () {
+                            return "tile";
+                        },
+                    }
+                })
+                .state("root.home.basket.list", {
+                    url: "/list",
+                    views: {
+                        "content@root": {
+                            templateUrl: "components/basket/basket.html",
+                            controller: injections.controllers.basket,
+                            controllerAs: "vm"
+                        }
                     },
+                    resolve: {
+                        basketResource: ($log, homeResource) => {
+                            $log.info("resolving basket-resource...");
+                            return homeResource.$get("basket").then(res => {
+                                $log.info("basket-resource resolved...");
+                                return res;
+                            });
+                        },
+                        filter: function () {
+                            return "list";
+                        },
+                    }
                 })
                 .state("root.home.orders", {
                     url: "/orders",

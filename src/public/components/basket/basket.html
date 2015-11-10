@@ -6,31 +6,41 @@
         </div>
     </div>
 
-    <div class="panel-body">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <tr>
-                    <th>{{ 'NAME' | translate }}</th>
-                    <th>{{ 'QUANTITY'| translate}}</th>
-                    <th>{{ 'PRICE' | translate }} / {{'PIECE' | translate}}</th>
-                    <th>{{ 'PRICE' | translate}}</th>
-                    <th></th>
-                </tr>
-                <tr ng-repeat="items in vm.basketItems">
-                    <td>{{items.item.name}}</td>
-                    <td>{{items.number}}</td>
-                    <td>{{items.item.tick.price}}</td>
-                    <td>{{vm.pricePerItem(items.item.tick.price, items.number)}}</td>
-                    <td><button type="button" class="btn btn-danger btn-xs" ng-click="vm.deleteItem(items.id)">{{ 'DELETE' | translate}}</button></td>
-                </tr>
-                <tr class="total">
-                    <td></td>
-                    <td></td>
-                    <td>{{'TOTAL' | translate}}</td>
-                    <td>{{vm.basketTotalPrice}}</td>
-                    <td><button type="button" class="btn btn-success" ng-click="vm.createOrder()">{{ 'CREATE_ORDER' | translate}}</button></td>
-                </tr>
-            </table>
+    <div ng-switch on="vm.currentFilter">
+        <div ng-switch-when="tile">
+            <div ng-include="'components/basket/basket-tile.html'"></div>
+        </div>
+        <div ng-switch-when="list">
+            <div ng-include="'components/basket/basket-list.html'"></div>
         </div>
     </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
+                        ng-click="navCollapsed = !navCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
+                <ul class="nav navbar-nav navbar-left">
+                    <li ui-sref-active="active">
+                        <a ng-href="#" ui-sref="root.home.basket.tile">
+                            <span class="glyphicon glyphicon-th-large"/> Tile</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ng-href="#" ui-sref="root.home.basket.list">
+                            <span class="glyphicon glyphicon-th-list"/> List</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>

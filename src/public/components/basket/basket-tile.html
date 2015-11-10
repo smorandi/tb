@@ -1,0 +1,33 @@
+<div class="panel-body">
+    <div class="row">
+        <div class="panel panel-default col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-4">
+            <div class="panel-body">
+                <div class="row" ng-repeat="items in vm.basketItems">
+                    <div class="col-xs-12 col-sm-1 col-md-1">
+                        <button type="button" class="close" aria-label="Close" ng-click="vm.deleteItem(items.id)"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="col-xs-11 col-sm-8 col-md-8 ">
+                        <div class="flex-auto flex-container-row flex-justify-content-start"
+                             ng-include="'components/basket/basket-item.html'"></div>
+                    </div>
+                </div>
+                <div class="row total">
+                    <div class="col-xs-offset-1 col-xs-3 col-sm-offset-2 col-sm-2 col-md-offset-2 col-md-2">
+                        {{'TOTAL' | translate}}
+                    </div>
+                    <div class=" col-xs-3 col-sm-2 col-md-2">
+                        {{vm.basketTotalPrice.price}}
+                    </div>
+                    </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-success" ng-click="vm.createOrder()">{{ 'CREATE_ORDER' |
+                            translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
