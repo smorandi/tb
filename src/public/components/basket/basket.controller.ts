@@ -5,64 +5,66 @@
 module controllers {
     export class BasketController {
         public basketItems = [];
-        private basketTotalPrice = { price: 0};
+        private basketTotalPrice = {price: 0};
         public dashboard = [];
-        public currentFilter:string = "all";
+        public currentFilter:string;
+        public FILTER_TILE:string = constants.FILTER.basketTile;
+        public FILTER_LIST:string = constants.FILTER.basketList;
 
         static $inject = [
             "basketResource",
+            "basketResourceItems",
             injections.services.loggerService,
             injections.services.dashboardService,
             injections.uiRouter.$stateService,
             injections.angular.$scope,
-            "filter"
+            injections.services.localStorageService,
         ];
 
-        constructor(private basketResource:any, private logger:services.LoggerService, private dashboardService:services.DashboardService, private $state:ng.ui.IStateService,
-                    private scope:ng.IScope, private filter:string) {
+        constructor(private basketResource:any, private basketResourceItems:any, private logger:services.LoggerService, private dashboardService:services.DashboardService,
+                    private $state:ng.ui.IStateService, private scope:ng.IScope, private storage:services.LocalStorageService) {
 
-            this.currentFilter = filter;
+            this.currentFilter = this.storage.get(constants.LOCAL_STORAGE.basketFilter) || this.FILTER_TILE;
             this.dashboard = dashboardService.dashboard;
-            scope.$watch( "vm.dashboard", function(newValue, oldValue){
-                for(var a = 0; a < newValue.length; a++) {
-                    var line = scope.vm.getBasketItemById(scope.vm.basketItems, newValue[a].id);
-                    line.tickprice = newValue[a].tick.price;
-                    line.priceItem = scope.vm.pricePerItem(line.tickprice, line.basket.number);
-                    line.dashItem = newValue[a];
-                }
-            }, true );
-
-            this.basketResource.$get("items")
-                .then(res => {
-                    var total = 0;
-                    for(var y = 0; y < res.length; y++){
-                        var dashItem = this.getItemFromDashboard(res[y].item.id);
-                        var priceItem = this.pricePerItem(dashItem.tick.price, res[y].number);
-                        this.basketItems.push({
-                            basket: res[y],
-                            tickprice: dashItem.tick.price,
-                            dashItemId: dashItem.id,
-                            dashItem: dashItem,
-                            img: this.getImageForItem(dashItem.category),
-                            priceItem: priceItem,
-                        });
-
-                       total = Number(total) + Number(priceItem);
+            scope.$watch("vm.dashboard", function (newValue, oldValue) {
+                var price = 0;
+                for (var a = 0; a < scope.vm.basketItems.length; a++) {
+                    var line = scope.vm.getDashboardItemById(newValue, scope.vm.basketItems[a].dashItemId );
+                    if (line) {
+                        scope.vm.basketItems[a].tickprice = line.tick.price;
+                        scope.vm.basketItems[a].priceItem = scope.vm.pricePerItem(scope.vm.basketItems[a].tickprice, scope.vm.basketItems[a].basket.number);
+                        scope.vm.basketItems[a].dashItem = line;
+                        price = Number(price) + Number(scope.vm.basketItems[a].priceItem);
                     }
+                }
+                scope.vm.basketTotalPrice.price = price;
+            }, true);
 
-                    this.basketTotalPrice.price = total;
-                })
-                .catch(err => {
-                    this.logger.error("Failed to Remove Item", err, enums.LogOptions.toast);
+            var total = 0;
+            for (var y = 0; y < this.basketResourceItems.length; y++) {
+                var dashItem = this.getItemFromDashboard(this.basketResourceItems[y].item.id);
+                var priceItem = this.pricePerItem(dashItem.tick.price, this.basketResourceItems[y].number);
+                this.basketItems.push({
+                    basket: this.basketResourceItems[y],
+                    tickprice: dashItem.tick.price,
+                    dashItemId: dashItem.id,
+                    dashItem: dashItem,
+                    img: this.getImageForItem(dashItem.category),
+                    priceItem: priceItem,
                 });
+
+                total = Number(total) + Number(priceItem);
+            }
+
+            this.basketTotalPrice.price = total;
 
 
         }
 
-        public getBasketItemById(basketItem, id) {
-            for(var x = 0; x < basketItem.length; x++) {
-                if(id == basketItem[x].dashItemId){
-                    return basketItem[x];
+        public getDashboardItemById(dashboard, id) {
+            for (var x = 0; x < dashboard.length; x++) {
+                if (id == dashboard[x].id) {
+                    return dashboard[x];
                 }
             }
         }
@@ -87,8 +89,8 @@ module controllers {
         }
 
         private getItemFromDashboard(idBasket:string) {
-            for(var z = 0; z < this.dashboard.length; z++){
-                if(idBasket == this.dashboard[z].id){
+            for (var z = 0; z < this.dashboard.length; z++) {
+                if (idBasket == this.dashboard[z].id) {
                     return this.dashboard[z];
                 }
             }
@@ -123,6 +125,11 @@ module controllers {
                 .catch(err => {
                     this.logger.error("Failed to Create Order", err, enums.LogOptions.toast);
                 });
+        }
+
+        public setFilter(filter:string) {
+            this.currentFilter = filter;
+            this.storage.set(constants.LOCAL_STORAGE.basketFilter, filter);
         }
     }
 }

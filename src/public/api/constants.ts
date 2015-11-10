@@ -17,6 +17,12 @@ module constants {
         export var credentialKey = "credentialToken";
         export var dashboardFilter = "dashboardFilter";
         export var dashboardSearch = "dashboardSearch";
+        export var basketFilter = "basketFilter";
+    }
+
+    export module FILTER {
+        export var basketTile:string = "tile";
+        export var basketList:string = "list";
     }
 
     export module RELS {

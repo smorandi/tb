@@ -32,11 +32,11 @@
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
                 <ul class="nav navbar-nav navbar-left">
                     <li ui-sref-active="active">
-                        <a ng-href="#" ui-sref="root.home.basket.tile">
+                        <a ng-click="vm.setFilter(vm.FILTER_TILE)">
                             <span class="glyphicon glyphicon-th-large"/> Tile</a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ng-href="#" ui-sref="root.home.basket.list">
+                        <a ng-click="vm.setFilter(vm.FILTER_LIST)">
                             <span class="glyphicon glyphicon-th-list"/> List</a>
                     </li>
                 </ul>
