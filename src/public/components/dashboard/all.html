@@ -1,16 +1,22 @@
 <div class="flex-container-column">
-    <section>
-        <h4><small>All Drinks</small></h4>
-        <hr>
-    </section>
-
-    <div ng-show="filtered.length > 0" class="flex-auto flex-container-row flex-wrap flex-justify-content-start">
-        <div ng-repeat="item in filtered = (vm.dashboard | filter: {name: vm.search} | orderBy:'name')"
-             ng-include="'components/dashboard/db-item.html'"/>
+    <div ng-switch on="vm.currentView">
+        <div ng-switch-when="tiles">
+            <div ng-show="vm.filteredItems.all.items.length > 0" class="flex-container-row flex-auto flex-wrap flex-justify-content-start">
+                <div ng-repeat="item in vm.filteredItems.all.items"
+                     ng-include="'components/dashboard/db-item-tile.html'"/>
+            </div>
+        </div>
+        <div ng-switch-when="list">
+            <div ng-show="vm.filteredItems.all.items.length > 0" class="list-group">
+                <div ng-repeat="item in vm.filteredItems.all.items"
+                     class="list-group-item no-padding"
+                     ng-include="'components/dashboard/db-item-flat.html'">
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div ng-hide="filtered.length > 0" class="flex-container-row flex-wrap flex-justify-content-center">
+    <div ng-hide="vm.filteredItems.all.items.length > 0" class="flex-container-row flex-wrap flex-justify-content-center">
         <h5><em>No drinks found...</em></h5>
     </div>
-
 </div>

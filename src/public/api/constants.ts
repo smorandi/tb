@@ -17,6 +17,7 @@ module constants {
         export var credentialKey = "credentialToken";
         export var dashboardFilter = "dashboardFilter";
         export var dashboardSearch = "dashboardSearch";
+        export var dashboardView = "dashboardView";
         export var basketFilter = "basketFilter";
     }
 

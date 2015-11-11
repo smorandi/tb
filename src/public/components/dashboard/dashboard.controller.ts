@@ -6,8 +6,10 @@ module controllers {
     export class DashboardController {
         public search:string;
         public dashboard:Array<any> = [];
+        public filteredItems:any = {categories: []};
         public currentFilter:string = "all";
         public categories:Array<any> = [];
+        public currentView:string = "tiles";
 
         static $inject = [
             injections.services.loggerService,
@@ -26,25 +28,39 @@ module controllers {
             this.dashboard = dashboardService.dashboard;
 
             this.currentFilter = this.storage.get(constants.LOCAL_STORAGE.dashboardFilter) || "all";
+            this.currentView = this.storage.get(constants.LOCAL_STORAGE.dashboardView) || "tiles";
             this.search = this.storage.get(constants.LOCAL_STORAGE.dashboardSearch) || "";
 
-            this.$scope.$watchCollection(() => dashboardService.dashboard, items => this.updateCategories(items));
-            this.$scope.$watch(() => this.search, search => this.storage.set(constants.LOCAL_STORAGE.dashboardSearch, search));
+            this.$scope.$watchCollection(() => dashboardService.dashboard, items => this.updateFilteredLists(items, this.search));
+            this.$scope.$watch(() => this.search, search => {
+                this.storage.set(constants.LOCAL_STORAGE.dashboardSearch, search)
+                this.updateFilteredLists(dashboardService.dashboard, this.search);
+            });
         }
 
-        private updateCategories(items:any) {
-            this.categories.length = 0;
-            this.categories.push({name: "Cocktails", items: this.createFilter(items, "cocktail")});
-            this.categories.push({name: "Shots", items: this.createFilter(items, "shot")});
-            this.categories.push({name: "Beers", items: this.createFilter(items, "beer")});
-            this.categories.push({name: "Wines", items: this.createFilter(items, "wine")});
-            this.categories.push({name: "Teas", items: this.createFilter(items, "tea")});
-            this.categories.push({name: "Coffees", items: this.createFilter(items, "coffee")});
-            this.categories.push({name: "Soft Drinks", items: this.createFilter(items, "soft")});
+        private updateFilteredLists(items:any, search:string) {
+            this.filteredItems.all = {name: "All Drinks", items: this.createFilter(items, search)}
+            this.filteredItems.categories.length = 0;
+            this.filteredItems.categories.push({name: "Cocktails", items: this.createFilter(items, search, "cocktail")});
+            this.filteredItems.categories.push({name: "Shots", items: this.createFilter(items, search, "shot")});
+            this.filteredItems.categories.push({name: "Beers", items: this.createFilter(items, search, "beer")});
+            this.filteredItems.categories.push({name: "Wines", items: this.createFilter(items, search, "wine")});
+            this.filteredItems.categories.push({name: "Teas", items: this.createFilter(items, search, "tea")});
+            this.filteredItems.categories.push({name: "Coffees", items: this.createFilter(items, search, "coffee")});
+            this.filteredItems.categories.push({name: "Soft Drinks", items: this.createFilter(items, search, "soft")});
         }
 
-        private createFilter(items:Array<any>, category:string):Array<any> {
-            var filteredList = this.$filter("filter")(items, {category: category}, true);
+        private createFilter(items:Array<any>, search:string, category?:string):Array<any> {
+            var filteredList = items;
+
+            if (search) {
+                filteredList = this.$filter("filter")(filteredList, {name: search}, false);
+            }
+
+            if (category) {
+                filteredList = this.$filter("filter")(filteredList, {category: category}, true);
+            }
+
             filteredList = this.$filter("orderBy")(filteredList, "name");
             return filteredList;
         }
@@ -75,6 +91,11 @@ module controllers {
         public setFilter(filter:string) {
             this.currentFilter = filter;
             this.storage.set(constants.LOCAL_STORAGE.dashboardFilter, filter);
+        }
+
+        public setView(view:string) {
+            this.currentView = view;
+            this.storage.set(constants.LOCAL_STORAGE.dashboardView, view);
         }
     }
 }
