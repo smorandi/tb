@@ -58,6 +58,7 @@ module controllers {
             var modalOptions = {
                 closeButtonText: "Cancel",
                 actionButtonText: "Unregister",
+                glyph: "glyphicon glyphicon-trash",
                 headerText: "Unregister",
                 bodyText: "Are you sure you want to unregister?"
             };

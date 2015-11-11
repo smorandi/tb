@@ -1,0 +1,16 @@
+<div class="flex-container-column">
+    <section>
+        <h4>
+            <small>All Drinks</small>
+        </h4>
+        <hr>
+    </section>
+
+    <div class="list-group">
+        <div ng-repeat="item in filtered = (vm.dashboard | filter: {name: vm.search} | orderBy:'name')" href="#"
+           class="list-group-item" style="padding: 0">
+            <div ng-include="'components/dashboard/db-item-flat.html'"></div>
+        </div>
+    </div>
+
+</div>

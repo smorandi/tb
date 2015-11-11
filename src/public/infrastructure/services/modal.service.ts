@@ -2,6 +2,9 @@
 
 "use strict";
 
+/**
+ * This is a rip-off from some place i cannot remember anymore...
+ */
 module services {
     export class ModalService {
 
@@ -9,14 +12,15 @@ module services {
             backdrop: true,
             keyboard: true,
             modalFade: true,
-            templateUrl: 'components/modal/modal.html'
+            templateUrl: "components/modal/modal.html"
         };
 
         private modalOptions = {
-            closeButtonText: 'Close',
-            actionButtonText: 'OK',
-            headerText: 'Proceed?',
-            bodyText: 'Perform this action?'
+            closeButtonText: "Close",
+            actionButtonText: "OK",
+            glyph: null,
+            headerText: "Proceed?",
+            bodyText: "Perform this action?"
         };
 
         static $inject = [
@@ -27,10 +31,9 @@ module services {
         constructor(private logger:services.LoggerService, private uibModal:angular.ui.bootstrap.IModalService) {
         }
 
-
         public showModal(customModalDefaults, customModalOptions) {
             if (!customModalDefaults) customModalDefaults = {};
-            customModalDefaults.backdrop = 'static';
+            customModalDefaults.backdrop = "static";
             return this.show(customModalDefaults, customModalOptions);
         }
 
@@ -46,19 +49,18 @@ module services {
             angular.extend(tempModalOptions, this.modalOptions, customModalOptions);
 
             if (!tempModalDefaults.controller) {
-                tempModalDefaults.controller = function ($scope, $modalInstance) {
+                tempModalDefaults.controller = ($scope, $modalInstance) => {
                     $scope.modalOptions = tempModalOptions;
                     $scope.modalOptions.ok = function (result) {
                         $modalInstance.close(result);
                     };
                     $scope.modalOptions.close = function (result) {
-                        $modalInstance.dismiss('cancel');
+                        $modalInstance.dismiss("cancel");
                     };
                 }
             }
 
             return this.uibModal.open(tempModalDefaults).result;
         }
-
     }
 }

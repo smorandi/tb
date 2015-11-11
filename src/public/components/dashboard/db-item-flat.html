@@ -1,0 +1,88 @@
+<!--<div ng-click="vm.showDetails(item)"-->
+<!--class="container">-->
+
+<!--<div class="row">-->
+
+<!--<div class="col-xs-4 flex-container-row" style="background-color: rosybrown;">-->
+<!--<div class="" back-img="{{vm.getImageForItem(item)}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--</div>-->
+
+<!--<h3 class="text-nowrap no-gutter" style=""><strong>&nbsp;{{item.name}}</strong>-->
+<!--</h3>-->
+<!--</div>-->
+
+<!--<div class="col-xs-4" style="background-color: lightblue">-->
+<!--<div class="flex-container-row">-->
+<!--<h6 flash="item.allTimeHigh" class="col-xs-3 no-gutter text-nowrap">-->
+<!--<span class="glyphicon glyphicon-collapse-up"></span>{{item.allTimeHigh}}&nbsp;&nbsp;-->
+<!--</h6>-->
+<!--<h6 flash="item.allTimeLow" class="col-xs-3 no-gutter text-nowrap">-->
+<!--<span class="glyphicon glyphicon-collapse-down"></span>{{item.allTimeLow}}&nbsp;&nbsp;-->
+<!--</h6>-->
+<!--<h6 flash="item.highestPrice" class="col-xs-3 no-gutter text-nowrap">-->
+<!--<span class="glyphicon glyphicon-menu-up"></span>{{item.highestPrice}}&nbsp;&nbsp;-->
+<!--</h6>-->
+<!--<h6 flash="item.lowestPrice" class="col-xs-3 no-gutter text-nowrap">-->
+<!--<span class="glyphicon glyphicon-menu-down"></span>{{item.lowestPrice}}&nbsp;&nbsp;-->
+<!--</h6>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="col-xs-4 flex-container-row">-->
+<!--<h4 flash="item.tick.timestamp" class="no-gutter text-nowrap">-->
+<!--<span class="glyphicon"-->
+<!--ng-class="item.tick.delta > 0 ? 'text-danger glyphicon-circle-arrow-up' : 'text-success glyphicon-circle-arrow-down'"></span>&nbsp;{{item.tick.delta}}-->
+<!--</h4>-->
+
+<!--<h3 flash="item.price" class="text-primary no-gutter text-nowrap">-->
+<!--<small>CHF</small>-->
+<!--<strong ng-show="item.price % 1 > 0">{{item.price}}</strong>-->
+<!--<strong ng-hide="item.price % 1 > 0">{{item.price}}.-</strong>-->
+<!--</h3>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<div ng-click="vm.showDetails(item)"
+     class="flex-container-row flex-wrap">
+
+    <div class="flex-container-row" style="background-color: rosybrown; flex: 40% 40% auto">
+        <div class="" back-img="{{vm.getImageForItem(item)}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+
+        <h3 class="text-nowrap no-gutter" style=""><strong>&nbsp;{{item.name}}</strong>
+        </h3>
+    </div>
+
+    <div class="flex-container-row" style="background-color: saddlebrown; flex: 30% 0%">
+        <h6 flash="item.allTimeHigh" class="no-gutter text-nowrap">
+            <span class="glyphicon glyphicon-collapse-up"></span>{{item.allTimeHigh}}&nbsp;&nbsp;
+        </h6>
+        <h6 flash="item.allTimeLow" class="no-gutter text-nowrap">
+            <span class="glyphicon glyphicon-collapse-down"></span>{{item.allTimeLow}}&nbsp;&nbsp;
+        </h6>
+        <h6 flash="item.highestPrice" class="no-gutter text-nowrap">
+            <span class="glyphicon glyphicon-menu-up"></span>{{item.highestPrice}}&nbsp;&nbsp;
+        </h6>
+        <h6 flash="item.lowestPrice" class="no-gutter text-nowrap">
+            <span class="glyphicon glyphicon-menu-down"></span>{{item.lowestPrice}}&nbsp;&nbsp;
+        </h6>
+    </div>
+
+    <div class="flex-container-row flex-justify-content-end flex-align-items-baseline flex-wrap-reverse"
+         style="background-color: sandybrown;flex: 30% 0">
+
+        <div class="flex-container-row flex-align-items-baseline flex-justify-content-space-between">
+            <h4 flash="item.tick.timestamp" class="no-gutter text-nowrap">
+<span class="glyphicon"
+      ng-class="item.tick.delta > 0 ? 'text-danger glyphicon-circle-arrow-up' : 'text-success glyphicon-circle-arrow-down'"></span>&nbsp;{{item.tick.delta}}
+            </h4>
+
+            <h3 flash="item.price" class="text-primary no-gutter text-nowrap">
+                <strong ng-show="item.price % 1 > 0">{{item.price}}</strong>
+                <strong ng-hide="item.price % 1 > 0">{{item.price}}.-</strong>
+            </h3>
+        </div>
+    </div>
+
+</div>
