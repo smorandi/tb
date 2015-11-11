@@ -10,6 +10,8 @@ module controllers {
         public currentFilter:string;
         public FILTER_TILE:string = constants.FILTER.basketTile;
         public FILTER_LIST:string = constants.FILTER.basketList;
+        public Links:any;
+        public showFooter:boolean = false;
 
         static $inject = [
             "basketResource",
@@ -19,13 +21,31 @@ module controllers {
             injections.uiRouter.$stateService,
             injections.angular.$scope,
             injections.services.localStorageService,
+            injections.services.footerService,
         ];
 
         constructor(private basketResource:any, private basketResourceItems:any, private logger:services.LoggerService, private dashboardService:services.DashboardService,
-                    private $state:ng.ui.IStateService, private scope:ng.IScope, private storage:services.LocalStorageService) {
+                    private $state:ng.ui.IStateService, private scope:ng.IScope, private storage:services.LocalStorageService, private footer:services.FooterService) {
 
             this.currentFilter = this.storage.get(constants.LOCAL_STORAGE.basketFilter) || this.FILTER_TILE;
+
+            this.Links = [ {
+                    id : this.FILTER_TILE,
+                    aSpanClass : "glyphicon glyphicon-th-large",
+                    aSpanTxt : "Tile"
+                },
+                {
+                    id : this.FILTER_LIST,
+                    aSpanClass : "glyphicon glyphicon-th-list",
+                    aSpanTxt : "List"
+                }
+            ];
+
+            footer.setLinks(this.Links);
+            footer.setCurrentFilter(this.currentFilter);
+
             this.dashboard = dashboardService.dashboard;
+
             scope.$watch("vm.dashboard", function (newValue, oldValue) {
                 var price = 0;
                 for (var a = 0; a < scope.vm.basketItems.length; a++) {
@@ -130,6 +150,7 @@ module controllers {
         public setFilter(filter:string) {
             this.currentFilter = filter;
             this.storage.set(constants.LOCAL_STORAGE.basketFilter, filter);
+            this.footer.setCurrentFilter(filter);
         }
     }
 }

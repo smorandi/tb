@@ -6,6 +6,7 @@ module injections {
         export var header:string = "header";
         export var flash:string = "flash";
         export var backImg:string = "backImg";
+        export var footer:string = "footer";
     }
 
     export module constants {
@@ -51,6 +52,7 @@ module injections {
         export var localStorageService:string = "localStorageService";
         export var loggerService:string = "loggerService";
         export var modalService:string = "modalService";
+        export var footerService:string = "footerService";
     }
 
     export module extServices {
