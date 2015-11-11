@@ -15,22 +15,22 @@
         <div class="flex-container-column flex-justify-content-space-between flex-wrap">
             <div class="flex-container-row">
                 <h6 flash="item.allTimeHigh" class="no-gutter text-nowrap">
-                    <span class="fa fa-angle-double-up"></span>{{item.allTimeHigh}}&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-collapse-up"></span>{{item.allTimeHigh}}&nbsp;&nbsp;
                 </h6>
                 <h6 flash="item.allTimeLow" class="no-gutter text-nowrap">
-                    <span class="fa fa-angle-double-down"></span>{{item.allTimeLow}}&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-collapse-down"></span>{{item.allTimeLow}}&nbsp;&nbsp;
                 </h6>
                 <h6 flash="item.highestPrice" class="no-gutter text-nowrap">
-                    <span class="fa fa-angle-up"></span>{{item.highestPrice}}&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-menu-up"></span>{{item.highestPrice}}&nbsp;&nbsp;
                 </h6>
                 <h6 flash="item.lowestPrice" class="no-gutter text-nowrap">
-                    <span class="fa fa-angle-down"></span>{{item.lowestPrice}}&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-menu-down"></span>{{item.lowestPrice}}&nbsp;&nbsp;
                 </h6>
             </div>
             <div class="flex-container-row flex-align-items-baseline flex-justify-content-space-between flex-wrap">
                 <h4 flash="item.tick.timestamp" class="no-gutter">
-                                <span class="fa"
-                                      ng-class="item.tick.delta > 0 ? 'text-danger fa-arrow-circle-up' : 'text-success fa-arrow-circle-down'"></span>&nbsp;{{item.tick.delta}}
+                                <span class="glyphicon"
+                                      ng-class="item.tick.delta > 0 ? 'text-danger glyphicon-circle-arrow-up' : 'text-success glyphicon-circle-arrow-down'"></span>&nbsp;{{item.tick.delta}}
                 </h4>
 
                 <h3 flash="item.price" class="text-primary no-gutter text-nowrap">
