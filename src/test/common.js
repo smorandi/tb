@@ -15,7 +15,7 @@ var JsonHalAdapter = require("traverson-hal");
 traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
 exports.traverson = traverson;
 
-var serverUrl = "http://" + config.server.host + ":" + config.server.port + "/";
+var serverUrl = config.server.protocol + "://" + config.server.host + ":" + config.server.port + "/";
 
 exports.urls = {
     root: url.resolve(serverUrl, config.urls.root),

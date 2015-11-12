@@ -7,17 +7,13 @@ module services {
         public socket:any;
 
         static $inject = [
-            injections.angular.$log,
+            injections.services.loggerService,
             injections.extServices.socketFactory,
         ];
 
-        constructor(private $log:ng.ILogService, private socketFactory:any) {
-            // TODO: maybe get it from the index.html?!?
-            var myIoSocket = io.connect(constants.WS);
-
-            this.socket = socketFactory({
-                ioSocket: myIoSocket
-            });
+        constructor(private logger:services.LoggerService, private socketFactory:any) {
+            this.socket = socketFactory();
+            this.logger.info("web-socket created");
         }
     }
 }

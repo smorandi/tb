@@ -3,9 +3,13 @@
  */
 "use strict";
 
+var fs = require("fs");
 var path = require("path");
 var _ = require("lodash");
 var utils = require("./utils/utils");
+
+exports.backendDir = path.join(__dirname);
+exports.publicDir = path.join(__dirname + "/../public");
 
 //=============================================================================
 // Defaults for application...
@@ -27,10 +31,15 @@ exports.logger = {
 // Server...
 //-----------------------------------------------------------------------------
 exports.server = {
-    port: process.env.PORT || 3000,
+    protocol: "http",
+    port: 3000,
     host: "localhost",
     backlog: 511,
-}
+    credentials: {
+        key: fs.readFileSync(path.join(exports.backendDir, "sec/key.pem"), "utf8"),
+        cert: fs.readFileSync(path.join(exports.backendDir, "sec/cert.pem"), "utf8")
+    }
+};
 
 //=============================================================================
 // Urls...
@@ -48,8 +57,6 @@ exports.urls = {
     system: "/system",
     pricing: "/pricing"
 };
-
-exports.serverRoot = path.join(__dirname + "/..");
 
 //=============================================================================
 // Content-Types...

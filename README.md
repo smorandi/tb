@@ -35,3 +35,7 @@ An Web Application to order drinks like stocks on a market.
 ### ...run the server-tests
 * in the `src` folder
 * call `npm test` (this will run all integration tests based on mocha)
+
+#TODOS
+* error handling when server is not running/responding
+* xxx

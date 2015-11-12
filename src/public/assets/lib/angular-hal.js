@@ -1,9 +1,9 @@
 /* global angular */
 
-// NOTE: this is a rip off "angular-hal": "~0.1.5". since it defines read-only properties which in certain use-cases it
-// is a problem! (e.g. for flashing changed values).
-// so I replaced it with defining writable & configurable properties. not really good as it makes an inmutable class mutable,
-// but well, such is life ;)
+// NOTE: this is a rip off "angular-hal": "~0.1.5". since it defines read-only properties which in certain use-cases
+// poses a problem! (e.g. for flashing changed values).
+// so I replaced it with defining writable & configurable properties. not really good as it makes an inmutable class
+// mutable, but well - life is not always perfect ;)
 
 angular.module('angular-hal', [])
 

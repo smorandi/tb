@@ -7,14 +7,15 @@ module services {
         static $inject = [
             injections.angular.$log,
             injections.extServices.halService,
+            injections.angular.$location
         ];
 
-        constructor(private $log:ng.ILogService, private hal:any) {
+        constructor(private $log:ng.ILogService, private hal:any, private $location:ng.ILocationService) {
         }
 
         public $load():ng.IPromise<any> {
-            // TODO: maybe get it from the index.html?!?
-            return this.$get(constants.API);
+            var host = this.$location.protocol() + '://' + this.$location.host() + ':' + this.$location.port();
+            return this.$get(host + constants.API);
         }
 
         public $get(loc:string):ng.IPromise<any> {

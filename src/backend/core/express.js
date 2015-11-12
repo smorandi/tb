@@ -24,7 +24,7 @@ function init() {
 
     // Showing stack errors
     app.set("showStackError", true);
-    app.use(favicon(path.join(config.serverRoot, "/public/assets/images/favicon.ico")));
+    app.use(favicon(path.join(config.publicDir, "/assets/images/favicon.ico")));
 
     // Enable logger (log4js)
     app.use(log4js.connectLogger(logger, {
@@ -50,7 +50,7 @@ function init() {
     app.use(helmet.ienoopen());
     app.disable("x-powered-by");
     app.use(cookieParser());
-    app.use(express.static(path.join(config.serverRoot, "/public")));
+    app.use(express.static(config.publicDir));
 
     app.use(formMiddleware);
     app.use(cmdevtMiddleware);
