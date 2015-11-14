@@ -15,7 +15,7 @@ module services {
         }
 
         public $load():ng.IPromise<any> {
-            var host = this.$location.protocol() + '://';// + this.$location.host() + ':' + this.$location.port();
+            var host = this.$location.protocol() + '://' + this.$location.host() + ':' + this.$location.port();
             return this.$get(host + constants.API);
         }
 

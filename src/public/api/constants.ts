@@ -3,7 +3,7 @@
 "use strict";
 
 module constants {
-    export var API:string = "localhost:3000/root";
+    export var API:string = "/root";
 
     export module TOASTER {
         export var error = "error";
