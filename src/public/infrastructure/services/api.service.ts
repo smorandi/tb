@@ -11,10 +11,11 @@ module services {
         ];
 
         constructor(private $log:ng.ILogService, private hal:any, private $location:ng.ILocationService) {
+            $log.log("apiservice")
         }
 
         public $load():ng.IPromise<any> {
-            var host = this.$location.protocol() + '://' + this.$location.host() + ':' + this.$location.port();
+            var host = this.$location.protocol() + '://';// + this.$location.host() + ':' + this.$location.port();
             return this.$get(host + constants.API);
         }
 
