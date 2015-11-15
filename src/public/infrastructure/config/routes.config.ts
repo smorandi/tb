@@ -53,6 +53,13 @@ module config {
                             controller: injections.controllers.dashboard,
                             controllerAs: "vm"
                         }
+                    },
+                    resolve: {
+                        subHeaderService: "subHeaderService",
+                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
+                            subHeaderService.setView(constants.RELS.dashboard);
+                            return true;
+                        }
                     }
                 })
                 .state("root.register", {
@@ -62,6 +69,13 @@ module config {
                             templateUrl: injections.templates.register.template,
                             controller: injections.controllers.register,
                             controllerAs: "vm"
+                        }
+                    },
+                    resolve: {
+                        subHeaderService: "subHeaderService",
+                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
+                            subHeaderService.setView(constants.RELS.register);
+                            return true;
                         }
                     }
                 })
@@ -103,7 +117,13 @@ module config {
                                 return res;
                             });
                         },
+                        subHeaderService: "subHeaderService",
+                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
+                            subHeaderService.setView(constants.RELS.system);
+                            return true;
+                        }
                     },
+
                 })
                 .state("root.home.drinks", {
                     url: "/drinks",
@@ -137,6 +157,11 @@ module config {
                                     $log.info("no collection in drinksResource");
                                     return null;
                                 });
+                        },
+                        subHeaderService: "subHeaderService",
+                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
+                            subHeaderService.setView(constants.RELS.drinks);
+                            return true;
                         }
                     },
                 })
@@ -212,9 +237,14 @@ module config {
                                 return res;
                             });
                         },
+                        subHeaderService: "subHeaderService",
+                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
+                            subHeaderService.setView(constants.RELS.profile);
+                            return true;
+                        }
                     },
                 })
-                .state(constants.STATES.basket, {//"root.home.basket", {
+                .state(constants.STATES.basket, {
                     url: "/basket",
                     views: {
                         "content@root": {
@@ -224,6 +254,11 @@ module config {
                         }
                     },
                     resolve: {
+                        subHeaderService: "subHeaderService",
+                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
+                            subHeaderService.setView(constants.RELS.basket);
+                            return true;
+                        },
                         basketResource: ($log, homeResource) => {
                             $log.info("resolving basket-resource...");
                             return homeResource.$get("basket").then(res => {
@@ -271,14 +306,14 @@ module config {
                                     $log.info("no collection in ordersResource");
                                     return null;
                                 });
-                        }
+                        },
+                        subHeaderService: "subHeaderService",
+                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
+                            subHeaderService.setView(constants.RELS.orders);
+                            return true;
+                        },
                     },
                 })
-                //.state("root.home.orders.overview", {
-                //    url: "",
-                //    abstract: true,
-                //    templateUrl: "components/orders/orders-overview.html",
-                //})
                 .state("root.home.orders.list", {
                     url: "",
                     views: {
@@ -286,10 +321,7 @@ module config {
                             templateUrl: "components/orders/list/orders-list.html",
                             controller: injections.controllers.orders.list,
                             controllerAs: "vm"
-                        }//,
-                        //"det@root.home.orders.overview": {
-                        //    templateUrl: "components/orders/details/order-details.html",
-                        //}
+                        }
                     }
                 })
                 .state("root.home.orders.list.details", {

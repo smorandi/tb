@@ -1,5 +1,4 @@
 ///<reference path="../../all.references.ts" />
-
 "use strict";
 
 module directives {

@@ -24,17 +24,12 @@ module controllers {
             injections.angular.$scope,
             injections.services.localStorageService,
             injections.services.footerService,
-            injections.services.subHeaderService,
         ];
 
         constructor(private basketResource:any, private basketResourceItems:any, private logger:services.LoggerService, private dashboardService:services.DashboardService,
-                    private $state:ng.ui.IStateService, private scope:ng.IScope, private storage:services.LocalStorageService, private footer:services.FooterService,
-                    private subHeader:services.SubHeaderService) {
+                    private $state:ng.ui.IStateService, private scope:ng.IScope, private storage:services.LocalStorageService, private footer:services.FooterService) {
 
             this.currentFilter = this.storage.get(constants.LOCAL_STORAGE.basketFilter) || this.FILTER_TILE;
-
-            this.subHeader.setSubTitle("Basket");
-            this.subHeader.setSubTitleTxt("Your open order");
 
             this.Links = [
                 {

@@ -9,5 +9,19 @@
   "PIECE" : "Piece",
   "DELETE" : "Delete",
   "TOTAL" : "Total",
-  "CREATE_ORDER" : "Order"
+  "CREATE_ORDER" : "Order",
+  "SUBHEAD_BASKET" : "Basket",
+  "SUBHEAD_TXT_BASKET" : "Your open order",
+  "SUBHEAD_ORDERS" : "Orders",
+  "SUBHEAD_TXT_ORDERS" : "History of your orders",
+  "SUBHEAD_DASHBOARD" : "Dashboard",
+  "SUBHEAD_TXT_DASHBOARD" : "Browse through the available drinks",
+  "SUBHEAD_PROFILE" : "Profile",
+  "SUBHEAD_TXT_PROFILE" : "Displays your registration details",
+  "SUBHEAD_DRINKS" : "Drinks",
+  "SUBHEAD_TXT_DRINKS" : "View all the drinks",
+  "SUBHEAD_SYSTEM" : "System",
+  "SUBHEAD_TXT_SYSTEM" : "Control the system",
+  "SUBHEAD_REGISTER" : "Sign Up",
+  "SUBHEAD_TXT_REGISTER" : "Please register yourself to participate"
 }
