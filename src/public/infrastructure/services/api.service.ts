@@ -5,23 +5,20 @@
 module services {
     export class ApiService {
         static $inject = [
-            injections.angular.$log,
+            injections.services.loggerService,
             injections.extServices.halService,
             injections.angular.$location
         ];
 
-        constructor(private $log:ng.ILogService, private hal:any, private $location:ng.ILocationService) {
-            $log.log("apiservice")
+        constructor(private logger:services.LoggerService, private hal:any, private $location:ng.ILocationService) {
+            this.logger.debug("ApiService created")
         }
 
         public $load():ng.IPromise<any> {
             var host = this.$location.protocol() + '://' + this.$location.host() + ':' + this.$location.port();
-            return this.$get(host + constants.API);
-        }
-
-        public $get(loc:string):ng.IPromise<any> {
-            this.$log.info("GET: " + loc)
-            return this.hal.$get(loc);
+            var root = host + constants.API;
+            this.logger.debug("loading api root resource @" + root);
+            return this.hal.$get(root);
         }
     }
 }

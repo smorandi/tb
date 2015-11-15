@@ -230,7 +230,13 @@ var precondition_createUser_mandatoryAttributesSet = domain.definePreCondition({
     name: ["createAdmin", "createCustomer"],
     description: "mandatory attributes must be set",
 }, function (data, aggregate, callback) {
-    if (!data.loginname) {
+    if (!data.firstname) {
+        callback(new Error());
+    }
+    else if (!data.lastname) {
+        callback(new Error());
+    }
+    else if (!data.loginname) {
         callback(new Error());
     }
     else if (!data.password) {

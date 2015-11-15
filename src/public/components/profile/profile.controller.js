@@ -11,23 +11,23 @@ var controllers;
             this.authService = authService;
             this.modal = modal;
             this.profileResource = profileResource;
-            this.profile = new models.UserProfile();
+            this.user = new models.UserProfile();
             this.isEdit = false;
             this.logger.info("ProfileController called with client-url: " + $location.path());
             // assigns the values contained in the resource for which we have keys for...
-            _.assign(this.profile, _.pick(this.profileResource, _.keys(this.profile)));
+            _.assign(this.user, _.pick(this.profileResource, _.keys(this.user)));
         }
         ProfileController.prototype.edit = function () {
             this.isEdit = true;
         };
         ProfileController.prototype.save = function () {
             var _this = this;
-            this.profileResource.$put("update", {}, this.profile)
+            this.profileResource.$put("update", {}, this.user)
                 .then(function (res) {
-                _this.authService.setCredentials(new models.Credentials(_this.profile.loginname, _this.profile.password));
+                _this.authService.setCredentials(new models.Credentials(_this.user.loginname, _this.user.password));
                 _this.$state.reload()
                     .then(function (res) {
-                    _this.logger.info("Change successfull", "Your profile has been updated", enums.LogOptions.toast);
+                    _this.logger.info("Change successfull", "Your user has been updated", enums.LogOptions.toast);
                 })
                     .catch(function (err) {
                     _this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);

@@ -4,7 +4,8 @@
 
 module controllers {
     export class ProfileController {
-        private profile = new models.UserProfile();
+        private user = new models.UserProfile();
+        private userForm:ng.IFormController;
         private isEdit:boolean = false;
 
         static $inject = [
@@ -26,7 +27,7 @@ module controllers {
             this.logger.info("ProfileController called with client-url: " + $location.path());
 
             // assigns the values contained in the resource for which we have keys for...
-            _.assign(this.profile, _.pick(this.profileResource, _.keys(this.profile)));
+            _.assign(this.user, _.pick(this.profileResource, _.keys(this.user)));
         }
 
         public edit():void {
@@ -34,12 +35,12 @@ module controllers {
         }
 
         public save():void {
-            this.profileResource.$put("update", {}, this.profile)
+            this.profileResource.$put("update", {}, this.user)
                 .then(res => {
-                    this.authService.setCredentials(new models.Credentials(this.profile.loginname, this.profile.password));
+                    this.authService.setCredentials(new models.Credentials(this.user.loginname, this.user.password));
                     this.$state.reload()
                         .then(res => {
-                            this.logger.info("Change successfull", "Your profile has been updated", enums.LogOptions.toast);
+                            this.logger.info("Change successfull", "Your user has been updated", enums.LogOptions.toast);
                         })
                         .catch(err => {
                             this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);

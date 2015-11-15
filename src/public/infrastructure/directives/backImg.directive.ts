@@ -5,7 +5,7 @@
 module directives {
     export function BackImg():ng.IDirective {
         return function (scope, element, attrs) {
-            attrs.$observe('backImg', function (value) {
+            attrs.$observe('backImg', value => {
                 element.css({
                     'background-image': 'url(' + value + ')',
                     'background-size': 'cover'

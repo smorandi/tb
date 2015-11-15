@@ -13,7 +13,8 @@ module run {
             injections.uiRouter.$stateService,
             injections.services.authService,
             injections.services.utilsService,
-            injections.bootstrap.uibModal
+            injections.bootstrap.uibModal,
+            injections.extServices.valdr
         ];
 
         constructor(logger:services.LoggerService,
@@ -21,7 +22,14 @@ module run {
                     $state:ng.ui.IStateService,
                     authService:services.AuthService,
                     utilsService:services.UtilsService,
-                    $uibModal:angular.ui.bootstrap.IModalService) {
+                    $uibModal:angular.ui.bootstrap.IModalService,
+                    valdr:any) {
+
+            // do this in order to prevent valdr screwing with our normal form-groups in css...
+            valdr.setClasses({
+                formGroup: "valdr-form-group"
+            });
+
             $rootScope.$on(injections.rootScope.$stateChangeStart,
                 (event, toState, toParams, fromState, fromParams) => {
                     logger.info("transition: " + fromState.name + " -> " + toState.name);

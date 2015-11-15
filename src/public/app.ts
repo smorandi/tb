@@ -35,4 +35,5 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .config(config.InterceptorConfig)
     .config(config.I18nConfig)
     .config(config.RoutesConfig)
+    .config(config.ValdrConfig)
     .run(run.Run);

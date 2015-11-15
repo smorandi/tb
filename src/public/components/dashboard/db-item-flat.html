@@ -1,16 +1,16 @@
 <div ng-click="vm.showDetails(item)"
-     class="flex-container-row flex-wrap">
+     class="flex-container-row flex-wrap ">
 
-    <div class="flex-container-row" style="background-color: rosybrown; flex: auto">
+    <div class="flex-container-row flex-auto">
         <div class="" back-img="{{vm.getImageForItem(item)}}" style="width: 20px">
         </div>
 
-        <h4 class="text-nowrap no-gutter" style=""><strong>&nbsp;{{item.name}}</strong>
+        <h4 class="text-nowrap no-gutter"><strong>&nbsp;{{item.name}}</strong>
         </h4>
     </div>
 
-    <div class="flex-container-row flex-justify-content-end flex-align-items-baseline flex-wrap-reverse"
-         style="background-color: sandybrown;flex: 100px 0">
+    <div class="flex-container-row flex-justify-content-end flex-align-items-baseline flex-wrap"
+         style="flex: 100px 0">
 
         <div class="flex-container-row flex-align-items-baseline flex-justify-content-space-between flex-auto">
             <h5 flash="item.tick.timestamp" class="no-gutter text-nowrap">

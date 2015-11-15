@@ -14,16 +14,22 @@ module services {
                     private toaster:ngtoaster.IToasterService) {
         }
 
+        private toLogString(title:string, message:string):string {
+            var logString = title ? title : "";
+            logString += message ? "-" + message : "";
+            return logString;
+        }
+
         public debug(title:string, message?:string, logOptions?:enums.LogOptions) {
             if (logOptions === enums.LogOptions.toast_only) {
-                this.toaster.pop(constants.TOASTER.info, title, message );
+                this.toaster.pop(constants.TOASTER.info, title, message);
             }
             else if (logOptions === enums.LogOptions.toast) {
                 this.toaster.pop(constants.TOASTER.info, title, message);
-                this.$log.debug(title + "//" + message);
+                this.$log.debug(this.toLogString(title, message));
             }
             else {
-                this.$log.debug(title + "//" + message);
+                this.$log.debug(this.toLogString(title, message));
             }
         }
 
@@ -33,10 +39,10 @@ module services {
             }
             else if (logOptions === enums.LogOptions.toast) {
                 this.toaster.info(title, message);
-                this.$log.info(title + "//" + message);
+                this.$log.info(this.toLogString(title, message));
             }
             else {
-                this.$log.info(title + "//" + message);
+                this.$log.info(this.toLogString(title, message));
             }
         }
 
@@ -46,10 +52,10 @@ module services {
             }
             else if (logOptions === enums.LogOptions.toast) {
                 this.toaster.warning(title, message);
-                this.$log.warn(title + "//" + message);
+                this.$log.warn(this.toLogString(title, message));
             }
             else {
-                this.$log.warn(title + "//" + message);
+                this.$log.warn(this.toLogString(title, message));
             }
         }
 
@@ -59,10 +65,10 @@ module services {
             }
             else if (logOptions === enums.LogOptions.toast) {
                 this.toaster.error(title, message);
-                this.$log.error(title + "//" + message);
+                this.$log.error(this.toLogString(title, message));
             }
             else {
-                this.$log.error(title + "//" + message);
+                this.$log.error(this.toLogString(title, message));
             }
         }
     }

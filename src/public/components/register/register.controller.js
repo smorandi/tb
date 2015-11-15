@@ -9,25 +9,28 @@ var controllers;
             this.$state = $state;
             this.authService = authService;
             this.rootResource = rootResource;
-            this.customer = new models.RegisterCustomer();
+            this.user = new models.RegisterCustomer();
+            this.isEdit = true;
             this.logger.info("RegisterController called with client-url: '" + $location.path() + "'");
         }
-        RegisterController.prototype.signUp = function () {
+        RegisterController.prototype.submitUserForm = function () {
             var _this = this;
-            this.rootResource.$post("register", {}, this.customer)
-                .then(function (res) {
-                _this.authService.setCredentials(new models.Credentials(_this.customer.loginname, _this.customer.password));
-                _this.$state.go(constants.LINKS.home.state, {}, {})
+            if (this.userForm.$valid) {
+                this.rootResource.$post("register", {}, this.user)
                     .then(function (res) {
-                    _this.logger.info("Sign-Up Completed", "You have been successfully registered", enums.LogOptions.toast_only);
+                    _this.authService.setCredentials(new models.Credentials(_this.user.loginname, _this.user.password));
+                    _this.$state.go(constants.LINKS.home.state, {}, {})
+                        .then(function (res) {
+                        _this.logger.info("Sign-Up Completed", "You have been successfully registered", enums.LogOptions.toast_only);
+                    })
+                        .catch(function (err) {
+                        _this.logger.error("Sign-Up Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
+                    });
                 })
                     .catch(function (err) {
                     _this.logger.error("Sign-Up Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
                 });
-            })
-                .catch(function (err) {
-                _this.logger.error("Sign-Up Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
-            });
+            }
         };
         RegisterController.prototype.cancel = function () {
             this.$state.go(constants.LINKS.dashboard.state, {}, {});

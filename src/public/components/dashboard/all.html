@@ -9,7 +9,7 @@
         <div ng-switch-when="list">
             <div ng-show="vm.filteredItems.all.items.length > 0" class="list-group">
                 <div ng-repeat="item in vm.filteredItems.all.items"
-                     class="list-group-item no-padding"
+                     class="list-group-item"
                      ng-include="'components/dashboard/db-item-flat.html'">
                 </div>
             </div>

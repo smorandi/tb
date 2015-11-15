@@ -60,6 +60,8 @@ module injections {
         export var socketFactory:string = "socketFactory";
         export var toaster:string = "toaster";
         export var lodash:string = "_";
+        export var valdrProvider:string = "valdrProvider";
+        export var valdr:string = "valdr";
     }
 
     export module bootstrap {

@@ -1,8 +1,8 @@
-[ng-click],
-[data-ng-click],
-[x-ng-click] {
-    cursor: pointer;
-}
+/*[ng-click],*/
+/*[data-ng-click],*/
+/*[x-ng-click] {*/
+    /*cursor: pointer;*/
+/*}*/
 
 body {
     /*we need this for the fixed-bootstrap nav layout*/
@@ -51,29 +51,36 @@ hr {
     margin: 0;
 }
 
-.action-link.success {
-    background-color: rgba(0, 255, 0, 0.1) !important;
+.action-link.disabled {
+    opacity: 0.7;
+    pointer-events: none;
 }
 
-.action-link.success:hover {
+.action-link.success {
     background-color: rgba(0, 255, 0, 0.2) !important;
 }
 
-.action-link.info {
-    background-color: rgba(0, 0, 255, 0.1) !important;
+.action-link.success:hover {
+    background-color: rgba(0, 255, 0, 0.3) !important;
 }
-.action-link.info:hover {
+
+.action-link.info {
     background-color: rgba(0, 0, 255, 0.2) !important;
 }
 
-.action-link.danger {
-    background-color: rgba(255, 0, 0, 0.1) !important;
+.action-link.info:hover {
+    background-color: rgba(0, 0, 255, 0.3) !important;
 }
-.action-link.danger:hover {
+
+.action-link.danger {
     background-color: rgba(255, 0, 0, 0.2) !important;
 }
 
-/*when isnide a nav-bar which can be collapsed or not*/
+.action-link.danger:hover {
+    background-color: rgba(255, 0, 0, 0.3) !important;
+}
+
+/*when inside a nav-bar which can be collapsed or not*/
 .collapse .action-link {
     margin: 0px 1px;
 }
@@ -81,3 +88,13 @@ hr {
 .collapse.in .action-link {
     margin: 1px 0px;
 }
+
+
+/*.valdr-form-group .ng-invalid {*/
+    /*background-color: papayawhip;*/
+/*}*/
+
+.valdr-message.ng-invalid {
+    color: red;
+}
+

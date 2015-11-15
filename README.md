@@ -38,4 +38,5 @@ An Web Application to order drinks like stocks on a market.
 
 #TODOS
 * error handling when server is not running/responding
-* xxx
+* setting focus on first element on page does not really work
+* more...

@@ -34,16 +34,16 @@
         <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
             <ul class="nav navbar-nav navbar-left">
                 <li ng-class="(vm.currentFilter === 'all')&& 'active'">
-                    <a ng-click="vm.setFilter('all')"><span class="glyphicon glyphicon-globe"/> All</a>
+                    <a ng-href="#" ng-click="vm.setFilter('all')"><span class="glyphicon glyphicon-globe"/> All</a>
                 </li>
                 <li ng-class="(vm.currentFilter === 'category')&& 'active'">
-                    <a ng-click="vm.setFilter('category')"><span class="glyphicon glyphicon-list"/> Categories</a>
+                    <a ng-href="#" ng-click="vm.setFilter('category')"><span class="glyphicon glyphicon-list"/> Categories</a>
                 </li>
                 <li ng-class="(vm.currentView === 'tiles')&& 'active'">
-                    <a ng-click="vm.setView('tiles')"><span class="glyphicon glyphicon-th-large"/> Tiles</a>
+                    <a ng-href="#" ng-click="vm.setView('tiles')"><span class="glyphicon glyphicon-th-large"/> Tiles</a>
                 </li>
                 <li ng-class="(vm.currentView === 'list')&& 'active'">
-                    <a ng-click="vm.setView('list')"><span class="glyphicon glyphicon-th-list"/> List</a>
+                    <a ng-href="#" ng-click="vm.setView('list')"><span class="glyphicon glyphicon-th-list"/> List</a>
                 </li>
             </ul>
 

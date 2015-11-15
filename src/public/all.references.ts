@@ -8,6 +8,7 @@
 /// <reference path="./api/models.ts" />
 /// <reference path="./api/constants.ts" />
 /// <reference path="./api/enums.ts" />
+/// <reference path="./api/validations.ts" />
 
 /// <reference path="./infrastructure/services/menu.service.ts" />
 /// <reference path="./infrastructure/services/api.service.ts" />
@@ -33,6 +34,7 @@
 /// <reference path="./infrastructure/config/interceptor.config.ts" />
 /// <reference path="./infrastructure/config/routes.config.ts" />
 /// <reference path="./infrastructure/config/i18n.config.ts" />
+/// <reference path="./infrastructure/config/valdr.config.ts" />
 
 /// <reference path="./components/dashboard/dashboard.controller.ts" />
 /// <reference path="./components/login/login-dialog.controller.ts" />
