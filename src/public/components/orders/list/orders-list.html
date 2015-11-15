@@ -1,28 +1,38 @@
-<div class="master">
-    <div class="header-row">
-        <h3>All Orders</h3>
-
-
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-md-12">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <tr>
-                        <th>{{ 'TIME' | translate }}</th>
-                        <th>{{ 'STATE'| translate}}</th>
-                        <th>{{ 'TOTAL' | translate }}</th>
-                        <th></th>
-                    </tr>
-                    <tr ng-repeat="items in vm.orderResources"  ui-sref-active="selected" ui-sref="root.home.orders.overview.list.details({ id: items.id})">
-                        <td>{{items.timestamp}}</td>
-                        <td>{{items.status}}</td>
-                        <td>{{items.totalPrice}}</td>
-                    </tr>
-                </table>
-            </div>
+<div class="header-row">
+    <h3>All Orders</h3>
+</div>
+<div class="list-group">
+    <div class="row list-group-item list-group-item-heading">
+        <div class="col-xs-6 col-sm-4 col-md-4">
+            {{ 'TIME' | translate }}
+        </div>
+        <div class="col-xs-3 col-sm-4 col-md-4">
+            {{ 'STATE'| translate}}
+        </div>
+        <div class="col-xs-3 col-sm-4 col-md-4">
+            {{ 'TOTAL' | translate }}
         </div>
     </div>
-
-
 </div>
+<div class="list-group">
+    <a class="list-group-item" ng-repeat="items in vm.orderResources" ui-sref="root.home.orders.list.details({ id: items.id})">
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-4">
+                {{items.timestamp | date:'HH:mm yyyy' }}
+            </div>
+            <div class="col-xs-3 col-sm-4 col-md-4">
+                <span class="glyphicon glyphicon-ok">
+
+                </span>
+            </div>
+            <div>
+                <span class="badge">
+                    {{items.totalPrice}}
+                </span>
+            </div>
+        </div>
+    </a>
+</div>
+
+
+<div footer></div>

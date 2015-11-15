@@ -4,10 +4,10 @@
 
 module services {
     export class FooterService {
-        public links:any;
-        public showSearch:boolean;
-        public currentFilter:string;
-        public callbackFilter:any;
+        public footerItems:any;
+        public showSearch:boolean = false;
+        public currentFooterItem:string;
+        public callbackFooterItem:any;
 
         static $inject = [
             injections.services.loggerService,
@@ -17,30 +17,42 @@ module services {
 
         }
 
-        public setLinks(pLinks:any){
-            this.links = pLinks;
+        public setFooterItems(itemObject:any){
+            this.footerItems = itemObject;
         }
 
-        public getLinks():any{
-            return this.links;
+        public getFooterItems():any{
+            return this.footerItems;
         }
 
         public setCurrentFilter(id:string):void{
-            this.currentFilter = id;
+            this.currentFooterItem = id;
         }
 
         public getClassActiveFilter(key):string {
-            if(key == this.currentFilter){
+            if(key == this.currentFooterItem){
                 return 'active';
             } else {
                 return '';
             }
         }
 
-        public setFilter(key:string){
-            if (this.callbackFilter) {
-                this.callbackFilter(key);
+        public callbackFooter(key:string){
+            if (this.callbackFooterItem) {
+                this.callbackFooterItem(key);
             }
+        }
+
+        public setCallbackFooterItem(callback){
+            this.callbackFooterItem = callback;
+        }
+
+        public setShowFooter(show:boolean) {
+            this.showSearch = show;
+        }
+
+        public getShowFooter():boolean {
+            return this.showSearch;
         }
 
     }

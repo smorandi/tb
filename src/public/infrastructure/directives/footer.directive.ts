@@ -7,9 +7,11 @@ module directives {
         return {
             templateUrl: "components/footer/footer.html",
             link: (scope:any) => {
-                scope.links = footerService.getLinks();
+                scope.footerLinks = footerService.getFooterItems();
                 scope.go= (id:string) => footerService.setCurrentFilter(id);
                 scope.getActiveClass = (key) => footerService.getClassActiveFilter(key);
+                scope.callback = (id) => footerService.callbackFooter(id);
+                scope.showFooter = footerService.getShowFooter();
             }
 
 
