@@ -1,29 +1,10 @@
-<div class="header-row">
-    <h3>Details for {{vm.order.timestamp}}</h3>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-md-12">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <tr>
-                    <th>{{ 'NAME' | translate }}</th>
-                    <th>{{ 'QUANTITY'| translate}}</th>
-                    <th>{{ 'PRICE' | translate }} / {{'PIECE' | translate}}</th>
-                    <th>{{ 'PRICE' | translate}}</th>
-                </tr>
-                <tr ng-repeat="items in vm.order.orderItems">
-                    <td>{{items.item.name}}</td>
-                    <td>{{items.number}}</td>
-                    <td>{{items.item.price}}</td>
-                    <td>{{items.price}}</td>
-                </tr>
-                <tr class="total">
-                    <td></td>
-                    <td></td>
-                    <td>{{'TOTAL' | translate}}</td>
-                    <td>{{vm.order.totalPrice}}</td>
-                </tr>
-            </table>
-        </div>
+<div ng-switch on="vm.currentFilter">
+    <div ng-switch-when="tile">
+        <div ng-include="'components/orders/details/order-detail-tile.html'"></div>
+    </div>
+    <div ng-switch-when="list">
+        <div ng-include="'components/orders/details/order-detail-list.html'"></div>
     </div>
 </div>
+
+<div footer></div>

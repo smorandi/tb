@@ -6,14 +6,22 @@ module controllers {
     export class OrdersListController {
         public query:string;
 
-        static $inject = [injections.angular.$log, injections.angular.$location, injections.uiRouter.$stateService, injections.services.utilsService, "ordersResource", "orderResources"];
+        static $inject = [
+            injections.angular.$log,
+            injections.angular.$location,
+            "ordersResource",
+            "orderResources",
+            injections.services.footerService,
+        ];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:services.UtilsService, private ordersResource, private orderResources) {
+        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private ordersResource, private orderResources, private footer:services.FooterService) {
             $log.info("OrdersListController called with client-url: " + $location.path());
+
+            footer.setFooterItems([]);
+            footer.setCallbackFooterItem(null);
+            footer.setShowFooter(false);
+
         }
-
-
-
 
     }
 }

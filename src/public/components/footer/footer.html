@@ -13,18 +13,20 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
-            <ul class="nav navbar-nav navbar-left" ng-repeat="link in vm.Links">
+            <ul class="nav navbar-nav navbar-left" ng-repeat="link in footerLinks">
                 <li ng-class="getActiveClass(link.id)">
-                    <a ng-click="vm.setFilter(link.id)"><span class="{{link.aSpanClass}}"/>{{link.aSpanTxt}}</a>
+                    <a ng-click="callback(link.id)"><span class="{{link.aSpanClass}}"/>{{link.aSpanTxt}}</a>
                 </li>
             </ul>
 
-            <form class="navbar-form navbar-right" role="search" ng-show="vm.showFooter">
+            <form class="navbar-form navbar-right" role="search" ng-show="showFooter">
                 <div class="input-group">
                     <span class="input-group-addon fa fa-search"></span>
                     <input ng-model="vm.search" type="text" class="form-control" placeholder="Search">
-                        <span class="input-group-btn"><button ng-click="vm.search = ''" type="button"
-                                                              class="btn fa fa-remove"></button></span>
+                        <span class="input-group-btn">
+                            <button ng-click="vm.search = ''" type="button" class="btn fa fa-remove">
+                            </button>
+                        </span>
                 </div>
             </form>
         </div>

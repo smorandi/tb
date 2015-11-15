@@ -18,11 +18,17 @@ module constants {
         export var dashboardSearch = "dashboardSearch";
         export var dashboardView = "dashboardView";
         export var basketFilter = "basketFilter";
+        export var orderView = "orderView";
     }
 
     export module FILTER {
         export var basketTile:string = "tile";
         export var basketList:string = "list";
+    }
+
+    export module FOOTER_STATE {
+        export var orderTile:string = "tile";
+        export var orderList:string = "list";
     }
 
     export module RELS {
@@ -57,7 +63,7 @@ module constants {
         export var profile:string = "root.home.profile";
         export var drinks:string = "root.home.drinks.overview.list";
         export var basket:string = "root.home.basket";
-        export var orders:string = "root.home.orders.overview.list";
+        export var orders:string = "root.home.orders.list";
         export var system:string = "root.home.system";
     }
 

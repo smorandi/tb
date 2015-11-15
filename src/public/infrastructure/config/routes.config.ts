@@ -274,28 +274,28 @@ module config {
                         }
                     },
                 })
-                .state("root.home.orders.overview", {
-                    url: "",
-                    abstract: true,
-                    templateUrl: "components/orders/orders-overview.html",
-                })
-                .state("root.home.orders.overview.list", {
+                //.state("root.home.orders.overview", {
+                //    url: "",
+                //    abstract: true,
+                //    templateUrl: "components/orders/orders-overview.html",
+                //})
+                .state("root.home.orders.list", {
                     url: "",
                     views: {
-                        "mas@root.home.orders.overview": {
+                        "@root.home.orders": {
                             templateUrl: "components/orders/list/orders-list.html",
                             controller: injections.controllers.orders.list,
                             controllerAs: "vm"
-                        },
-                        "det@root.home.orders.overview": {
-                            templateUrl: "components/orders/details/order-details.html",
-                        }
+                        }//,
+                        //"det@root.home.orders.overview": {
+                        //    templateUrl: "components/orders/details/order-details.html",
+                        //}
                     }
                 })
-                .state("root.home.orders.overview.list.details", {
+                .state("root.home.orders.list.details", {
                     url: "/:id",
                     views: {
-                        "det@root.home.orders.overview": {
+                        "@root.home.orders": {
                             templateUrl: "components/orders/details/order-details.html",
                             controller: injections.controllers.orders.details,
                             controllerAs: "vm"

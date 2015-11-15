@@ -6,7 +6,7 @@
         </div>
 
         <div class="db-item-caption-text flex-container-column flex-justify-content-center flex-auto">
-            <h3 class="text-center text-nowrap"><strong>{{items.dashItem.name}}</strong>
+            <h3 class="text-center text-nowrap"><strong>{{items.item.name}}</strong>
             </h3>
         </div>
     </div>
@@ -17,20 +17,14 @@
             </div>
             <div class="flex-container-row flex-align-items-baseline flex-justify-content-space-between flex-wrap">
                 <h4 flash="item.tickprice" class="no-gutter">
-                    <button type="button" class="btn btn-default" aria-label="Left Align">
-                        <span class="glyphicon glyphicon-menu-up" aria-hidden="true" ng-click="vm.basketItemAdd(items.id)"></span>
-                    </button>
-                    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="vm.basketItemMinus(items.id)">
-                        <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-                    </button>
-                    <strong> &nbsp;{{items.basket.number}} </strong>
+                    <strong> &nbsp;{{items.number}} </strong>
                     &nbsp;Stk
                 </h4>
 
                 <h3 flash="item.tickprice" class="text-primary no-gutter text-nowrap">
                     <small>CHF</small>
-                    <strong ng-show="items.tickprice % 1 > 0">{{items.tickprice}}</strong>
-                    <strong ng-hide="items.tickprice % 1 > 0">{{items.tickprice}}.-</strong>
+                    <strong ng-show="items.tickprice % 1 > 0">{{items.item.price}}</strong>
+                    <strong ng-hide="items.tickprice % 1 > 0">{{items.item.price}}.-</strong>
                     <small> &nbsp; per Unit</small>
                 </h3>
             </div>
