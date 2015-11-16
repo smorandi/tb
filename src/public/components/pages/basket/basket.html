@@ -1,8 +1,6 @@
 <div class="container-fluid">
     <div page-header title="page.basket.header.title" subtitle="page.basket.header.subtitle"/>
 
-    <div subheader></div>
-
     <div ng-switch on="vm.currentFilter">
         <div ng-switch-when="tile">
             <div ng-include="'components/pages/basket/basket-tile.html'"></div>
