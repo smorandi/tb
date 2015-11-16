@@ -30,8 +30,8 @@
     <div data-ui-view/>
 </div>
 
-<!--<script src="./socket.io/socket.io.js"></script>-->
-<script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
+<!--KEEP THIS!!! socket.io is automatically served by the server!! no need to include a script from some other place!-->
+<script src="socket.io/socket.io.js"></script>
 <!-- first:js -->
 <!-- endinject -->
 
@@ -71,28 +71,27 @@
 <script src="infrastructure/services/api.service.js"></script>
 <script src="infrastructure/services/modal.service.js"></script>
 <script src="infrastructure/services/footer.service.js"></script>
-<script src="infrastructure/services/subHeader.service.js"></script>
 <script src="infrastructure/run/run.js"></script>
 <script src="infrastructure/directives/header.directive.js"></script>
-<script src="infrastructure/directives/subHeader.directive.js"></script>
 <script src="infrastructure/directives/flash.directive.js"></script>
 <script src="infrastructure/directives/backImg.directive.js"></script>
+<script src="infrastructure/directives/pageHeader.directive.js"></script>
 <script src="infrastructure/directives/footer.directive.js"></script>
 <script src="infrastructure/config/routes.config.js"></script>
 <script src="infrastructure/config/interceptor.config.js"></script>
 <script src="infrastructure/config/i18n.config.js"></script>
 <script src="infrastructure/config/valdr.config.js"></script>
-<script src="components/drinks/list/drink-list.controller.js"></script>
-<script src="components/drinks/edit/drink-edit.controller.js"></script>
-<script src="components/drinks/details/drink-details.controller.js"></script>
-<script src="components/drinks/create/drink-create.controller.js"></script>
-<script src="components/orders/list/orders-list.controller.js"></script>
-<script src="components/orders/details/order-detail.controller.js"></script>
-<script src="components/system/system.controller.js"></script>
-<script src="components/register/register.controller.js"></script>
-<script src="components/profile/profile.controller.js"></script>
-<script src="components/dashboard/dashboard.controller.js"></script>
-<script src="components/basket/basket.controller.js"></script>
+<script src="components/pages/drinks/list/drink-list.controller.js"></script>
+<script src="components/pages/drinks/edit/drink-edit.controller.js"></script>
+<script src="components/pages/drinks/details/drink-details.controller.js"></script>
+<script src="components/pages/drinks/create/drink-create.controller.js"></script>
+<script src="components/pages/orders/list/orders-list.controller.js"></script>
+<script src="components/pages/orders/details/order-detail.controller.js"></script>
+<script src="components/pages/system/system.controller.js"></script>
+<script src="components/pages/register/register.controller.js"></script>
+<script src="components/pages/profile/profile.controller.js"></script>
+<script src="components/pages/dashboard/dashboard.controller.js"></script>
+<script src="components/pages/basket/basket.controller.js"></script>
 <script src="components/login/login-dialog.controller.js"></script>
 <script src="api/models.js"></script>
 <script src="api/interfaces.js"></script>

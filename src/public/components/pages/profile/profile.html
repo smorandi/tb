@@ -1,0 +1,65 @@
+<div class="container-fluid">
+    <div page-header title="page.profile.header.title" subtitle="page.profile.header.subtitle"/>
+
+    <div class="row">
+        <div class=" col-xs-12 col-sm-7">
+            <div class="panel" ng-class="vm.userForm.$valid ? 'panel-info' : 'panel-danger'">
+                <div class="panel-heading"><strong>Details</strong></div>
+                <div class="panel-body" ng-include="'components/userform/user-form.html'"/>
+            </div>
+        </div>
+
+        <div class=" col-xs-12 col-sm-5">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Information</strong></div>
+                <div class="panel-body" ng-include="'components/pages/profile/profile-information.html'"/>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
+                        ng-click="navCollapsed = !navCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
+                <div ng-switch on="vm.isEdit">
+                    <div ng-switch-when="true">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a ng-href="#" class="action-link success" ng-click="vm.save()">
+                                    <span class="glyphicon glyphicon-save"/> Save</a>
+                            </li>
+                            <li>
+                                <a ng-href="#" class="action-link" ng-click="vm.cancel()">
+                                    <span class="glyphicon glyphicon-remove-circle"/> Cancel</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div ng-switch-when="false">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a ng-href="#" class="action-link info" ng-click="vm.edit()">
+                                    <span class="glyphicon glyphicon-edit"/> Edit</a>
+                            </li>
+                            <li>
+                                <a ng-href="#" class="action-link danger" ng-click="vm.unregister()">
+                                    <span class="glyphicon glyphicon-trash"/> Unregister</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

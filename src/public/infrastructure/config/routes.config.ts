@@ -49,35 +49,21 @@ module config {
                     url: "/dashboard",
                     views: {
                         "content@root": {
-                            templateUrl: "components/dashboard/dashboard.html",
+                            templateUrl: injections.templates.dashboard,
                             controller: injections.controllers.dashboard,
                             controllerAs: "vm"
                         }
                     },
-                    resolve: {
-                        subHeaderService: "subHeaderService",
-                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
-                            subHeaderService.setView(constants.RELS.dashboard);
-                            return true;
-                        }
-                    }
                 })
                 .state("root.register", {
                     url: "/register",
                     views: {
                         "content@root": {
-                            templateUrl: injections.templates.register.template,
+                            templateUrl: injections.templates.register,
                             controller: injections.controllers.register,
                             controllerAs: "vm"
                         }
                     },
-                    resolve: {
-                        subHeaderService: "subHeaderService",
-                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
-                            subHeaderService.setView(constants.RELS.register);
-                            return true;
-                        }
-                    }
                 })
                 .state("root.home", {
                     url: "/home",
@@ -104,7 +90,7 @@ module config {
                     url: "/system",
                     views: {
                         "content@root": {
-                            templateUrl: "components/system/system.html",
+                            templateUrl: injections.templates.system,
                             controller: injections.controllers.system,
                             controllerAs: "vm"
                         }
@@ -117,11 +103,6 @@ module config {
                                 return res;
                             });
                         },
-                        subHeaderService: "subHeaderService",
-                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
-                            subHeaderService.setView(constants.RELS.system);
-                            return true;
-                        }
                     },
 
                 })
@@ -130,7 +111,7 @@ module config {
                     abstract: true,
                     views: {
                         "content@root": {
-                            templateUrl: "components/drinks/drinks-root.html",
+                            templateUrl: injections.templates.drinks.root,
                         }
                     },
                     resolve: {
@@ -158,18 +139,13 @@ module config {
                                     return null;
                                 });
                         },
-                        subHeaderService: "subHeaderService",
-                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
-                            subHeaderService.setView(constants.RELS.drinks);
-                            return true;
-                        }
                     },
                 })
                 .state("root.home.drinks.newDrink", { //state for adding a new drink
                     url: "/new",
                     views: {
                         "@root.home.drinks": {
-                            templateUrl: "components/drinks/create/drink-create.html",
+                            templateUrl: injections.templates.drinks.create,
                             controller: injections.controllers.drinks.create,
                             controllerAs: "vm"
                         }
@@ -178,18 +154,18 @@ module config {
                 .state("root.home.drinks.overview", {
                     url: "",
                     abstract: true,
-                    templateUrl: "components/drinks/drinks-overview.html",
+                    templateUrl: injections.templates.drinks.overview,
                 })
                 .state("root.home.drinks.overview.list", { // state for showing all drinks
                     url: "",
                     views: {
                         "mas@root.home.drinks.overview": {
-                            templateUrl: "components/drinks/list/drink-list.html",
+                            templateUrl: injections.templates.drinks.list,
                             controller: injections.controllers.drinks.list,
                             controllerAs: "vm"
                         },
                         "det@root.home.drinks.overview": {
-                            templateUrl: "components/drinks/details/drink-details.html",
+                            templateUrl: injections.templates.drinks.details,
                         }
                     }
                 })
@@ -197,7 +173,7 @@ module config {
                     url: "/:id",
                     views: {
                         "det@root.home.drinks.overview": {
-                            templateUrl: "components/drinks/details/drink-details.html",
+                            templateUrl: injections.templates.drinks.details,
                             controller: injections.controllers.drinks.details,
                             controllerAs: "vm"
                         }
@@ -214,7 +190,7 @@ module config {
                     url: "/edit",
                     views: {
                         "@root.home.drinks": {
-                            templateUrl: "components/drinks/edit/drink-edit.html",
+                            templateUrl: injections.templates.drinks.edit,
                             controller: injections.controllers.drinks.edit,
                             controllerAs: "vm"
                         }
@@ -224,7 +200,7 @@ module config {
                     url: "/profile",
                     views: {
                         "content@root": {
-                            templateUrl: "components/profile/profile.html",
+                            templateUrl: injections.templates.profile,
                             controller: injections.controllers.profile,
                             controllerAs: "vm"
                         }
@@ -237,28 +213,18 @@ module config {
                                 return res;
                             });
                         },
-                        subHeaderService: "subHeaderService",
-                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
-                            subHeaderService.setView(constants.RELS.profile);
-                            return true;
-                        }
                     },
                 })
                 .state(constants.STATES.basket, {
                     url: "/basket",
                     views: {
                         "content@root": {
-                            templateUrl: "components/basket/basket.html",
+                            templateUrl: injections.templates.basket,
                             controller: injections.controllers.basket,
                             controllerAs: "vm"
                         }
                     },
                     resolve: {
-                        subHeaderService: "subHeaderService",
-                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
-                            subHeaderService.setView(constants.RELS.basket);
-                            return true;
-                        },
                         basketResource: ($log, homeResource) => {
                             $log.info("resolving basket-resource...");
                             return homeResource.$get("basket").then(res => {
@@ -279,7 +245,7 @@ module config {
                     abstract: true,
                     views: {
                         "content@root": {
-                            templateUrl: "components/orders/orders-root.html",
+                            templateUrl: injections.templates.orders.root,
                         }
                     },
                     resolve: {
@@ -307,18 +273,13 @@ module config {
                                     return null;
                                 });
                         },
-                        subHeaderService: "subHeaderService",
-                        setSubHeader: (subHeaderService:services.SubHeaderService) => {
-                            subHeaderService.setView(constants.RELS.orders);
-                            return true;
-                        },
                     },
                 })
                 .state("root.home.orders.list", {
                     url: "",
                     views: {
                         "@root.home.orders": {
-                            templateUrl: "components/orders/list/orders-list.html",
+                            templateUrl: injections.templates.orders.list,
                             controller: injections.controllers.orders.list,
                             controllerAs: "vm"
                         }
@@ -328,7 +289,7 @@ module config {
                     url: "/:id",
                     views: {
                         "@root.home.orders": {
-                            templateUrl: "components/orders/details/order-details.html",
+                            templateUrl: injections.templates.orders.details,
                             controller: injections.controllers.orders.details,
                             controllerAs: "vm"
                         }

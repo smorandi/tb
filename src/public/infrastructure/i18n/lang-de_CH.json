@@ -1,0 +1,29 @@
+{
+  "dialog.login.loginname": "Login Name",
+  "dialog.login.password": "Password",
+  "dialog.login.btn.login": "Login",
+  "dialog.login.btn.cancel": "Cancel",
+
+  "page.profile.header.title": "Profile",
+  "page.profile.header.subtitle": "Displays your registration details",
+  "page.register.header.title": "Sign Up",
+  "page.register.header.subtitle": "Please register yourself to participate",
+  "page.system.header.title": "System",
+  "page.system.header.subtitle": "Control the system",
+  "page.basket.header.title": "Basket",
+  "page.basket.header.subtitle": "Displays your basket items",
+  "page.dashboard.header.title": "Dashboard",
+  "page.dashboard.header.subtitle": "Browse through the available drinks",
+  "page.orders.header.title": "Orders",
+  "page.orders.header.subtitle": "Displays your order history",
+  "page.drinks.header.title": "Drinks",
+  "page.drinks.header.subtitle": "Displays all the available drinks",
+
+  "NAME" : "Name",
+  "QUANTITY" : "Quantity",
+  "PRICE" : "Price",
+  "PIECE" : "Piece",
+  "DELETE" : "Delete",
+  "TOTAL" : "Total",
+  "CREATE_ORDER" : "Order"
+}

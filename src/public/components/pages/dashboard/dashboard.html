@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <div page-header title="page.dashboard.header.title" subtitle="page.dashboard.header.subtitle"/>
+
+    <div ng-switch on="vm.currentFilter">
+        <div ng-switch-when="all">
+            <div ng-include="'components/pages/dashboard/all.html'"></div>
+        </div>
+        <div ng-switch-when="category">
+            <div ng-include="'components/pages/dashboard/category.html'"></div>
+        </div>
+    </div>
+</div>
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
+                    ng-click="navCollapsed = !navCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
+            <ul class="nav navbar-nav navbar-left">
+                <li ng-class="(vm.currentFilter === 'all')&& 'active'">
+                    <a ng-href="#" ng-click="vm.setFilter('all')"><span class="glyphicon glyphicon-globe"/> All</a>
+                </li>
+                <li ng-class="(vm.currentFilter === 'category')&& 'active'">
+                    <a ng-href="#" ng-click="vm.setFilter('category')"><span class="glyphicon glyphicon-list"/> Categories</a>
+                </li>
+                <li ng-class="(vm.currentView === 'tiles')&& 'active'">
+                    <a ng-href="#" ng-click="vm.setView('tiles')"><span class="glyphicon glyphicon-th-large"/> Tiles</a>
+                </li>
+                <li ng-class="(vm.currentView === 'list')&& 'active'">
+                    <a ng-href="#" ng-click="vm.setView('list')"><span class="glyphicon glyphicon-th-list"/> List</a>
+                </li>
+            </ul>
+
+
+            <form class="navbar-form navbar-right" role="search">
+                <div class="input-group ">
+                    <span class="input-group-addon glyphicon glyphicon-search"></span>
+                    <input ng-model="vm.search" type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn"><button ng-click="vm.search = ''" type="button"
+                                                              class="btn glyphicon glyphicon-remove"></button></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+</div>

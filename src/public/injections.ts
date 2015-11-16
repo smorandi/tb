@@ -7,7 +7,7 @@ module injections {
         export var flash:string = "flash";
         export var backImg:string = "backImg";
         export var footer:string = "footer";
-        export var subheader:string = "subheader";
+        export var pageHeader:string = "pageHeader";
     }
 
     export module constants {
@@ -36,8 +36,26 @@ module injections {
     }
 
     export module templates {
-        export module register {
-            export var template:string = "components/register/register.html"
+        export var system:string = "components/pages/system/system.html"
+        export var register:string = "components/pages/register/register.html"
+        export var dashboard:string = "components/pages/dashboard/dashboard.html"
+        export var profile:string = "components/pages/profile/profile.html"
+        export var basket:string = "components/pages/basket/basket.html"
+        export module orders {
+            export var root:string = "components/pages/orders/orders-root.html"
+            export var list:string = "components/pages/orders/list/orders-list.html"
+            export var details:string = "components/pages/orders/details/order-details.html"
+        }
+        export module drinks {
+            export var root:string = "components/pages/drinks/drinks-root.html"
+            export var overview:string = "components/pages/drinks/drinks-overview.html"
+            export var create:string = "components/pages/drinks/create/drink-create.html";
+            export var edit:string = "components/pages/drinks/edit/drink-edit.html";
+            export var list:string = "components/pages/drinks/list/drink-list.html";
+            export var details:string = "components/pages/drinks/details/drink-details.html";
+        }
+        export module forms {
+            export var user:string = "components/userform/user-form.html"
         }
     }
 

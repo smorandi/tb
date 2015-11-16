@@ -13,13 +13,12 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .service(injections.services.loggerService, services.LoggerService)
     .service(injections.services.modalService, services.ModalService)
     .service(injections.services.footerService, services.FooterService)
-    .service(injections.services.subHeaderService, services.SubHeaderService)
 
     .directive(injections.directives.header, directives.Header)
     .directive(injections.directives.flash, directives.Flash)
     .directive(injections.directives.backImg, directives.BackImg)
     .directive(injections.directives.footer, directives.Footer)
-    .directive(injections.directives.subheader, directives.SubHeader)
+    .directive(injections.directives.pageHeader, directives.PageHeader)
 
     .controller(injections.controllers.dashboard, controllers.DashboardController)
     .controller(injections.controllers.profile, controllers.ProfileController)

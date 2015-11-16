@@ -1,15 +1,20 @@
 #Trinkbörse
-An Web Application to order drinks like stocks on a market.
+A Web Application to order drinks like stocks on a market.
 
 ###Server: 
 * RESTful HATEOAS driven node.js web-server using web-sockets for price-change propagation
 * Event-Sourcing (MongoDB) and CQRS-designed domain-model
 * role-based user-model using basic-authentication middleware
+* supports http & https protocol-schemes (switch protocols in config.js in the backend, however certs are self-signed, 
+so it's just a show-case)
 
 ###Client:
 * AngularJS / Bootstrap
 * heavily using flexbox
 * Typescript
+* (transparently supports https, however, different browsers might notify the user due to a "not trusted" server cert 
+being used)
+
 
 <hr>
 

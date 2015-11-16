@@ -10,7 +10,7 @@ module config {
 
         constructor($translateProvider:angular.translate.ITranslateProvider) {
             $translateProvider.useStaticFilesLoader({
-                prefix: './infrastructure/localizations/lang-',
+                prefix: './infrastructure/i18n/lang-',
                 suffix: '.json'
             });
 

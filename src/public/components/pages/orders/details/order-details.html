@@ -1,0 +1,10 @@
+<div ng-switch on="vm.currentFilter">
+    <div ng-switch-when="tile">
+        <div ng-include="'components/pages/orders/details/order-detail-tile.html'"></div>
+    </div>
+    <div ng-switch-when="list">
+        <div ng-include="'components/pages/orders/details/order-detail-list.html'"></div>
+    </div>
+</div>
+
+<div footer></div>

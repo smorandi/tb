@@ -22,13 +22,12 @@
 /// <reference path="./infrastructure/services/localStorage.service.ts" />
 /// <reference path="./infrastructure/services/logger.service.ts" />
 /// <reference path="./infrastructure/services/footer.service.ts" />
-/// <reference path="./infrastructure/services/subHeader.service.ts" />
 
 /// <reference path="./infrastructure/directives/header.directive.ts" />
 /// <reference path="./infrastructure/directives/flash.directive.ts" />
 /// <reference path="./infrastructure/directives/backImg.directive.ts" />
 /// <reference path="./infrastructure/directives/footer.directive.ts" />
-///<reference path="./infrastructure/directives/subHeader.directive.ts" />
+/// <reference path="./infrastructure/directives/pageHeader.directive.ts" />
 
 /// <reference path="./infrastructure/run/run.ts" />
 
@@ -37,17 +36,17 @@
 /// <reference path="./infrastructure/config/i18n.config.ts" />
 /// <reference path="./infrastructure/config/valdr.config.ts" />
 
-/// <reference path="./components/dashboard/dashboard.controller.ts" />
-/// <reference path="./components/login/login-dialog.controller.ts" />
-/// <reference path="./components/system/system.controller.ts" />
-/// <reference path="./components/profile/profile.controller.ts" />
-/// <reference path="./components/register/register.controller.ts" />
-/// <reference path="./components/drinks/list/drink-list.controller.ts" />
-/// <reference path="./components/drinks/details/drink-details.controller.ts" />
-/// <reference path="./components/drinks/create/drink-create.controller.ts" />
-/// <reference path="./components/drinks/edit/drink-edit.controller.ts" />
-/// <reference path="./components/basket/basket.controller.ts" />
-/// <reference path="./components/orders/list/orders-list.controller.ts" />
-/// <reference path="./components/orders/details/order-detail.controller.ts" />
+/// <reference path="components/pages/dashboard/dashboard.controller.ts" />
+/// <reference path="components/login/login-dialog.controller.ts" />
+/// <reference path="components/pages/system/system.controller.ts" />
+/// <reference path="components/pages/profile/profile.controller.ts" />
+/// <reference path="components/pages/register/register.controller.ts" />
+/// <reference path="components/pages/drinks/list/drink-list.controller.ts" />
+/// <reference path="components/pages/drinks/details/drink-details.controller.ts" />
+/// <reference path="components/pages/drinks/create/drink-create.controller.ts" />
+/// <reference path="components/pages/drinks/edit/drink-edit.controller.ts" />
+/// <reference path="components/pages/basket/basket.controller.ts" />
+/// <reference path="components/pages/orders/list/orders-list.controller.ts" />
+/// <reference path="components/pages/orders/details/order-detail.controller.ts" />
 
 //end-inject:ts
