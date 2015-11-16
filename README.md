@@ -44,4 +44,7 @@ being used)
 #TODOS
 * error handling when server is not running/responding
 * setting focus on first element on page does not really work
-* more...
+* remove style tags in html -> move to css
+* x
+* y
+* z
