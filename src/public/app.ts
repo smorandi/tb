@@ -36,6 +36,7 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
 
     //pageHeader
     .directive(injections.components.pageHeader.directive, directives.PageHeader)
+    .controller(injections.components.pageHeader.controller, controllers.PageHeader)
 
     //dbItems
     //tile

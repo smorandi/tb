@@ -5,11 +5,14 @@ module directives {
     export function PageHeader():ng.IDirective {
         return {
             restrict: "E",
+            scope: {},
             templateUrl: injections.components.pageHeader.template,
-            scope: {
+            controller: injections.components.pageHeader.controller,
+            controllerAs: "vm",
+            bindToController: {
                 title: "@",
                 subtitle: "@"
-            }
+            },
         };
     }
 }

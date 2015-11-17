@@ -42,6 +42,7 @@ module injections {
         export module pageHeader {
             export var directive:string = "pageHeader";
             export var template:string = "components/pageHeader/pageHeader.html";
+            export var controller:string = "pageHeader-controller";
         }
         export module page {
             export module dashboard {

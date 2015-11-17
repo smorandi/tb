@@ -49,6 +49,7 @@
 /// <reference path="components/header/header.controller.ts" />
 /// <reference path="components/footer/footer.directive.ts" />
 /// <reference path="components/pageHeader/pageHeader.directive.ts" />
+/// <reference path="components/pageHeader/pageHeader.controller.ts" />
 /// <reference path="components/dbItem/dbItem.controller.ts" />
 /// <reference path="components/dbItem/tile/dbItem-tile.directive.ts" />
 /// <reference path="components/dbItem/flat/dbItem-flat.directive.ts" />
