@@ -1,6 +1,9 @@
 ///<reference path="./all.references.ts" />
 
 angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "ngAnimate", "toaster", "angular-hal", "btford.socket-io", "ui.bootstrap", "pascalprecht.translate"])
+    //======================================================================================
+    //services (used application wide)
+    //--------------------------------------------------------------------------------------
     .service(injections.services.apiService, services.ApiService)
     .service(injections.services.socketService, services.SocketService)
     .service(injections.services.utilsService, services.UtilsService)
@@ -14,27 +17,70 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .service(injections.services.modalService, services.ModalService)
     .service(injections.services.footerService, services.FooterService)
 
-    .directive(injections.directives.header, directives.Header)
+    //======================================================================================
+    //directives (directives used within multiple components)
+    //--------------------------------------------------------------------------------------
     .directive(injections.directives.flash, directives.Flash)
     .directive(injections.directives.backImg, directives.BackImg)
-    .directive(injections.directives.footer, directives.Footer)
-    .directive(injections.directives.pageHeader, directives.PageHeader)
 
-    .controller(injections.controllers.dashboard, controllers.DashboardController)
-    .controller(injections.controllers.profile, controllers.ProfileController)
-    .controller(injections.controllers.system, controllers.SystemController)
-    .controller(injections.controllers.register, controllers.RegisterController)
-    .controller(injections.controllers.drinks.list, controllers.DrinkListController)
-    .controller(injections.controllers.drinks.details, controllers.DrinkDetailsController)
-    .controller(injections.controllers.drinks.create, controllers.DrinkCreateController)
-    .controller(injections.controllers.drinks.edit, controllers.DrinkEditController)
-    .controller(injections.controllers.loginDialog, controllers.LoginDialogController)
-    .controller(injections.controllers.basket, controllers.BasketController)
-    .controller(injections.controllers.orders.list, controllers.OrdersListController)
-    .controller(injections.controllers.orders.details, controllers.OrderDetailsController)
 
+    //======================================================================================
+    //components (the visual bricks of the application)
+    //--------------------------------------------------------------------------------------
+    //pageHeader
+    .directive(injections.components.pageHeader.directive, directives.PageHeader)
+
+    //dbItems
+    //tile
+    .directive(injections.components.dbItem.tile.directive, directives.DbItemTile)
+    .controller(injections.components.dbItem.tile.controller, controllers.DbItemController)
+    //flat
+    .directive(injections.components.dbItem.flat.directive, directives.DbItemFlat)
+    .controller(injections.components.dbItem.flat.controller, controllers.DbItemController)
+
+    //header
+    .directive(injections.components.header.directive, directives.Header)
+
+    //footer
+    .directive(injections.components.footer.directive, directives.Footer)
+
+    //dashboard
+    .controller(injections.components.page.dashboard.controller, controllers.DashboardController)
+
+    //basket
+    .controller(injections.components.page.basket.controller, controllers.BasketController)
+
+    //system
+    .controller(injections.components.page.system.controller, controllers.SystemController)
+
+    //orders
+    .controller(injections.components.page.orders.list.controller, controllers.OrdersListController)
+    .controller(injections.components.page.orders.details.controller, controllers.OrderDetailsController)
+
+    //drinks
+    .controller(injections.components.page.drinks.list.controller, controllers.DrinkListController)
+    .controller(injections.components.page.drinks.details.controller, controllers.DrinkDetailsController)
+    .controller(injections.components.page.drinks.create.controller, controllers.DrinkCreateController)
+    .controller(injections.components.page.drinks.edit.controller, controllers.DrinkEditController)
+
+    //profile
+    .controller(injections.components.page.profile.controller, controllers.ProfileController)
+
+    //register
+    .controller(injections.components.page.register.controller, controllers.RegisterController)
+
+    //login
+    .controller(injections.components.login.controller, controllers.LoginDialogController)
+
+    //======================================================================================
+    //configs (application configuration, routes, i18n, validation, etc.)
+    //--------------------------------------------------------------------------------------
     .config(config.InterceptorConfig)
     .config(config.I18nConfig)
     .config(config.RoutesConfig)
     .config(config.ValdrConfig)
+
+    //======================================================================================
+    //run (handling of errors, state changes and authentications)
+    //--------------------------------------------------------------------------------------
     .run(run.Run);

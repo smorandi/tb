@@ -5,7 +5,7 @@
 module directives {
     export function Footer(footerService:services.FooterService):ng.IDirective {
         return {
-            templateUrl: "components/footer/footer.html",
+            templateUrl: injections.components.footer.template,
             link: (scope:any) => {
                 scope.footerLinks = footerService.getFooterItems();
                 scope.go= (id:string) => footerService.setCurrentFilter(id);

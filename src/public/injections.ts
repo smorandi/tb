@@ -1,61 +1,105 @@
 "use strict"
 
 module injections {
-
-    export module directives {
-        export var header:string = "header";
-        export var flash:string = "flash";
-        export var backImg:string = "backImg";
-        export var footer:string = "footer";
-        export var pageHeader:string = "pageHeader";
-    }
-
     export module constants {
         export var appName:string = "tb";
     }
 
-    export module controllers {
-        export var dashboard:string = "dashboard-controller";
-        export var profile:string = "profile-controller";
-        export var system:string = "system-controller";
-        export var register:string = "register-controller";
-        export var loginDialog:string = "loginDialog-controller";
-        export var basket:string = "basket-controller";
-
-        export module drinks {
-            export var list:string = "drink-list-controller";
-            export var details:string = "drink-details-controller";
-            export var create:string = "drink-create-controller";
-            export var edit:string = "drink-edit-controller";
-        }
-
-        export module orders {
-            export var list:string = "orders-list-controller";
-            export var details:string = "order-details-controller";
-        }
+    export module directives {
+        export var flash:string = "flash";
+        export var backImg:string = "backImg";
     }
 
-    export module templates {
-        export var system:string = "components/pages/system/system.html"
-        export var register:string = "components/pages/register/register.html"
-        export var dashboard:string = "components/pages/dashboard/dashboard.html"
-        export var profile:string = "components/pages/profile/profile.html"
-        export var basket:string = "components/pages/basket/basket.html"
-        export module orders {
-            export var root:string = "components/pages/orders/orders-root.html"
-            export var list:string = "components/pages/orders/list/orders-list.html"
-            export var details:string = "components/pages/orders/details/order-details.html"
+    export module components {
+        export module root {
+            export var template:string = "components/root/root.html";
         }
-        export module drinks {
-            export var root:string = "components/pages/drinks/drinks-root.html"
-            export var overview:string = "components/pages/drinks/drinks-overview.html"
-            export var create:string = "components/pages/drinks/create/drink-create.html";
-            export var edit:string = "components/pages/drinks/edit/drink-edit.html";
-            export var list:string = "components/pages/drinks/list/drink-list.html";
-            export var details:string = "components/pages/drinks/details/drink-details.html";
+        export module login {
+            export var controller:string = "loginDialog-controller";
+            export var template:string = "components/login/login-dialog.html";
         }
-        export module forms {
-            export var user:string = "components/userform/user-form.html"
+        export module dbItem {
+            export module tile {
+                export var directive:string = "dbItemTile";
+                export var controller:string = "db-item-tile-controller";
+                export var template:string = "components/dbItem/tile/dbItem-tile.html";
+            }
+            export module flat {
+                export var directive:string = "dbItemFlat";
+                export var controller:string = "db-item-flat-controller";
+                export var template:string = "components/dbItem/flat/dbItem-flat.html";
+            }
+        }
+        export module header {
+            export var directive:string = "header";
+            export var template:string = "components/header/header.html";
+        }
+        export module footer {
+            export var directive:string = "footer";
+            export var template:string = "components/footer/footer.html";
+        }
+        export module pageHeader {
+            export var directive:string = "pageHeader";
+            export var template:string = "components/pageHeader/pageHeader.html";
+        }
+        export module page {
+            export module dashboard {
+                export var controller:string = "dashboard-controller";
+                export var template:string = "components/pages/dashboard/dashboard.html";
+            }
+            export module system {
+                export var controller:string = "system-controller";
+                export var template:string = "components/pages/system/system.html";
+            }
+            export module register {
+                export var controller:string = "register-controller";
+                export var template:string = "components/pages/register/register.html";
+            }
+            export module profile {
+                export var controller:string = "profile-controller";
+                export var template:string = "components/pages/profile/profile.html";
+            }
+            export module basket {
+                export var controller:string = "basket-controller";
+                export var template:string = "components/pages/basket/basket.html";
+            }
+            export module orders {
+                export module root {
+                    export var template:string = "components/pages/orders/orders-root.html";
+                }
+                export module list {
+                    export var controller:string = "orders-list-controller";
+                    export var template:string = "components/pages/orders/list/orders-list.html";
+                }
+                export module details {
+                    export var controller:string = "orders-details-controller";
+                    export var template:string = "components/pages/orders/details/order-details.html";
+                }
+            }
+            export module drinks {
+                export module root {
+                    export var template:string = "components/pages/drinks/drinks-root.html";
+                }
+                export module overview {
+                    export var template:string = "components/pages/drinks/drinks-overview.html";
+                }
+                export module list {
+                    export var controller:string = "drink-list-controller";
+                    export var template:string = "components/pages/drinks/list/drink-list.html";
+                }
+                export module details {
+                    export var controller:string = "drink-details-controller";
+                    export var template:string = "components/pages/drinks/details/drink-details.html";
+                }
+                export module create {
+                    export var controller:string = "drink-create-controller";
+                    export var template:string = "components/pages/drinks/details/drink-details.html";
+                }
+                export module edit {
+                    export var controller:string = "drink-edit-controller";
+                    export var template:string = "components/pages/drinks/details/drink-details.html";
+                }
+            }
         }
     }
 

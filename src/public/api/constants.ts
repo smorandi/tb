@@ -94,4 +94,14 @@ module constants {
         [RELS.basket]: LINKS.basket,
         [RELS.orders]: LINKS.orders,
     }
+
+    export var CATEGORY_IMAGE_MAP = {
+        ["beer"]: "assets/images/drinks/beer.jpg",
+        ["cocktail"]: "assets/images/drinks/cocktail.jpg",
+        ["wine"]: "assets/images/drinks/wine.jpg",
+        ["coffee"]: "assets/images/drinks/coffee.jpg",
+        ["tea"]: "assets/images/drinks/tea.jpg",
+        ["shot"]: "assets/images/drinks/shot.jpg",
+        ["soft"]: "assets/images/drinks/soft.jpg",
+    }
 }

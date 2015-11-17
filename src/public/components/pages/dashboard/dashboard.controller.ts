@@ -4,12 +4,12 @@
 
 module controllers {
     export class DashboardController {
-        public search:string;
-        public dashboard:Array<any> = [];
-        public filteredItems:any = {categories: []};
-        public currentFilter:string = "all";
-        public categories:Array<any> = [];
-        public currentView:string = "tiles";
+        private search:string;
+        private dashboard:Array<any> = [];
+        private filteredItems:any = {categories: []};
+        private categories:Array<any> = [];
+        private currentFilter:string = "all";
+        private currentView:string = "tiles";
 
         static $inject = [
             injections.services.loggerService,
@@ -40,6 +40,7 @@ module controllers {
 
         private updateFilteredLists(items:any, search:string) {
             this.filteredItems.all = {name: "All Drinks", items: this.createFilter(items, search)}
+
             this.filteredItems.categories.length = 0;
             this.filteredItems.categories.push({name: "Cocktails", items: this.createFilter(items, search, "cocktail")});
             this.filteredItems.categories.push({name: "Shots", items: this.createFilter(items, search, "shot")});
@@ -63,29 +64,6 @@ module controllers {
 
             filteredList = this.$filter("orderBy")(filteredList, "name");
             return filteredList;
-        }
-
-        public showDetails(item:any) {
-            this.logger.info(item.id, item.name, enums.LogOptions.toast_only);
-        }
-
-        public getImageForItem(item:any) {
-            switch (item.category) {
-                case "beer":
-                    return "assets/images/drinks/beer.jpg";
-                case "cocktail":
-                    return "assets/images/drinks/cocktail.jpg";
-                case "wine":
-                    return "assets/images/drinks/wine.jpg";
-                case "coffee":
-                    return "assets/images/drinks/coffee.jpg";
-                case "tea":
-                    return "assets/images/drinks/tea.jpg";
-                case "shot":
-                    return "assets/images/drinks/shot.jpg";
-                case "soft":
-                    return "assets/images/drinks/soft.jpg";
-            }
         }
 
         public setFilter(filter:string) {

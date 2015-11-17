@@ -4,7 +4,8 @@
 module directives {
     export function PageHeader():ng.IDirective {
         return {
-            templateUrl: "components/header/pageHeader.html",
+            restrict: "E",
+            templateUrl: injections.components.pageHeader.template,
             scope: {
                 title: "@",
                 subtitle: "@"

@@ -1,0 +1,28 @@
+<div ng-click="vm.showDetails()"
+     class="db-item-flat flex-container-row flex-wrap">
+
+    <div class="flex-container-row flex-auto">
+        <div class="" back-img="{{vm.image}}" style="width: 20px">
+        </div>
+
+        <h4 class="text-nowrap no-gutter"><strong>&nbsp;{{vm.item.name}}</strong>
+        </h4>
+    </div>
+
+    <div class="flex-container-row flex-justify-content-end flex-align-items-baseline flex-wrap"
+         style="flex: 100px 0">
+
+        <div class="flex-container-row flex-align-items-baseline flex-justify-content-space-between flex-auto">
+            <h5 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap">
+<span class="glyphicon"
+      ng-class="vm.item.tick.delta > 0 ? 'text-danger glyphicon-circle-arrow-up' : 'text-success glyphicon-circle-arrow-down'"></span>&nbsp;{{vm.item.tick.delta}}
+            </h5>
+
+            <h4 flash="vm.item.price" class="text-primary no-gutter text-nowrap">
+                <strong ng-show="vm.item.price % 1 > 0">{{vm.item.price}}</strong>
+                <strong ng-hide="vm.item.price % 1 > 0">{{vm.item.price}}.-</strong>
+            </h4>
+        </div>
+    </div>
+
+</div>

@@ -12,8 +12,8 @@ var controllers;
             this.storage = storage;
             this.dashboard = [];
             this.filteredItems = { categories: [] };
-            this.currentFilter = "all";
             this.categories = [];
+            this.currentFilter = "all";
             this.currentView = "tiles";
             this.logger.info("DashboardController called");
             this.dashboard = dashboardService.dashboard;
@@ -47,27 +47,6 @@ var controllers;
             }
             filteredList = this.$filter("orderBy")(filteredList, "name");
             return filteredList;
-        };
-        DashboardController.prototype.showDetails = function (item) {
-            this.logger.info(item.id, item.name, enums.LogOptions.toast_only);
-        };
-        DashboardController.prototype.getImageForItem = function (item) {
-            switch (item.category) {
-                case "beer":
-                    return "assets/images/drinks/beer.jpg";
-                case "cocktail":
-                    return "assets/images/drinks/cocktail.jpg";
-                case "wine":
-                    return "assets/images/drinks/wine.jpg";
-                case "coffee":
-                    return "assets/images/drinks/coffee.jpg";
-                case "tea":
-                    return "assets/images/drinks/tea.jpg";
-                case "shot":
-                    return "assets/images/drinks/shot.jpg";
-                case "soft":
-                    return "assets/images/drinks/soft.jpg";
-            }
         };
         DashboardController.prototype.setFilter = function (filter) {
             this.currentFilter = filter;

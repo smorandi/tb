@@ -15,7 +15,7 @@ module config {
             $stateProvider
                 .state("root", {
                     url: "",
-                    templateUrl: "components/root/root.html",
+                    templateUrl: injections.components.root.template,
                     abstract: true,
                     resolve: {
                         apiService: "apiService",
@@ -49,8 +49,8 @@ module config {
                     url: "/dashboard",
                     views: {
                         "content@root": {
-                            templateUrl: injections.templates.dashboard,
-                            controller: injections.controllers.dashboard,
+                            templateUrl: injections.components.page.dashboard.template,
+                            controller: injections.components.page.dashboard.controller,
                             controllerAs: "vm"
                         }
                     },
@@ -59,8 +59,8 @@ module config {
                     url: "/register",
                     views: {
                         "content@root": {
-                            templateUrl: injections.templates.register,
-                            controller: injections.controllers.register,
+                            templateUrl: injections.components.page.register.template,
+                            controller: injections.components.page.register.controller,
                             controllerAs: "vm"
                         }
                     },
@@ -90,8 +90,8 @@ module config {
                     url: "/system",
                     views: {
                         "content@root": {
-                            templateUrl: injections.templates.system,
-                            controller: injections.controllers.system,
+                            templateUrl: injections.components.page.system.template,
+                            controller: injections.components.page.system.controller,
                             controllerAs: "vm"
                         }
                     },
@@ -111,7 +111,7 @@ module config {
                     abstract: true,
                     views: {
                         "content@root": {
-                            templateUrl: injections.templates.drinks.root,
+                            templateUrl: injections.components.page.drinks.root.template,
                         }
                     },
                     resolve: {
@@ -145,8 +145,8 @@ module config {
                     url: "/new",
                     views: {
                         "@root.home.drinks": {
-                            templateUrl: injections.templates.drinks.create,
-                            controller: injections.controllers.drinks.create,
+                            templateUrl: injections.components.page.drinks.create.template,
+                            controller: injections.components.page.drinks.create.controller,
                             controllerAs: "vm"
                         }
                     },
@@ -154,18 +154,18 @@ module config {
                 .state("root.home.drinks.overview", {
                     url: "",
                     abstract: true,
-                    templateUrl: injections.templates.drinks.overview,
+                    templateUrl: injections.components.page.drinks.overview.template,
                 })
                 .state("root.home.drinks.overview.list", { // state for showing all drinks
                     url: "",
                     views: {
                         "mas@root.home.drinks.overview": {
-                            templateUrl: injections.templates.drinks.list,
-                            controller: injections.controllers.drinks.list,
+                            templateUrl: injections.components.page.drinks.list.template,
+                            controller: injections.components.page.drinks.list.controller,
                             controllerAs: "vm"
                         },
                         "det@root.home.drinks.overview": {
-                            templateUrl: injections.templates.drinks.details,
+                            templateUrl: injections.components.page.drinks.details.template,
                         }
                     }
                 })
@@ -173,8 +173,8 @@ module config {
                     url: "/:id",
                     views: {
                         "det@root.home.drinks.overview": {
-                            templateUrl: injections.templates.drinks.details,
-                            controller: injections.controllers.drinks.details,
+                            templateUrl: injections.components.page.drinks.details.template,
+                            controller: injections.components.page.drinks.details.controller,
                             controllerAs: "vm"
                         }
                     },
@@ -190,8 +190,8 @@ module config {
                     url: "/edit",
                     views: {
                         "@root.home.drinks": {
-                            templateUrl: injections.templates.drinks.edit,
-                            controller: injections.controllers.drinks.edit,
+                            templateUrl: injections.components.page.drinks.edit.template,
+                            controller: injections.components.page.drinks.edit.controller,
                             controllerAs: "vm"
                         }
                     },
@@ -200,8 +200,8 @@ module config {
                     url: "/profile",
                     views: {
                         "content@root": {
-                            templateUrl: injections.templates.profile,
-                            controller: injections.controllers.profile,
+                            templateUrl: injections.components.page.profile.template,
+                            controller: injections.components.page.profile.controller,
                             controllerAs: "vm"
                         }
                     },
@@ -219,8 +219,8 @@ module config {
                     url: "/basket",
                     views: {
                         "content@root": {
-                            templateUrl: injections.templates.basket,
-                            controller: injections.controllers.basket,
+                            templateUrl: injections.components.page.basket.template,
+                            controller: injections.components.page.basket.controller,
                             controllerAs: "vm"
                         }
                     },
@@ -245,7 +245,7 @@ module config {
                     abstract: true,
                     views: {
                         "content@root": {
-                            templateUrl: injections.templates.orders.root,
+                            templateUrl: injections.components.page.orders.root.template,
                         }
                     },
                     resolve: {
@@ -279,8 +279,8 @@ module config {
                     url: "",
                     views: {
                         "@root.home.orders": {
-                            templateUrl: injections.templates.orders.list,
-                            controller: injections.controllers.orders.list,
+                            templateUrl: injections.components.page.orders.list.template,
+                            controller: injections.components.page.orders.list.controller,
                             controllerAs: "vm"
                         }
                     }
@@ -289,8 +289,8 @@ module config {
                     url: "/:id",
                     views: {
                         "@root.home.orders": {
-                            templateUrl: injections.templates.orders.details,
-                            controller: injections.controllers.orders.details,
+                            templateUrl: injections.components.page.orders.details.template,
+                            controller: injections.components.page.orders.details.controller,
                             controllerAs: "vm"
                         }
                     },

@@ -10,8 +10,8 @@
                 </section>
 
                 <div class="flex-container-row overflow-auto">
-                    <div ng-include="'components/pages/dashboard/db-item-tile.html'"
-                         ng-repeat="item in filtered = category.items">
+                    <div ng-repeat="item in filtered = category.items">
+                        <db-item-tile item="item"></db-item-tile>
                     </div>
                 </div>
             </div>
@@ -26,8 +26,8 @@
                 </section>
 
                 <div class="list-group">
-                    <div class="list-group-item" ng-include="'components/pages/dashboard/db-item-flat.html'"
-                         ng-repeat="item in filtered = category.items">
+                    <div class="list-group-item" ng-repeat="item in filtered = category.items">
+                        <db-item-flat item="item"></db-item-flat>
                     </div>
                 </div>
             </div>
