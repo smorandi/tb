@@ -27,6 +27,13 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     //======================================================================================
     //components (the visual bricks of the application)
     //--------------------------------------------------------------------------------------
+    //header
+    .directive(injections.components.header.directive, directives.Header)
+    .controller(injections.components.header.controller, controllers.Header)
+
+    //footer
+    .directive(injections.components.footer.directive, directives.Footer)
+
     //pageHeader
     .directive(injections.components.pageHeader.directive, directives.PageHeader)
 
@@ -37,12 +44,6 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     //flat
     .directive(injections.components.dbItem.flat.directive, directives.DbItemFlat)
     .controller(injections.components.dbItem.flat.controller, controllers.DbItemController)
-
-    //header
-    .directive(injections.components.header.directive, directives.Header)
-
-    //footer
-    .directive(injections.components.footer.directive, directives.Footer)
 
     //dashboard
     .controller(injections.components.page.dashboard.controller, controllers.DashboardController)

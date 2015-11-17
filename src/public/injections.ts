@@ -32,6 +32,7 @@ module injections {
         }
         export module header {
             export var directive:string = "header";
+            export var controller:string = "header-controller";
             export var template:string = "components/header/header.html";
         }
         export module footer {

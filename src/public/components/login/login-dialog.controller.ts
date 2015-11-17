@@ -17,7 +17,7 @@ module controllers {
         }
 
         public cancel():void {
-            this.$uibModalInstance.dismiss('cancel');
+            this.$uibModalInstance.dismiss("cancel");
         }
 
         public login() {

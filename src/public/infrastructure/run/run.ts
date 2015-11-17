@@ -53,7 +53,7 @@ module run {
                         var modalInst = $uibModal.open({
                             controller: controllers.LoginDialogController,
                             controllerAs: "vm",
-                            templateUrl: 'components/login/login-dialog.html',
+                            templateUrl: injections.components.login.template,
                         });
 
                         modalInst.result.then((credentials:interfaces.ICredentials) => {

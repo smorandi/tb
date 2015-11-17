@@ -18,39 +18,39 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
-            <ul ng-repeat="link in menu.navigationLinks" class="nav navbar-nav">
+            <ul ng-repeat="link in vm.menu.navigationLinks" class="nav navbar-nav">
                 <li ui-sref-active="active">
                     <a ng-href="#" ui-sref="{{link.state}}">{{link.name}}</a>
                 </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li ui-sref-active="active" ng-show="menu.registerLink">
+                <li ui-sref-active="active" ng-show="vm.menu.registerLink">
                     <a ng-href="#" ui-sref="root.register">
-                        <span class="glyphicon glyphicon-pencil"/> {{menu.registerLink.name}}</a>
+                        <span class="glyphicon glyphicon-pencil"/> {{vm.menu.registerLink.name}}</a>
                 </li>
 
-                <li ui-sref-active="active" ng-show="menu.ordersLink">
+                <li ui-sref-active="active" ng-show="vm.menu.ordersLink">
                     <a ng-href="#" ui-sref="root.home.orders.list">
-                        <span class="glyphicon glyphicon-list-alt"/> {{menu.ordersLink.name}}</a>
+                        <span class="glyphicon glyphicon-list-alt"/> {{vm.menu.ordersLink.name}}</a>
                 </li>
 
-                <li ui-sref-active="active" ng-show="menu.basketLink">
+                <li ui-sref-active="active" ng-show="vm.menu.basketLink">
                     <a ng-href="#" ui-sref="root.home.basket">
-                        <span class="glyphicon glyphicon-shopping-cart"/> Basket <span class="badge">{{menu.numberOfBasketItems}}</span></a>
+                        <span class="glyphicon glyphicon-shopping-cart"/> Basket <span class="badge">{{vm.menu.numberOfBasketItems}}</span></a>
                 </li>
 
-                <li ui-sref-active="active" ng-show="menu.profileLink">
+                <li ui-sref-active="active" ng-show="vm.menu.profileLink">
                     <a ng-href="#" ui-sref="root.home.profile">
-                        <span class="glyphicon glyphicon-user"/> {{menu.loginname}}</a>
+                        <span class="glyphicon glyphicon-user"/> {{vm.menu.loginname}}</a>
                 </li>
 
-                <li ng-hide="menu.isLoggedIn">
-                    <a ng-href="#" ng-click="login()"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                <li ng-hide="vm.menu.isLoggedIn">
+                    <a ng-href="#" ng-click="vm.login()"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
 
-                <li ng-show="menu.isLoggedIn">
-                    <a ng-href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                <li ng-show="vm.menu.isLoggedIn">
+                    <a ng-href="#" ng-click="vm.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                 </li>
             </ul>
         </div>

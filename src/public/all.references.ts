@@ -46,6 +46,7 @@
 /// <reference path="components/pages/orders/list/orders-list.controller.ts" />
 /// <reference path="components/pages/orders/details/order-detail.controller.ts" />
 /// <reference path="components/header/header.directive.ts" />
+/// <reference path="components/header/header.controller.ts" />
 /// <reference path="components/footer/footer.directive.ts" />
 /// <reference path="components/pageHeader/pageHeader.directive.ts" />
 /// <reference path="components/dbItem/dbItem.controller.ts" />

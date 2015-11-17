@@ -3,17 +3,13 @@
 "use strict";
 
 module directives {
-    export function Header(menuService:services.MenuService, navigationService:services.NavigationService):ng.IDirective {
+    export function Header():ng.IDirective {
         return {
             restrict: "E",
+            scope:{},
             templateUrl: injections.components.header.template,
-            link: (scope:any) => {
-                scope.menu = menuService.getMenu();
-                scope.getLink = (rel:string) => menuService.getLink(rel);
-                scope.login= () => menuService.login();
-                scope.logout= () => menuService.logout();
-                scope.go= (link:interfaces.ILink) => navigationService.go(link);
-            }
+            controller: injections.components.header.controller,
+            controllerAs: "vm",
         };
     }
 }
