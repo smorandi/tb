@@ -45,6 +45,7 @@ being used)
 * error handling when server is not running/responding
 * setting focus on first element on page does not really work
 * remove style tags in html -> move to css
-* x
+* factor out lodash, possibly write own functions where lodash is used atm or import only specific function from lodash
+to minimize loadtime
 * y
 * z

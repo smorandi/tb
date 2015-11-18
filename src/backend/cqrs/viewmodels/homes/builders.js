@@ -75,14 +75,14 @@ var basketItemRemoved = denormalizer.defineViewBuilder({
     vm.set("numberOfBasketItems", vm.get("numberOfBasketItems") - 1);
 });
 
-var orderMade = denormalizer.defineViewBuilder({
-    name: "orderMade",
+var orderCreated = denormalizer.defineViewBuilder({
+    name: "orderCreated",
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
 }, function (order, vm) {
-    logger.debug("orderMade in collection: " + vm.repository.collectionName, order);
+    logger.debug("orderCreated in collection: " + vm.repository.collectionName, order);
     vm.set("numberOfBasketItems", 0);
 });
 
-module.exports = [adminCreated, customerCreated, rootCreated, userChanged, userDeleted, basketItemAdded, basketItemRemoved, orderMade];
+module.exports = [adminCreated, customerCreated, rootCreated, userChanged, userDeleted, basketItemAdded, basketItemRemoved, orderCreated];
