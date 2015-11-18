@@ -22,20 +22,22 @@ var controllers;
         };
         ProfileController.prototype.save = function () {
             var _this = this;
-            this.profileResource.$put("update", {}, this.user)
-                .then(function (res) {
-                _this.authService.setCredentials(new models.Credentials(_this.user.loginname, _this.user.password));
-                _this.$state.reload()
+            if (this.userForm.$valid && this.isEdit) {
+                this.profileResource.$put("update", {}, this.user)
                     .then(function (res) {
-                    _this.logger.info("Change successfull", "Your user has been updated", enums.LogOptions.toast);
+                    _this.authService.setCredentials(new models.Credentials(_this.user.loginname, _this.user.password));
+                    _this.$state.reload()
+                        .then(function (res) {
+                        _this.logger.info("Change successfull", "Your user has been updated", enums.LogOptions.toast);
+                    })
+                        .catch(function (err) {
+                        _this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
+                    });
                 })
                     .catch(function (err) {
                     _this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
                 });
-            })
-                .catch(function (err) {
-                _this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
-            });
+            }
         };
         ProfileController.prototype.cancel = function () {
             this.$state.reload();

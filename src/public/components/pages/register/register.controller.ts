@@ -6,7 +6,6 @@ module controllers {
     export class RegisterController {
         private user = new models.RegisterCustomer();
         private userForm:ng.IFormController;
-        private isEdit:boolean = true;
 
         static $inject = [
             injections.services.loggerService,
@@ -23,11 +22,11 @@ module controllers {
             this.logger.info("RegisterController called with client-url: '" + $location.path() + "'");
         }
 
-        public submitUserForm() {
+        public signUp() {
             if(this.userForm.$valid) {
                 this.rootResource.$post("register", {}, this.user)
                     .then(res => {
-                        this.authService.setCredentials(new models.Credentials(this.user.loginname, this.user.password));
+                        this.authService.setCredentials(new models.Credentials(this.user.loginname, this.user.loginname));
                         this.$state.go(constants.LINKS.home.state, {}, {})
                             .then(res => {
                                 this.logger.info("Sign-Up Completed", "You have been successfully registered", enums.LogOptions.toast_only);

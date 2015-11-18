@@ -3,7 +3,9 @@
 
     <div class="panel" ng-class="vm.userForm.$valid ? 'panel-info' : 'panel-danger'">
         <div class="panel-heading"><strong>Details</strong></div>
-        <div class="panel-body" ng-include="'components/userform/user-form.html'"/>
+        <div class="panel-body">
+            <user-form data="vm.user" form="vm.userForm" submit="vm.signUp()" read-only="false"></user-form>
+        </div>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
@@ -23,10 +25,12 @@
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
-                        <a ng-href="#" class="action-link info" ng-class="{'disabled':vm.userForm.$invalid}" ng-click="vm.signUp()"><span class="glyphicon glyphicon-pencil"/> Sign Up</a>
+                        <a ng-href="#" class="action-link info" ng-class="{'disabled':vm.userForm.$invalid}"
+                           ng-click="vm.signUp()"><span class="glyphicon glyphicon-pencil"/> Sign Up</a>
                     </li>
                     <li>
-                        <a ng-href="#" class="action-link" ng-click="vm.cancel()"><span class="glyphicon glyphicon-remove-circle"/> Cancel</a>
+                        <a ng-href="#" class="action-link" ng-click="vm.cancel()"><span
+                                class="glyphicon glyphicon-remove-circle"/> Cancel</a>
                     </li>
                 </ul>
             </div>

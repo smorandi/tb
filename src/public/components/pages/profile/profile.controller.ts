@@ -35,20 +35,22 @@ module controllers {
         }
 
         public save():void {
-            this.profileResource.$put("update", {}, this.user)
-                .then(res => {
-                    this.authService.setCredentials(new models.Credentials(this.user.loginname, this.user.password));
-                    this.$state.reload()
-                        .then(res => {
-                            this.logger.info("Change successfull", "Your user has been updated", enums.LogOptions.toast);
-                        })
-                        .catch(err => {
-                            this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
-                        });
-                })
-                .catch(err => {
-                    this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
-                });
+            if (this.userForm.$valid && this.isEdit) {
+                this.profileResource.$put("update", {}, this.user)
+                    .then(res => {
+                        this.authService.setCredentials(new models.Credentials(this.user.loginname, this.user.password));
+                        this.$state.reload()
+                            .then(res => {
+                                this.logger.info("Change successfull", "Your user has been updated", enums.LogOptions.toast);
+                            })
+                            .catch(err => {
+                                this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
+                            });
+                    })
+                    .catch(err => {
+                        this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
+                    });
+            }
         }
 
         public cancel():void {

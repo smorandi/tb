@@ -44,6 +44,13 @@ module injections {
             export var template:string = "components/pageHeader/pageHeader.html";
             export var controller:string = "pageHeader-controller";
         }
+        export module forms {
+            export module user {
+                export var template:string = "components/forms/user/user-form.html";
+                export var controller:string = "user-form-controller";
+                export var directive:string = "userForm";
+            }
+        }
         export module page {
             export module dashboard {
                 export var controller:string = "dashboard-controller";

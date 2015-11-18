@@ -53,5 +53,7 @@
 /// <reference path="components/dbItem/dbItem.controller.ts" />
 /// <reference path="components/dbItem/tile/dbItem-tile.directive.ts" />
 /// <reference path="components/dbItem/flat/dbItem-flat.directive.ts" />
+/// <reference path="components/forms/user/user-form.directive.ts" />
+/// <reference path="components/forms/user/user-form.controller.ts" />
 
 //end-inject:ts
