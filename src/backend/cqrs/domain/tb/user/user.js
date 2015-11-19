@@ -173,6 +173,28 @@ var basketItemRemoved = domain.defineEvent({
         });
     });
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// ----------------------------------------------------------------
+// update item from basket
+// ----------------------------------------------------------------
+var changeBasketItem = domain.defineCommand({
+    name: "changeBasketItem",
+    existing: true,
+}, function (data, aggregate) {
+    var basket = aggregate.get("basket");
+    for(var i = 0; i < basket.length; i++){
+        if(basket[i].id == data.id){
+            basket[i].number = data.number;
+        }
+    }
+    aggregate.apply("basketItemChanged", basket);
+});
+
+var basketItemChanged = domain.defineEvent({
+        name: "basketItemChanged"
+    },
+    function (data, aggregate) {
+            aggregate.set(data);
+});
 
 // ----------------------------------------------------------------
 // make order
@@ -295,6 +317,7 @@ module.exports = [user,
     deleteUser, userDeleted,
     addBasketItem, basketItemAdded,
     removeBasketItem, basketItemRemoved,
+    changeBasketItem, basketItemChanged,
     createOrder, orderCreated,
     confirmOrder, orderConfirmed,
     // preconditions

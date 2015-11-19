@@ -50,7 +50,7 @@ module.exports = function (app) {
                     var basketItems = docs[0].get("basket");
                     var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId);
                     res.form(function () {
-                        var resource = resourceUtils.createCollectionResource(baseUrl, basketItems, "c", "d");
+                        var resource = resourceUtils.createCollectionResource(baseUrl, basketItems, "c", "ud");
                         resource.link("createOrder", resourceUtils.createBaseUrl(req, config.urls.orders + "/" + req.params.customerId));
                         return resource;
                     }, basketItems);
@@ -74,8 +74,8 @@ module.exports = function (app) {
                 }
                 else {
                     var basketItems = docs[0].get("basket");
-                    var basketItem = _.find(basketItems, "item.id", req.params.basketItemId);
-                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId + "/" + req.params.basketItemId);
+                    var basketItem = _.find(basketItems, "id", req.params.basketItemId);
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId);
                     res.form(resourceUtils.createResource(baseUrl, basketItem, "d"), basketItem);
                 }
             });
@@ -83,6 +83,25 @@ module.exports = function (app) {
         .delete(function (req, res, next) {
             commandService.send("removeBasketItem").for("user").instance(req.params.customerId).with({payload: req.params.basketItemId}).go(res.handleEvent(function (evt) {
                 res.status(204).end();
+            }));
+        })
+        .put(function (req, res, next) {
+            commandService.send("changeBasketItem").for("user").instance(req.params.customerId).with({payload: req.body}).go(res.handleEvent(function (evt) {
+                basketsCollection.findViewModels({id: req.params.customerId}, {limit: 1}, function (err, docs) {
+                    if (err) {
+                        next(err);
+                    }
+                    else if (_.isEmpty(docs)) {
+                        next(new HTTPErrors.NotFoundError("Basket for customer '%s' not found", req.user.loginname));
+                    }
+                    else {
+                        var basketItems = docs[0].get("basket");
+                        var basketItem = _.find(basketItems, "id", req.params.basketItemId);
+                        var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.params.customerId);
+                        res.form(resourceUtils.createResource(baseUrl, basketItem, "ud"), basketItem);
+                    }
+                });
+                //res.form(resourceUtils.createResource(baseUrl, evt.payload.body, "ud"), evt.payload);
             }));
         });
 }

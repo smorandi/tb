@@ -52,6 +52,15 @@ var basketItemRemoved = denormalizer.defineViewBuilder({
     _.remove(vm.get("basket"), "id", id);
 });
 
+var basketItemChanged = denormalizer.defineViewBuilder({
+    name: "basketItemChanged",
+    aggregate: "user",
+    id: "aggregate.id",
+    autoCreate: false,
+}, function (data, vm) {
+    logger.debug("basketItemChanged in collection: " + vm.repository.collectionName);
+    vm.set("basket", data);
+});
 
 var orderCreated = denormalizer.defineViewBuilder({
     name: "orderCreated",
@@ -66,4 +75,4 @@ var orderCreated = denormalizer.defineViewBuilder({
 });
 
 
-module.exports = [customerCreated, userDeleted, basketItemAdded, basketItemRemoved, orderCreated];
+module.exports = [customerCreated, userDeleted, basketItemAdded, basketItemChanged, basketItemRemoved, orderCreated];

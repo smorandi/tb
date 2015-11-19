@@ -187,13 +187,8 @@ module controllers {
         public basketItemAdd(id:string) {
             var item = this.getBasketItemById(id);
             if (item) {
-                this.deleteItem(id);
-                var number = Number(item.basket.number) + 1;
-                var data = {
-                    "drinkId" : item.basket.item.id,
-                    "number" : number
-                };
-                this.basketResource.$post("create", null, data )
+                item.basket.number = Number(item.basket.number) + 1;
+                item.basket.$put("update", null, item.basket)
                     .then(res => {
                         this.$state.reload();
                     })
@@ -206,15 +201,11 @@ module controllers {
         public basketItemMinus(id:string) {
             var item = this.getBasketItemById(id);
             if (item) {
-                this.deleteItem(id);
                 var number = Number(item.basket.number);
                 if (number > 2) {
                     number = number - 1.
-                    var data = {
-                        "drinkId" : item.basket.item.id,
-                        "number" : number
-                    };
-                    this.basketResource.$post("create", null, data )
+                    item.basket.number = number;
+                    item.basket.$put("update", null, item.basket)
                         .then(res => {
                             this.$state.reload();
                         })
