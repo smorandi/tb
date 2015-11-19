@@ -1,43 +1,90 @@
-<div ng-click="vm.showDetails()"
-     class="db-item flex-auto flex-container-column flex-justify-content-space-between">
+<div class="flip-container db-item-tile-container">
+    <div class="flipper" ng-class="{flip: vm.isFlipped}">
+        <div class="front">
+            <div class="db-item-tile flex-auto flex-container-column flex-justify-content-space-between"
+                 ng-click="vm.flip()">
 
-    <div class="db-item-caption flex-container-column flex-justify-content-space-between flex-auto">
-        <div class="db-item-caption-image" back-img="{{vm.image}}">
-        </div>
+                <div class="db-item-caption-image" back-img="{{vm.image}}"></div>
 
-        <div class="db-item-caption-text flex-container-column flex-justify-content-center flex-auto">
-            <h3 class="text-center text-nowrap"><strong>{{vm.item.name}}</strong>
-            </h3>
-        </div>
-    </div>
+                <h3 class="db-item-caption-text flex-auto text-center text-nowrap no-gutter">
+                    <strong>{{vm.item.name}}</strong>
+                </h3>
 
-    <div class="db-item-price-area">
-        <div class="flex-container-column flex-justify-content-space-between flex-wrap">
-            <div class="flex-container-row text-muted">
-                <h6 flash="vm.item.allTimeHigh" class="no-gutter text-nowrap">
-                    <span class="glyphicon glyphicon-collapse-up"></span>{{vm.item.allTimeHigh}}&nbsp;&nbsp;
+                <h6 class="db-item-description flex-auto text-center"><em>{{vm.item.description}}</em>
                 </h6>
-                <h6 flash="vm.item.allTimeLow" class="no-gutter text-nowrap">
-                    <span class="glyphicon glyphicon-collapse-down"></span>{{vm.item.allTimeLow}}&nbsp;&nbsp;
-                </h6>
-                <h6 flash="vm.item.highestPrice" class="no-gutter text-nowrap">
-                    <span class="glyphicon glyphicon-menu-up"></span>{{vm.item.highestPrice}}&nbsp;&nbsp;
-                </h6>
-                <h6 flash="vm.item.lowestPrice" class="no-gutter text-nowrap">
-                    <span class="glyphicon glyphicon-menu-down"></span>{{vm.item.lowestPrice}}&nbsp;&nbsp;
-                </h6>
-            </div>
-            <div class="flex-container-row flex-align-items-center flex-justify-content-space-between flex-wrap">
-                <h4 flash="vm.item.tick.timestamp" class="no-gutter">
+
+                <div class="db-item-price-area">
+                    <div class="flex-container-column flex-justify-content-space-between flex-wrap">
+                        <!--<div class="flex-container-row text-muted">-->
+                        <!--<h6 flash="vm.item.allTimeHigh" class="no-gutter text-nowrap">-->
+                        <!--<span class="glyphicon glyphicon-collapse-up"></span>{{vm.item.allTimeHigh}}&nbsp;&nbsp;-->
+                        <!--</h6>-->
+                        <!--<h6 flash="vm.item.allTimeLow" class="no-gutter text-nowrap">-->
+                        <!--<span class="glyphicon glyphicon-collapse-down"></span>{{vm.item.allTimeLow}}&nbsp;&nbsp;-->
+                        <!--</h6>-->
+                        <!--<h6 flash="vm.item.highestPrice" class="no-gutter text-nowrap">-->
+                        <!--<span class="glyphicon glyphicon-menu-up"></span>{{vm.item.highestPrice}}&nbsp;&nbsp;-->
+                        <!--</h6>-->
+                        <!--<h6 flash="vm.item.lowestPrice" class="no-gutter text-nowrap">-->
+                        <!--<span class="glyphicon glyphicon-menu-down"></span>{{vm.item.lowestPrice}}&nbsp;&nbsp;-->
+                        <!--</h6>-->
+                        <!--</div>-->
+                        <div class="flex-container-row flex-align-items-baseline flex-justify-content-space-between">
+                            <h4 flash="vm.item.tick.timestamp" class="no-gutter">
                                 <span class="glyphicon"
                                       ng-class="vm.item.tick.delta > 0 ? 'text-danger glyphicon-circle-arrow-up' : 'text-success glyphicon-circle-arrow-down'"></span>&nbsp;{{vm.item.tick.delta}}
-                </h4>
+                            </h4>
 
-                <h3 flash="vm.item.price" class="text-primary no-gutter text-nowrap">
-                    <small>CHF</small>
-                    <strong ng-show="vm.item.price % 1 > 0">{{vm.item.price}}</strong>
-                    <strong ng-hide="vm.item.price % 1 > 0">{{vm.item.price}}.-</strong>
+                            <h3 flash="vm.item.price" class="text-primary no-gutter text-nowrap">
+                                <small>CHF</small>
+                                <strong ng-show="vm.item.price % 1 > 0">{{vm.item.price}}</strong>
+                                <strong ng-hide="vm.item.price % 1 > 0">{{vm.item.price}}.-</strong>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="back">
+            <div class="db-item-tile flex-auto flex-container-column flex-justify-content-space-between"
+                 ng-click="vm.flip()">
+
+                <div class="db-item-caption-image" back-img="{{vm.image}}"></div>
+
+                <h3 class="db-item-caption-text flex-auto text-center text-nowrap no-gutter">
+                    <strong>{{vm.item.name}}</strong>
                 </h3>
+
+                <div class="flex-container-row flex-justify-content-space-between">
+                    <h5 flash="item.tickprice" class="no-gutter">
+                        <button class="btn no-gutter" ng-click="vm.increment($event)">
+                            <span class="glyphicon glyphicon-menu-up"></span>
+                        </button>
+                        <button class="btn no-gutter" ng-click="vm.decrement($event)">
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </button>
+                        <strong> &nbsp;{{vm.number}}</strong>
+                    </h5>
+                    <h5 class="btn btn-primary no-gutter" ng-click="vm.addToBasket($event)">Add To Basket
+                    </h5>
+                </div>
+
+                <div class="db-item-price-area">
+                    <div class="flex-container-column flex-justify-content-space-between flex-wrap">
+                        <div class="flex-container-row flex-align-items-center flex-justify-content-space-between flex-wrap">
+                            <h4 flash="vm.item.tick.timestamp" class="no-gutter">
+                                <span class="glyphicon"
+                                      ng-class="vm.item.tick.delta > 0 ? 'text-danger glyphicon-circle-arrow-up' : 'text-success glyphicon-circle-arrow-down'"></span>&nbsp;{{vm.item.tick.delta}}
+                            </h4>
+
+                            <h3 flash="vm.item.price" class="text-primary no-gutter text-nowrap">
+                                <small>CHF</small>
+                                <strong ng-show="vm.item.price % 1 > 0">{{vm.item.price}}</strong>
+                                <strong ng-hide="vm.item.price % 1 > 0">{{vm.item.price}}.-</strong>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

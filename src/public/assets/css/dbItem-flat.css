@@ -1,0 +1,11 @@
+.db-item-flat {
+    cursor: pointer;
+}
+
+.db-item-flat-image {
+    width: 20px;
+}
+
+.db-item-flat-price-area {
+    flex: 100px 0;
+}

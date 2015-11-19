@@ -2,15 +2,14 @@
      class="db-item-flat flex-container-row flex-wrap">
 
     <div class="flex-container-row flex-auto">
-        <div class="" back-img="{{vm.image}}" style="width: 20px">
+        <div class="db-item-flat-image" back-img="{{vm.image}}">
         </div>
 
         <h4 class="text-nowrap no-gutter"><strong>&nbsp;{{vm.item.name}}</strong>
         </h4>
     </div>
 
-    <div class="flex-container-row flex-justify-content-end flex-align-items-baseline flex-wrap"
-         style="flex: 100px 0">
+    <div class="db-item-flat-price-area flex-container-row flex-justify-content-end flex-align-items-baseline flex-wrap">
 
         <div class="flex-container-row flex-align-items-baseline flex-justify-content-space-between flex-auto">
             <h5 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap">
