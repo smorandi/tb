@@ -8,6 +8,7 @@ module injections {
     export module directives {
         export var flash:string = "flash";
         export var backImg:string = "backImg";
+        export var stopEvent:string = "stopEvent";
     }
 
     export module components {

@@ -14,7 +14,7 @@ module controllers {
         ];
 
         constructor(private logger:services.LoggerService) {
-            this.logger.info("DbItemController called");
+            this.logger.info("DbItemController created");
             this.image = constants.CATEGORY_IMAGE_MAP[this.item.category];
         }
 
@@ -22,20 +22,18 @@ module controllers {
             this.isFlipped = !this.isFlipped;
         }
 
-        public addToBasket($event:ng.IAngularEvent):void {
-            $event.stopPropagation();
+        public addToBasket():void {
+            this.flip();
+            this.number = 1;
             this.logger.info(this.item.name, "added to basket, " + this.number, enums.LogOptions.toast_only);
         }
 
-        public increment($event:ng.IAngularEvent):void {
-            $event.stopPropagation();
+        public increment():void {
             this.number++;
-            console.log("clicked");
         }
 
-        public decrement($event:ng.IAngularEvent):void {
-            $event.stopPropagation();
-            this.number = Math.max(0, this.number - 1);
+        public decrement():void {
+            this.number = Math.max(1, this.number - 1);
         }
     }
 }

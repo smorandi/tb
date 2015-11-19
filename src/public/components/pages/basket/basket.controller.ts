@@ -106,22 +106,7 @@ module controllers {
         }
 
         public getImageForItem(cat:any) {
-            switch (cat) {
-                case "beer":
-                    return "assets/images/drinks/beer.jpg";
-                case "cocktail":
-                    return "assets/images/drinks/cocktail.jpg";
-                case "wine":
-                    return "assets/images/drinks/wine.jpg";
-                case "coffee":
-                    return "assets/images/drinks/coffee.jpg";
-                case "tea":
-                    return "assets/images/drinks/tea.jpg";
-                case "shot":
-                    return "assets/images/drinks/shot.jpg";
-                case "soft":
-                    return "assets/images/drinks/soft.jpg";
-            }
+            return constants.CATEGORY_IMAGE_MAP[cat];
         }
 
         private getItemFromDashboard(idBasket:string) {

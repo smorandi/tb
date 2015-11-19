@@ -44,11 +44,12 @@
 
 
                 <form class="navbar-form navbar-right" role="search">
-                    <div class="input-group ">
+                    <div class="input-group">
                         <span class="input-group-addon glyphicon glyphicon-search"></span>
-                        <input ng-model="vm.search" type="text" class="form-control" placeholder="Search">
+                        <input ng-model="vm.search" type="text" class="form-control" placeholder="Search" stop-event>
                         <span class="input-group-btn"><button ng-click="vm.search = ''" type="button"
-                                                              class="btn glyphicon glyphicon-remove"></button></span>
+                                                              class="btn glyphicon glyphicon-remove"
+                                                              stop-event></button></span>
                     </div>
                 </form>
             </div>

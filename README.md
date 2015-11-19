@@ -44,8 +44,10 @@ being used)
 #TODOS
 * error handling when server is not running/responding
 * setting focus on first element on page does not really work
-* remove style tags in html -> move to css
+* remove style tags in html -> move to css [done]
 * factor out lodash, possibly write own functions where lodash is used atm or import only specific function from lodash
 to minimize loadtime
-* y
-* z
+* prevent event propagation (bubbling) of several controls, i.e. search, inc/dec/addToBasket to prevent multi handling 
+of events in chain leading to effect like closing/flipping of widgets prematurely. [done]
+* extend dashbaord routes / ws-emits in server to transmit HAL resources (creation of proper resource with links to 
+add/remove of item to basket)

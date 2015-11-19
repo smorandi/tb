@@ -1,7 +1,7 @@
 /*[ng-click],*/
 /*[data-ng-click],*/
 /*[x-ng-click] {*/
-    /*cursor: pointer;*/
+/*cursor: pointer;*/
 /*}*/
 
 body {
@@ -13,11 +13,17 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-hr {
-    margin-top: 0px;
-    margin-bottom: 0px;
+/*used as a separator between related elements*/
+hr.separator {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid darkgray;
+    margin: 2px 0;
+    padding: 0;
 }
 
+/*to quickly remove margin and padding from html elements*/
 .no-gutter {
     margin: 0;
     padding: 0;
@@ -44,9 +50,11 @@ hr {
     top: 0px;
 }
 
-/*--------------------------------------------*/
-/*action-link*/
-/*--------------------------------------------*/
+/*--------------------------------------------
+  action-link, some styles have to be declared
+  as important, there is no other way to overrule bootstraps
+  shitty background-colouring
+  --------------------------------------------*/
 .action-link {
     margin: 0;
 }
@@ -89,12 +97,7 @@ hr {
     margin: 1px 0px;
 }
 
-
-/*.valdr-form-group .ng-invalid {*/
-    /*background-color: papayawhip;*/
-/*}*/
-
+/*validation style*/
 .valdr-message.ng-invalid {
     color: red;
 }
-
