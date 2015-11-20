@@ -181,8 +181,8 @@ var changeBasketItem = domain.defineCommand({
     existing: true,
 }, function (data, aggregate) {
     var basket = aggregate.get("basket");
-    for(var i = 0; i < basket.length; i++){
-        if(basket[i].id == data.id){
+    for (var i = 0; i < basket.length; i++) {
+        if (basket[i].id == data.id) {
             basket[i].number = data.number;
         }
     }
@@ -193,8 +193,8 @@ var basketItemChanged = domain.defineEvent({
         name: "basketItemChanged"
     },
     function (data, aggregate) {
-            aggregate.set(data);
-});
+        aggregate.set("basket", data);
+    });
 
 // ----------------------------------------------------------------
 // make order
