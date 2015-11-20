@@ -64,14 +64,21 @@ module controllers {
 
             var total = 0;
             for (var y = 0; y < this.basketResourceItems.length; y++) {
-                var dashItem = this.getItemFromDashboard(this.basketResourceItems[y].item.id);
-                var priceItem = this.pricePerItem(dashItem.tick.price, this.basketResourceItems[y].number);
+                var dashItem; var priceItem;var tickprice;var dashItemId;var image;
+                dashItem = this.getItemFromDashboard(this.basketResourceItems[y].item.id);
+                if (dashItem) {
+                    priceItem = this.pricePerItem(dashItem.tick.price, this.basketResourceItems[y].number);
+                    tickprice =  dashItem.tick.price;
+                    dashItemId = dashItem.id;
+                    image = this.getImageForItem(dashItem.category);
+                }
+
                 this.basketItems.push({
                     basket: this.basketResourceItems[y],
-                    tickprice: dashItem.tick.price,
-                    dashItemId: dashItem.id,
+                    tickprice: tickprice,
+                    dashItemId: dashItemId,
                     dashItem: dashItem,
-                    img: this.getImageForItem(dashItem.category),
+                    img: image,
                     priceItem: priceItem,
                 });
 

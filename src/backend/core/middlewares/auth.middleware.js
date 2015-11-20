@@ -19,6 +19,18 @@ exports.requireLogin = function (req, res, next) {
     });
 }
 
+exports.isLogedIn = function(req, res, next) {
+    authService.authenticate(req, function (err, isAdmin, isRoot, user) {
+        if (err) {
+            next(false);
+        }
+        else {
+            req.user = user;
+            next(true);
+        }
+    });
+}
+
 exports.requireUserType = function (req, res, next, type) {
     // this should really never be the case if routes are correctly set up...
     if (!req.user || !req.user.type) {
