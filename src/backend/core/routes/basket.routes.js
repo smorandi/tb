@@ -86,6 +86,7 @@ module.exports = function (app) {
             }));
         })
         .put(function (req, res, next) {
+            req.body.basketItemId = req.params.basketItemId;
             commandService.send("changeBasketItem").for("user").instance(req.params.customerId).with({payload: req.body}).go(res.handleEvent(function (evt) {
                 basketsCollection.findViewModels({id: req.params.customerId}, {limit: 1}, function (err, docs) {
                     if (err) {

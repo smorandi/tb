@@ -181,20 +181,24 @@ var changeBasketItem = domain.defineCommand({
     existing: true,
 }, function (data, aggregate) {
     //DO NOT CHANGE THE AGGREGATE IN HERE!!!
-    var basket = _.clone(aggregate.get("basket"), true);
+    var basketItem = _.clone(_.find(aggregate.get("basket"), "id", data.basketItemId), true);
 
-    _.forEach(_.filter(basket, "id", data.id), function (basket) {
-        basket.number = data.number;
-    });
+    if (data.drinkId) {
+        basketItem.item.id = data.drinkId;
+    }
+    if (data.number) {
+        basketItem.number = data.number;
+    }
 
-    aggregate.apply("basketItemChanged", basket);
+    aggregate.apply("basketItemChanged", basketItem);
 });
 
 var basketItemChanged = domain.defineEvent({
         name: "basketItemChanged"
     },
-    function (data, aggregate) {
-        aggregate.set("basket", data);
+    function (basketItem, aggregate) {
+        var index = _.findIndex(aggregate.get("basket"), "id", basketItem.id);
+        aggregate.get("basket").splice(index, 1, basketItem);
     });
 
 // ----------------------------------------------------------------
@@ -248,6 +252,20 @@ var orderConfirmed = domain.defineEvent({
     });
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+var precondition_basketItem_exists = domain.definePreCondition({
+    name: "changeBasketItem",
+    description: "basket item must exist",
+}, function (data, aggregate, callback) {
+    if (!data.basketItemId) {
+        callback(new Error());
+    }
+    else {
+        var basketItem = _.find(aggregate.get("basket"), "id", data.basketItemId);
+        basketItem ?
+            callback(null) :
+            callback(new Error());
+    }
+});
 
 var precondition_createUser_mandatoryAttributesSet = domain.definePreCondition({
     name: ["createAdmin", "createCustomer"],
@@ -325,5 +343,6 @@ module.exports = [user,
     precondition_createUser_mandatoryAttributesSet,
     precondition_createUser_loginNameMustBeUnique,
     precondition_changeUser_allowedChanges,
+    precondition_basketItem_exists,
     // business rules...
     businessRule_makeOrder_basketMustNotBeEmpty];

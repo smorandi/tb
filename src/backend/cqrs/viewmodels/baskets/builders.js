@@ -57,9 +57,24 @@ var basketItemChanged = denormalizer.defineViewBuilder({
     aggregate: "user",
     id: "aggregate.id",
     autoCreate: false,
-}, function (data, vm) {
+}, function (basketItem, vm, callback) {
     logger.debug("basketItemChanged in collection: " + vm.repository.collectionName);
-    vm.set("basket", data);
+    var basket = vm.get("basket");
+    dashboardCollection.loadViewModel(basketItem.item.id, function (err, doc) {
+        if (err) {
+            callback(err);
+        } else {
+            basketItem.item = doc.toJSON();
+            var index = _.findIndex(basket, "id", basketItem.id);
+            if (index === -1) {
+                callback(new Error("cannot change basketItem - index not found"));
+            }
+            else {
+                basket.splice(index, 1, basketItem);
+                callback(null);
+            }
+        }
+    });
 });
 
 var orderCreated = denormalizer.defineViewBuilder({
