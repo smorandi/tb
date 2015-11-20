@@ -180,12 +180,13 @@ var changeBasketItem = domain.defineCommand({
     name: "changeBasketItem",
     existing: true,
 }, function (data, aggregate) {
-    var basket = aggregate.get("basket");
-    for (var i = 0; i < basket.length; i++) {
-        if (basket[i].id == data.id) {
-            basket[i].number = data.number;
-        }
-    }
+    //DO NOT CHANGE THE AGGREGATE IN HERE!!!
+    var basket = _.clone(aggregate.get("basket"), true);
+
+    _.forEach(_.filter(basket, "id", data.id), function (basket) {
+        basket.number = data.number;
+    });
+
     aggregate.apply("basketItemChanged", basket);
 });
 
