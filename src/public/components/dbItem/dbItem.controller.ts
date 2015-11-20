@@ -24,8 +24,18 @@ module controllers {
 
         public addToBasket():void {
             this.flip();
-            this.number = 1;
-            this.logger.info(this.item.name, "added to basket, " + this.number, enums.LogOptions.toast_only);
+            var basket = {
+                drinkId: this.item.id,
+                number: this.number
+            };
+            this.item.$post("addBasket", null, basket)
+                .then(res => {
+                    this.logger.info(this.item.name, "added to basket, " + this.number, enums.LogOptions.toast_only);
+                    this.number = 1;
+                })
+                .catch(err => {
+                    this.logger.error("Failed to added to basket", err, enums.LogOptions.toast);
+                });
         }
 
         public increment():void {

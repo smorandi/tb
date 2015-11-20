@@ -101,7 +101,6 @@ module.exports = function (app) {
                         res.form(resourceUtils.createResource(baseUrl, basketItem, "ud"), basketItem);
                     }
                 });
-                //res.form(resourceUtils.createResource(baseUrl, evt.payload.body, "ud"), evt.payload);
             }));
         });
 }
