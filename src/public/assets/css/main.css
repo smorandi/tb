@@ -13,16 +13,6 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-/*used as a separator between related elements*/
-hr.separator {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid darkgray;
-    margin: 2px 0;
-    padding: 0;
-}
-
 /*to quickly remove margin and padding from html elements*/
 .no-gutter {
     margin: 0;
@@ -41,15 +31,6 @@ hr.separator {
     overflow: auto;
 }
 
-.navbar-brand {
-    padding: 2px 0;
-}
-
-/*need to do this because of a bootstrap bug: https://github.com/twbs/bootstrap/issues/10936*/
-.input-group .glyphicon {
-    top: 0px;
-}
-
 /*--------------------------------------------
   action-link, some styles have to be declared
   as important, there is no other way to overrule bootstraps
@@ -57,6 +38,7 @@ hr.separator {
   --------------------------------------------*/
 .action-link {
     margin: 0;
+    cursor: pointer;
 }
 
 .action-link.disabled {
@@ -100,4 +82,14 @@ hr.separator {
 /*validation style*/
 .valdr-message.ng-invalid {
     color: red;
+}
+
+/*used as a separator between related elements*/
+hr.separator {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid darkgray;
+    margin: 2px 0;
+    padding: 0;
 }

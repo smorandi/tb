@@ -1,0 +1,22 @@
+<form name="vm.form" class="form-horizontal" role="form" novalidate valdr-type="System"
+      ng-submit="vm.submit()">
+    <div class="form-group" ng-class="{'has-error': vm.form.priceReductionInterval.$invalid}">
+        <label for="priceReductionInterval" class="col-sm-6 control-label">Price Reduction Interval</label>
+
+        <div valdr-form-group class="col-sm-3">
+            <input type="text" ng-model="vm.data.priceReductionInterval" class="form-control" id="priceReductionInterval"
+                   name="priceReductionInterval" placeholder="Reduction Interval" autofocus ng-readonly="vm.readOnly"/>
+        </div>
+    </div>
+    <div class="form-group" ng-class="{'has-error': vm.form.priceReductionGracePeriod.$invalid}">
+        <label for="priceReductionGracePeriod" class="col-sm-6 control-label">Price Reduction Grace Period</label>
+
+        <div valdr-form-group class="col-sm-3">
+            <input type="text" ng-model="vm.data.priceReductionGracePeriod" class="form-control" id="priceReductionGracePeriod"
+                   name="priceReductionGracePeriod" placeholder="Grace Period" ng-readonly="vm.readOnly"/>
+        </div>
+    </div>
+
+    <!--this is to enable handling when enter key is pressed-->
+    <input ng-show="false" type="submit" id="submit" value="Submit"/>
+</form>

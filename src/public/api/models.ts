@@ -36,4 +36,10 @@ module models {
         constructor(public drinkId:string, public number:number) {
         }
     }
+
+    export class SystemProperties implements interfaces.ISystemProperties {
+        constructor(public priceReductionInterval?:number,
+                    public priceReductionGracePeriod?:number) {
+        }
+    }
 }

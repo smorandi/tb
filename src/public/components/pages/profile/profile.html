@@ -3,65 +3,53 @@
 
     <div class="row">
         <div class=" col-xs-12 col-sm-7">
-            <div class="panel" ng-class="vm.userForm.$valid ? 'panel-info' : 'panel-danger'">
-                <div class="panel-heading"><strong>Details</strong></div>
+            <div class="panel panel-default" ng-class="{'panel-danger': vm.userForm.$invalid}">
+                <div class="panel-heading">
+                    <div class="flex-container-row flex-align-items-center">
+                        <strong class="flex-auto">{{"page.profile.details.title" | translate}}</strong>
+
+                        <div ng-switch on="vm.isEdit">
+                            <div ng-switch-when="true">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button type="button" class="btn btn-primary" ng-disabled="vm.userForm.$invalid" ng-click="vm.save()"><span
+                                            class="glyphicon glyphicon-save"/> Save
+                                    </button>
+                                    <button type="button" class="btn btn-default" ng-click="vm.cancel()"><span
+                                            class="glyphicon glyphicon-remove-circle"/> Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            <div ng-switch-when="false">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-primary" ng-click="vm.edit()"><span
+                                            class="glyphicon glyphicon-edit"/> Edit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="panel-body">
                     <user-form data="vm.user" form="vm.userForm" submit="vm.save()" read-only="!vm.isEdit"></user-form>
                 </div>
             </div>
         </div>
 
-        <div class=" col-xs-12 col-sm-5">
-            <div class="panel panel-default">
-                <div class="panel-heading"><strong>Information</strong></div>
-                <div class="panel-body" ng-include="'components/pages/profile/profile-information.html'"/>
-            </div>
-        </div>
-    </div>
-
-    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
-                        ng-click="navCollapsed = !navCollapsed">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
-                <div ng-switch on="vm.isEdit">
-                    <div ng-switch-when="true">
-                        <ul class="nav navbar-nav navbar-left">
-                            <li>
-                                <a ng-href="#" class="action-link success" ng-click="vm.save()">
-                                    <span class="glyphicon glyphicon-save"/> Save</a>
-                            </li>
-                            <li>
-                                <a ng-href="#" class="action-link" ng-click="vm.cancel()">
-                                    <span class="glyphicon glyphicon-remove-circle"/> Cancel</a>
-                            </li>
-                        </ul>
+        <div class="col-xs-12 col-sm-5">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>{{"page.profile.properties.title" | translate}}</strong>
+                        </div>
+                        <div class="panel-body" ng-include="'components/pages/profile/profile-information.html'"/>
                     </div>
-
-                    <div ng-switch-when="false">
-                        <ul class="nav navbar-nav navbar-left">
-                            <li>
-                                <a ng-href="#" class="action-link info" ng-click="vm.edit()">
-                                    <span class="glyphicon glyphicon-edit"/> Edit</a>
-                            </li>
-                            <li>
-                                <a ng-href="#" class="action-link danger" ng-click="vm.unregister()">
-                                    <span class="glyphicon glyphicon-trash"/> Unregister</a>
-                            </li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-danger btn-lg" ng-click="vm.unregister()"><span
+                            class="glyphicon glyphicon-trash"/> Unregister
+                    </button>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
 </div>

@@ -6,10 +6,18 @@
 
   "page.profile.header.title": "Profile",
   "page.profile.header.subtitle": "Displays your registration details",
+  "page.profile.details.title": "User Details",
+  "page.profile.properties.title": "User Properties",
+
   "page.register.header.title": "Sign Up",
   "page.register.header.subtitle": "Please register yourself to participate",
+
   "page.system.header.title": "System",
   "page.system.header.subtitle": "Control the system",
+  "page.system.status.title": "Pricing Engine - Status",
+  "page.system.properties.title": "System Properties",
+  "page.system.events.title": "System Events",
+
   "page.basket.header.title": "Basket",
   "page.basket.header.subtitle": "Displays your basket items",
   "page.dashboard.header.title": "Dashboard",
@@ -18,6 +26,9 @@
   "page.orders.header.subtitle": "Displays your order history",
   "page.drinks.header.title": "Drinks",
   "page.drinks.header.subtitle": "Displays all the available drinks",
+
+  "engine.status.idle": "Idle",
+  "engine.status.running": "Running",
 
   "NAME" : "Name",
   "QUANTITY" : "Quantity",

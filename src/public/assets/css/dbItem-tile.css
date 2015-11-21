@@ -11,22 +11,25 @@
     background-color: aliceblue;
 }
 
-.db-item-tile:hover, .db-item-tile:hover .db-item-caption-image {
-    /*-webkit-filter: grayscale(0%);*/
-    /*filter: grayscale(0%);*/
-    box-shadow: inset 2px 2px 10px 0px whitesmoke, inset -2px -2px 10px 0px yellow;
-}
-
-.db-item-tile-basket-ctrl {
-    padding: 4px 10px;
-}
-
 .db-item-tile-caption-image {
     border-radius: inherit;
     min-height: 25px;
     max-height: 25px;
     box-shadow: inset 2px 2px 10px -2px whitesmoke, inset -2px 0px 10px -2px black;
 }
+
+.db-item-tile:hover {
+    box-shadow: inset 2px 2px 10px 0px yellow, inset -2px -2px 10px 0px yellow;
+}
+
+.db-item-tile:hover .db-item-tile-caption-image {
+    box-shadow: inset 2px 2px 10px -2px yellow, inset -2px 0px 10px -2px yellow;
+}
+
+.db-item-tile-basket-ctrl {
+    padding: 4px 10px;
+}
+
 
 .db-item-tile-caption-text {
     font-family: 'Indie Flower', cursive;

@@ -51,6 +51,11 @@ module injections {
                 export var controller:string = "user-form-controller";
                 export var directive:string = "userForm";
             }
+            export module system {
+                export var template:string = "components/forms/system/system-form.html";
+                export var controller:string = "system-form-controller";
+                export var directive:string = "systemForm";
+            }
         }
         export module page {
             export module dashboard {

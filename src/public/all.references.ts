@@ -17,7 +17,6 @@
 /// <reference path="infrastructure/services/utils.service.ts" />
 /// <reference path="infrastructure/services/socket.service.ts" />
 /// <reference path="infrastructure/services/dashboard.service.ts" />
-/// <reference path="infrastructure/services/navigation.service.ts" />
 /// <reference path="infrastructure/services/httpInterceptor.service.ts" />
 /// <reference path="infrastructure/services/localStorage.service.ts" />
 /// <reference path="infrastructure/services/logger.service.ts" />
@@ -56,5 +55,7 @@
 /// <reference path="components/dbItem/flat/dbItem-flat.directive.ts" />
 /// <reference path="components/forms/user/user-form.directive.ts" />
 /// <reference path="components/forms/user/user-form.controller.ts" />
+/// <reference path="components/forms/system/system-form.directive.ts" />
+/// <reference path="components/forms/system/system-form.controller.ts" />
 
 //end-inject:ts

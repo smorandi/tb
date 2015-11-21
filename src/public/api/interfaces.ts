@@ -46,4 +46,9 @@ module interfaces {
         drinkId: string;
         number: number;
     }
+
+    export interface ISystemProperties {
+        priceReductionInterval: number;
+        priceReductionGracePeriod: number;
+    }
 }

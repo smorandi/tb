@@ -33,6 +33,34 @@ module validations {
                     "message": "Login name must be between 3 and 20 characters."
                 }
             }
+        },
+        "System": {
+            "priceReductionInterval": {
+                "required": {
+                    "message": "This value is required."
+                },
+                "min": {
+                    "value": 1000,
+                    "message": "Must be at least 1'000 ms."
+                },
+                "max": {
+                    "value": 10000,
+                    "message": "Must not exceed 10'000 ms."
+                },
+            },
+            "priceReductionGracePeriod": {
+                "required": {
+                    "message": "This value is required."
+                },
+                "min": {
+                    "value": 1000,
+                    "message": "Must be at least 1'000 ms."
+                },
+                "max": {
+                    "value": 10000,
+                    "message": "Must not exceed 10'000 ms."
+                },
+            },
         }
     };
 }
