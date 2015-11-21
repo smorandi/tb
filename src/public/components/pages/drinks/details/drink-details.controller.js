@@ -3,12 +3,13 @@
 var controllers;
 (function (controllers) {
     var DrinkDetailsController = (function () {
-        function DrinkDetailsController($log, $location, $state, utilsService, drinkResource) {
+        function DrinkDetailsController($log, $location, $state, utilsService, drinkResource, logger) {
             this.$log = $log;
             this.$location = $location;
             this.$state = $state;
             this.utilsService = utilsService;
             this.drinkResource = drinkResource;
+            this.logger = logger;
             $log.info("DrinkDetailsController called with client-url: " + $location.path());
             this.drink = drinkResource;
         }
@@ -21,14 +22,20 @@ var controllers;
         DrinkDetailsController.prototype.deleteDrink = function (event) {
             var _this = this;
             if (this.utilsService.showPopup("Really delete this?")) {
-                this.drink.$del("delete").then(function (res) { return _this.$state.go("^.list"); });
+                this.drink.$del("delete").then(function (res) { return _this.$state.go(constants.STATES.drinks, null, { reload: true }); });
             }
             event.stopPropagation();
         };
         DrinkDetailsController.prototype.editDrink = function () {
             this.$state.go(".editDrink");
         };
-        DrinkDetailsController.$inject = [injections.angular.$log, injections.angular.$location, injections.uiRouter.$stateService, injections.services.utilsService, "drinkResource"];
+        DrinkDetailsController.$inject = [
+            injections.angular.$log,
+            injections.angular.$location,
+            injections.uiRouter.$stateService,
+            injections.services.utilsService,
+            "drinkResource",
+            injections.services.loggerService];
         return DrinkDetailsController;
     })();
     controllers.DrinkDetailsController = DrinkDetailsController;

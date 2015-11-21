@@ -5,7 +5,8 @@
                 <p>Search</p>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4">
-                <input type="search" ng-model="vm.query"/>
+                <input type="search" type="text" class="form-control" ng-model="vm.query" placeholder="Search for...">
+                <!--<input type="search" ng-model="vm.query"/>-->
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2">
                 <a class="btn btn-primary nodecoration" ng-click="vm.createNewDrink()"

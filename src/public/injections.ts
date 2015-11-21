@@ -103,11 +103,11 @@ module injections {
                 }
                 export module create {
                     export var controller:string = "drink-create-controller";
-                    export var template:string = "components/pages/drinks/details/drink-details.html";
+                    export var template:string = "components/pages/drinks/create/drink-create.html";
                 }
                 export module edit {
                     export var controller:string = "drink-edit-controller";
-                    export var template:string = "components/pages/drinks/details/drink-details.html";
+                    export var template:string = "components/pages/drinks/edit/drink-edit.html";
                 }
             }
         }
