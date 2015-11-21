@@ -42,7 +42,7 @@
                 </h3>
 
 
-                <div class="input-group input-group-sm db-item-tile-basket-ctrl">
+                <div ng-show="vm.canAddToBasket" class="input-group input-group-sm db-item-tile-basket-ctrl">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-xs" ng-click="vm.increment()" stop-event><i class="glyphicon glyphicon-triangle-top"></i></button>
                     </span>

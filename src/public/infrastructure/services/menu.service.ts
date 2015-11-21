@@ -4,19 +4,17 @@
 
 module services {
     export class MenuService {
-        public menu:any;
+        private menu:any;
 
         static $inject = [
             injections.services.loggerService,
             injections.uiRouter.$stateService,
-            injections.services.authService,
-            injections.services.navigationService,
+            injections.services.authService
         ];
 
         constructor(private logger:services.LoggerService,
                     private $state:ng.ui.IStateService,
-                    private authService:services.AuthService,
-                    private navigationService:services.NavigationService) {
+                    private authService:services.AuthService) {
             this.menu = {
                 resource: null,
                 isLoggedIn: false,
@@ -31,6 +29,15 @@ module services {
                 controlLinks: {}
             };
         }
+
+        public setNumberOfBasketItems(number:number):void {
+            this.menu.numberOfBasketItems = number;
+        }
+
+        public getNumberOfBasketItems():number {
+            return this.menu.numberOfBasketItems;
+        }
+
 
         public getMenu():Object {
             return this.menu;

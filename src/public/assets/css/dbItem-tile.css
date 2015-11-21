@@ -18,10 +18,7 @@
 }
 
 .db-item-tile-basket-ctrl {
-    padding: 10px;
-}
-
-.db-item-tile-caption {
+    padding: 4px 10px;
 }
 
 .db-item-tile-caption-image {
@@ -35,7 +32,7 @@
     font-family: 'Indie Flower', cursive;
     color: black;
     text-shadow: 0px 5px 10px grey;
-    padding-top: 10px;
+    padding-top: 6px;
 }
 
 .db-item-tile-description {

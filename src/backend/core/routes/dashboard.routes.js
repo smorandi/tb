@@ -12,10 +12,8 @@ var logger = require("../../utils/logger");
 var config = require("../../config");
 var resourceUtils = require("../../utils/resourceUtils");
 var commandService = require("../../services/command.service.js");
-var requireLogin = require("../../services/auth.service.js").requireLogin;
-var requireAdmin = require("../../services/auth.service.js").requireAdmin;
-var requireMatchingUserId = require("../../services/auth.service.js").requireMatchingUserId;
-var checkIsLogedIn = require("../middlewares/auth.middleware").isLogedIn;
+
+var authenticate = require("../../services/auth.service").authenticate;
 
 var dashboardCollection = require("../../cqrs/viewmodels/dashboard/collection");
 
@@ -26,8 +24,9 @@ module.exports = function (app) {
 
     router.route("/")
         .get(function (req, res, next) {
-            checkIsLogedIn(req, res, function(isLoggedIn){
-                if(isLoggedIn) {
+            authenticate(req, function(err, isAdmin, isRoot, user){
+                // only return a resource if we are a customer. admins and roots do NOT have a basket.
+                if(!isAdmin && !isRoot && user) {
                     dashboardCollection.findViewModels({}, function (err, docs) {
                         if(err){
                             next(err);
@@ -36,7 +35,7 @@ module.exports = function (app) {
                         res.form(function () {
                             var resource = resourceUtils.createCollectionResource(baseUrl, docs, "", "");
                             _.forEach(resource._embedded.items, function (item) {
-                                item.link("addBasket", resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + req.user.id));
+                                item.link("addToBasket", resourceUtils.createBaseUrl(req, config.urls.baskets + "/" + user.id));
                             });
                             return resource._embedded.items;
 
@@ -48,6 +47,5 @@ module.exports = function (app) {
                     });
                 }
             });
-
         });
 };

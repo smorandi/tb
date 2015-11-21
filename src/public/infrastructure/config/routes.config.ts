@@ -3,6 +3,7 @@
 "use strict";
 
 module config {
+    import IDeferred = angular.IDeferred;
     export class RoutesConfig {
         static $inject = [
             injections.uiRouter.$stateProvider,
@@ -18,29 +19,58 @@ module config {
                     templateUrl: injections.components.root.template,
                     abstract: true,
                     resolve: {
-                        apiService: "apiService",
-                        menuService: "menuService",
-                        authService: "authService",
-                        rootResource: ($log, apiService:services.ApiService, menuService:services.MenuService, authService:services.AuthService) => {
-                            $log.info("resolving root-resource...");
-                            return apiService.$load().then(res => {
-                                $log.info("root-resource resolved...");
-                                if (authService.getToken() && res.$has("home")) {
-                                    return res.$get("home")
+                        logger: injections.services.loggerService,
+                        apiService: injections.services.apiService,
+                        menuService: injections.services.menuService,
+                        authService: injections.services.authService,
+                        dashboardService: injections.services.dashboardService,
+                        $q: injections.angular.$qService,
+                        rootResource: (logger:services.LoggerService,
+                                       apiService:services.ApiService,
+                                       menuService:services.MenuService,
+                                       authService:services.AuthService,
+                                       dashboardService:services.DashboardService,
+                                       $q:ng.IQService) => {
+                            logger.info("resolving root-resource...");
+                            return apiService.$load().then(rootResource => {
+                                logger.info("root-resource resolved...");
+
+                                var requests = [];
+
+                                var deferredHome = $q.defer();
+                                if (authService.getToken() && rootResource.$has("home")) {
+                                    rootResource.$get("home")
                                         .then(resHome => {
-                                            $log.info("home-resource resolved...");
-                                            menuService.setResource(resHome);
-                                            return res;
+                                            logger.info("home-resource resolved...");
+                                            deferredHome.resolve(resHome);
                                         })
                                         .catch(err => {
+                                            logger.error("home-resource cannot be resolved...");
                                             authService.clearCredentials();
-                                            menuService.setResource(res);
-                                            return res;
+                                            deferredHome.resolve(rootResource);
                                         });
                                 } else {
-                                    menuService.setResource(res);
-                                    return res;
+                                    deferredHome.resolve(rootResource);
                                 }
+                                requests.push(deferredHome.promise);
+
+                                var deferredDashboard = $q.defer();
+                                rootResource.$get("dashboard")
+                                    .then(dashboardResource => {
+                                        logger.info("dashboard-resource resolved...");
+                                        deferredDashboard.resolve(dashboardResource);
+                                    }).catch(err => deferredDashboard.reject(err));
+                                requests.push(deferredDashboard.promise);
+
+                                var deferredAll = $q.defer();
+                                $q.all(requests).then((ret:any) => {
+                                    menuService.setResource(ret[0]);
+                                    dashboardService.setDashboard(ret[1]);
+                                    deferredAll.resolve(rootResource);
+                                }).catch(err => {
+                                    deferredAll.reject(err);
+                                });
+                                return deferredAll.promise;
                             });
                         }
                     },
@@ -54,6 +84,21 @@ module config {
                             controllerAs: "vm"
                         }
                     },
+                    resolve: {
+                        logger: injections.services.loggerService,
+                        dashboardService: injections.services.dashboardService,
+
+                        dashboardResource: (logger:services.LoggerService,
+                                            dashboardService:services.DashboardService,
+                                            rootResource) => {
+                            logger.info("resolving dashboard-resource...");
+                            return rootResource.$get("dashboard").then(dashboardResource => {
+                                logger.info("dashboard-resource resolved...");
+                                dashboardService.setDashboard(dashboardResource);
+                                return dashboardResource;
+                            });
+                        },
+                    }
                 })
                 .state("root.register", {
                     url: "/register",
@@ -69,17 +114,18 @@ module config {
                     url: "/home",
                     ["redirectTo"]: "root.dashboard",
                     resolve: {
-                        menuService: "menuService",
-                        homeResource: ($log, rootResource, menuService:services.MenuService) => {
-                            $log.info("resolving home-resource...");
+                        logger: injections.services.loggerService,
+                        menuService: injections.services.menuService,
+                        homeResource: (logger:services.LoggerService, rootResource, menuService:services.MenuService) => {
+                            logger.info("resolving home-resource...");
 
                             if (!rootResource.$has("home")) {
-                                $log.info("no home resources found. returning empty array...");
+                                logger.info("no home resources found. returning empty array...");
                                 return [];
                             }
 
                             return rootResource.$get("home").then(res => {
-                                $log.info("home-resource resolved...");
+                                logger.info("home-resource resolved...");
                                 menuService.setResource(res);
                                 return res;
                             });
@@ -179,7 +225,7 @@ module config {
                         }
                     },
                     resolve: {
-                        utilsService: "utilsService",
+                        utilsService: injections.services.utilsService,
                         drinkResource: ($log, drinkResources:Array<any>, $location, $state:ng.ui.IStateService, $stateParams:ng.ui.IStateParamsService, utilsService:services.UtilsService) => {
                             var drinkResource = utilsService.findInArray(drinkResources, dr => dr.id === $stateParams["id"]);
                             return drinkResource;
@@ -235,7 +281,7 @@ module config {
                         basketResourceItems: ($log, basketResource) => {
                             return basketResource.$get("items").then(res => {
                                 $log.info("basket-resource-items resolved...");
-                               return res;
+                                return res;
                             });
                         },
                     }
@@ -295,7 +341,7 @@ module config {
                         }
                     },
                     resolve: {
-                        utilsService: "utilsService",
+                        utilsService: injections.services.utilsService,
                         orderResource: ($log, orderResources:Array<any>, $location, $state:ng.ui.IStateService, $stateParams:ng.ui.IStateParamsService, utilsService:services.UtilsService) => {
                             var orderResource = utilsService.findInArray(orderResources, dr => dr.id === $stateParams["id"]);
                             return orderResource;

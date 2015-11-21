@@ -8,16 +8,16 @@ module services {
 
         static $inject = [
             injections.services.loggerService,
-            injections.services.apiService,
             injections.services.socketService,
             injections.extServices.lodash
         ];
 
-        constructor(private logger:services.LoggerService, private apiService:services.ApiService, private socketService:services.SocketService, private _:_.LoDashStatic) {
-            apiService.$load().then(res => {
-                res.$get("dashboard").then(res => res.forEach(item => this.dashboard.push(item)));
-            });
+        public setDashboard(dashboard:Array<any>):void {
+            this.dashboard.length = 0;
+            Array.prototype.push.apply(this.dashboard, dashboard);
+        }
 
+        constructor(private logger:services.LoggerService, private socketService:services.SocketService, private _:_.LoDashStatic) {
             logger.info("registering websocket on dashboard-channel");
             socketService.socket.on("dashboard", data => {
                 // remove all items from dashboard which are not included in data anymore...

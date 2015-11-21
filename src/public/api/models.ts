@@ -31,4 +31,9 @@ module models {
                     public modificationDate?:Date) {
         }
     }
+
+    export class BasketEntry implements interfaces.IBasketEntry {
+        constructor(public drinkId:string, public number:number) {
+        }
+    }
 }

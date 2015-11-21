@@ -16,7 +16,7 @@
 
 /* flip speed goes here */
 .flipper {
-    transition: 1s;
+    transition: 0.5s;
     transform-style: preserve-3d;
     position: relative;
 

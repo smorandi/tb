@@ -40,6 +40,10 @@ module interfaces {
         debug(title:string, message?:string, logOptions?:enums.LogOptions):void;
         info(title:string, message?:string, logOptions?:enums.LogOptions):void;
         warn(title:string, message?:string, logOptions?:enums.LogOptions):void;
+    }
 
+    export interface IBasketEntry {
+        drinkId: string;
+        number: number;
     }
 }

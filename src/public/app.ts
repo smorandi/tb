@@ -9,7 +9,6 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .service(injections.services.utilsService, services.UtilsService)
     .service(injections.services.dashboardService, services.DashboardService)
     .service(injections.services.authService, services.AuthService)
-    .service(injections.services.navigationService, services.NavigationService)
     .service(injections.services.menuService, services.MenuService)
     .service(injections.services.httpInterceptorService, services.HttpInterceptorService)
     .service(injections.services.localStorageService, services.LocalStorageService)

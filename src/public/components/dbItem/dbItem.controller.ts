@@ -8,14 +8,17 @@ module controllers {
         private image:string;
         private isFlipped:boolean = false;
         private number:number = 1;
+        private canAddToBasket:boolean = false;
 
         static $inject = [
-            injections.services.loggerService
+            injections.services.loggerService,
+            injections.services.menuService,
         ];
 
-        constructor(private logger:services.LoggerService) {
+        constructor(private logger:services.LoggerService, private menuService:services.MenuService) {
             this.logger.info("DbItemController created");
             this.image = constants.CATEGORY_IMAGE_MAP[this.item.category];
+            this.canAddToBasket = this.item.$has("addToBasket");
         }
 
         public flip() {
@@ -24,17 +27,15 @@ module controllers {
 
         public addToBasket():void {
             this.flip();
-            var basket = {
-                drinkId: this.item.id,
-                number: this.number
-            };
-            this.item.$post("addBasket", null, basket)
+            var basketEntry = new models.BasketEntry(this.item.id, this.number);
+            this.item.$post("addToBasket", null, basketEntry)
                 .then(res => {
                     this.logger.info(this.item.name, "added to basket, " + this.number, enums.LogOptions.toast_only);
                     this.number = 1;
+                    this.menuService.setNumberOfBasketItems(this.menuService.getNumberOfBasketItems() + 1);
                 })
                 .catch(err => {
-                    this.logger.error("Failed to added to basket", err, enums.LogOptions.toast);
+                    this.logger.error("Failed to add item to basket", err, enums.LogOptions.toast);
                 });
         }
 

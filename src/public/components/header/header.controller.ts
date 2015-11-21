@@ -8,11 +8,10 @@ module controllers {
 
         static $inject = [
             injections.services.loggerService,
-            injections.services.menuService,
-            injections.services.navigationService,
+            injections.services.menuService
         ];
 
-        constructor(private logger:services.LoggerService, private menuService:services.MenuService, private navigationService:services.NavigationService) {
+        constructor(private logger:services.LoggerService, private menuService:services.MenuService) {
             this.menu = menuService.getMenu();
         }
 
