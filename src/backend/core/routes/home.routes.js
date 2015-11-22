@@ -48,7 +48,6 @@ module.exports = function (app) {
 
                             if (isAdmin || isRoot) {
                                 resource.link("drinks", root + config.urls.drinks);
-                                resource.link("profile", root + config.urls.admins + "/" + user.id);
                                 resource.link("system", root + config.urls.system);
                                 resource.link("admins", root + config.urls.admins);
                                 resource.link("customers", root + config.urls.customers);
@@ -56,6 +55,10 @@ module.exports = function (app) {
                                 resource.link("customerOrders", root + config.urls.orders);
                                 if(isRoot) {
                                     resource.link("users", root + config.urls.users);
+                                    resource.link("profile", root + config.urls.users + "/" + user.id);
+                                }
+                                if(isAdmin) {
+                                    resource.link("profile", root + config.urls.admins + "/" + user.id);
                                 }
                             }
                             else {

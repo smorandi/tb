@@ -33,8 +33,8 @@ module.exports = function (app) {
                     next(err);
                 }
                 else {
-                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins);
-                    res.form(resourceUtils.createCollectionResource(baseUrl, docs), docs);
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.users);
+                    res.form(resourceUtils.createCollectionResource(baseUrl, docs, "", "ud"), docs);
                 }
             });
         });
@@ -49,9 +49,20 @@ module.exports = function (app) {
                     next(new HTTPErrors.NotFoundError("User with id '%s' not found", req.params.id));
                 }
                 else {
-                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.admins + "/" + req.params.id);
-                    res.form(resourceUtils.createResource(baseUrl, docs[0]), docs[0]);
+                    var baseUrl = resourceUtils.createBaseUrl(req, config.urls.users + "/" + req.params.id);
+                    res.form(resourceUtils.createResource(baseUrl, docs[0]), docs[0], "ud");
                 }
             });
+        })
+        .put(function (req, res, next) {
+            commandService.send("changeUser").for("user").instance(req.params.id).with({payload: req.body}).go(res.handleEvent(function (evt) {
+                var baseUrl = resourceUtils.createBaseUrl(req, config.urls.users);
+                res.form(resourceUtils.createResource(baseUrl, evt.payload, "ud"), evt.payload);
+            }));
+        })
+        .delete(function (req, res, next) {
+            commandService.send("deleteUser").for("user").instance(req.params.id).go(res.handleEvent(function (evt) {
+                res.status(204).end();
+            }));
         });
 }
