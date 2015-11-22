@@ -5,6 +5,7 @@
 module controllers {
     export class DrinkDetailsController {
         public drink:any;
+        public edit:boolean = true;
 
         static $inject = [
             injections.angular.$log,
