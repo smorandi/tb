@@ -53,6 +53,7 @@ module controllers {
                 this.selectedOriginalUser.$put("update", {}, this.user)
                     .then(res => {
                         this.utils.replaceInArray(this.users, "id", res.id, res);
+                        this.logger.info("Change successfull", "User " + this.user.loginname + " has been changed", enums.LogOptions.toast);
                         this.showDetails(res);
                     })
                     .catch(err => {
@@ -77,6 +78,7 @@ module controllers {
                     this.selectedOriginalUser.$del("delete")
                         .then(res => {
                             this.utils.removeFromArray(this.users, "id", this.user.id);
+                            this.logger.info("Unregister successfull", "User " + this.user.loginname + " has been unregistered", enums.LogOptions.toast);
                             this.showDetails(null);
                         })
                         .catch(err => {
