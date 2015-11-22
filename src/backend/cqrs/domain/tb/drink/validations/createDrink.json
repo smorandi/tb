@@ -17,6 +17,7 @@
             "name",
             "description",
             "quantity",
+            "quantityUnit",
             "category",
             "basePrice",
             "minPrice",

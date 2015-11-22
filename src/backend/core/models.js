@@ -143,13 +143,14 @@ var Root = (function (_User3) {
     return Root;
 })(User);
 
-var Drink = function Drink(name, description, quantity, category, tags, basePrice, minPrice, maxPrice, priceStep) {
+var Drink = function Drink(name, description, quantity, quantityUnit, category, tags, basePrice, minPrice, maxPrice, priceStep) {
     _classCallCheck(this, Drink);
 
     this.id = null;
     this.name = name;
     this.description = description;
     this.quantity = quantity;
+    this.quantityUnit = quantityUnit;
     this.category = category;
     this.tags = tags;
     this.basePrice = basePrice;

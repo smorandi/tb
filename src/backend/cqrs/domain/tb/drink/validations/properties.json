@@ -9,7 +9,15 @@
       "type": "string"
     },
     "quantity": {
-      "type": "string"
+      "type": "number"
+    },
+    "quantityUnit": {
+      "enum": [
+        "mm",
+        "cl",
+        "dl",
+        "l"
+      ]
     },
     "category": {
       "enum": [

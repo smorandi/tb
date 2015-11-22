@@ -13,7 +13,8 @@ var drink = domain.defineAggregate({
     {
         name: "",
         description: "",
-        quantity: "",
+        quantity: 0,
+        quantityUnit: "",
         category: "",
         tags: [],
         basePrice: 0,
@@ -27,7 +28,7 @@ var drink = domain.defineAggregate({
 
 var createDrink = domain.defineCommand({
     name: "createDrink",
-    existing: false,
+    existing: false
 }, function (data, aggregate) {
     //enrich data with what we have in the aggregate atm...
     data = _.defaults(data, aggregate.attributes);
@@ -47,7 +48,7 @@ var drinkCreated = domain.defineEvent({
 
 var changeDrink = domain.defineCommand({
     name: "changeDrink",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
     data.modificationDate = new Date();
     aggregate.apply("drinkChanged", data);
@@ -75,7 +76,7 @@ var drinkDeleted = domain.defineEvent({
 
 var changePrice = domain.defineCommand({
     name: "changePrice",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
 
     var currentPrice = aggregate.get("priceTicks")[0].price;
@@ -96,7 +97,7 @@ var priceChanged = domain.defineEvent({
 
 var resetPrice = domain.defineCommand({
     name: "resetPrice",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
 
     var price = aggregate.get("priceTicks")[0].price;
@@ -168,7 +169,7 @@ module.exports = [drink,
     resetPrice, priceReset,
     // preconditions
     precondition_price_mustBeGreaterThanOrEqualMinPrice,
-    precondition_price_mustBeLowerThanOrEqualMaxPrice,
+    precondition_price_mustBeLowerThanOrEqualMaxPrice
     // business rules
     //businessRule_currentPrice_mustBeGreaterThanOrEqualBottomPrice,
     //businessRule_currentPrice_mustBeLowerThanOrEqualTopPrice
