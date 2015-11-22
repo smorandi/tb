@@ -66,7 +66,13 @@ var controllers;
             if (this.systemForm.$valid && this.isEdit) {
                 this.systemResource.$put("update", {}, this.system)
                     .then(function (res) {
-                    _this.$state.reload();
+                    _this.$state.reload()
+                        .then(function (res) {
+                        _this.logger.info("System Changed", "", enums.LogOptions.toast);
+                    })
+                        .catch(function (err) {
+                        _this.logger.error("Sign-Up Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
+                    });
                 })
                     .catch(function (err) {
                     _this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);

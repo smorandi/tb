@@ -1,5 +1,4 @@
-<form name="vm.form" class="form-horizontal" role="form" novalidate valdr-type="User"
-      ng-submit="vm.submit()">
+<form name="vm.form" class="form-horizontal" role="form" novalidate valdr-type="User">
     <div class="form-group form-group-sm" ng-class="{'has-error': vm.form.firstname.$invalid}">
         <label for="firstname" class="col-sm-3 control-label text-nowrap">First Name</label>
 
@@ -36,10 +35,10 @@
     <div class="form-group form-group-sm" ng-hide="vm.readOnly">
         <div class="col-sm-offset-3 col-sm-9">
                 <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vm.form.$invalid"
-                        ng-click="vm.submit"><span
+                        ng-click="vm.submit()"><span
                         class="glyphicon glyphicon-save"/> Save
                 </button>
-                <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel"><span
+                <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()"><span
                         class="glyphicon glyphicon-remove-circle"/> Cancel
                 </button>
         </div>

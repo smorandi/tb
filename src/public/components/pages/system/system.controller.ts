@@ -22,7 +22,7 @@ module controllers {
             this.systemResource = resource;
             _.assign(this.system, _.pick(this.systemResource, _.keys(this.system)));
             this.isRunning = this.systemResource.status === "running";
-            this.status =  this.isRunning ? "engine.status.running" : "engine.status.idle";
+            this.status = this.isRunning ? "engine.status.running" : "engine.status.idle";
         }
 
         public replay():void {
@@ -72,7 +72,13 @@ module controllers {
             if (this.systemForm.$valid && this.isEdit) {
                 this.systemResource.$put("update", {}, this.system)
                     .then(res => {
-                        this.$state.reload();
+                        this.$state.reload()
+                            .then(res => {
+                                this.logger.info("System Changed", "", enums.LogOptions.toast);
+                            })
+                            .catch(err => {
+                                this.logger.error("Sign-Up Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
+                            });
                     })
                     .catch(err => {
                         this.logger.error("Change Failed", JSON.stringify(err, undefined, 2), enums.LogOptions.toast);
