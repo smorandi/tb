@@ -83,6 +83,9 @@ module services {
             if (resource.$has(constants.RELS.system)) {
                 this.menu.navigationLinks[constants.RELS.system] = constants.LINKS.system;
             }
+            if (resource.$has(constants.RELS.users)) {
+                this.menu.navigationLinks[constants.RELS.users] = constants.LINKS.users;
+            }
         }
     }
 }

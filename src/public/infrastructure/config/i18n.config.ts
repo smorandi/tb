@@ -15,7 +15,6 @@ module config {
             });
 
             $translateProvider.preferredLanguage('en_US');
-
         }
     }
 }

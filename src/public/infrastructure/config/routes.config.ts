@@ -142,15 +142,35 @@ module config {
                         }
                     },
                     resolve: {
-                        systemResource: ($log, homeResource) => {
-                            $log.info("resolving system-resource...");
+                        logger: injections.services.loggerService,
+                        systemResource: (logger:services.LoggerService, homeResource) => {
+                            logger.info("resolving system-resource...");
                             return homeResource.$get("system").then(res => {
-                                $log.info("system-resource resolved...");
+                                logger.info("system-resource resolved...");
                                 return res;
                             });
                         },
                     },
-
+                })
+                .state("root.home.users", {
+                    url: "/users",
+                    views: {
+                        "content@root": {
+                            templateUrl: injections.components.page.users.template,
+                            controller: injections.components.page.users.controller,
+                            controllerAs: "vm"
+                        }
+                    },
+                    resolve: {
+                        logger: injections.services.loggerService,
+                        usersResource: (logger:services.LoggerService, homeResource) => {
+                            logger.info("resolving users-resource...");
+                            return homeResource.$get("users").then(res => {
+                                logger.info("users-resource resolved...");
+                                return res;
+                            });
+                        },
+                    },
                 })
                 .state("root.home.drinks", {
                     url: "/drinks",

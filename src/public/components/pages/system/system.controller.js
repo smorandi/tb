@@ -66,7 +66,6 @@ var controllers;
             if (this.systemForm.$valid && this.isEdit) {
                 this.systemResource.$put("update", {}, this.system)
                     .then(function (res) {
-                    _this.setSystemResource(res);
                     _this.$state.reload();
                 })
                     .catch(function (err) {

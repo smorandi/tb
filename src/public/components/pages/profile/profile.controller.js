@@ -11,11 +11,10 @@ var controllers;
             this.authService = authService;
             this.modal = modal;
             this.profileResource = profileResource;
-            this.user = new models.UserProfile();
             this.isEdit = false;
             this.logger.info("ProfileController called with client-url: " + $location.path());
             // assigns the values contained in the resource for which we have keys for...
-            _.assign(this.user, _.pick(this.profileResource, _.keys(this.user)));
+            this.user = angular.copy(profileResource);
         }
         ProfileController.prototype.edit = function () {
             this.isEdit = true;
@@ -45,11 +44,11 @@ var controllers;
         ProfileController.prototype.unregister = function () {
             var _this = this;
             var modalOptions = {
-                closeButtonText: "Cancel",
-                actionButtonText: "Unregister",
-                glyph: "glyphicon glyphicon-trash",
-                headerText: "Unregister",
-                bodyText: "Are you sure you want to unregister?"
+                headerText: "dialog.unregister.header",
+                bodyText: "dialog.unregister.body",
+                closeButtonText: "dialog.unregister.btn.cancel",
+                actionButtonText: "dialog.unregister.btn.unregister",
+                glyph: "glyphicon glyphicon-trash"
             };
             this.modal.showModal({}, modalOptions)
                 .then(function (res) {

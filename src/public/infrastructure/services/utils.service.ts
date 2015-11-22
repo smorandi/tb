@@ -30,5 +30,24 @@ module services {
             }
             return null;
         }
+
+        public replaceInArray<T>(array:Array<T>, property:string, value:any, replacement:T):void {
+            for (var i = 0; i < array.length; i++) {
+                var testee = array[i];
+                if (angular.equals(testee[property], value)) {
+                    array[i] = replacement;
+                }
+            }
+        }
+
+        public removeFromArray<T>(array:Array<T>, property:string, value:any):void {
+            for (var i = 0; i < array.length; i++) {
+                var testee = array[i];
+                if (angular.equals(testee[property], value)) {
+                    array.splice(i, 1);
+                    return;
+                }
+            }
+        }
     }
 }

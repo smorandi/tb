@@ -19,6 +19,11 @@ module injections {
             export var controller:string = "loginDialog-controller";
             export var template:string = "components/login/login-dialog.html";
         }
+        export module search {
+            export var directive:string = "search";
+            export var controller:string = "search-controller";
+            export var template:string = "components/search/search.html";
+        }
         export module dbItem {
             export module tile {
                 export var directive:string = "dbItemTile";
@@ -77,6 +82,10 @@ module injections {
             export module basket {
                 export var controller:string = "basket-controller";
                 export var template:string = "components/pages/basket/basket.html";
+            }
+            export module users {
+                export var controller:string = "users-controller";
+                export var template:string = "components/pages/users/users.html";
             }
             export module orders {
                 export module root {
@@ -167,7 +176,8 @@ module injections {
         export var $translateProvider:string = "$translateProvider";
         export var translate = "pascalprecht.translate";
         export var $exceptionHandler = "$exceptionHandler";
-        export var $filter = "$filter"
+        export var $filter = "$filter";
+        export var $translateService = "$translate";
     }
 
     export module uiRouter {

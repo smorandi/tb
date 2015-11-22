@@ -41,18 +41,20 @@ module constants {
         export var basket:string = "basket";
         export var orders:string = "orders";
         export var system:string = "system";
+        export var users:string = "users";
     }
 
     export module NAMES {
-        export var root:string = "Root";
-        export var home:string = "Home";
-        export var register:string = "Sign Up";
-        export var dashboard:string = "Dashboard";
-        export var profile:string = "Profile";
-        export var drinks:string = "Drinks";
-        export var basket:string = "Basket";
-        export var orders:string = "Orders";
-        export var system:string = "System";
+        export var root:string = "link.name.root";
+        export var home:string = "link.name.home";
+        export var register:string = "link.name.register";
+        export var dashboard:string = "link.name.dashboard";
+        export var profile:string = "link.name.profile";
+        export var drinks:string = "link.name.drinks";
+        export var basket:string = "link.name.basket";
+        export var orders:string = "link.name.orders";
+        export var system:string = "link.name.system";
+        export var users:string = "link.name.users";
     }
 
     export module STATES {
@@ -65,6 +67,7 @@ module constants {
         export var basket:string = "root.home.basket";
         export var orders:string = "root.home.orders.list";
         export var system:string = "root.home.system";
+        export var users:string = "root.home.users";
     }
 
     export module LINKS {
@@ -77,6 +80,7 @@ module constants {
         export var basket:interfaces.ILink = new models.Link(RELS.basket, NAMES.basket, STATES.basket);
         export var orders:interfaces.ILink = new models.Link(RELS.orders, NAMES.orders, STATES.orders);
         export var system:interfaces.ILink = new models.Link(RELS.system, NAMES.system, STATES.system);
+        export var users:interfaces.ILink = new models.Link(RELS.users, NAMES.users, STATES.users);
     }
 
     interface IRelToLinkMap {
@@ -93,6 +97,7 @@ module constants {
         [RELS.system]: LINKS.system,
         [RELS.basket]: LINKS.basket,
         [RELS.orders]: LINKS.orders,
+        [RELS.users]: LINKS.users,
     }
 
     export var CATEGORY_IMAGE_MAP = {

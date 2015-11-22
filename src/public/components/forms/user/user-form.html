@@ -1,31 +1,31 @@
 <form name="vm.form" class="form-horizontal" role="form" novalidate valdr-type="User"
       ng-submit="vm.submit()">
-    <div class="form-group" ng-class="{'has-error': vm.form.firstname.$invalid}">
-        <label for="firstname" class="col-sm-2 control-label">First Name</label>
+    <div class="form-group form-group-sm" ng-class="{'has-error': vm.form.firstname.$invalid}">
+        <label for="firstname" class="col-sm-3 control-label text-nowrap">First Name</label>
 
         <div valdr-form-group class="col-sm-9">
             <input type="text" ng-model="vm.data.firstname" class="form-control" id="firstname"
                    name="firstname" placeholder="First Name" autofocus ng-readonly="vm.readOnly"/>
         </div>
     </div>
-    <div class="form-group" ng-class="{'has-error': vm.form.lastname.$invalid}">
-        <label for="lastname" class="col-sm-2 control-label">Last Name</label>
+    <div class="form-group form-group-sm" ng-class="{'has-error': vm.form.lastname.$invalid}">
+        <label for="lastname" class="col-sm-3 control-label text-nowrap">Last Name</label>
 
         <div valdr-form-group class="col-sm-9">
             <input type="text" ng-model="vm.data.lastname" class="form-control" id="lastname"
                    name="lastname" placeholder="Last Name" ng-readonly="vm.readOnly"/>
         </div>
     </div>
-    <div class="form-group" ng-class="{'has-error': vm.form.loginname.$invalid}">
-        <label for="loginname" class="col-sm-2 control-label">Login Name</label>
+    <div class="form-group form-group-sm" ng-class="{'has-error': vm.form.loginname.$invalid}">
+        <label for="loginname" class="col-sm-3 control-label text-nowrap">Login Name</label>
 
         <div valdr-form-group class="col-sm-9">
             <input type="text" ng-model="vm.data.loginname" class="form-control" id="loginname"
                    name="loginname" placeholder="Login Name" ng-readonly="vm.readOnly"/>
         </div>
     </div>
-    <div class="form-group" ng-class="{'has-error': vm.form.password.$invalid}">
-        <label for="password" class="col-sm-2 control-label">Password</label>
+    <div class="form-group form-group-sm" ng-class="{'has-error': vm.form.password.$invalid}">
+        <label for="password" class="col-sm-3 control-label text-nowrap">Password</label>
 
         <div valdr-form-group class="col-sm-9">
             <input type="password" ng-model="vm.data.password" class="form-control" id="password"
@@ -33,6 +33,15 @@
         </div>
     </div>
 
-    <!--this is to enable handling when enter key is pressed-->
-    <input ng-show="false" type="submit" id="submit" value="Submit"/>
+    <div class="form-group form-group-sm" ng-hide="vm.readOnly">
+        <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vm.form.$invalid"
+                        ng-click="vm.submit()"><span
+                        class="glyphicon glyphicon-save"/> Save
+                </button>
+                <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()"><span
+                        class="glyphicon glyphicon-remove-circle"/> Cancel
+                </button>
+        </div>
+    </div>
 </form>

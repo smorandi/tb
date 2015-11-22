@@ -4,7 +4,7 @@
 
 module controllers {
     export class ProfileController {
-        private user = new models.UserProfile();
+        private user:any;
         private userForm:ng.IFormController;
         private isEdit:boolean = false;
 
@@ -26,8 +26,9 @@ module controllers {
                     private profileResource) {
             this.logger.info("ProfileController called with client-url: " + $location.path());
 
+
             // assigns the values contained in the resource for which we have keys for...
-            _.assign(this.user, _.pick(this.profileResource, _.keys(this.user)));
+            this.user = angular.copy(profileResource);
         }
 
         public edit():void {
@@ -59,11 +60,11 @@ module controllers {
 
         public unregister():void {
             var modalOptions = {
-                closeButtonText: "Cancel",
-                actionButtonText: "Unregister",
+                headerText: "dialog.unregister.header",
+                bodyText: "dialog.unregister.body",
+                closeButtonText: "dialog.unregister.btn.cancel",
+                actionButtonText: "dialog.unregister.btn.unregister",
                 glyph: "glyphicon glyphicon-trash",
-                headerText: "Unregister",
-                bodyText: "Are you sure you want to unregister?"
             };
 
             this.modal.showModal({}, modalOptions)

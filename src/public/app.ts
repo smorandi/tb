@@ -46,6 +46,10 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .directive(injections.components.dbItem.flat.directive, directives.DbItemFlat)
     .controller(injections.components.dbItem.flat.controller, controllers.DbItemController)
 
+    //search
+    .directive(injections.components.search.directive, directives.Search)
+    .controller(injections.components.search.controller, controllers.SearchController)
+
     //dashboard
     .controller(injections.components.page.dashboard.controller, controllers.DashboardController)
 
@@ -54,6 +58,9 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
 
     //system
     .controller(injections.components.page.system.controller, controllers.SystemController)
+
+    //users
+    .controller(injections.components.page.users.controller, controllers.UsersController)
 
     //orders
     .controller(injections.components.page.orders.list.controller, controllers.OrdersListController)

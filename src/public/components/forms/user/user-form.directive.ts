@@ -12,6 +12,7 @@ module directives {
             controllerAs: "vm",
             bindToController: {
                 submit: "&",
+                cancel: "&",
                 readOnly: "=",
                 data: "=",
                 form: "="

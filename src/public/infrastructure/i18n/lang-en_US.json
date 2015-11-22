@@ -4,6 +4,13 @@
   "dialog.login.btn.login": "Login",
   "dialog.login.btn.cancel": "Cancel",
 
+  "dialog.unregister.header": "Unregister {{value}}",
+  "dialog.unregister.body": "Are you sure you want to unregister {{value}}?",
+  "dialog.unregister.btn.cancel": "Cancel",
+  "dialog.unregister.btn.unregister": "Unregister",
+
+
+
   "page.profile.header.title": "Profile",
   "page.profile.header.subtitle": "Displays your registration details",
   "page.profile.details.title": "User Details",
@@ -20,15 +27,45 @@
 
   "page.basket.header.title": "Basket",
   "page.basket.header.subtitle": "Displays your basket items",
+
   "page.dashboard.header.title": "Dashboard",
   "page.dashboard.header.subtitle": "Browse through the available drinks",
+
   "page.orders.header.title": "Orders",
   "page.orders.header.subtitle": "Displays your order history",
+
   "page.drinks.header.title": "Drinks",
   "page.drinks.header.subtitle": "Displays all the available drinks",
 
+  "page.users.header.title": "Users",
+  "page.users.header.subtitle": "Displays all the users of the system",
+  "page.users.list.title": "User - List",
+  "page.users.details.title": "User - Details",
+
+
+
   "engine.status.idle": "Idle",
   "engine.status.running": "Running",
+
+
+
+  "link.name.root": "Root",
+  "link.name.home": "Home",
+  "link.name.register": "Sign Up",
+  "link.name.dashboard": "Dashboard",
+  "link.name.profile": "Profile",
+  "link.name.drinks": "Drinks",
+  "link.name.basket": "Basket",
+  "link.name.orders": "Orders",
+  "link.name.system": "System",
+  "link.name.users": "Users",
+
+
+
+  "action.login": "Login",
+  "action.logout": "Logout",
+
+
 
   "NAME" : "Name",
   "QUANTITY" : "Quantity",

@@ -45,6 +45,7 @@
 /// <reference path="components/pages/basket/basket.controller.ts" />
 /// <reference path="components/pages/orders/list/orders-list.controller.ts" />
 /// <reference path="components/pages/orders/details/order-detail.controller.ts" />
+/// <reference path="components/pages/users/users.controller.ts" />
 /// <reference path="components/header/header.directive.ts" />
 /// <reference path="components/header/header.controller.ts" />
 /// <reference path="components/footer/footer.directive.ts" />
@@ -53,6 +54,10 @@
 /// <reference path="components/dbItem/dbItem.controller.ts" />
 /// <reference path="components/dbItem/tile/dbItem-tile.directive.ts" />
 /// <reference path="components/dbItem/flat/dbItem-flat.directive.ts" />
+
+/// <reference path="components/search/search.controller.ts" />
+/// <reference path="components/search/search.directive.ts" />
+
 /// <reference path="components/forms/user/user-form.directive.ts" />
 /// <reference path="components/forms/user/user-form.controller.ts" />
 /// <reference path="components/forms/system/system-form.directive.ts" />

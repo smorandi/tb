@@ -72,7 +72,6 @@ module controllers {
             if (this.systemForm.$valid && this.isEdit) {
                 this.systemResource.$put("update", {}, this.system)
                     .then(res => {
-                        this.setSystemResource(res);
                         this.$state.reload();
                     })
                     .catch(err => {

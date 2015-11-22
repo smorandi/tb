@@ -23,29 +23,15 @@
                     <div class="flex-container-row flex-align-items-center">
                         <strong class="flex-auto">{{"page.system.properties.title" | translate}}</strong>
 
-                        <div ng-switch on="vm.isEdit">
-                            <div ng-switch-when="true">
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-primary" ng-disabled="vm.systemForm.$invalid" ng-click="vm.save()"><span
-                                            class="glyphicon glyphicon-save"/> Save
-                                    </button>
-                                    <button type="button" class="btn btn-default" ng-click="vm.cancel()"><span
-                                            class="glyphicon glyphicon-remove-circle"/> Cancel
-                                    </button>
-                                </div>
-                            </div>
-                            <div ng-switch-when="false">
-                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                    <button type="button" class="btn btn-primary" ng-click="vm.edit()"><span
-                                            class="glyphicon glyphicon-edit"/> Edit
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                            <button type="button" class="btn btn-primary" ng-click="vm.edit()"><span
+                                    class="glyphicon glyphicon-edit"/> Edit
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <system-form data="vm.system" form="vm.systemForm" submit="vm.save()"
+                    <system-form data="vm.system" form="vm.systemForm" submit="vm.save()" cancel="vm.cancel()"
                                  read-only="!vm.isEdit"></system-form>
                 </div>
             </div>

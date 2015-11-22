@@ -8,29 +8,18 @@
                     <div class="flex-container-row flex-align-items-center">
                         <strong class="flex-auto">{{"page.profile.details.title" | translate}}</strong>
 
-                        <div ng-switch on="vm.isEdit">
-                            <div ng-switch-when="true">
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-primary" ng-disabled="vm.userForm.$invalid" ng-click="vm.save()"><span
-                                            class="glyphicon glyphicon-save"/> Save
-                                    </button>
-                                    <button type="button" class="btn btn-default" ng-click="vm.cancel()"><span
-                                            class="glyphicon glyphicon-remove-circle"/> Cancel
-                                    </button>
-                                </div>
-                            </div>
-                            <div ng-switch-when="false">
-                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                    <button type="button" class="btn btn-primary" ng-click="vm.edit()"><span
-                                            class="glyphicon glyphicon-edit"/> Edit
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                            <button type="button" class="btn btn-primary" ng-click="vm.edit()"><span
+                                    class="glyphicon glyphicon-edit"/> Edit
+                            </button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.unregister()"><span
+                                    class="glyphicon glyphicon-trash"/> Unregister
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <user-form data="vm.user" form="vm.userForm" submit="vm.save()" read-only="!vm.isEdit"></user-form>
+                    <user-form data="vm.user" form="vm.userForm" submit="vm.save()" cancel="vm.cancel()" read-only="!vm.isEdit"></user-form>
                 </div>
             </div>
         </div>
@@ -41,13 +30,11 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"><strong>{{"page.profile.properties.title" | translate}}</strong>
                         </div>
-                        <div class="panel-body" ng-include="'components/pages/profile/profile-information.html'"/>
+                        <div class="panel-body">
+                            <div ng-include="'components/pages/profile/profile-information.html'">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-12">
-                    <button type="button" class="btn btn-danger btn-lg" ng-click="vm.unregister()"><span
-                            class="glyphicon glyphicon-trash"/> Unregister
-                    </button>
                 </div>
             </div>
         </div>
