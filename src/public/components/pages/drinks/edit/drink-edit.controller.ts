@@ -5,6 +5,7 @@
 module controllers {
     export class DrinkEditController {
         drink:any;
+        public edit:boolean = false;
 
         static $inject = [
             injections.angular.$log,
@@ -34,7 +35,6 @@ module controllers {
                 } catch(e){
                     this.logger.error("Error", err, enums.LogOptions.toast);
                 }
-                //this.utilsService.alert(JSON.stringify(err, undefined, 2));
             });
         }
     }

@@ -10,6 +10,7 @@ var controllers;
             this.utilsService = utilsService;
             this.drinkResource = drinkResource;
             this.logger = logger;
+            this.edit = false;
             $log.info("DrinkEditController called with client-url: " + $location.path());
             //as we cannot directly edit the read-only instance of resource, we clone it...
             this.drink = JSON.parse(JSON.stringify(drinkResource));
@@ -26,7 +27,6 @@ var controllers;
                 catch (e) {
                     _this.logger.error("Error", err, enums.LogOptions.toast);
                 }
-                //this.utilsService.alert(JSON.stringify(err, undefined, 2));
             });
         };
         DrinkEditController.$inject = [

@@ -36,5 +36,7 @@
   "PIECE" : "Piece",
   "DELETE" : "Delete",
   "TOTAL" : "Total",
-  "CREATE_ORDER" : "Order"
+  "CREATE_ORDER" : "Order",
+  "LIST_DRINKS" : "List of drinks",
+  "DETAILS_FOR" : "Details for"
 }

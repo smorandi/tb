@@ -25,5 +25,7 @@
   "PIECE" : "Piece",
   "DELETE" : "Delete",
   "TOTAL" : "Total",
-  "CREATE_ORDER" : "Order"
+  "CREATE_ORDER" : "Order",
+  "LIST_DRINKS" : "Liste der Getränke",
+  "DETAILS_FOR" : "Deatail für"
 }

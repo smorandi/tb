@@ -10,6 +10,7 @@ var controllers;
             this.utilsService = utilsService;
             this.drinkResource = drinkResource;
             this.logger = logger;
+            this.edit = true;
             $log.info("DrinkDetailsController called with client-url: " + $location.path());
             this.drink = drinkResource;
         }
