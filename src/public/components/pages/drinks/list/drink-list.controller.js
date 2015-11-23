@@ -31,23 +31,21 @@ var controllers;
             }
             event.stopPropagation();
         };
-        DrinkListController.prototype.deleteAllDrinks = function (event) {
-            var _this = this;
-            if (this.canDeleteAllDrinks()) {
-                if (this.utilsService.showPopup('Really delete all drinks?')) {
-                    this.drinksResource.$del("delete").then(function (res) { return _this.$state.go("drinks", {}, { reload: true }); });
-                }
-                event.stopPropagation();
-            }
-        };
         DrinkListController.prototype.createNewDrink = function () {
-            this.$state.go("root.home.drinks.newDrink");
+            this.$state.go("root.home.drinks.overview.list.newDrink");
         };
         DrinkListController.prototype.viewDrink = function (drink) {
             this.activeItem = drink.id;
             this.$state.go("root.home.drinks.overview.list.details", { id: drink.id });
         };
-        DrinkListController.$inject = [injections.angular.$log, injections.angular.$location, injections.uiRouter.$stateService, injections.services.utilsService, "drinksResource", "drinkResources"];
+        DrinkListController.$inject = [
+            injections.angular.$log,
+            injections.angular.$location,
+            injections.uiRouter.$stateService,
+            injections.services.utilsService,
+            "drinksResource",
+            "drinkResources"
+        ];
         return DrinkListController;
     })();
     controllers.DrinkListController = DrinkListController;

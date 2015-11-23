@@ -76,5 +76,8 @@
   "TOTAL" : "Total",
   "CREATE_ORDER" : "Order",
   "LIST_DRINKS" : "List of drinks",
-  "DETAILS_FOR" : "Details for"
+  "DETAILS_FOR" : "Details for",
+  "NEW_DRINK" : "New drink",
+  "BASKET" : "Basket",
+  "ORDER": "My order"
 }

@@ -42,16 +42,16 @@ module controllers {
                     aSpanClass: "glyphicon glyphicon-th-list",
                     aSpanTxt: "List"
                 },
-                {
-                    id: this.STATE_ORDER,
-                    aSpanClass: "glyphicon glyphicon-shopping-cart",
-                    aSpanTxt: "Order"
-                },
-                {
-                    id: this.STATE_CLEAR,
-                    aSpanClass: "glyphicon glyphicon-trash",
-                    aSpanTxt: "Clear"
-                }
+                //{
+                //    id: this.STATE_ORDER,
+                //    aSpanClass: "glyphicon glyphicon-shopping-cart,
+                //    aSpanTxt: "Order"
+                //},
+                //{
+                //    id: this.STATE_CLEAR,
+                //    aSpanClass: "glyphicon glyphicon-trash",
+                //    aSpanTxt: "Clear"
+                //}"
             ];
 
             footer.setFooterItems(this.Links);
@@ -64,11 +64,15 @@ module controllers {
 
             var total = 0;
             for (var y = 0; y < this.basketResourceItems.length; y++) {
-                var dashItem; var priceItem;var tickprice;var dashItemId;var image;
+                var dashItem;
+                var priceItem;
+                var tickprice;
+                var dashItemId;
+                var image;
                 dashItem = this.getItemFromDashboard(this.basketResourceItems[y].item.id);
                 if (dashItem) {
                     priceItem = this.pricePerItem(dashItem.tick.price, this.basketResourceItems[y].number);
-                    tickprice =  dashItem.tick.price;
+                    tickprice = dashItem.tick.price;
                     dashItemId = dashItem.id;
                     image = this.getImageForItem(dashItem.category);
                 }
@@ -141,8 +145,10 @@ module controllers {
             if (item) {
                 item.basket.$del("delete")
                     .then(res => {
-                        this.logger.info("", "item removed", enums.LogOptions.toast);
-                        this.$state.reload();
+                        this.$state.reload()
+                            .then(res=> {
+                                this.logger.info("Item removed", "", enums.LogOptions.toast);
+                            });
                     })
                     .catch(err => {
                         this.logger.error("Failed to Remove Item", err, enums.LogOptions.toast);
@@ -155,8 +161,11 @@ module controllers {
         public createOrder() {
             this.basketResource.$post("createOrder")
                 .then(res => {
-                    this.$state.reload();
-                    this.logger.info("Order send", "", enums.LogOptions.toast);
+                    this.$state.reload()
+                        .then(res=> {
+                        this.logger.info("Order placed", "", enums.LogOptions.toast);
+                    });
+
                 })
                 .catch(err => {
                     this.logger.error("Failed to Create Order", err, enums.LogOptions.toast);
@@ -167,15 +176,14 @@ module controllers {
             for (var i = 0; i < this.basketItems.length; i++) {
                 this.basketItems[i].basket.$del("delete")
                     .then(res => {
-
+                        this.$state.reload().then(res=> {
+                            this.logger.info("Whole items removed", "", enums.LogOptions.toast);
+                        });
                     })
                     .catch(err => {
                         this.logger.error("Failed to Remove Item", err, enums.LogOptions.toast);
                     });
             }
-
-            this.logger.info("", "whole items removed", enums.LogOptions.toast);
-            this.$state.reload();
         }
 
         public callbackFooter(filter:string) {
@@ -197,7 +205,10 @@ module controllers {
                 item.basket.number = Number(item.basket.number) + 1;
                 item.basket.$put("update", null, item.basket)
                     .then(res => {
-                        this.$state.reload();
+                        this.$state.reload()
+                            .then(res=> {
+                                this.logger.info("Basket updated", "", enums.LogOptions.toast);
+                            });
                     })
                     .catch(err => {
                         this.logger.error("Failed to update Item", err, enums.LogOptions.toast);
@@ -214,7 +225,10 @@ module controllers {
                     item.basket.number = number;
                     item.basket.$put("update", null, item.basket)
                         .then(res => {
-                            this.$state.reload();
+                            this.$state.reload()
+                                .then(res=> {
+                                    this.logger.info("Basket updated", "", enums.LogOptions.toast);
+                                });
                         })
                         .catch(err => {
                             this.logger.error("Failed to update Item", err, enums.LogOptions.toast);

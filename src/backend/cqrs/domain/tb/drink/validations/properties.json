@@ -13,7 +13,7 @@
     },
     "quantityUnit": {
       "enum": [
-        "mm",
+        "ml",
         "cl",
         "dl",
         "l"

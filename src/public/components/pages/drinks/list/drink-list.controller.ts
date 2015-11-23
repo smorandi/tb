@@ -7,7 +7,14 @@ module controllers {
         public query:string;
         public activeItem:string;
 
-        static $inject = [injections.angular.$log, injections.angular.$location, injections.uiRouter.$stateService, injections.services.utilsService, "drinksResource", "drinkResources"];
+        static $inject = [
+            injections.angular.$log,
+            injections.angular.$location,
+            injections.uiRouter.$stateService,
+            injections.services.utilsService,
+            "drinksResource",
+            "drinkResources"
+        ];
 
         constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:services.UtilsService, private drinksResource, private drinkResources) {
             $log.info("DrinkListController called with client-url: " + $location.path());
@@ -35,17 +42,8 @@ module controllers {
             event.stopPropagation();
         }
 
-        public deleteAllDrinks(event:Event):void {
-            if (this.canDeleteAllDrinks()) {
-                if (this.utilsService.showPopup('Really delete all drinks?')) {
-                    this.drinksResource.$del("delete").then(res => this.$state.go("drinks", {}, {reload: true}));
-                }
-                event.stopPropagation();
-            }
-        }
-
         public createNewDrink():void {
-            this.$state.go("root.home.drinks.newDrink");
+            this.$state.go("root.home.drinks.overview.list.newDrink");
         }
 
         public viewDrink(drink:any):void {

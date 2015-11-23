@@ -1,3 +1,10 @@
-<form class="form-horizontal" role="form" ng-submit="vm.createDrink()">
-    <div ng-include="'components/pages/drinks/drink-form.html'"/>
-</form>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong> {{ "NEW_DRINK" | translate}} {{vm.drink.name}}</strong>
+    </div>
+    <div class="panel-body">
+        <drink-form data="vm.drink" form="vm.drinkForm" submit="vm.createDrink()" cancel="vm.cancel()"
+                    read-only="vm.edit">
+        </drink-form>
+    </div>
+</div>

@@ -1,7 +1,12 @@
 <div class="container-fluid">
     <page-header title="page.orders.header.title" subtitle="page.orders.header.subtitle"></page-header>
 
-    <div class="panel-body">
-        <div ui-view/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong> {{ "ORDERS" | translate}} {{vm.drink.name}}</strong>
+        </div>
+        <div class="panel-body">
+            <div ui-view/>
+        </div>
     </div>
 </div>

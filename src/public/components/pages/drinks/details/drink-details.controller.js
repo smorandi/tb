@@ -13,7 +13,6 @@ var controllers;
             this.edit = true;
             this.drink = new models.DrinkProperties();
             $log.info("DrinkDetailsController called with client-url: " + $location.path());
-            //this.drink = drinkResource;
             this.setDrinkResource(drinkResource);
         }
         DrinkDetailsController.prototype.setDrinkResource = function (resource) {
@@ -29,7 +28,21 @@ var controllers;
         DrinkDetailsController.prototype.deleteDrink = function (event) {
             var _this = this;
             if (this.utilsService.showPopup("Really delete this?")) {
-                this.drinkResource.$del("delete").then(function (res) { return _this.$state.go(constants.STATES.drinks, null, { reload: true }); });
+                this.drinkResource.$del("delete")
+                    .then(function (res) {
+                    _this.$state.go(constants.STATES.drinks, null, { reload: true })
+                        .then(function (res) {
+                        _this.logger.info("The drink has been deleted!", null, enums.LogOptions.toast);
+                    });
+                })
+                    .catch(function (err) {
+                    try {
+                        _this.logger.error(err.data.name, err.data.message, enums.LogOptions.toast);
+                    }
+                    catch (e) {
+                        _this.logger.error("Error", err, enums.LogOptions.toast);
+                    }
+                });
             }
             event.stopPropagation();
         };

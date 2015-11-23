@@ -21,7 +21,6 @@ module controllers {
         ) {
             $log.info("DrinkDetailsController called with client-url: " + $location.path());
 
-            //this.drink = drinkResource;
             this.setDrinkResource(drinkResource);
         }
 
@@ -40,7 +39,20 @@ module controllers {
 
         public deleteDrink(event:Event):void {
             if (this.utilsService.showPopup("Really delete this?")) {
-                this.drinkResource.$del("delete").then(res => this.$state.go(constants.STATES.drinks, null, {reload : true}));
+                this.drinkResource.$del("delete")
+                    .then(res => {
+                        this.$state.go(constants.STATES.drinks, null, {reload : true})
+                        .then(res => {
+                                this.logger.info("The drink has been deleted!", null, enums.LogOptions.toast);
+                            });
+                    })
+                    .catch(err => {
+                        try {
+                            this.logger.error(err.data.name, err.data.message, enums.LogOptions.toast);
+                        } catch (e) {
+                            this.logger.error("Error", err, enums.LogOptions.toast);
+                        }
+                    });
             }
             event.stopPropagation();
         }
