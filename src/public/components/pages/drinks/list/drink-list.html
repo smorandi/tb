@@ -12,7 +12,6 @@
                     <div class="col-xs-4 col-sm-4 col-md-4">
                         <input type="search" class="form-control" ng-model="vm.query"
                                placeholder="Search for...">
-                        <!--<input type="search" ng-model="vm.query"/>-->
                     </div>
                     <div class="col-xs-2 col-sm-2 col-md-2">
                         <a class="btn btn-primary nodecoration" ng-click="vm.createNewDrink()"
@@ -20,12 +19,6 @@
                             Add New Drink
                         </a>
                     </div>
-                    <!--<div class="col-xs-2 col-sm-2 col-md-2">-->
-                        <!--<a class="btn btn-danger" ng-show="vm.drinksResource.$has('delete')"-->
-                           <!--ng-click="vm.deleteAllDrinks($event)">-->
-                            <!--Delete-->
-                        <!--</a>-->
-                    <!--</div>-->
                 </div>
             </div>
         </div>
@@ -45,7 +38,8 @@
 
         <div class="list-group">
             <a class="list-group-item" ng-repeat="drink in vm.drinkResources | filter: vm.query"
-               ui-sref-active="selected" ng-click="vm.viewDrink(drink)" ng-class="{'active': vm.activeItem == drink.id}" >
+               ui-sref-active="selected" ng-click="vm.viewDrink(drink)"
+               ng-class="{'active': vm.activeItem == drink.id}">
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6">
                         <p>{{drink.name}}</p>
@@ -53,11 +47,6 @@
                     <div class="col-xs-3 col-sm-3 col-md-3">
                         <p>{{drink.id}}</p>
                     </div>
-                    <!--<div class="col-xs-3 col-sm-3 col-md-3">-->
-                        <!--<button type="button" class="btn btn-danger" ng-show="vm.canDelete(drink)"-->
-                                <!--ng-click="vm.deleteDrink(drink, $event)">Delete-->
-                        <!--</button>-->
-                    <!--</div>-->
                 </div>
             </a>
         </div>

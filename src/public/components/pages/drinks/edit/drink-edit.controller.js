@@ -3,11 +3,10 @@
 var controllers;
 (function (controllers) {
     var DrinkEditController = (function () {
-        function DrinkEditController($log, $location, $state, utilsService, drinkResource, logger) {
+        function DrinkEditController($log, $location, $state, drinkResource, logger) {
             this.$log = $log;
             this.$location = $location;
             this.$state = $state;
-            this.utilsService = utilsService;
             this.drinkResource = drinkResource;
             this.logger = logger;
             this.edit = false;
@@ -15,26 +14,14 @@ var controllers;
             //as we cannot directly edit the read-only instance of resource, we clone it...
             this.drink = JSON.parse(JSON.stringify(drinkResource));
         }
-        DrinkEditController.prototype.updateDrink = function () {
-            var _this = this;
-            this.drinkResource.$put("update", {}, this.drink).then(function (res) {
-                _this.logger.error("The drink has been updated!", null, enums.LogOptions.toast_only);
-                _this.$state.go("^", {}, { reload: true });
-            }).catch(function (err) {
-                try {
-                    _this.logger.error(err.data.name, err.data.message, enums.LogOptions.toast);
-                }
-                catch (e) {
-                    _this.logger.error("Error", err, enums.LogOptions.toast);
-                }
-            });
-        };
         DrinkEditController.prototype.save = function () {
             var _this = this;
             if (this.drinkForm.$valid) {
                 this.drinkResource.$put("update", {}, this.drink).then(function (res) {
-                    _this.logger.error("The drink has been updated!", null, enums.LogOptions.toast_only);
-                    _this.$state.go("^", {}, { reload: true });
+                    _this.$state.go("^", {}, { reload: true })
+                        .then(function (res) {
+                        _this.logger.info("The drink has been updated!", null, enums.LogOptions.toast);
+                    });
                 }).catch(function (err) {
                     try {
                         _this.logger.error(err.data.name, err.data.message, enums.LogOptions.toast);
@@ -45,11 +32,13 @@ var controllers;
                 });
             }
         };
+        DrinkEditController.prototype.cancel = function () {
+            this.$state.go("^", {}, { reload: true });
+        };
         DrinkEditController.$inject = [
             injections.angular.$log,
             injections.angular.$location,
             injections.uiRouter.$stateService,
-            injections.services.utilsService,
             "drinkResource",
             injections.services.loggerService,
         ];

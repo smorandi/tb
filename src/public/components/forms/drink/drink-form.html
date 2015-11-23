@@ -42,12 +42,12 @@
         <label for="quantity" class="col-sm-2 control-label">Quantity</label>
 
         <div valdr-form-group class="col-sm-4">
-            <input type="text" ng-model="vm.data.quantity" class="form-control col-sm-5" id="quantity" name="quantity"
+            <input type="number" ng-model="vm.data.quantity" class="form-control col-sm-5" id="quantity" name="quantity"
                    placeholder="Quantity" ng-readonly="vm.readOnly"/>
         </div>
         <div class="col-sm-4">
-            <div ng-if="vm.readOnly == false">
-                <select class="form-control col-sm-4" ng-model="vm.data.quantityUnit" id="quantityUnit">
+            <div valdr-form-group ng-if="vm.readOnly == false">
+                <select class="form-control col-sm-4" ng-model="vm.data.quantityUnit" id="quantityUnit" name="quantityUnit">
                     <option>ml</option>
                     <option>cl</option>
                     <option>dl</option>
@@ -64,8 +64,7 @@
             </span>
         </div>
     </div>
-    <div class="form-group"
-         ng-class="{'has-error': vm.form.basePrice.$invalid, 'has-success': vm.form.basePrice.$valid}">
+    <div class="form-group">
         <label for="basePrice" class="col-sm-2 control-label">Base Price</label>
 
         <div valdr-form-group class="col-sm-8">

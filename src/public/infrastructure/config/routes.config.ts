@@ -207,16 +207,6 @@ module config {
                         },
                     },
                 })
-                .state("root.home.drinks.newDrink", { //state for adding a new drink
-                    url: "/new",
-                    views: {
-                        "@root.home.drinks": {
-                            templateUrl: injections.components.page.drinks.create.template,
-                            controller: injections.components.page.drinks.create.controller,
-                            controllerAs: "vm"
-                        }
-                    },
-                })
                 .state("root.home.drinks.overview", {
                     url: "",
                     abstract: true,
@@ -235,6 +225,16 @@ module config {
                         }
                     }
                 })
+                .state("root.home.drinks.overview.list.newDrink", { //state for adding a new drink
+                    url: "/new",
+                    views: {
+                        "det@root.home.drinks.overview": {
+                            templateUrl: injections.components.page.drinks.create.template,
+                            controller: injections.components.page.drinks.create.controller,
+                            controllerAs: "vm"
+                        }
+                    },
+                })
                 .state("root.home.drinks.overview.list.details", { //state for showing single drink
                     url: "/:id",
                     views: {
@@ -245,7 +245,6 @@ module config {
                         }
                     },
                     resolve: {
-                        utilsService: injections.services.utilsService,
                         drinkResource: ($log, drinkResources:Array<any>, $location, $state:ng.ui.IStateService, $stateParams:ng.ui.IStateParamsService, utilsService:services.UtilsService) => {
                             var drinkResource = utilsService.findInArray(drinkResources, dr => dr.id === $stateParams["id"]);
                             return drinkResource;

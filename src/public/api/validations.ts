@@ -87,6 +87,11 @@ module validations {
                     "message": "The value must be the pattern x.xx",
                 }
             },
+            "quantityUnit": {
+                "required": {
+                    "message": "This value is required."
+                }
+            },
             "basePrice": {
                 "required": {
                     "message": "This value is required."
@@ -122,6 +127,11 @@ module validations {
                     "value": "/^[0-9]+(\.[0-9]{1,2})?$/",
                     "message": "The value must be the pattern x.xx",
                 }
+            },
+            "category":{
+                "required": {
+                    "message": "This value is required."
+                },
             }
         }
     };

@@ -1,12 +1,33 @@
 <div class="container-fluid">
     <page-header title="page.basket.header.title" subtitle="page.basket.header.subtitle"></page-header>
 
-    <div ng-switch on="vm.currentFilter">
-        <div ng-switch-when="tile">
-            <div ng-include="'components/pages/basket/basket-tile.html'"></div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong> {{ "BASKET" | translate}}</strong>
         </div>
-        <div ng-switch-when="list">
-            <div ng-include="'components/pages/basket/basket-list.html'"></div>
+        <div class="panel-body">
+            <div class="list-group">
+                <div class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-2 col-sm1 col-md-1">
+                            <button type="button" class="btn btn-success glyphicon glyphicon-shopping-cart" ng-click="vm.createOrder()">Order</button>
+                        </div>
+                        <div class="col-xs-2 col-sm1 col-md-1">
+                            <button type="button" class="btn btn-primary glyphicon glyphicon-trash" ng-click="vm.clearWholeBasket()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-switch on="vm.currentFilter">
+                <div ng-switch-when="tile">
+                    <div ng-include="'components/pages/basket/basket-tile.html'"></div>
+                </div>
+                <div ng-switch-when="list">
+                    <div ng-include="'components/pages/basket/basket-list.html'"></div>
+                </div>
+            </div>
+
         </div>
     </div>
 

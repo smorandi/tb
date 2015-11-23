@@ -27,5 +27,8 @@
   "TOTAL" : "Total",
   "CREATE_ORDER" : "Order",
   "LIST_DRINKS" : "Liste der Getränke",
-  "DETAILS_FOR" : "Deatail für"
+  "DETAILS_FOR" : "Deatail für",
+  "NEW_DRINK" : "Neues Getränk",
+  "BASKET" : "Warenkorb",
+  "ORDER": "Meine Bestellungen"
 }
