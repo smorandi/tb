@@ -18,7 +18,9 @@
         </div>
 
         <div class="col-xs-12 col-sm-8">
-            <div class="panel panel-default" ng-class="{'panel-danger': vm.systemForm.$invalid}">
+            <div class="panel panel-default"
+                 ng-class="{'panel-danger': vm.systemForm.$invalid && vm.isEdit,
+                            'panel-success': vm.systemForm.$valid && vm.isEdit}">
                 <div class="panel-heading">
                     <div class="flex-container-row flex-align-items-center">
                         <strong class="flex-auto">{{"page.system.properties.title" | translate}}</strong>

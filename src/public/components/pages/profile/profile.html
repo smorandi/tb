@@ -3,7 +3,9 @@
 
     <div class="row">
         <div class=" col-xs-12 col-sm-7">
-            <div class="panel panel-default" ng-class="{'panel-danger': vm.userForm.$invalid}">
+            <div class="panel panel-default"
+                 ng-class="{'panel-danger': vm.userForm.$invalid && vm.isEdit,
+                            'panel-success': vm.userForm.$valid && vm.isEdit}">
                 <div class="panel-heading">
                     <div class="flex-container-row flex-align-items-center">
                         <strong class="flex-auto">{{"page.profile.details.title" | translate}}</strong>

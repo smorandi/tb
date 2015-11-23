@@ -11,7 +11,7 @@ module config {
 
         constructor(valdrProvider:any, valdrMessageProvider:any) {
             valdrProvider.addConstraints(validations.ValidationSchemas);
-            //valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
+            valdrMessageProvider.setTemplate('<div class="valdr-message control-label">{{ violation.message }}</div>');
         }
     }
 }

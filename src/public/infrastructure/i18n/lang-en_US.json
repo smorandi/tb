@@ -39,8 +39,9 @@
 
   "page.users.header.title": "Users",
   "page.users.header.subtitle": "Displays all the users of the system",
-  "page.users.list.title": "User - List",
-  "page.users.details.title": "User - Details",
+  "page.users.list.title": "User List",
+  "page.users.details.title": "Details for {{value}}",
+  "page.users.properties.title": "User Properties for {{value}}",
 
 
 
