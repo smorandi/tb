@@ -1,3 +1,15 @@
-<form name="drinkForm" class="form-horizontal" role="form" ng-submit="vm.updateDrink()">
-    <div ng-include="'components/pages/drinks/drink-form.html'"/>
-</form>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong> {{ "DETAILS_FOR" | translate}} {{vm.drink.name}}</strong>
+        <a class="btn btn-primary" ng-show="vm.canEdit()" ng-click="vm.editDrink()">Edit</a>
+        <a class="btn btn-danger" ng-show="vm.canDelete()" ng-click="vm.deleteDrink($event)">Delete</a>
+    </div>
+    <div class="panel-body">
+        <drink-form data="vm.drink" form="vm.drinkForm" submit="vm.save()" cancel="vm.cancel()"
+                    read-only="vm.edit">
+        </drink-form>
+        <!--<form name="drinkForm" class="form-horizontal" role="form" ng-submit="vm.updateDrink()">-->
+            <!--<div ng-include="'components/pages/drinks/drink-form.html'"/>-->
+        <!--</form>-->
+    </div>
+</div>

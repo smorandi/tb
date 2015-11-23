@@ -255,7 +255,7 @@ module config {
                 .state("root.home.drinks.overview.list.details.editDrink", { //state for updating a drink
                     url: "/edit",
                     views: {
-                        "@root.home.drinks": {
+                        "det@root.home.drinks.overview": {
                             templateUrl: injections.components.page.drinks.edit.template,
                             controller: injections.components.page.drinks.edit.controller,
                             controllerAs: "vm"

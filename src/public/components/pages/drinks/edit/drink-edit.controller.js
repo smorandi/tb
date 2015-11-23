@@ -29,6 +29,22 @@ var controllers;
                 }
             });
         };
+        DrinkEditController.prototype.save = function () {
+            var _this = this;
+            if (this.drinkForm.$valid) {
+                this.drinkResource.$put("update", {}, this.drink).then(function (res) {
+                    _this.logger.error("The drink has been updated!", null, enums.LogOptions.toast_only);
+                    _this.$state.go("^", {}, { reload: true });
+                }).catch(function (err) {
+                    try {
+                        _this.logger.error(err.data.name, err.data.message, enums.LogOptions.toast);
+                    }
+                    catch (e) {
+                        _this.logger.error("Error", err, enums.LogOptions.toast);
+                    }
+                });
+            }
+        };
         DrinkEditController.$inject = [
             injections.angular.$log,
             injections.angular.$location,

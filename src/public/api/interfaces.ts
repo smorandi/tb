@@ -51,4 +51,16 @@ module interfaces {
         priceReductionInterval: number;
         priceReductionGracePeriod: number;
     }
+    export interface IDrinkProperties {
+        name: string;
+        description: string;
+        alcoholic: boolean;
+        quantity: number;
+        quantityUnit: any;
+        basePrice: number;
+        minPrice: number;
+        maxPrice: number;
+        priceStep: number;
+        category: any;
+    }
 }

@@ -42,4 +42,19 @@ module models {
                     public priceReductionGracePeriod?:number) {
         }
     }
+    export class DrinkProperties implements interfaces.IDrinkProperties {
+        constructor(
+            public name?: string,
+            public description?: string,
+            public alcoholic?: boolean,
+            public quantity?: number,
+            public quantityUnit?: any,
+            public basePrice?: number,
+            public minPrice?: number,
+            public maxPrice?: number,
+            public priceStep?: number,
+            public category?: any
+            ) {
+        }
+    }
 }

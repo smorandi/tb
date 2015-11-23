@@ -4,8 +4,9 @@
 
 module controllers {
     export class DrinkDetailsController {
-        public drink:any;
         public edit:boolean = true;
+        private drinkForm:ng.IFormController;
+        private drink = new models.DrinkProperties();
 
         static $inject = [
             injections.angular.$log,
@@ -19,20 +20,27 @@ module controllers {
                     private utilsService:services.UtilsService, private drinkResource, private logger:services.LoggerService
         ) {
             $log.info("DrinkDetailsController called with client-url: " + $location.path());
-            this.drink = drinkResource;
+
+            //this.drink = drinkResource;
+            this.setDrinkResource(drinkResource);
+        }
+
+        public setDrinkResource(resource:any):void {
+            this.drinkResource = resource;
+            _.assign(this.drink, _.pick(this.drinkResource, _.keys(this.drink)));
         }
 
         public canDelete():void {
-            return this.drink ? this.drink.$has("delete") : false;
+            return this.drinkResource ? this.drinkResource.$has("delete") : false;
         }
 
         public canEdit():void {
-            return this.drink ? this.drink.$has("update") : false;
+            return this.drinkResource ? this.drinkResource.$has("update") : false;
         }
 
         public deleteDrink(event:Event):void {
             if (this.utilsService.showPopup("Really delete this?")) {
-                this.drink.$del("delete").then(res => this.$state.go(constants.STATES.drinks, null, {reload : true}));
+                this.drinkResource.$del("delete").then(res => this.$state.go(constants.STATES.drinks, null, {reload : true}));
             }
             event.stopPropagation();
         }

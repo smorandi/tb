@@ -5,11 +5,15 @@
 module controllers {
     export class DrinkListController {
         public query:string;
+        public activeItem:string;
 
         static $inject = [injections.angular.$log, injections.angular.$location, injections.uiRouter.$stateService, injections.services.utilsService, "drinksResource", "drinkResources"];
 
         constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:services.UtilsService, private drinksResource, private drinkResources) {
             $log.info("DrinkListController called with client-url: " + $location.path());
+            if($state.params.id){
+                this.activeItem = $state.params.id;
+            }
         }
 
         public canCreateNewDrink():boolean {
@@ -45,6 +49,7 @@ module controllers {
         }
 
         public viewDrink(drink:any):void {
+            this.activeItem = drink.id;
             this.$state.go("root.home.drinks.overview.list.details", {id: drink.id});
         }
     }

@@ -61,6 +61,11 @@ module injections {
                 export var controller:string = "system-form-controller";
                 export var directive:string = "systemForm";
             }
+            export module drink {
+                export var template:string = "components/forms/drink/drink-form.html";
+                export var controller:string = "drink-form-controller";
+                export var directive:string = "drinkForm";
+            }
         }
         export module page {
             export module dashboard {

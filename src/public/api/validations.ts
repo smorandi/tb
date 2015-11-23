@@ -61,6 +61,68 @@ module validations {
                     "message": "Must not exceed 10'000 ms."
                 },
             },
+        },
+        "Drink": {
+            "name": {
+                "required": {
+                    "message": "This value is required."
+                },
+                "size": {
+                    "min": 4,
+                    "message": "The name must be over 4"
+                }
+            },
+            "description": {
+                "required": {
+                    "message": "This value is required."
+                }
+            },
+            "alcoholic": {},
+            "quantity": {
+                "required": {
+                    "message": "This value is required."
+                },
+                "pattern": {
+                    "value": "/^[0-9]+(\.[0-9]{1,2})?$/",
+                    "message": "The value must be the pattern x.xx",
+                }
+            },
+            "basePrice": {
+                "required": {
+                    "message": "This value is required."
+                },
+                "pattern": {
+                    "value": "/^[0-9]+(\.[0-9]{1,2})?$/",
+                    "message": "The value must be the pattern x.xx",
+                }
+            },
+            "minPrice": {
+                "required": {
+                    "message": "This value is required."
+                },
+                "pattern": {
+                    "value": "/^[0-9]+(\.[0-9]{1,2})?$/",
+                    "message": "The value must be the pattern x.xx",
+                }
+            },
+            "maxPrice": {
+                "required": {
+                    "message": "This value is required."
+                },
+                "pattern": {
+                    "value": "/^[0-9]+(\.[0-9]{1,2})?$/",
+                    "message": "The value must be the pattern x.xx",
+                }
+            },
+            "priceStep": {
+                "required": {
+                    "message": "This value is required."
+                },
+                "pattern": {
+                    "value": "/^[0-9]+(\.[0-9]{1,2})?$/",
+                    "message": "The value must be the pattern x.xx",
+                }
+            }
         }
     };
 }

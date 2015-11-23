@@ -6,6 +6,7 @@ module controllers {
     export class DrinkEditController {
         drink:any;
         public edit:boolean = false;
+        private drinkForm:ng.IFormController;
 
         static $inject = [
             injections.angular.$log,
@@ -36,6 +37,20 @@ module controllers {
                     this.logger.error("Error", err, enums.LogOptions.toast);
                 }
             });
+        }
+        public save():void {
+            if (this.drinkForm.$valid) {
+                this.drinkResource.$put("update", {}, this.drink).then(res => {
+                    this.logger.error("The drink has been updated!", null, enums.LogOptions.toast_only);
+                    this.$state.go("^", {}, {reload: true});
+                }).catch(err => {
+                    try {
+                        this.logger.error(err.data.name, err.data.message, enums.LogOptions.toast);
+                    } catch (e) {
+                        this.logger.error("Error", err, enums.LogOptions.toast);
+                    }
+                });
+            }
         }
     }
 }

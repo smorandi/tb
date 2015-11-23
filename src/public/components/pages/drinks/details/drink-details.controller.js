@@ -11,19 +11,25 @@ var controllers;
             this.drinkResource = drinkResource;
             this.logger = logger;
             this.edit = true;
+            this.drink = new models.DrinkProperties();
             $log.info("DrinkDetailsController called with client-url: " + $location.path());
-            this.drink = drinkResource;
+            //this.drink = drinkResource;
+            this.setDrinkResource(drinkResource);
         }
+        DrinkDetailsController.prototype.setDrinkResource = function (resource) {
+            this.drinkResource = resource;
+            _.assign(this.drink, _.pick(this.drinkResource, _.keys(this.drink)));
+        };
         DrinkDetailsController.prototype.canDelete = function () {
-            return this.drink ? this.drink.$has("delete") : false;
+            return this.drinkResource ? this.drinkResource.$has("delete") : false;
         };
         DrinkDetailsController.prototype.canEdit = function () {
-            return this.drink ? this.drink.$has("update") : false;
+            return this.drinkResource ? this.drinkResource.$has("update") : false;
         };
         DrinkDetailsController.prototype.deleteDrink = function (event) {
             var _this = this;
             if (this.utilsService.showPopup("Really delete this?")) {
-                this.drink.$del("delete").then(function (res) { return _this.$state.go(constants.STATES.drinks, null, { reload: true }); });
+                this.drinkResource.$del("delete").then(function (res) { return _this.$state.go(constants.STATES.drinks, null, { reload: true }); });
             }
             event.stopPropagation();
         };

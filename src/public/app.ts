@@ -88,6 +88,9 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .directive(injections.components.forms.system.directive, directives.SystemForm)
     .controller(injections.components.forms.system.controller, controllers.SystemForm)
 
+    .directive(injections.components.forms.drink.directive, directives.DrinkForm)
+    .controller(injections.components.forms.drink.controller, controllers.DrinkForm)
+
     //======================================================================================
     //configs (application configuration, routes, i18n, validation, etc.)
     //--------------------------------------------------------------------------------------

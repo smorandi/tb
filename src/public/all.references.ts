@@ -62,5 +62,7 @@
 /// <reference path="components/forms/user/user-form.controller.ts" />
 /// <reference path="components/forms/system/system-form.directive.ts" />
 /// <reference path="components/forms/system/system-form.controller.ts" />
+/// <reference path="components/forms/drink/drink-form.directive.ts" />
+/// <reference path="components/forms/drink/drink-form.controller.ts" />
 
 //end-inject:ts

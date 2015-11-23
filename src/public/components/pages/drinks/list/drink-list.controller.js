@@ -11,6 +11,9 @@ var controllers;
             this.drinksResource = drinksResource;
             this.drinkResources = drinkResources;
             $log.info("DrinkListController called with client-url: " + $location.path());
+            if ($state.params.id) {
+                this.activeItem = $state.params.id;
+            }
         }
         DrinkListController.prototype.canCreateNewDrink = function () {
             return this.drinksResource === undefined ? false : this.drinksResource.$has("create");
@@ -41,6 +44,7 @@ var controllers;
             this.$state.go("root.home.drinks.newDrink");
         };
         DrinkListController.prototype.viewDrink = function (drink) {
+            this.activeItem = drink.id;
             this.$state.go("root.home.drinks.overview.list.details", { id: drink.id });
         };
         DrinkListController.$inject = [injections.angular.$log, injections.angular.$location, injections.uiRouter.$stateService, injections.services.utilsService, "drinksResource", "drinkResources"];
