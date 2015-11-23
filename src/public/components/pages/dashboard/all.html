@@ -2,7 +2,7 @@
     <div ng-switch on="vm.currentView">
         <div ng-switch-when="tiles">
             <div ng-show="vm.filteredItems.all.items.length > 0"
-                 class="flex-container-row flex-auto flex-wrap flex-justify-content-start">
+                 class="flex-container-row flex-auto flex-wrap flex-justify-content-center">
                 <div ng-repeat="item in vm.filteredItems.all.items">
                     <db-item-tile item="item"></db-item-tile>
                 </div>
