@@ -1,6 +1,6 @@
 ///<reference path="./all.references.ts" />
 
-angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "ngAnimate", "toaster", "angular-hal", "btford.socket-io", "ui.bootstrap", "pascalprecht.translate"])
+angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "ngSanitize", "ngAnimate", "toaster", "angular-hal", "btford.socket-io", "ui.bootstrap", "pascalprecht.translate"])
     //======================================================================================
     //services (used application wide)
     //--------------------------------------------------------------------------------------
