@@ -22,6 +22,7 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .directive(injections.directives.flash, directives.Flash)
     .directive(injections.directives.backImg, directives.BackImg)
     .directive(injections.directives.stopEvent, directives.StopEvent)
+    .directive(injections.directives.formAutofillFix, directives.AutoFillFix)
 
 
     //======================================================================================

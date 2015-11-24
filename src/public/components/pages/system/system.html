@@ -89,7 +89,7 @@
                                 stop-event
                                 ng-click="vm.startEngine()"><span class="glyphicon glyphicon-play"/> Start
                         </button>
-                        <button class="btn btn-default navbar-btn btn-danger"
+                        <button class="btn btn-default navbar-btn btn-success"
                                 stop-event
                                 ng-click="vm.stopEngine()"><span class="glyphicon glyphicon-stop"/>
                             Stop
@@ -103,6 +103,12 @@
                         <button class="btn btn-default navbar-btn btn-warning"
                                 stop-event
                                 ng-click="vm.reinitialize()"><span class="glyphicon glyphicon-download-alt"/> Reinitialize
+                        </button>
+                    </div>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button class="btn btn-default navbar-btn btn-danger"
+                                stop-event
+                                ng-click="vm.clearLocalStore()"><span class="glyphicon glyphicon-trash"/> Clear Local Store
                         </button>
                     </div>
                 </div>

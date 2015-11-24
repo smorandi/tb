@@ -25,6 +25,7 @@
 /// <reference path="infrastructure/directives/flash.directive.ts" />
 /// <reference path="infrastructure/directives/backImg.directive.ts" />
 /// <reference path="infrastructure/directives/stopEvent.directive.ts" />
+/// <reference path="infrastructure/directives/auto-fill-fix.directive.ts" />
 
 /// <reference path="infrastructure/run/run.ts" />
 

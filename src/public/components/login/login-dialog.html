@@ -1,7 +1,7 @@
 <div class="modal-header">
     <h3 class="modal-title"><span class="glyphicon glyphicon-log-in"/> Login</h3>
 </div>
-<form>
+<form ng-submit="vm.login()" form-autofill-fix>
     <div class="modal-body">
         <div class="md-dialog-content">
             <div class="form-group">
@@ -16,6 +16,6 @@
     </div>
     <div class="modal-footer">
         <button class="btn" type="button" ng-click="vm.cancel()">{{ 'dialog.login.btn.cancel' | translate }}</button>
-        <button class="btn btn-primary" type="submit" ng-click="vm.login()" ng-keypress="">{{ 'dialog.login.btn.login' | translate }}</button>
+        <button class="btn btn-primary" type="submit">{{ 'dialog.login.btn.login' | translate }}</button>
     </div>
 </form>

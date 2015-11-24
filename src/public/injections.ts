@@ -9,6 +9,7 @@ module injections {
         export var flash:string = "flash";
         export var backImg:string = "backImg";
         export var stopEvent:string = "stopEvent";
+        export var formAutofillFix:string = "formAutofillFix";
     }
 
     export module components {

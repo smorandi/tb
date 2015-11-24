@@ -3,9 +3,10 @@
 var controllers;
 (function (controllers) {
     var SystemController = (function () {
-        function SystemController(logger, $state, systemResource) {
+        function SystemController(logger, $state, localStore, systemResource) {
             this.logger = logger;
             this.$state = $state;
+            this.localStore = localStore;
             this.systemResource = systemResource;
             this.status = "";
             this.isRunning = false;
@@ -19,6 +20,10 @@ var controllers;
             _.assign(this.system, _.pick(this.systemResource, _.keys(this.system)));
             this.isRunning = this.systemResource.status === "running";
             this.status = this.isRunning ? "engine.status.running" : "engine.status.idle";
+        };
+        SystemController.prototype.clearLocalStore = function () {
+            this.localStore.clearAll();
+            this.logger.info("Local Store cleared", null, enums.LogOptions.toast);
         };
         SystemController.prototype.replay = function () {
             var _this = this;
@@ -79,7 +84,11 @@ var controllers;
                 });
             }
         };
-        SystemController.$inject = [injections.services.loggerService, injections.uiRouter.$stateService, "systemResource"];
+        SystemController.$inject = [
+            injections.services.loggerService,
+            injections.uiRouter.$stateService,
+            injections.services.localStorageService,
+            "systemResource"];
         return SystemController;
     })();
     controllers.SystemController = SystemController;

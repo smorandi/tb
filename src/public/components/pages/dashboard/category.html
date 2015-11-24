@@ -3,17 +3,18 @@
         <div ng-switch-when="tiles">
             <div ng-show="filtered.length > 0" ng-repeat="category in vm.filteredItems.categories">
                 <section>
-                    <h4>
+                    <h4 class="no-gutter">
                         <small>{{category.name}}</small>
                     </h4>
-                    <hr>
-                </section>
+                    <hr class="separator">
 
-                <div class="flex-container-row overflow-auto">
-                    <div ng-repeat="item in filtered = category.items">
-                        <db-item-tile item="item"></db-item-tile>
+                    <div class="flex-container-row overflow-auto">
+                        <div ng-repeat="item in filtered = category.items">
+                            <db-item-tile item="item"></db-item-tile>
+                        </div>
                     </div>
-                </div>
+                    <br>
+                </section>
             </div>
         </div>
         <div ng-switch-when="list">

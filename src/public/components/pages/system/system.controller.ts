@@ -11,18 +11,30 @@ module controllers {
         private isEdit:boolean = false;
 
 
-        static $inject = [injections.services.loggerService, injections.uiRouter.$stateService, "systemResource"];
+        static $inject = [
+            injections.services.loggerService,
+            injections.uiRouter.$stateService,
+            injections.services.localStorageService,
+            "systemResource"];
 
-        constructor(private logger:services.LoggerService, private $state:ng.ui.IStateService, private systemResource) {
+        constructor(private logger:services.LoggerService,
+                    private $state:ng.ui.IStateService,
+                    private localStore:services.LocalStorageService,
+                    private systemResource) {
             this.logger.info("SystemController created");
             this.setSystemResource(systemResource);
         }
 
-        public setSystemResource(resource:any):void {
+        private setSystemResource(resource:any):void {
             this.systemResource = resource;
             _.assign(this.system, _.pick(this.systemResource, _.keys(this.system)));
             this.isRunning = this.systemResource.status === "running";
             this.status = this.isRunning ? "engine.status.running" : "engine.status.idle";
+        }
+
+        public clearLocalStore():void {
+            this.localStore.clearAll();
+            this.logger.info("Local Store cleared", null, enums.LogOptions.toast);
         }
 
         public replay():void {
