@@ -18,39 +18,59 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
-            <ul ng-repeat="link in vm.menu.navigationLinks" class="nav navbar-nav">
-                <li ui-sref-active="active">
-                    <a ng-href="#" ui-sref="{{link.state}}">{{link.name | translate}}</a>
+            <ul class="nav navbar-nav">
+                <li ui-sref-active="active" ng-show="vm.menu.dashboardLink">
+                    <a ng-href="#" ui-sref="root.dashboard">
+                        <span class="glyphicon glyphicon-equalizer"/> {{vm.menu.dashboardLink.name | translate}}
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-show="vm.menu.drinksLink">
+                    <a ng-href="#" ui-sref="root.home.drinks.overview.list">
+                        <span class="glyphicon glyphicon-baby-formula"/> {{vm.menu.drinksLink.name | translate}}
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-show="vm.menu.systemLink">
+                    <a ng-href="#" ui-sref="root.home.system">
+                        <span class="glyphicon glyphicon-cog"/> {{vm.menu.systemLink.name | translate}}
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-show="vm.menu.usersLink">
+                    <a ng-href="#" ui-sref="root.home.users">
+                        <span class="glyphicon glyphicon-duplicate"/> {{vm.menu.usersLink.name | translate}}
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-show="vm.menu.ordersLink">
+                    <a ng-href="#" ui-sref="root.home.orders.list">
+                        <span class="glyphicon glyphicon-piggy-bank"/> {{vm.menu.ordersLink.name | translate}}
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-show="vm.menu.basketLink">
+                    <a ng-href="#" ui-sref="root.home.basket">
+                        <span class="glyphicon glyphicon-shopping-cart"/> Basket <span class="badge">{{vm.menu.numberOfBasketItems}}</span>
+                    </a>
                 </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <li class="nav-divider"></li>
                 <li ui-sref-active="active" ng-show="vm.menu.registerLink">
                     <a ng-href="#" ui-sref="root.register">
-                        <span class="glyphicon glyphicon-pencil"/> {{vm.menu.registerLink.name | translate}}</a>
+                        <span class="glyphicon glyphicon-pencil"/> {{vm.menu.registerLink.name | translate}}
+                    </a>
                 </li>
-
-                <li ui-sref-active="active" ng-show="vm.menu.ordersLink">
-                    <a ng-href="#" ui-sref="root.home.orders.list">
-                        <span class="glyphicon glyphicon-list-alt"/> {{vm.menu.ordersLink.name | translate}}</a>
-                </li>
-
-                <li ui-sref-active="active" ng-show="vm.menu.basketLink">
-                    <a ng-href="#" ui-sref="root.home.basket">
-                        <span class="glyphicon glyphicon-shopping-cart"/> Basket <span class="badge">{{vm.menu.numberOfBasketItems | translate}}</span></a>
-                </li>
-
                 <li ui-sref-active="active" ng-show="vm.menu.profileLink">
                     <a ng-href="#" ui-sref="root.home.profile">
-                        <span class="glyphicon glyphicon-user"/> {{vm.menu.loginname | translate}}</a>
+                        <span class="glyphicon glyphicon-user"/> {{vm.menu.loginname | translate}}
+                    </a>
                 </li>
-
-                <li ng-hide="vm.menu.isLoggedIn">
-                    <a ng-href="#" ng-click="vm.login()"><span class="glyphicon glyphicon-log-in"></span> {{"action.login" | translate}}</a>
-                </li>
-
-                <li ng-show="vm.menu.isLoggedIn">
-                    <a ng-href="#" ng-click="vm.logout()"><span class="glyphicon glyphicon-log-out"></span> {{"action.logout" | translate}}</a>
+                <li class="nav-divider"></li>
+                <li>
+                    <a ng-href="#" ng-hide="vm.menu.isLoggedIn" ng-click="vm.login()">
+                        <span class="glyphicon glyphicon-log-in"></span> {{"action.login" | translate}}
+                    </a>
+                    <a ng-href="#" ng-show="vm.menu.isLoggedIn" ng-click="vm.logout()">
+                        <span class="glyphicon glyphicon-log-out"></span> {{"action.logout" | translate}}
+                    </a>
                 </li>
             </ul>
         </div>

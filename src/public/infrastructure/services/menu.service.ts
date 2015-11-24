@@ -21,12 +21,14 @@ module services {
                 loginname: null,
                 numberOfBasketItems: 0,
                 userType: null,
-                registerLink: constants.LINKS.register,
-                profileLink: constants.LINKS.profile,
-                basketLink: constants.LINKS.basket,
-                ordersLink: constants.LINKS.orders,
-                navigationLinks: {},
-                controlLinks: {}
+                registerLink: null,
+                profileLink: null,
+                basketLink: null,
+                ordersLink: null,
+                drinksLink: null,
+                systemLink: null,
+                usersLink: null,
+                dashboardLink: null,
             };
         }
 
@@ -61,9 +63,6 @@ module services {
         public setResource(resource:any) {
             this.menu.resource = resource;
 
-            this.menu.navigationLinks = {};
-            this.menu.controlLinks = {};
-
             this.menu.userType = resource.userType;
             this.menu.isLoggedIn = resource.loginname ? true : false;
             this.menu.loginname = resource.loginname;
@@ -73,19 +72,10 @@ module services {
             this.menu.profileLink = resource.$has(constants.RELS.profile) ? constants.LINKS.profile : null;
             this.menu.basketLink = resource.$has(constants.RELS.basket) ? constants.LINKS.basket : null;
             this.menu.ordersLink = resource.$has(constants.RELS.orders) ? constants.LINKS.orders : null;
-
-            if (resource.$has(constants.RELS.dashboard)) {
-                this.menu.navigationLinks[constants.RELS.dashboard] = constants.LINKS.dashboard;
-            }
-            if (resource.$has(constants.RELS.drinks)) {
-                this.menu.navigationLinks[constants.RELS.drinks] = constants.LINKS.drinks;
-            }
-            if (resource.$has(constants.RELS.system)) {
-                this.menu.navigationLinks[constants.RELS.system] = constants.LINKS.system;
-            }
-            if (resource.$has(constants.RELS.users)) {
-                this.menu.navigationLinks[constants.RELS.users] = constants.LINKS.users;
-            }
+            this.menu.drinksLink = resource.$has(constants.RELS.drinks) ? constants.LINKS.drinks : null;
+            this.menu.systemLink = resource.$has(constants.RELS.system) ? constants.LINKS.system : null;
+            this.menu.usersLink = resource.$has(constants.RELS.users) ? constants.LINKS.users: null;
+            this.menu.dashboardLink = resource.$has(constants.RELS.dashboard) ? constants.LINKS.dashboard: null;
         }
     }
 }
