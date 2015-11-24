@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-bottom navbar" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -25,23 +25,36 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
-                <ul class="nav navbar-nav navbar-left">
-                    <li class="action-link" ng-class="(vm.currentFilter === 'all')&& 'active'">
-                        <a ng-click="vm.setFilter('all')"><span class="glyphicon glyphicon-globe"/> All</a>
-                    </li>
-                    <li class="action-link" ng-class="(vm.currentFilter === 'category')&& 'active'">
-                        <a ng-click="vm.setFilter('category')"><span class="glyphicon glyphicon-list"/>
-                            Categories</a>
-                    </li>
-                    <li class="action-link" ng-class="(vm.currentView === 'tiles')&& 'active'">
-                        <a ng-click="vm.setView('tiles')"><span class="glyphicon glyphicon-th-large"/> Tiles</a>
-                    </li>
-                    <li class="action-link" ng-class="(vm.currentView === 'list')&& 'active'">
-                        <a ng-click="vm.setView('list')"><span class="glyphicon glyphicon-th-list"/>
-                            List</a>
-                    </li>
-                </ul>
+                <div class="btn-toolbar navbar-left" role="toolbar">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button class="btn btn-default navbar-btn"
+                                stop-event
+                                ng-class="{'active btn-primary': vm.currentFilter === 'all'}"
+                                ng-click="vm.setFilter('all')"><span class="glyphicon glyphicon-globe"/> All
+                        </button>
+                        <button class="btn btn-default navbar-btn"
+                                stop-event
+                                ng-class="{'active btn-primary': vm.currentFilter === 'category'}"
+                                ng-click="vm.setFilter('category')"><span class="glyphicon glyphicon-list"/>
+                            Categories
+                        </button>
+                    </div>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button class="btn btn-default navbar-btn"
+                                stop-event
+                                ng-class="{'active btn-primary': vm.currentView === 'tiles'}"
+                                ng-click="vm.setView('tiles')"><span class="glyphicon glyphicon-th-large"/> Tiles
+                        </button>
+                        <button class="btn btn-default navbar-btn"
+                                stop-event
+                                ng-class="{'active btn-primary': vm.currentView === 'list'}"
+                                ng-click="vm.setView('list')"><span class="glyphicon glyphicon-th-list"/> List
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
 
+                    </div>
+                </div>
 
                 <form class="navbar-form navbar-right" role="search">
                     <search search="vm.search"></search>

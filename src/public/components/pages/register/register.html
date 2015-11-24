@@ -4,7 +4,9 @@
     <div class="panel"
          ng-class="{'panel-danger': vm.userForm.$invalid,
                     'panel-success': vm.userForm.$valid}">
-        <div class="panel-heading"><strong>Details</strong></div>
+        <div class="panel-heading">
+            <label class="panel-title">Details</label>
+        </div>
         <div class="panel-body">
             <user-form data="vm.user" form="vm.userForm" submit="vm.signUp()" cancel="vm.cancel()" read-only="false"></user-form>
         </div>

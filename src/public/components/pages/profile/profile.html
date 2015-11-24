@@ -8,7 +8,7 @@
                             'panel-success': vm.userForm.$valid && vm.isEdit}">
                 <div class="panel-heading">
                     <div class="flex-container-row flex-align-items-center">
-                        <strong class="flex-auto">{{"page.profile.details.title" | translate}}</strong>
+                        <label class="panel-title flex-auto">{{"page.profile.details.title" | translate}}</label>
 
                         <div class="btn-group btn-group-sm" role="group" aria-label="...">
                             <button type="button" class="btn btn-primary" ng-click="vm.edit()"><span
@@ -30,7 +30,8 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><strong>{{"page.profile.properties.title" | translate}}</strong>
+                        <div class="panel-heading">
+                            <label class="panel-title">{{"page.profile.properties.title" | translate}}</label>
                         </div>
                         <div class="panel-body">
                             <div ng-include="'components/pages/profile/profile-information.html'">
