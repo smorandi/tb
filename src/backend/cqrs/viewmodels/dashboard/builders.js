@@ -15,6 +15,7 @@ var drinkCreated = denormalizer.defineViewBuilder({
     vm.set("category", data.category);
     vm.set("tags", data.tags);
     vm.set("quantity", data.quantity);
+    vm.set("quantityUnit", data.quantityUnit);
     vm.set("tick", data.priceTicks[0]);
     vm.set("price", data.priceTicks[0].price);
     vm.set("lowestPrice", data.priceTicks[0].price);
@@ -37,6 +38,7 @@ var drinkChanged = denormalizer.defineViewBuilder({
     vm.set("category", data.category);
     vm.set("tags", data.tags);
     vm.set("quantity", data.quantity);
+    vm.set("quantityUnit", data.quantityUnit);
 });
 
 var drinkDeleted = denormalizer.defineViewBuilder({

@@ -72,6 +72,8 @@
   "QUANTITY" : "Quantity",
   "PRICE" : "Price",
   "PIECE" : "Piece",
+  "TIME" : "Time",
+  "STATE": "State",
   "DELETE" : "Delete",
   "TOTAL" : "Total",
   "CREATE_ORDER" : "Order",

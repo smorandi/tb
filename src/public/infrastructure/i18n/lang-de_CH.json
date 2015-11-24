@@ -30,5 +30,7 @@
   "DETAILS_FOR" : "Deatail für",
   "NEW_DRINK" : "Neues Getränk",
   "BASKET" : "Warenkorb",
-  "ORDER": "Meine Bestellungen"
+  "ORDER": "Meine Bestellungen",
+  "TIME" : "Zeit",
+  "STATE": "Status"
 }

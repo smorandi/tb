@@ -22,41 +22,12 @@ module controllers {
             injections.services.dashboardService,
             injections.uiRouter.$stateService,
             injections.angular.$scope,
-            injections.services.localStorageService,
             injections.services.footerService,
         ];
 
         constructor(private basketResource:any, private basketResourceItems:any, private logger:services.LoggerService, private dashboardService:services.DashboardService,
-                    private $state:ng.ui.IStateService, private scope:ng.IScope, private storage:services.LocalStorageService, private footer:services.FooterService) {
+                    private $state:ng.ui.IStateService, private scope:ng.IScope, private footer:services.FooterService) {
 
-            this.currentFilter = this.storage.get(constants.LOCAL_STORAGE.basketFilter) || this.FILTER_TILE;
-
-            this.Links = [
-                {
-                    id: this.FILTER_TILE,
-                    aSpanClass: "glyphicon glyphicon-th-large",
-                    aSpanTxt: "Tile"
-                },
-                {
-                    id: this.FILTER_LIST,
-                    aSpanClass: "glyphicon glyphicon-th-list",
-                    aSpanTxt: "List"
-                },
-                //{
-                //    id: this.STATE_ORDER,
-                //    aSpanClass: "glyphicon glyphicon-shopping-cart,
-                //    aSpanTxt: "Order"
-                //},
-                //{
-                //    id: this.STATE_CLEAR,
-                //    aSpanClass: "glyphicon glyphicon-trash",
-                //    aSpanTxt: "Clear"
-                //}"
-            ];
-
-            footer.setFooterItems(this.Links);
-            footer.setCallbackFooterItem((key) => this.callbackFooter(key));
-            footer.setCurrentFilter(this.currentFilter);
 
             this.dashboard = dashboardService.dashboard;
 
@@ -128,20 +99,11 @@ module controllers {
             }
         }
 
-        private getBasketItemById(id:string) {
-            for (var i = 0; i < this.basketItems.length; i++) {
-                if (this.basketItems[i].id == id) {
-                    return this.basketItems[i];
-                }
-            }
-        }
-
         public pricePerItem(price:number, piece:number) {
             return price * piece;
         }
 
-        public deleteItem(id:string) {
-            var item = this.getBasketItemById(id);
+        public deleteItem(item:any) {
             if (item) {
                 item.basket.$del("delete")
                     .then(res => {
@@ -186,23 +148,13 @@ module controllers {
             }
         }
 
-        public callbackFooter(filter:string) {
-            if (filter == this.FILTER_LIST || filter == this.FILTER_TILE) {
-                this.currentFilter = filter;
-                this.storage.set(constants.LOCAL_STORAGE.basketFilter, filter);
-                this.footer.setCurrentFilter(filter);
-            } else if (filter == this.STATE_ORDER) {
-                this.createOrder();
-            } else if (filter == this.STATE_CLEAR) {
-                this.clearWholeBasket();
-            }
-
-        }
-
-        public basketItemAdd(id:string) {
-            var item = this.getBasketItemById(id);
+        public basketItemChange(item:any, sign:string) {
             if (item) {
-                item.basket.number = Number(item.basket.number) + 1;
+                if (sign == "+") {
+                    item.basket.number = Number(item.basket.number) + 1;
+                } else if (sign == "-" && item.basket.number >= 2){
+                        item.basket.number = Number(item.basket.number - 1);
+                }
                 item.basket.$put("update", null, item.basket)
                     .then(res => {
                         this.$state.reload()
@@ -213,27 +165,6 @@ module controllers {
                     .catch(err => {
                         this.logger.error("Failed to update Item", err, enums.LogOptions.toast);
                     });
-            }
-        }
-
-        public basketItemMinus(id:string) {
-            var item = this.getBasketItemById(id);
-            if (item) {
-                var number = Number(item.basket.number);
-                if (number > 2) {
-                    number = number - 1.
-                    item.basket.number = number;
-                    item.basket.$put("update", null, item.basket)
-                        .then(res => {
-                            this.$state.reload()
-                                .then(res=> {
-                                    this.logger.info("Basket updated", "", enums.LogOptions.toast);
-                                });
-                        })
-                        .catch(err => {
-                            this.logger.error("Failed to update Item", err, enums.LogOptions.toast);
-                        });
-                }
             }
         }
     }

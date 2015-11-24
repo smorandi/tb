@@ -9,3 +9,7 @@
 .db-item-flat-price-area {
     flex: 100px 0;
 }
+
+.db-item-flat-text {
+    padding-left: 1rem;
+}
