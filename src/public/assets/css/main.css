@@ -11,6 +11,7 @@ body {
 
     /*use a nicer font*/
     font-family: 'Roboto', sans-serif;
+    /*background-image: url('/assets/images/dark_mosaic.png');*/
 }
 
 /*to quickly remove margin and padding from html elements*/

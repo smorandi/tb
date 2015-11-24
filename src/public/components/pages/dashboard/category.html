@@ -20,17 +20,16 @@
         <div ng-switch-when="list">
             <div ng-show="filtered.length > 0" ng-repeat="category in vm.filteredItems.categories">
                 <section>
-                    <h4>
+                    <h4 class="no-gutter">
                         <small>{{category.name}}</small>
                     </h4>
-                    <hr>
-                </section>
-
-                <div class="list-group">
-                    <div class="list-group-item" ng-repeat="item in filtered = category.items">
-                        <db-item-flat item="item"></db-item-flat>
+                    <hr class="separator">
+                    <div class="list-group">
+                        <div class="list-group-item" ng-repeat="item in filtered = category.items">
+                            <db-item-flat item="item"></db-item-flat>
+                        </div>
                     </div>
-                </div>
+                </section>
             </div>
         </div>
     </div>
