@@ -49,8 +49,7 @@ function startServer(clear, populate, callback) {
                     callback(err);
                 }
                 else {
-                    logger.info("server started (cleared: %s, populated: %s) -> listening on port %s using %s protocol",
-                        clear, populate, server.address().port, config.server.protocol);
+                    logger.info("server started (cleared: %s, populated: %s)", clear, populate);
                     logger.info("                                                        _");
                     logger.info("                                                       (_)");
                     logger.info("  ___  ___ _ ____   _____ _ __   _ __ _   _ _ __  _ __  _ _ __   __ _");
@@ -59,6 +58,11 @@ function startServer(clear, populate, callback) {
                     logger.info(" |___/\\___|_|    \\_/ \\___|_|    |_|   \\__,_|_| |_|_| |_|_|_| |_|\\__, |");
                     logger.info("                                                                 __/ |");
                     logger.info("                                                                |___/ ");
+                    logger.info("address -> %s@%s (%s):%s",
+                        config.server.protocol,
+                        server.address().address,
+                        server.address().family,
+                        server.address().port);
 
                     callback(null);
                 }

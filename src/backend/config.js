@@ -31,8 +31,8 @@ exports.logger = {
 // Server...
 //-----------------------------------------------------------------------------
 exports.server = {
-    protocol: "http",
-    port: 3000,
+    protocol: utils.getValue("--protocol", "http"),
+    port: utils.getValue("--port", "3000"),
     host: "localhost",
     backlog: 511,
     credentials: {
