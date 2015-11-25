@@ -21,7 +21,7 @@
     <div class="list-group-item" ng-repeat="items in vm.basketItems">
         <div class="row">
             <div class="col-xs-1 col-sm-1 col-md-1">
-                <button type="button" class="close" aria-label="Close" ng-click="vm.deleteItem(items.id)"><span
+                <button type="button" class="close" aria-label="Close" ng-click="vm.deleteItem(items)"><span
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="col-xs-11 col-sm-2 col-md-2">
@@ -29,21 +29,22 @@
             </div>
             <div class="col-xs-offset-1 col-xs-6 col-sm-2 col-md-2">
                 <button type="button" class="btn btn-default" aria-label="Left Align"
-                        ng-click="vm.basketItemAdd(items.id)">
+                        ng-click="vm.basketItemChange(items, '+')">
                     <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-default" aria-label="Left Align"
-                        ng-click="vm.basketItemMinus(items.id)">
+                        ng-class="{'disabled': items.basket.number == 1}"
+                        ng-click="vm.basketItemChange(items, '-')">
                     <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
                 </button>
                 <strong> &nbsp;{{items.basket.number}} </strong>
                 &nbsp;Stk
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2">
-                {{items.dashItem.price}}
+                {{items.dashItem.price | currency:"":2}}
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2">
-                {{vm.pricePerItem(items.tickprice, items.basket.number)}}
+                {{items.priceItem | currency:"":2}}
             </div>
         </div>
     </div>
@@ -55,7 +56,7 @@
                 <div class="input-group">
                     <div class="input-group-addon">{{'TOTAL' | translate}}</div>
                     <p class="form-control text-right">
-                        {{vm.basketTotalPrice.price}}
+                        {{vm.basketTotalPrice.price | currency:"":2}}
                     </p>
 
                     <div class="input-group-addon">CHF</div>
@@ -64,3 +65,18 @@
         </div>
     </div>
 </div>
+<div class="list-group">
+    <div class="list-group-item">
+        <div class="row">
+            <div class="col-xs-2 col-sm1 col-md-1">
+                <a class="btn btn-success glyphicon glyphicon-shopping-cart"
+                   ng-class="{'disabled': vm.basketTotalPrice.price == 0}" ng-click="vm.createOrder()">Order</a>
+            </div>
+            <div class="col-xs-2 col-sm1 col-md-1">
+                <a class="btn btn-primary glyphicon glyphicon-trash"
+                   ng-class="{'disabled': vm.basketTotalPrice.price == 0}" ng-click="vm.clearWholeBasket()">Clear</a>
+            </div>
+        </div>
+    </div>
+</div>
+

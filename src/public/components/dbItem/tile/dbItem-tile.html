@@ -10,6 +10,12 @@
                     <strong>{{vm.item.name}}</strong>
                 </h3>
 
+                <p class="db-item-tile-quantity flex-auto text-center">
+                    <em>
+                        {{vm.item.quantity | currency:"":2}} &nbsp {{vm.item.quantityUnit}}
+                    </em>
+                </p>
+
                 <h6 class="db-item-tile-description flex-auto text-center"><em>{{vm.item.description}}</em>
                 </h6>
 

@@ -17,10 +17,6 @@ module controllers {
         constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private ordersResource, private orderResources, private footer:services.FooterService) {
             $log.info("OrdersListController called with client-url: " + $location.path());
 
-            footer.setFooterItems([]);
-            footer.setCallbackFooterItem(null);
-            footer.setShowFooter(false);
-
         }
 
     }
