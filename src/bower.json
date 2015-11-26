@@ -13,7 +13,7 @@
     "lodash": "~3.10.1",
     "angular-socket-io": "~0.7.0",
     "angular-bootstrap": "~0.14.3",
-    "bootstrap-css-only": "*",
+    "bootstrap-css-only": "~3.3.5",
     "AngularJS-Toaster": "angularjs-toaster#~0.4.16",
     "angular-lodash-module": "~1.2.0",
     "angular-translate": "~2.8.1",

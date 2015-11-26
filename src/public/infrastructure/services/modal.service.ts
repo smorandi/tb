@@ -49,13 +49,13 @@ module services {
             angular.extend(tempModalOptions, this.modalOptions, customModalOptions);
 
             if (!tempModalDefaults.controller) {
-                tempModalDefaults.controller = ($scope, $modalInstance) => {
+                tempModalDefaults.controller = ($scope, $uibModalInstance:angular.ui.bootstrap.IModalServiceInstance) => {
                     $scope.modalOptions = tempModalOptions;
                     $scope.modalOptions.ok = function (result) {
-                        $modalInstance.close(result);
+                        $uibModalInstance.close(result);
                     };
                     $scope.modalOptions.close = function (result) {
-                        $modalInstance.dismiss("cancel");
+                        $uibModalInstance.dismiss("cancel");
                     };
                 }
             }
