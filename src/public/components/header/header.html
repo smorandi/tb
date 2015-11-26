@@ -29,14 +29,14 @@
                         <span class="glyphicon glyphicon-glass"/> {{vm.menu.drinksLink.name | translate}}
                     </a>
                 </li>
-                <li ui-sref-active="active" ng-show="vm.menu.systemLink">
-                    <a ng-href="#" ui-sref="root.home.system">
-                        <span class="glyphicon glyphicon-cog"/> {{vm.menu.systemLink.name | translate}}
-                    </a>
-                </li>
                 <li ui-sref-active="active" ng-show="vm.menu.usersLink">
                     <a ng-href="#" ui-sref="root.home.users">
                         <span class="glyphicon glyphicon-duplicate"/> {{vm.menu.usersLink.name | translate}}
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-show="vm.menu.systemLink">
+                    <a ng-href="#" ui-sref="root.home.system">
+                        <span class="glyphicon glyphicon-cog"/> {{vm.menu.systemLink.name | translate}}
                     </a>
                 </li>
                 <li ui-sref-active="active" ng-show="vm.menu.ordersLink">

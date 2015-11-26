@@ -18,8 +18,8 @@ module controllers {
 
         constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:services.UtilsService, private drinksResource, private drinkResources) {
             $log.info("DrinkListController called with client-url: " + $location.path());
-            if($state.params.id){
-                this.activeItem = $state.params.id;
+            if($state.params["id"]){
+                this.activeItem = $state.params["id"];
             }
         }
 

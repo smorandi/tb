@@ -11,8 +11,8 @@ var controllers;
             this.drinksResource = drinksResource;
             this.drinkResources = drinkResources;
             $log.info("DrinkListController called with client-url: " + $location.path());
-            if ($state.params.id) {
-                this.activeItem = $state.params.id;
+            if ($state.params["id"]) {
+                this.activeItem = $state.params["id"];
             }
         }
         DrinkListController.prototype.canCreateNewDrink = function () {
