@@ -29,12 +29,12 @@
                     <div class="btn-group btn-group-sm" role="group">
                         <button class="btn btn-default navbar-btn"
                                 stop-event
-                                ng-class="{'active btn-primary': vm.currentFilter === 'all'}"
+                                ng-class="{'active btn-info': vm.currentFilter === 'all'}"
                                 ng-click="vm.setFilter('all')"><span class="glyphicon glyphicon-globe"/> All
                         </button>
                         <button class="btn btn-default navbar-btn"
                                 stop-event
-                                ng-class="{'active btn-primary': vm.currentFilter === 'category'}"
+                                ng-class="{'active btn-info': vm.currentFilter === 'category'}"
                                 ng-click="vm.setFilter('category')"><span class="glyphicon glyphicon-tags"/>
                             Categories
                         </button>
@@ -42,17 +42,14 @@
                     <div class="btn-group btn-group-sm" role="group">
                         <button class="btn btn-default navbar-btn"
                                 stop-event
-                                ng-class="{'active btn-primary': vm.currentView === 'tiles'}"
+                                ng-class="{'active btn-info': vm.currentView === 'tiles'}"
                                 ng-click="vm.setView('tiles')"><span class="glyphicon glyphicon-th-large"/> Tiles
                         </button>
                         <button class="btn btn-default navbar-btn"
                                 stop-event
-                                ng-class="{'active btn-primary': vm.currentView === 'list'}"
+                                ng-class="{'active btn-info': vm.currentView === 'list'}"
                                 ng-click="vm.setView('list')"><span class="glyphicon glyphicon-th-list"/> List
                         </button>
-                    </div>
-                    <div class="btn-group" role="group">
-
                     </div>
                 </div>
 

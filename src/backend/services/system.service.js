@@ -144,8 +144,8 @@ function createStandardSet(callback) {
     var drink4 = new models.Drink("Darjeeling", "Fine indial tea",  2, "dl", "tea", ["non-alcoholic"], 4, 3, 15, 0.3);
     var drink5 = new models.Drink("Tequila", "The mexican favourite",  2, "cl", "shot", ["alcoholic"], 4, 3, 15, 0.3);
     var drink6 = new models.Drink("Dr. Pepper", "Some funny tasting coke",  3, "dl", "soft", ["non-alcoholic"], 4, 3, 15, 0.3);
-    var drink7 = new models.Drink("Valser", "Ah, yes! The swiss sparkling refreshment",  3, "dl", "soft", ["non-alcoholic"], 4, 3, 15, 0.3);
-    var drink8 = new models.Drink("Kaffee Hag", "Also some nice coffee",  3, "dl", "coffee", ["non-alcoholic"], 4, 2.5, 6, 0.2);
+    var drink7 = new models.Drink("Valser", "Ah, yes! The swiss sparkling refreshment",  3, "dl", "soft", ["non-alcoholic"], 5.5, 3, 15, 0.3);
+    var drink8 = new models.Drink("Kaffee Hag", "Also some nice coffee",  3, "dl", "coffee", ["non-alcoholic"], 54.25, 2.5, 60, 0.25);
     var drink9 = new models.Drink("Tequila Sunrise", "Let the sun shine (in your brain)",  2, "dl", "cocktail", ["alcoholic"], 4, 2.5, 6, 0.2);
 
     var commands = [];

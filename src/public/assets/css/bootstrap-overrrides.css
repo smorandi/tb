@@ -32,3 +32,43 @@
 .navbar-nav > li > a {
     font-size: 1.1em;
 }
+
+.navbar-inverse {
+    /*background-color: rgba(40, 40, 40, 0.9);*/
+    background: linear-gradient(to bottom, rgba(40, 40, 40, 0.4), rgba(255, 165, 0, 0.4));
+    /*color: whitesmoke;*/
+}
+
+.navbar-inverse.in {
+    background: linear-gradient(to bottom, rgba(40, 40, 40, 0.4) 1px, rgba(255, 165, 0, 0.4) 50px, rgba(51, 28, 0, 0.98) 51px);
+}
+
+.navbar-default {
+    background-color: rgba(40, 40, 40, 0.96);
+}
+
+
+
+
+.page-header {
+    color: orange;
+}
+
+
+.panel {
+    /*opacity: 0.9;*/
+    /*background-color: transparent;*/
+}
+
+.panel-heading {
+    background-color: lightgrey !important;
+    /*background: linear-gradient(to top, rgba(40, 40, 40, 0.9), rgba(255, 165, 0, 0.9));*/
+    background: linear-gradient(to top, lightgrey, ghostwhite);
+    /*background-color: transparent !important;*/
+}
+
+
+.panel-heading .panel-title {
+    color: black !important;
+    text-shadow: 0 0 10px white;
+}

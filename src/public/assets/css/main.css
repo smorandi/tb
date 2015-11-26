@@ -11,7 +11,7 @@ body {
 
     /*use a nicer font*/
     font-family: 'Roboto', sans-serif;
-    /*background-image: url('/assets/images/dark_mosaic.png');*/
+    background-image: url('/assets/images/dark_mosaic.png');
 }
 
 /*to quickly remove margin and padding from html elements*/
@@ -30,54 +30,6 @@ body {
 
 .overflow-auto {
     overflow: auto;
-}
-
-/*--------------------------------------------
-  action-link, some styles have to be declared
-  as important, there is no other way to overrule bootstraps
-  shitty background-colouring
-  --------------------------------------------*/
-.action-link {
-    margin: 0;
-    cursor: pointer;
-}
-
-.action-link.disabled {
-    opacity: 0.7;
-    pointer-events: none;
-}
-
-.action-link.success {
-    background-color: rgba(0, 255, 0, 0.2) !important;
-}
-
-.action-link.success:hover {
-    background-color: rgba(0, 255, 0, 0.3) !important;
-}
-
-.action-link.info {
-    background-color: rgba(0, 0, 255, 0.2) !important;
-}
-
-.action-link.info:hover {
-    background-color: rgba(0, 0, 255, 0.3) !important;
-}
-
-.action-link.danger {
-    background-color: rgba(255, 0, 0, 0.2) !important;
-}
-
-.action-link.danger:hover {
-    background-color: rgba(255, 0, 0, 0.3) !important;
-}
-
-/*when inside a nav-bar which can be collapsed or not*/
-.collapse .action-link {
-    margin: 0px 1px;
-}
-
-.collapse.in .action-link {
-    margin: 1px 0px;
 }
 
 /*validation style*/
