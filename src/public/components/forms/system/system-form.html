@@ -2,7 +2,7 @@
     <div class="form-group form-group-sm has-feedback"
          ng-class="{'has-error': vm.form.priceReductionInterval.$invalid && !vm.readOnly,
                     'has-success': vm.form.priceReductionInterval.$valid && !vm.readOnly}">
-        <label for="priceReductionInterval" class="col-sm-3 control-label">Reduction Interval</label>
+        <label for="priceReductionInterval" class="col-sm-3 control-label text-nowrap">{{"system.form.label.reductionInterval" | translate}}</label>
 
         <div valdr-form-group class="col-sm-9">
             <input type="number" ng-model="vm.data.priceReductionInterval" class="form-control" id="priceReductionInterval"
@@ -15,7 +15,7 @@
     <div class="form-group form-group-sm has-feedback"
          ng-class="{'has-error': vm.form.priceReductionGracePeriod.$invalid && !vm.readOnly,
                     'has-success': vm.form.priceReductionGracePeriod.$valid && !vm.readOnly}">
-        <label for="priceReductionGracePeriod" class="col-sm-3 control-label ">Reduction Grace Period</label>
+        <label for="priceReductionGracePeriod" class="col-sm-3 control-label text-nowrap">{{"system.form.label.gracePeriod" | translate}}</label>
 
         <div valdr-form-group class="col-sm-9">
             <input type="number" ng-model="vm.data.priceReductionGracePeriod" class="form-control" id="priceReductionGracePeriod"

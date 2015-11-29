@@ -9,8 +9,6 @@
   "dialog.unregister.btn.cancel": "Cancel",
   "dialog.unregister.btn.unregister": "Unregister",
 
-
-
   "page.profile.header.title": "Profile",
   "page.profile.header.subtitle": "Displays your registration details",
   "page.profile.details.title": "User Details",
@@ -61,10 +59,11 @@
   "link.name.system": "System",
   "link.name.users": "Users",
 
-
-
   "action.login": "Login",
   "action.logout": "Logout",
+
+  "system.form.label.reductionInterval": "Reduction Inverval [ms]",
+  "system.form.label.gracePeriod": "Grace Period [ms]",
 
 
 
