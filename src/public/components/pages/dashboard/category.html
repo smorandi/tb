@@ -2,34 +2,31 @@
     <div ng-switch on="vm.currentView">
         <div ng-switch-when="tiles">
             <div ng-show="filtered.length > 0" ng-repeat="category in vm.filteredItems.categories">
-                <section>
+                <p>
                     <h4 class="no-gutter">
                         <small>{{category.name}}</small>
                     </h4>
                     <hr class="separator">
-
                     <div class="flex-container-row overflow-auto">
                         <div ng-repeat="item in filtered = category.items">
                             <db-item-tile item="item"></db-item-tile>
                         </div>
                     </div>
                     <br>
-                </section>
+                </p>
             </div>
         </div>
         <div ng-switch-when="list">
             <div ng-show="filtered.length > 0" ng-repeat="category in vm.filteredItems.categories">
-                <section>
+                <p>
                     <h4 class="no-gutter">
                         <small>{{category.name}}</small>
                     </h4>
                     <hr class="separator">
-                    <div class="list-group">
-                        <div class="list-group-item" ng-repeat="item in filtered = category.items">
-                            <db-item-flat item="item"></db-item-flat>
-                        </div>
+                    <div ng-repeat="item in filtered = category.items">
+                        <db-item-flat item="item"></db-item-flat>
                     </div>
-                </section>
+                </p>
             </div>
         </div>
     </div>

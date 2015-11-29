@@ -23,10 +23,10 @@
 .input-group-xs>.form-control,
 .input-group-xs>.input-group-addon,
 .input-group-xs>.input-group-btn>.btn {
-    height: 22px;
-    padding: 1px 5px;
-    font-size: 12px;
-    line-height: 1.5;
+    height: 20px;
+    padding: 1px 3px;
+    font-size: 10px;
+    line-height: 2;
 }
 
 .navbar-nav > li > a {

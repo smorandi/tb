@@ -1,15 +1,47 @@
-.db-item-flat {
+.db-item-flat-container {
+    /*min-width: 160px;*/
+    /*max-width: 160px;*/
+    min-height: 40px;
+    max-height: 40px;
+    margin: 2px;
     cursor: pointer;
 }
 
-.db-item-flat-image {
-    width: 20px;
+.db-item-flat {
+    box-shadow: inset 2px 2px 4px 0px whitesmoke, inset -2px -2px 4px -0px black;
+    background-color: aliceblue;
+    padding: 0px;
+}
+
+.db-item-flat:hover {
+    box-shadow: inset 2px 2px 4px 0px yellow, inset -2px -2px 4px 0px orange;
+}
+
+.db-item-flat:hover .db-item-flat-caption-image {
+    box-shadow: inset 2px 2px 4px -2px yellow, inset -2px 0px 4px -2px orange;
+}
+
+.db-item-flat-caption-text {
+    font-family: 'Indie Flower', cursive;
+    color: black;
+    /*text-shadow: 0px 5px 10px grey;*/
+}
+
+.db-item-flat-caption-image {
+    width: 40px;
+    height: 40px;
+    margin: 0px 4px 0px 0px;
+    align-self: center;
+    box-shadow: inset 0px 0px 10px 0px black;
+}
+
+.db-item-flat-quantity {
+    padding-right: 4px;
 }
 
 .db-item-flat-price-area {
-    flex: 100px 0;
-}
-
-.db-item-flat-text {
-    padding-left: 1em;
+    flex: 0 0 140px;
+    align-self: stretch;
+    padding: 0px 6px;
+    background: linear-gradient(to bottom, rgba(40, 40, 40, 0.2), rgba(20, 20, 20, 0.1));
 }

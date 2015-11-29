@@ -132,21 +132,19 @@ function createStandardSet(callback) {
     logger.info("creating standard-set");
 
     var root = new models.Root("root", "root", "root", "root");
-
     var admin = new models.Admin("admin", "admin", "admin", "admin");
-
     var customer = new models.Customer("customer", "customer", "customer", "customer");
 
     var drink0 = new models.Drink("Gin Tonic", "Most favourite drink", 3, "dl", "cocktail", ["alcoholic"], 10, 4, 15, 0.1);
-    var drink1 = new models.Drink("Stärböcks", "Fine jamaican blue mountain blend",  3, "dl", "coffee", ["non-alcoholic"], 4, 2.5, 6, 0.2);
-    var drink2 = new models.Drink("Duff Bräu", "Ice cold and masterly brewed",  5, "dl", "beer", ["alcoholic"], 5, 3, 9, 0.1);
-    var drink3 = new models.Drink("Faustino I.", "Red wine made of superb grapes",  2, "dl", "wine", ["alcoholic"], 4, 3, 15, 0.3);
-    var drink4 = new models.Drink("Darjeeling", "Fine indial tea",  2, "dl", "tea", ["non-alcoholic"], 4, 3, 15, 0.3);
-    var drink5 = new models.Drink("Tequila", "The mexican favourite",  2, "cl", "shot", ["alcoholic"], 4, 3, 15, 0.3);
-    var drink6 = new models.Drink("Dr. Pepper", "Some funny tasting coke",  3, "dl", "soft", ["non-alcoholic"], 4, 3, 15, 0.3);
-    var drink7 = new models.Drink("Valser", "Ah, yes! The swiss sparkling refreshment",  3, "dl", "soft", ["non-alcoholic"], 5.5, 3, 15, 0.3);
-    var drink8 = new models.Drink("Kaffee Hag", "Also some nice coffee",  3, "dl", "coffee", ["non-alcoholic"], 54.25, 2.5, 60, 0.25);
-    var drink9 = new models.Drink("Tequila Sunrise", "Let the sun shine (in your brain)",  2, "dl", "cocktail", ["alcoholic"], 4, 2.5, 6, 0.2);
+    var drink1 = new models.Drink("Stärböcks", "Fine jamaican blue mountain blend", 3, "dl", "coffee", ["non-alcoholic"], 4, 2.5, 6, 0.2);
+    var drink2 = new models.Drink("Duff Bräu", "Ice cold and masterly brewed", 5, "dl", "beer", ["alcoholic"], 5, 3, 9, 0.1);
+    var drink3 = new models.Drink("Faustino I.", "Red wine made of superb grapes", 2, "dl", "wine", ["alcoholic"], 4, 3, 15, 0.3);
+    var drink4 = new models.Drink("Darjeeling", "Fine indian tea", 2, "dl", "tea", ["non-alcoholic"], 4, 3, 15, 0.3);
+    var drink5 = new models.Drink("Tequila", "The mexican favourite", 2, "cl", "shot", ["alcoholic"], 4, 3, 15, 0.3);
+    var drink6 = new models.Drink("Dr. Pepper", "Some funny tasting coke", 3, "dl", "soft", ["non-alcoholic"], 4, 3, 15, 0.3);
+    var drink7 = new models.Drink("Valser", "Ah, yes! The swiss sparkling refreshment", 3, "dl", "soft", ["non-alcoholic"], 5.5, 3, 15, 0.3);
+    var drink8 = new models.Drink("Kaffee Hag", "Also some nice coffee", 3, "dl", "coffee", ["non-alcoholic"], 54.25, 2.5, 60, 0.25);
+    var drink9 = new models.Drink("Tequila Sunrise", "Let the sun shine (in your brain)", 2, "dl", "cocktail", ["alcoholic"], 4, 2.5, 6, 0.2);
 
     var commands = [];
     commands.push(commandService.send("createRoot").for("user").instance("root").with({payload: root}));

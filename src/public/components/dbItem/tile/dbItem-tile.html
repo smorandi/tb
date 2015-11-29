@@ -1,5 +1,5 @@
 <div class="flip-container db-item-tile-container">
-    <div class="flipper" ng-class="{flip: vm.isFlipped}">
+    <div class="flipper y-axis" ng-class="{flip: vm.isFlipped}">
         <div class="front">
             <div class="db-item-tile flex-auto flex-container-column flex-justify-content-space-between"
                  ng-click="vm.flip()">
@@ -14,25 +14,25 @@
                 </h6>
 
                 <div class="db-item-tile-price-area">
-                    <div class="flex-container-row flex-justify-content-space-between flex-align-items-baseline">
-                        <h6 class="no-gutter flex-align-self-center text-muted text-nowrap">
+                    <div class="flex-container-row flex-align-items-baseline">
+                        <h6 class="db-item-tile-quantity no-gutter flex-align-self-center text-muted text-nowrap">
                             <span class="glyphicon glyphicon-tint"></span>
                             {{vm.item.quantity}}&nbsp;{{vm.item.quantityUnit}}
                         </h6>
 
                         <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>
 
-                        <h4 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap">
+                        <h5 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap flex-1 text-center">
                             <small><span class="glyphicon"
                                          ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
                                                  'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
                                 </span></small>
                             {{vm.item.tick.delta}}
-                        </h4>
+                        </h5>
 
                         <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>
 
-                        <h4 flash="vm.item.price" class="text-primary no-gutter text-nowrap">
+                        <h4 flash="vm.item.price" class="text-primary no-gutter text-nowrap flex-1 text-right">
                             <strong ng-show="vm.item.price % 1 > 0">{{vm.item.price | currency:"":2}}</strong>
                             <strong ng-hide="vm.item.price % 1 > 0">{{vm.item.price | currency:"":2}}</strong>
                         </h4>
@@ -87,24 +87,24 @@
                         <hr class="separator">
 
                         <div class="flex-container-row flex-justify-content-space-between flex-align-items-baseline">
-                            <h6 class="no-gutter flex-align-self-center text-muted text-nowrap">
+                            <h6 class="db-item-tile-quantity no-gutter flex-align-self-center text-muted text-nowrap">
                                 <span class="glyphicon glyphicon-tint"></span>
                                 {{vm.item.quantity}}&nbsp;{{vm.item.quantityUnit}}
                             </h6>
 
                             <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>
 
-                            <h4 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap">
+                            <h5 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap flex-1 text-center">
                                 <small><span class="glyphicon"
                                              ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
                                                  'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
                                 </span></small>
                                 {{vm.item.tick.delta}}
-                            </h4>
+                            </h5>
 
                             <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>
 
-                            <h4 flash="vm.item.price" class="text-primary no-gutter text-nowrap">
+                            <h4 flash="vm.item.price" class="text-primary no-gutter text-nowrap flex-1 text-right">
                                 <strong ng-show="vm.item.price % 1 > 0">{{vm.item.price | currency:"":2}}</strong>
                                 <strong ng-hide="vm.item.price % 1 > 0">{{vm.item.price | currency:"":2}}</strong>
                             </h4>

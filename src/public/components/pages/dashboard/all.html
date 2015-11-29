@@ -9,9 +9,8 @@
             </div>
         </div>
         <div ng-switch-when="list">
-            <div ng-show="vm.filteredItems.all.items.length > 0" class="list-group">
-                <div ng-repeat="item in vm.filteredItems.all.items"
-                     class="list-group-item">
+            <div ng-show="vm.filteredItems.all.items.length > 0">
+                <div ng-repeat="item in vm.filteredItems.all.items">
                     <db-item-flat item="item"></db-item-flat>
                 </div>
             </div>

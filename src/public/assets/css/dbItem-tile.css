@@ -49,8 +49,7 @@
 }
 
 .db-item-tile-quantity {
-    border-right: solid thin darkgray;
-    padding-right: 6px;
+    padding-right: 4px;
 }
 
 .db-item-tile-price-area-separator {
