@@ -1,21 +1,25 @@
 var gulp = require('gulp');
 
-var connect = require('gulp-connect');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
-var minifyCSS = require('gulp-minify-css');
-var clean = require('gulp-clean');
+//var minifyCSS = require('gulp-minify-css');
+//var clean = require('gulp-clean');
 var inject = require('gulp-inject');
 var bowerFiles = require('main-bower-files');
 var stylus = require('gulp-stylus');
 var open = require('gulp-open');
 var concat = require('gulp-concat');
 var util = require('gulp-util');
-var minify = require('gulp-minify');
+//var minify = require('gulp-minify');
 var filesort = require('gulp-angular-filesort');
+//var run = require('gulp-run');
+var exec = require('child_process').exec;
+var exit = require('gulp-exit');
 
-var urlBuild = "http://localhost:9999";
-var urlApp = "http://localhost:8888";
+var gulpProtractorAngular = require('gulp-angular-protractor');
+var Server = require('karma').Server;
+
+var urlApp = "http://localhost:3000";
 
 //App Dev
 gulp.task('inject', function(){
@@ -37,17 +41,69 @@ gulp.task('lint', function() {
         .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('connect', function () {
-    connect.server({
-        root: 'public/',
-        port: 8888
-    });
-});
-
 gulp.task('appOpen', function(){
     gulp.src(__filename)
         .pipe(open({uri: urlApp}));
 });
+
+// Server
+
+gulp.task('start.server', function (cb) {
+    exec('start npm start', function (err, stdout, stderr) {
+        util.log(stdout);
+        util.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('start.server.dev', function (cb) {
+    exec('start npm run start-dev', function (err, stdout, stderr) {
+        util.log(stdout);
+        util.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('start.mongod', function (cb) {
+    exec('start mongod', function (err, stdout, stderr) {
+        util.log(stdout);
+        util.log(stderr);
+        cb(err);
+    });
+});
+
+// Testing
+
+gulp.task('test.e2e', function(callback) {
+    gulp.src(['./testFE/*.js'])
+        .pipe(gulpProtractorAngular({
+            'configFile': './testFE/protractor.conf.js',
+            'debug': false,
+            'autoStartStopServer': true
+        }))
+        .on('error', function(e) {
+            console.log(e);
+        })
+        .on('end', callback);
+});
+
+gulp.task('test.unit', function (done) {
+    new Server({
+        configFile: __dirname +'/testFE/karma-unit.conf.js',
+        singleRun: true
+    }, done).start();
+});
+
+gulp.task('test.midway', function (done) {
+    new Server({
+        configFile: __dirname +'/testFE/karma-midway.conf.js',
+        singleRun: true
+    }, done).start();
+});
+
+gulp.task('test.all',
+    ['start.mongod', 'start.server.dev', 'test.midway', 'test.unit', 'test.e2e']
+);
 
 //// Build
 //gulp.task( 'buildConcatBower', function(){
@@ -97,25 +153,11 @@ gulp.task('appOpen', function(){
 //        .pipe(gulp.dest('build/'));
 //});
 
-gulp.task('connectDist', function () {
-    connect.server({
-        root: 'build/',
-        port: 9999
-    });
-});
 
-gulp.task('buildOpen', function(){
-    gulp.src(__filename)
-        .pipe(open({uri: urlBuild}));
-});
-
+//workflow
 
 gulp.task('default',
-    ['inject', 'lint', 'connect', 'appOpen']
-);
-
-gulp.task('app',
-    ['inject', 'connect', 'appOpen']
+    [ 'start.mongod', 'start.server', 'appOpen']
 );
 
 /*
@@ -123,14 +165,3 @@ gulp.task('build',
     ['cleanBuild', 'inject', 'minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components', 'connectDist', 'buildOpen']
 );*/
 
-gulp.task('inject_test', function(){
-    gulp.src('./public/index.html')
-        .pipe(inject(gulp.src(['./public/assets/lib_head/**/*.js'], {read: false}), {relative: true, name: 'head'}))
-        .pipe(inject(gulp.src(bowerFiles(), {read: true}), {relative: true, name: 'bower'}))
-        .pipe(inject(gulp.src(['./public/api/**/*.js', './public/components/**/*.js', './public/infrastructure/**/*.js', './public/injections.js' ],
-            {read: true}).pipe(filesort()), {relative: true, name:'angular'}))
-        .pipe(inject(gulp.src(['./public/app.js'], {read: false}), {relative: true, name:'anguapp'}))
-        .pipe(inject(gulp.src(['./public/assets/css/**/*.css'], {read: false}), {relative: true}))
-        .pipe(gulp.dest('./build'))
-        .on('error', util.log);
-});

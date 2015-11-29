@@ -40,10 +40,10 @@
                 <strong> &nbsp;{{items.basket.number}} </strong>
                 &nbsp;Stk
             </div>
-            <div class="col-xs-2 col-sm-2 col-md-2">
+            <div class="col-xs-2 col-sm-2 col-md-2" flash="items.dashItem.price">
                 {{items.dashItem.price | currency:"":2}}
             </div>
-            <div class="col-xs-2 col-sm-2 col-md-2">
+            <div class="col-xs-2 col-sm-2 col-md-2" flash="items.priceItem">
                 {{items.priceItem | currency:"":2}}
             </div>
         </div>
@@ -55,7 +55,7 @@
             <div class="col-xs-8 col-sm-5 col-md-6">
                 <div class="input-group">
                     <div class="input-group-addon">{{'TOTAL' | translate}}</div>
-                    <p class="form-control text-right">
+                    <p class="form-control text-right" flash="vm.basketTotalPrice.price">
                         {{vm.basketTotalPrice.price | currency:"":2}}
                     </p>
 

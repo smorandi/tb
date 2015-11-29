@@ -26,12 +26,10 @@ module controllers {
         ];
 
         constructor(private basketResource:any, private basketResourceItems:any, private logger:services.LoggerService, private dashboardService:services.DashboardService,
-                    private $state:ng.ui.IStateService, private scope:ng.IScope, private footer:services.FooterService) {
+                    private $state:ng.ui.IStateService, private $scope:ng.IScope, private footer:services.FooterService) {
 
 
             this.dashboard = dashboardService.dashboard;
-
-            scope.$watchCollection(() => this.dashboard, (newValue, oldValue) => this.updateItems(newValue, oldValue));
 
             var total = 0;
             for (var y = 0; y < this.basketResourceItems.length; y++) {
@@ -62,13 +60,14 @@ module controllers {
 
             this.basketTotalPrice.price = total;
 
+            this.$scope.$watch(() => dashboardService.dashboard, items => this.update(items), true);
 
         }
 
-        public updateItems(newValue, oldValue) {
+        public update(items) {
             var price = 0;
             for (var a = 0; a < this.basketItems.length; a++) {
-                var line = this.getDashboardItemById(newValue, this.basketItems[a].dashItemId);
+                var line = this.getDashboardItemById(items, this.basketItems[a].dashItemId);
                 if (line) {
                     this.basketItems[a].tickprice = line.tick.price;
                     this.basketItems[a].priceItem = this.pricePerItem(this.basketItems[a].tickprice, this.basketItems[a].basket.number);

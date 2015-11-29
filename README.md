@@ -41,6 +41,19 @@ being used)
 * in the `src` folder
 * call `npm test` (this will run all integration tests based on mocha)
 
+### ...gulp
+* tasks:
+*   - AppOpen           --> open the browser with the start page of the app
+*   - start.server      --> start the server (npm start)
+*   - start.server.dev  --> start the server in dev mode (npm run start-dev)
+*   - start.mongod      --> start mongodb (start mongod)
+*   - test.e2e          --> start e2e test with protractor
+*   - test.unit         --> start unit test with karma
+*   - test.midway       --> start midway test with karma
+*   - test.all          --> start.mongod/start.server.dev/test.midway/test.unit/test.e2e
+*   - default           --> start.mongod/start.server/appOpen
+
+
 #TODOS
 * error handling when server is not running/responding
 * setting focus on first element on page does not really work

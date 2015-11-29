@@ -9,6 +9,6 @@ var common = require("./../../common");
 
 it("server started, up & running", function (done) {
     var address = serverService.server.address();
-    expect(address.port).to.be(config.server.port);
+    expect(address.port).to.eql(config.server.port);
     done();
 });
