@@ -20,7 +20,7 @@
 /// <reference path="infrastructure/services/httpInterceptor.service.ts" />
 /// <reference path="infrastructure/services/localStorage.service.ts" />
 /// <reference path="infrastructure/services/logger.service.ts" />
-/// <reference path="infrastructure/services/footer.service.ts" />
+/// <reference path="infrastructure/services/focus.service.ts" />
 
 /// <reference path="infrastructure/directives/flash.directive.ts" />
 /// <reference path="infrastructure/directives/backImg.directive.ts" />
@@ -49,7 +49,6 @@
 /// <reference path="components/pages/users/users.controller.ts" />
 /// <reference path="components/header/header.directive.ts" />
 /// <reference path="components/header/header.controller.ts" />
-/// <reference path="components/footer/footer.directive.ts" />
 /// <reference path="components/pageHeader/pageHeader.directive.ts" />
 /// <reference path="components/pageHeader/pageHeader.controller.ts" />
 /// <reference path="components/dbItem/dbItem.controller.ts" />

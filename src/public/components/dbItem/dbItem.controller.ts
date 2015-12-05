@@ -11,22 +11,36 @@ module controllers {
         private canAddToBasket:boolean = false;
 
         static $inject = [
+            injections.angular.$element,
             injections.services.loggerService,
             injections.services.menuService,
+            injections.services.focusService
         ];
 
-        constructor(private logger:services.LoggerService, private menuService:services.MenuService) {
+        constructor(private $element:ng.IAugmentedJQuery, private logger:services.LoggerService, private menuService:services.MenuService, private focusService:services.FocusService) {
             this.logger.info("DbItemController created");
             this.image = constants.CATEGORY_IMAGE_MAP[this.item.category];
             this.canAddToBasket = this.item.$has("addToBasket");
         }
 
-        public flip() {
-            this.isFlipped = !this.isFlipped;
+        public flip(event:any) {
+            if (event) {
+                if (event.type === "click" ||
+                    (event.type === "keypress" && event.which === 13)) {
+                    this.isFlipped = !this.isFlipped;
+                }
+            }
+            else {
+                this.isFlipped = !this.isFlipped;
+            }
+
+            // we have to make sure the focus stays on the root element...
+            var rootElement = this.$element.children()[0];
+            this.focusService.focusByElement(rootElement);
         }
 
-        public addToBasket():void {
-            this.flip();
+        public addToBasket(event:any):void {
+            this.flip(event);
             var basketEntry = new models.BasketEntry(this.item.id, this.number);
             this.item.$post("addToBasket", null, basketEntry)
                 .then(res => {

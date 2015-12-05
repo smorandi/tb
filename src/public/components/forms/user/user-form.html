@@ -22,7 +22,8 @@
                    name="password" placeholder="Password" ng-readonly="vm.readOnly"/>
             <span class="glyphicon glyphicon-ok form-control-feedback"
                   ng-class="{'glyphicon-remove': vm.form.password.$invalid}"
-                  ng-hide="vm.readOnly"></span>
+                  ng-hide="vm.readOnly">
+            </span>
         </div>
     </div>
 
@@ -36,7 +37,8 @@
                    name="firstname" placeholder="First Name" ng-readonly="vm.readOnly"/>
             <span class="glyphicon glyphicon-ok form-control-feedback"
                   ng-class="{'glyphicon-remove': vm.form.firstname.$invalid}"
-                  ng-hide="vm.readOnly"></span>
+                  ng-hide="vm.readOnly">
+            </span>
         </div>
 
     </div>
@@ -50,18 +52,19 @@
                    name="lastname" placeholder="Last Name" ng-readonly="vm.readOnly"/>
             <span class="glyphicon glyphicon-ok form-control-feedback"
                   ng-class="{'glyphicon-remove': vm.form.lastname.$invalid}"
-                  ng-hide="vm.readOnly"></span>
+                  ng-hide="vm.readOnly">
+            </span>
         </div>
     </div>
 
     <div class="form-group form-group-sm" ng-hide="vm.readOnly">
         <div class="col-sm-offset-3 col-sm-9">
             <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vm.form.$invalid"
-                    ng-click="vm.submit()"><span
-                    class="glyphicon glyphicon-save"/> Save
+                    ng-click="vm.submit()">
+                <span class="glyphicon glyphicon-save"/>&nbsp;{{"forms.save" | translate}}
             </button>
-            <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()"><span
-                    class="glyphicon glyphicon-remove"/> Cancel
+            <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()">
+                <span class="glyphicon glyphicon-remove"/>&nbsp;{{"forms.cancel" | translate}}
             </button>
         </div>
     </div>

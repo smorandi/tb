@@ -10,6 +10,9 @@ module directives {
                 element.bind("click", function (e) {
                     e.stopPropagation();
                 });
+                element.bind("keypress", function (e) {
+                    e.stopPropagation();
+                });
             }
         };
     }

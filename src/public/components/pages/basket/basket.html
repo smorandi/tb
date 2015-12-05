@@ -3,10 +3,104 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <strong> {{ "BASKET" | translate}}</strong>
+            <label class="panel-title">
+                {{"page.basket.panel.title" | translate}}
+            </label>
         </div>
-        <div class="panel-body">
-            <div ng-include="'components/pages/basket/basket-list.html'"></div>
+
+        <div class="flex-container-row flex-justify-content-center"
+             ng-hide="vm.basketItems.length > 0">
+            <h5 class="text-center">
+                <em>There are currently no items in your basket...</em>
+            </h5>
         </div>
+
+        <table class="table table-striped table-responsive table-condensed"
+               ng-show="vm.basketItems.length > 0">
+            <thead>
+            <tr>
+                <th></th>
+                <th class="h6"><strong>{{"page.basket.table.name" | translate}}</strong></th>
+                <th class="text-left h6"><strong>{{"page.basket.table.units" | translate}}</strong></th>
+                <th class="text-right h6"><strong>{{"page.basket.table.pricePerUnit" | translate}}</strong></th>
+                <th class="text-right h6"><strong>{{"page.basket.table.subtotal" | translate}}</strong></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.basketItems">
+                <td class="valign-baseline" style="width: 1px">
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="vm.deleteItem(item)"><span
+                            aria-hidden="true">&times;</span></button>
+                </td>
+                <td class="valign-baseline">
+                    <h6 class="no-gutter">{{item.dashItem.name}}</h6>
+                </td>
+                <td class="h6">
+                    <div class="input-group input-group-xs"
+                         style="width: 60px">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.increment(item)" stop-event>
+                            <span class="glyphicon glyphicon-triangle-top"></span>
+                        </button>
+                    </span>
+                        <input ng-model="item.basket.number" type="text" maxlength="2" class="form-control text-center"
+                               readonly stop-event>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.decrement(item)" stop-event>
+                            <span class="glyphicon glyphicon-triangle-bottom"></span>
+                        </button>
+                    </span>
+                    </div>
+                </td>
+                <td class="valign-baseline h6 text-right" flash="item.dashItem.price">
+                    {{item.dashItem.price | currency:"":2}}
+                </td>
+                <td class="valign-baseline h6 text-right" flash="item.priceItem">
+                    {{item.priceItem | currency:"":2}}
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="valign-baseline info">
+                    <h4 class="text-right text-info no-gutter" flash="vm.basketTotalPrice.price">
+                        <small>{{"page.basket.table.total" | translate}}:&nbsp;&nbsp;</small>
+                        <strong flash="vm.basketTotalPrice.price">{{vm.basketTotalPrice.price | currency:"":2}}</strong>
+                    </h4>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
     </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
+                        ng-click="navCollapsed = !navCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
+                <div class="btn-toolbar navbar-left" role="toolbar">
+                    <button class="btn btn-sm navbar-btn btn-success"
+                            stop-event
+                            ng-click="vm.createOrder()"
+                            ng-disabled="vm.basketItems.length <= 0">
+                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;Place Order
+                    </button>
+                    <button class="btn btn-sm navbar-btn btn-danger"
+                            stop-event
+                            ng-click="vm.clearBasket()"
+                            ng-disabled="vm.basketItems.length <= 0">
+                        <span class="glyphicon glyphicon-trash"></span>&nbsp;Clear Basket
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
 </div>

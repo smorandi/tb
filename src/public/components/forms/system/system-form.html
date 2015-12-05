@@ -2,10 +2,12 @@
     <div class="form-group form-group-sm has-feedback"
          ng-class="{'has-error': vm.form.priceReductionInterval.$invalid && !vm.readOnly,
                     'has-success': vm.form.priceReductionInterval.$valid && !vm.readOnly}">
-        <label for="priceReductionInterval" class="col-sm-3 control-label text-nowrap">{{"system.form.label.reductionInterval" | translate}}</label>
+        <label for="priceReductionInterval" class="col-sm-3 control-label text-nowrap">{{"system.form.label.reductionInterval"
+            | translate}}</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="number" ng-model="vm.data.priceReductionInterval" class="form-control" id="priceReductionInterval"
+            <input type="number" ng-model="vm.data.priceReductionInterval" class="form-control"
+                   id="priceReductionInterval"
                    name="priceReductionInterval" placeholder="Reduction Interval" autofocus ng-readonly="vm.readOnly"/>
             <span class="glyphicon glyphicon-ok form-control-feedback"
                   ng-class="{'glyphicon-remove': vm.form.priceReductionInterval.$invalid}"
@@ -15,10 +17,12 @@
     <div class="form-group form-group-sm has-feedback"
          ng-class="{'has-error': vm.form.priceReductionGracePeriod.$invalid && !vm.readOnly,
                     'has-success': vm.form.priceReductionGracePeriod.$valid && !vm.readOnly}">
-        <label for="priceReductionGracePeriod" class="col-sm-3 control-label text-nowrap">{{"system.form.label.gracePeriod" | translate}}</label>
+        <label for="priceReductionGracePeriod" class="col-sm-3 control-label text-nowrap">{{"system.form.label.gracePeriod"
+            | translate}}</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="number" ng-model="vm.data.priceReductionGracePeriod" class="form-control" id="priceReductionGracePeriod"
+            <input type="number" ng-model="vm.data.priceReductionGracePeriod" class="form-control"
+                   id="priceReductionGracePeriod"
                    name="priceReductionGracePeriod" placeholder="Grace Period" ng-readonly="vm.readOnly"/>
             <span class="glyphicon glyphicon-ok form-control-feedback"
                   ng-class="{'glyphicon-remove': vm.form.priceReductionGracePeriod.$invalid}"
@@ -29,11 +33,11 @@
     <div class="form-group form-group-sm" ng-hide="vm.readOnly">
         <div class="col-sm-offset-3 col-sm-9">
             <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vm.form.$invalid"
-                    ng-click="vm.submit()"><span
-                    class="glyphicon glyphicon-save"/> Save
+                    ng-click="vm.submit()">
+                <span class="glyphicon glyphicon-save"/>&nbsp;{{"forms.save" | translate}}
             </button>
-            <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()"><span
-                    class="glyphicon glyphicon-remove"/> Cancel
+            <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()">
+                <span class="glyphicon glyphicon-remove"/>&nbsp;{{"forms.cancel" | translate}}
             </button>
         </div>
     </div>

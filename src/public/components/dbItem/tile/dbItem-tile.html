@@ -1,16 +1,16 @@
-<div class="flip-container db-item-tile-container">
+<div class="flip-container db-item-tile-container" ng-click="vm.flip($event)" ng-keypress="vm.flip($event)">
     <div class="flipper y-axis" ng-class="{flip: vm.isFlipped}">
         <div class="front">
-            <div class="db-item-tile flex-auto flex-container-column flex-justify-content-space-between"
-                 ng-click="vm.flip()">
-
-                <div class="db-item-tile-caption-image" back-img="{{vm.image}}"></div>
+            <div class="db-item-tile flex-auto flex-container-column flex-justify-content-space-between">
+                <div class="db-item-tile-caption-image" back-img="{{vm.image}}">
+                </div>
 
                 <h3 class="db-item-tile-caption-text flex-auto text-center text-nowrap no-gutter">
                     <strong>{{vm.item.name}}</strong>
                 </h3>
 
-                <h6 class="db-item-tile-description flex-auto text-center"><em>{{vm.item.description}}</em>
+                <h6 class="db-item-tile-description flex-auto text-center">
+                    <em>{{vm.item.description}}</em>
                 </h6>
 
                 <div class="db-item-tile-price-area">
@@ -20,17 +20,21 @@
                             {{vm.item.quantity}}&nbsp;{{vm.item.quantityUnit}}
                         </h6>
 
-                        <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>
+                        <div class="db-item-tile-price-area-separator flex-align-self-stretch">
+                        </div>
 
                         <h5 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap flex-1 text-center">
-                            <small><span class="glyphicon"
-                                         ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
+                            <small>
+                                <span class="glyphicon"
+                                      ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
                                                  'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
-                                </span></small>
+                                </span>
+                            </small>
                             {{vm.item.tick.delta}}
                         </h5>
 
-                        <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>
+                        <div class="db-item-tile-price-area-separator flex-align-self-stretch">
+                        </div>
 
                         <h4 flash="vm.item.price" class="text-primary no-gutter text-nowrap flex-1 text-right">
                             <strong ng-show="vm.item.price % 1 > 0">{{vm.item.price | currency:"":2}}</strong>
@@ -41,30 +45,32 @@
             </div>
         </div>
         <div class="back">
-            <div class="opt db-item-tile flex-auto flex-container-column flex-justify-content-space-between"
-                 ng-click="vm.flip()">
-
-                <div class="db-item-tile-caption-image" back-img="{{vm.image}}"></div>
+            <div class="db-item-tile flex-auto flex-container-column flex-justify-content-space-between">
+                <div class="db-item-tile-caption-image" back-img="{{vm.image}}">
+                </div>
 
                 <h3 class="db-item-tile-caption-text flex-auto text-center text-nowrap no-gutter">
                     <strong>{{vm.item.name}}</strong>
                 </h3>
 
-
-                <div ng-show="vm.canAddToBasket" class="input-group input-group-sm db-item-tile-basket-ctrl">
+                <div ng-show="vm.isFlipped && vm.canAddToBasket"
+                     class="input-group input-group-sm db-item-tile-basket-ctrl">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.increment()" stop-event><i
-                                class="glyphicon glyphicon-triangle-top"></i></button>
+                        <button type="button" class="btn btn-default" ng-click="vm.increment()" stop-event>
+                            <span class="glyphicon glyphicon-triangle-top"></span>
+                        </button>
                     </span>
                     <input ng-model="vm.number" type="text" maxlength="2" class="form-control text-center"
                            readonly stop-event>
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.decrement()" stop-event><i
-                                class="glyphicon glyphicon-triangle-bottom"></i></button>
+                        <button type="button" class="btn btn-default" ng-click="vm.decrement()" stop-event>
+                            <span class="glyphicon glyphicon-triangle-bottom"></span>
+                        </button>
                     </span>
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary" ng-click="vm.addToBasket()" stop-event><i
-                                class="glyphicon glyphicon-shopping-cart"></i></button>
+                        <button type="button" class="btn btn-primary" ng-click="vm.addToBasket($event)" stop-event>
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                        </button>
                     </span>
                 </div>
 
@@ -73,14 +79,15 @@
                         <div class="flex-container-row text-muted flex-justify-content-center flex-align-items-center">
                             <h6 flash="vm.item.highestPrice"
                                 class="flex-auto no-gutter text-nowrap text-danger text-center">
-                                <span class="glyphicon glyphicon-triangle-top"></span>&nbsp;{{vm.item.highestPrice |
-                                currency:"":2}}
+                                <span class="glyphicon glyphicon-triangle-top"></span>
+                                &nbsp;{{vm.item.highestPrice | currency:"":2}}
                             </h6>
+
                             <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>
                             <h6 flash="vm.item.lowestPrice"
                                 class="flex-auto no-gutter text-nowrap text-success text-center">
-                                <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;{{vm.item.lowestPrice |
-                                currency:"":2}}
+                                <span class="glyphicon glyphicon-triangle-bottom"></span>
+                                &nbsp;{{vm.item.lowestPrice | currency:"":2}}
                             </h6>
                         </div>
 
@@ -95,10 +102,12 @@
                             <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>
 
                             <h5 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap flex-1 text-center">
-                                <small><span class="glyphicon"
-                                             ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
-                                                 'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
-                                </span></small>
+                                <small>
+                                    <span class="glyphicon"
+                                          ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
+                                                     'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
+                                    </span>
+                                </small>
                                 {{vm.item.tick.delta}}
                             </h5>
 

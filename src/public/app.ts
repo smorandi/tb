@@ -1,6 +1,6 @@
 ///<reference path="./all.references.ts" />
 
-angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "ngSanitize", "ngAnimate", "toaster", "angular-hal", "btford.socket-io", "ui.bootstrap", "pascalprecht.translate"])
+angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "ngSanitize", "ngAnimate", "ngAria", "toaster", "angular-hal", "btford.socket-io", "ui.bootstrap", "pascalprecht.translate"])
     //======================================================================================
     //services (used application wide)
     //--------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .service(injections.services.localStorageService, services.LocalStorageService)
     .service(injections.services.loggerService, services.LoggerService)
     .service(injections.services.modalService, services.ModalService)
-    .service(injections.services.footerService, services.FooterService)
+    .service(injections.services.focusService, services.FocusService)
 
     //======================================================================================
     //directives (directives used within multiple components)
@@ -24,16 +24,12 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .directive(injections.directives.stopEvent, directives.StopEvent)
     //.directive(injections.directives.formAutofillFix, directives.AutoFillFix)
 
-
     //======================================================================================
     //components (the visual bricks of the application)
     //--------------------------------------------------------------------------------------
     //header
     .directive(injections.components.header.directive, directives.Header)
     .controller(injections.components.header.controller, controllers.Header)
-
-    //footer
-    .directive(injections.components.footer.directive, directives.Footer)
 
     //pageHeader
     .directive(injections.components.pageHeader.directive, directives.PageHeader)

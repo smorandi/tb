@@ -1,59 +1,114 @@
-<div class="list-group">
-    <div class="list-group-item">
-        <div class="row">
-            <div class="col-xs-11 col-sm-2 col-md-2">
-                {{ 'NAME' | translate }}
-            </div>
-            <div class="col-xs-offset-1 col-xs-6 col-sm-2 col-md-2">
-                {{ 'QUANTITY'| translate}}
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2">
-                {{ 'PRICE' | translate }} / {{'PIECE' | translate}}
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2">
-                {{ 'PRICE' | translate}}
-            </div>
-        </div>
-    </div>
-    <div class="list-group-item" ng-repeat="items in vm.order.orderItems">
-        <div class="row">
-            <div class="col-xs-11 col-sm-2 col-md-2">
-                {{items.item.name}}
-            </div>
-            <div class="col-xs-offset-1 col-xs-6 col-sm-2 col-md-2">
-                <strong> &nbsp;{{items.number}} </strong>
-                &nbsp;Stk
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2">
-                {{items.item.price | currency:"":2}}
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2">
-                {{items.price | currency:"":2}}
-            </div>
-        </div>
-    </div>
-</div>
-<div class="list-group">
-    <div class="list-group-item">
-        <div class="row">
-            <div class="col-xs-8 col-sm-5 col-md-6">
-                <div class="input-group">
-                    <div class="input-group-addon">{{'TOTAL' | translate}}</div>
-                    <p class="form-control text-right">
-                        {{vm.order.totalPrice | currency:"":2}}
-                    </p>
-                    <div class="input-group-addon">CHF</div>
+<div class="container-fluid">
+    <page-header title="page.orders.details.header.title" subtitle="page.orders.details.header.subtitle">
+    </page-header>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="panel-title">
+                        {{"page.orders.details.panel.properties.title" | translate}}
+                    </label>
+                </div>
+
+                <div class="panel-body">
+                    <table class="table table-borderless table-responsive table-condensed">
+                        <tbody>
+                        <tr>
+                            <th class="valign-baseline">{{"page.orders.details.panel.properties.table.id" |
+                                translate}}
+                            </th>
+                            <td class="valign-baseline h6">{{vm.orderResource.id}}</td>
+                        </tr>
+                        <tr>
+                            <th class="valign-baseline">{{"page.orders.details.panel.properties.table.status" |
+                                translate}}
+                            </th>
+                            <td class="valign-baseline h6 text-success">{{vm.orderResource.status}}</td>
+                        </tr>
+                        <tr>
+                            <th class="valign-baseline">{{"page.orders.details.panel.properties.table.date" |
+                                translate}}
+                            </th>
+                            <td class="valign-baseline h6">{{vm.orderResource.timestamp | date:"medium"}}</td>
+                        </tr>
+                        <tr>
+                            <th class="valign-baseline">{{"page.orders.details.panel.properties.table.total" |
+                                translate}}
+                            </th>
+                            <td class="valign-baseline h6 text-info">{{vm.orderResource.totalPrice | currency:"":2}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="list-group">
-    <div class="list-group-item">
-        <div class="row">
-            <div class="col-xs-8 col-sm-5 col-md-6">
-                <button type="button" class="btn btn-info glyphicon glyphicon-arrow-left" ng-click="vm.goBack()"></button>
+
+        <div class="col-xs-12 col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="panel-title">
+                        {{"page.orders.details.panel.items.title" | translate}}
+                    </label>
+                </div>
+                <table class="table table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th class="">{{"page.orders.details.panel.items.table.name" | translate}}</th>
+                        <th class="text-right">{{"page.orders.details.panel.items.table.units" | translate}}</th>
+                        <th class="text-right">{{"page.orders.details.panel.items.table.pricePerUnit" | translate}}
+                        </th>
+                        <th class="text-right">{{"page.orders.details.panel.items.table.subtotal" | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="orderItem in vm.orderResource.orderItems">
+                        <td class="valign-baseline h6">{{orderItem.item.name}}</td>
+                        <td class="valign-baseline text-right h6">{{orderItem.number}}</td>
+                        <td class="valign-baseline text-right h6">{{orderItem.item.price | currency:"":2}}</td>
+                        <td class="valign-baseline text-right h6">{{orderItem.price | currency:"":2}}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="4" class="valign-baseline text-right info">
+                            <h4 class="text-info no-gutter" flash="vm.basketTotalPrice.price">
+                                <small>{{"page.orders.details.panel.items.table.total" |
+                                    translate}}:&nbsp;&nbsp;</small>
+                                <strong flash="vm.basketTotalPrice.price">{{vm.orderResource.totalPrice |
+                                    currency:"":2}}</strong>
+                            </h4>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
+                        ng-click="navCollapsed = !navCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
+                <div class="btn-toolbar navbar-left" role="toolbar">
+                    <button class="btn btn-sm navbar-btn btn-info"
+                            stop-event
+                            ng-click="vm.goBack()">
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Back To Orders
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
 </div>

@@ -1,15 +1,16 @@
 /*flashing used to indicate price changes*/
 @keyframes flash {
     from {
-        transform: scale(1);
+        transform: scale(1, 1);
 
     }
     to {
-        transform: scale(1.1);
-        text-shadow: 0 0 10px, 0 0 20px yellow;
+        transform: scale(1, 2);
+        text-shadow: 0px 0px 3px orange, 0px 0px 10px black;
+        color: orange;
     }
 }
 
 .flash {
-    animation: flash 0.5s ease-in-out 2 alternate;
+    animation: flash 1s ease-in-out 2 alternate;
 }

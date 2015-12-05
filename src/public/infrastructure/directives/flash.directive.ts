@@ -10,9 +10,9 @@ module directives {
                 scope.$watch(attrs["flash"], function (nv, ov) {
                     function settimeout() {
                         attrs["timeout"] = $timeout(function () {
-                            element.removeClass("flash flash-active");
+                            element.removeClass("flash");
                             attrs["timeout"] = null;
-                        }, 1000);
+                        }, 2000);
                     }
 
                     if (nv !== ov) {
@@ -22,7 +22,7 @@ module directives {
                             settimeout();
                         } else {
                             if (!element.hasClass("flash")) {
-                                element.addClass("flash flash-active");
+                                element.addClass("flash");
                             }
                             settimeout();
                         }

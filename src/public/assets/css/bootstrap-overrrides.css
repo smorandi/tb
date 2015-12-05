@@ -3,7 +3,6 @@
 }
 
 .progress-bar {
-    /*color: black;*/
     text-shadow: 0px 0px 10px black;
 }
 
@@ -29,26 +28,50 @@
     line-height: 2;
 }
 
+
+/*increase size of links*/
 .navbar-nav > li > a {
     font-size: 1.1em;
 }
 
 .navbar-inverse {
-    /*background-color: rgba(40, 40, 40, 0.9);*/
-    background: linear-gradient(to bottom, rgba(40, 40, 40, 0.4), rgba(255, 165, 0, 0.4));
-    /*color: whitesmoke;*/
+    background: linear-gradient(to top, rgba(102, 56, 0, 0.98), rgba(40, 40, 40, 0.98));
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: lightgrey;
+    text-shadow: 0px 0px 4px black;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: #fff;
+    background-color: rgba(102, 56, 0, 0.98);
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+    color: #fff;
+    background: linear-gradient(to top, orange 2px, rgba(102, 56, 0, 0.98) 4px, rgba(20, 20, 20, 0.98) 8px);
 }
 
 .navbar-inverse.in {
-    background: linear-gradient(to bottom, rgba(40, 40, 40, 0.4) 1px, rgba(255, 165, 0, 0.4) 50px, rgba(51, 28, 0, 0.98) 51px);
+    background: linear-gradient(to bottom, rgba(40, 40, 40, 0.94) 1px, rgba(255, 165, 0, 0.94) 50px, rgba(51, 28, 0, 0.98) 51px);
 }
+
+.navbar-inverse.in .navbar-nav > .active > a,
+.navbar-inverse.in .navbar-nav > .active > a:hover,
+.navbar-inverse.in .navbar-nav > .active > a:focus {
+    /*color: green;*/
+    background: #080808;
+    /*background-color: #080808;*/
+}
+
 
 .navbar-default {
-    background-color: rgba(40, 40, 40, 0.96);
+    background-color: rgba(40, 40, 40, 0.94);
 }
-
-
-
 
 .page-header {
     color: orange;
@@ -56,15 +79,11 @@
 
 
 .panel {
-    /*opacity: 0.9;*/
-    /*background-color: transparent;*/
 }
 
 .panel-heading {
     background-color: lightgrey !important;
-    /*background: linear-gradient(to top, rgba(40, 40, 40, 0.9), rgba(255, 165, 0, 0.9));*/
     background: linear-gradient(to top, lightgrey, ghostwhite);
-    /*background-color: transparent !important;*/
 }
 
 

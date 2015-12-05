@@ -4,16 +4,9 @@
 
 module controllers {
     export class BasketController {
-        public basketItems = [];
+        private basketItems = [];
         private basketTotalPrice = {price: 0};
-        public dashboard = [];
-        public currentFilter:string;
-        public FILTER_TILE:string = constants.FILTER.basketTile;
-        public FILTER_LIST:string = constants.FILTER.basketList;
-        public STATE_ORDER:string = "order";
-        public STATE_CLEAR:string = "clear";
-        public Links:any;
-        public showFooter:boolean = false;
+        private dashboard = [];
 
         static $inject = [
             "basketResource",
@@ -22,11 +15,14 @@ module controllers {
             injections.services.dashboardService,
             injections.uiRouter.$stateService,
             injections.angular.$scope,
-            injections.services.footerService,
         ];
 
-        constructor(private basketResource:any, private basketResourceItems:any, private logger:services.LoggerService, private dashboardService:services.DashboardService,
-                    private $state:ng.ui.IStateService, private $scope:ng.IScope, private footer:services.FooterService) {
+        constructor(private basketResource:any,
+                    private basketResourceItems:any,
+                    private logger:services.LoggerService,
+                    private dashboardService:services.DashboardService,
+                    private $state:ng.ui.IStateService,
+                    private $scope:ng.IScope) {
 
 
             this.dashboard = dashboardService.dashboard;
@@ -37,13 +33,11 @@ module controllers {
                 var priceItem;
                 var tickprice;
                 var dashItemId;
-                var image;
                 dashItem = this.getItemFromDashboard(this.basketResourceItems[y].item.id);
                 if (dashItem) {
                     priceItem = this.pricePerItem(dashItem.tick.price, this.basketResourceItems[y].number);
                     tickprice = dashItem.tick.price;
                     dashItemId = dashItem.id;
-                    image = this.getImageForItem(dashItem.category);
                 }
 
                 this.basketItems.push({
@@ -51,7 +45,6 @@ module controllers {
                     tickprice: tickprice,
                     dashItemId: dashItemId,
                     dashItem: dashItem,
-                    img: image,
                     priceItem: priceItem,
                 });
 
@@ -61,7 +54,6 @@ module controllers {
             this.basketTotalPrice.price = total;
 
             this.$scope.$watch(() => dashboardService.dashboard, items => this.update(items), true);
-
         }
 
         public update(items) {
@@ -84,10 +76,6 @@ module controllers {
                     return dashboard[x];
                 }
             }
-        }
-
-        public getImageForItem(cat:any) {
-            return constants.CATEGORY_IMAGE_MAP[cat];
         }
 
         private getItemFromDashboard(idBasket:string) {
@@ -124,8 +112,8 @@ module controllers {
                 .then(res => {
                     this.$state.reload()
                         .then(res=> {
-                        this.logger.info("Order placed", "", enums.LogOptions.toast);
-                    });
+                            this.logger.info("Order placed", "", enums.LogOptions.toast);
+                        });
 
                 })
                 .catch(err => {
@@ -133,38 +121,41 @@ module controllers {
                 });
         }
 
-        public clearWholeBasket() {
+        public clearBasket() {
             for (var i = 0; i < this.basketItems.length; i++) {
                 this.basketItems[i].basket.$del("delete")
                     .then(res => {
                         this.$state.reload().then(res=> {
-                            this.logger.info("Whole items removed", "", enums.LogOptions.toast);
+                            this.logger.info("Your basket has been cleared", "", enums.LogOptions.toast);
                         });
                     })
                     .catch(err => {
-                        this.logger.error("Failed to Remove Item", err, enums.LogOptions.toast);
+                        this.logger.error("Failed to remove items", err, enums.LogOptions.toast);
                     });
             }
         }
 
-        public basketItemChange(item:any, sign:string) {
-            if (item) {
-                if (sign == "+") {
-                    item.basket.number = Number(item.basket.number) + 1;
-                } else if (sign == "-" && item.basket.number >= 2){
-                        item.basket.number = Number(item.basket.number - 1);
-                }
-                item.basket.$put("update", null, item.basket)
-                    .then(res => {
-                        this.$state.reload()
-                            .then(res=> {
-                                this.logger.info("Basket updated", "", enums.LogOptions.toast);
-                            });
-                    })
-                    .catch(err => {
-                        this.logger.error("Failed to update Item", err, enums.LogOptions.toast);
-                    });
-            }
+        private updateBasketItem(item:any) {
+            item.basket.$put("update", null, item.basket)
+                .then(res => {
+                    this.$state.reload()
+                        .then(res=> {
+                            this.logger.info("Basket updated", "", enums.LogOptions.toast);
+                        });
+                })
+                .catch(err => {
+                    this.logger.error("Failed to update Item", err, enums.LogOptions.toast);
+                });
+        }
+
+        public increment(item:any):void {
+            item.basket.number++;
+            this.updateBasketItem(item);
+        }
+
+        public decrement(item:any):void {
+            item.basket.number = Math.max(1, item.basket.number - 1);
+            this.updateBasketItem(item);
         }
     }
 }

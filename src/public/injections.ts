@@ -147,6 +147,7 @@ module injections {
         export var modalService:string = "modalService";
         export var footerService:string = "footerService";
         export var subHeaderService:string = "subHeaderService";
+        export var focusService:string = "focusService";
     }
 
     export module extServices {
@@ -184,6 +185,8 @@ module injections {
         export var $exceptionHandler = "$exceptionHandler";
         export var $filter = "$filter";
         export var $translateService = "$translate";
+        export var $element = "$element";
+        export var $attrs = "$attrs";
     }
 
     export module uiRouter {

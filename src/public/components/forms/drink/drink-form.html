@@ -53,7 +53,8 @@
         </div>
         <div class="col-sm-4">
             <div valdr-form-group ng-if="vm.readOnly == false">
-                <select class="form-control col-sm-4" ng-model="vm.data.quantityUnit" id="quantityUnit" name="quantityUnit">
+                <select class="form-control col-sm-4" ng-model="vm.data.quantityUnit" id="quantityUnit"
+                        name="quantityUnit">
                     <option>ml</option>
                     <option>cl</option>
                     <option>dl</option>
@@ -144,11 +145,11 @@
     <div class="form-group form-group-sm" ng-hide="vm.readOnly">
         <div class="col-sm-offset-4 col-sm-8">
             <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vm.form.$invalid"
-                    ng-click="vm.submit()"><span
-                    class="glyphicon glyphicon-save"/> Save
+                    ng-click="vm.submit()">
+                <span class="glyphicon glyphicon-save"/>&nbsp;{{"forms.save" | translate}}
             </button>
-            <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()"><span
-                    class="glyphicon glyphicon-remove"/> Cancel
+            <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()">
+                <span class="glyphicon glyphicon-remove"/>&nbsp;{{"forms.cancel" | translate}}
             </button>
         </div>
     </div>

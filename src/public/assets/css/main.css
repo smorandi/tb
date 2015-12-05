@@ -46,3 +46,16 @@ hr.separator {
     margin: 2px 0;
     padding: 0;
 }
+
+.table tbody > tr > td.valign-baseline {
+    vertical-align: baseline;
+}
+.table tbody > tr > th.valign-baseline {
+    vertical-align: baseline;
+}
+
+.table-borderless,
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th {
+    border: none;
+}

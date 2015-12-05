@@ -5,11 +5,17 @@
     max-height: 160px;
     margin: 2px;
     cursor: pointer;
+    outline: none;
 }
 
 .db-item-tile {
     box-shadow: inset 2px 2px 10px 0px whitesmoke, inset -2px -2px 10px -0px black;
     background-color: aliceblue;
+}
+
+.db-item-tile-container:hover .db-item-tile,
+.db-item-tile-container:focus .db-item-tile {
+    box-shadow: inset 2px 2px 10px 0px yellow, inset -2px -2px 10px 0px orange;
 }
 
 .db-item-tile-caption-image {
@@ -19,11 +25,8 @@
     box-shadow: inset 2px 2px 10px -2px whitesmoke, inset -2px 0px 10px -2px black;
 }
 
-.db-item-tile:hover {
-    box-shadow: inset 2px 2px 10px 0px yellow, inset -2px -2px 10px 0px orange;
-}
-
-.db-item-tile:hover .db-item-tile-caption-image {
+.db-item-tile-container:hover .db-item-tile-caption-image,
+.db-item-tile-container:focus .db-item-tile-caption-image{
     box-shadow: inset 2px 2px 10px -2px yellow, inset -2px 0px 10px -2px orange;
 }
 
@@ -53,8 +56,5 @@
 }
 
 .db-item-tile-price-area-separator {
-    /*display: block;*/
     border-right: solid thin darkgray;
-    /*padding: 0;*/
-    /*background-color: saddlebrown;*/
 }

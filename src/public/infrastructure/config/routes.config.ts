@@ -14,7 +14,7 @@ module config {
             $urlRouterProvider.otherwise("/dashboard");
 
             $stateProvider
-                .state("root", {
+                .state(constants.STATES.root, {
                     url: "",
                     templateUrl: injections.components.root.template,
                     abstract: true,
@@ -75,7 +75,7 @@ module config {
                         }
                     },
                 })
-                .state("root.dashboard", {
+                .state(constants.STATES.dashboard, {
                     url: "/dashboard",
                     views: {
                         "content@root": {
@@ -100,7 +100,7 @@ module config {
                         },
                     }
                 })
-                .state("root.register", {
+                .state(constants.STATES.register, {
                     url: "/register",
                     views: {
                         "content@root": {
@@ -110,7 +110,7 @@ module config {
                         }
                     },
                 })
-                .state("root.home", {
+                .state(constants.STATES.home, {
                     url: "/home",
                     ["redirectTo"]: "root.dashboard",
                     resolve: {
@@ -132,7 +132,7 @@ module config {
                         },
                     },
                 })
-                .state("root.home.system", {
+                .state(constants.STATES.system, {
                     url: "/system",
                     views: {
                         "content@root": {
@@ -152,7 +152,7 @@ module config {
                         },
                     },
                 })
-                .state("root.home.users", {
+                .state(constants.STATES.users, {
                     url: "/users",
                     views: {
                         "content@root": {
@@ -172,7 +172,7 @@ module config {
                         },
                     },
                 })
-                .state("root.home.drinks", {
+                .state(constants.STATES.drinks.root, {
                     url: "/drinks",
                     abstract: true,
                     views: {
@@ -181,38 +181,41 @@ module config {
                         }
                     },
                     resolve: {
-                        drinksResource: ($log, homeResource, $state) => {
-                            $log.info("resolving drinks-resource...");
+                        logger: injections.services.loggerService,
+                        drinksResource: (logger, homeResource) => {
+                            logger.info("resolving drinks-resource...");
                             return homeResource.$get("drinks").then(res => {
-                                $log.info("drinks-resource resolved...");
+                                logger.info("drinks-resource resolved...");
                                 return res;
                             });
                         },
 
-                        drinkResources: ($log, drinksResource) => {
-                            $log.info("resolving drink-resources...");
+                        drinkResources: (logger, drinksResource) => {
+                            logger.info("resolving drink-resources...");
                             if (!drinksResource.$has("items")) {
-                                $log.info("no drink resources found. returning empty array...");
+                                logger.info("no drink resources found. returning empty array...");
                                 return [];
                             }
                             return drinksResource.$get("items")
                                 .then(res => {
-                                    $log.info("drink-resources resolved...");
+                                    logger.info("drink-resources resolved...");
                                     return res;
                                 })
                                 .catch(err => {
-                                    $log.info("no collection in drinksResource");
+                                    logger.error("no collection in drinksResource");
                                     return null;
                                 });
                         },
                     },
                 })
-                .state("root.home.drinks.overview", {
+                //this is the root state for the drinks
+                .state(constants.STATES.drinks.overview, {
                     url: "",
                     abstract: true,
                     templateUrl: injections.components.page.drinks.overview.template,
                 })
-                .state("root.home.drinks.overview.list", { // state for showing all drinks
+                //state for showing all drinks
+                .state(constants.STATES.drinks.list, {
                     url: "",
                     views: {
                         "mas@root.home.drinks.overview": {
@@ -225,7 +228,8 @@ module config {
                         }
                     }
                 })
-                .state("root.home.drinks.overview.list.newDrink", { //state for adding a new drink
+                //state for adding a new drink
+                .state(constants.STATES.drinks.create, {
                     url: "/new",
                     views: {
                         "det@root.home.drinks.overview": {
@@ -235,7 +239,8 @@ module config {
                         }
                     },
                 })
-                .state("root.home.drinks.overview.list.details", { //state for showing single drink
+                //state for showing single drink
+                .state(constants.STATES.drinks.details, {
                     url: "/:id",
                     views: {
                         "det@root.home.drinks.overview": {
@@ -245,13 +250,15 @@ module config {
                         }
                     },
                     resolve: {
-                        drinkResource: ($log, drinkResources:Array<any>, $location, $state:ng.ui.IStateService, $stateParams:ng.ui.IStateParamsService, utilsService:services.UtilsService) => {
-                            var drinkResource = utilsService.findInArray(drinkResources, dr => dr.id === $stateParams["id"]);
-                            return drinkResource;
+                        drinkResource: (drinkResources:Array<any>,
+                                        $stateParams:ng.ui.IStateParamsService,
+                                        utilsService:services.UtilsService) => {
+                            return utilsService.findInArray(drinkResources, item => item.id === $stateParams["id"]);
                         },
                     },
                 })
-                .state("root.home.drinks.overview.list.details.editDrink", { //state for updating a drink
+                //state for updating a drink
+                .state(constants.STATES.drinks.edit, {
                     url: "/edit",
                     views: {
                         "det@root.home.drinks.overview": {
@@ -261,7 +268,7 @@ module config {
                         }
                     },
                 })
-                .state("root.home.profile", {
+                .state(constants.STATES.profile, {
                     url: "/profile",
                     views: {
                         "content@root": {
@@ -271,10 +278,11 @@ module config {
                         }
                     },
                     resolve: {
-                        profileResource: ($log, homeResource) => {
-                            $log.info("resolving profile-resource...");
+                        logger: injections.services.loggerService,
+                        profileResource: (logger, homeResource) => {
+                            logger.info("resolving profile-resource...");
                             return homeResource.$get("profile").then(res => {
-                                $log.info("profile-resource resolved...");
+                                logger.info("profile-resource resolved...");
                                 return res;
                             });
                         },
@@ -290,22 +298,23 @@ module config {
                         }
                     },
                     resolve: {
-                        basketResource: ($log, homeResource) => {
-                            $log.info("resolving basket-resource...");
+                        logger: injections.services.loggerService,
+                        basketResource: (logger, homeResource) => {
+                            logger.info("resolving basket-resource...");
                             return homeResource.$get("basket").then(res => {
-                                $log.info("basket-resource resolved...");
+                                logger.info("basket-resource resolved...");
                                 return res;
                             });
                         },
-                        basketResourceItems: ($log, basketResource) => {
+                        basketResourceItems: (logger, basketResource) => {
                             return basketResource.$get("items").then(res => {
-                                $log.info("basket-resource-items resolved...");
+                                logger.info("basket-resource-items resolved...");
                                 return res;
                             });
                         },
                     }
                 })
-                .state("root.home.orders", {
+                .state(constants.STATES.orders.root, {
                     url: "/orders",
                     abstract: true,
                     views: {
@@ -314,33 +323,34 @@ module config {
                         }
                     },
                     resolve: {
-                        ordersResource: ($log, homeResource, $state) => {
-                            $log.info("resolving orders-resource...");
+                        logger: injections.services.loggerService,
+                        ordersResource: (logger, homeResource, $state) => {
+                            logger.info("resolving orders-resource...");
                             return homeResource.$get("orders").then(res => {
-                                $log.info("orders-resource resolved...");
+                                logger.info("orders-resource resolved...");
                                 return res;
                             });
                         },
 
-                        orderResources: ($log, ordersResource) => {
-                            $log.info("resolving order-resources...");
+                        orderResources: (logger, ordersResource) => {
+                            logger.info("resolving order-items...");
                             if (!ordersResource.$has("items")) {
-                                $log.info("no order resources found. returning empty array...");
+                                logger.info("no order items found. returning empty array...");
                                 return [];
                             }
                             return ordersResource.$get("items")
                                 .then(res => {
-                                    $log.info("order-resources resolved...");
+                                    logger.info("order-items resolved...");
                                     return res;
                                 })
                                 .catch(err => {
-                                    $log.info("no collection in ordersResource");
+                                    logger.error("no collection in ordersResource");
                                     return null;
                                 });
                         },
                     },
                 })
-                .state("root.home.orders.list", {
+                .state(constants.STATES.orders.list, {
                     url: "",
                     views: {
                         "@root.home.orders": {
@@ -350,7 +360,7 @@ module config {
                         }
                     }
                 })
-                .state("root.home.orders.list.details", {
+                .state(constants.STATES.orders.details, {
                     url: "/:id",
                     views: {
                         "@root.home.orders": {
@@ -361,9 +371,10 @@ module config {
                     },
                     resolve: {
                         utilsService: injections.services.utilsService,
-                        orderResource: ($log, orderResources:Array<any>, $location, $state:ng.ui.IStateService, $stateParams:ng.ui.IStateParamsService, utilsService:services.UtilsService) => {
-                            var orderResource = utilsService.findInArray(orderResources, dr => dr.id === $stateParams["id"]);
-                            return orderResource;
+                        orderResource: (orderResources:Array<any>,
+                                        $stateParams:ng.ui.IStateParamsService,
+                                        utilsService:services.UtilsService) => {
+                            return utilsService.findInArray(orderResources, item => item.id === $stateParams["id"]);
                         },
                     },
                 });

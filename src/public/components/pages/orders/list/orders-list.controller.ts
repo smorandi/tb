@@ -4,20 +4,24 @@
 
 module controllers {
     export class OrdersListController {
-        public query:string;
-
         static $inject = [
             injections.angular.$log,
             injections.angular.$location,
+            injections.uiRouter.$stateService,
             "ordersResource",
-            "orderResources",
-            injections.services.footerService,
+            "orderResources"
         ];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private ordersResource, private orderResources, private footer:services.FooterService) {
+        constructor(private $log:ng.ILogService,
+                    private $location:ng.ILocationService,
+                    private $state:ng.ui.IStateService,
+                    private ordersResource,
+                    private orderResources) {
             $log.info("OrdersListController called with client-url: " + $location.path());
-
         }
 
+        public showDetails(orderItem:any):void {
+            this.$state.go(constants.STATES.orders.details, {id: orderItem.id});
+        }
     }
 }

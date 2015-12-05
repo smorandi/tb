@@ -1,0 +1,20 @@
+<table class="table table-borderless table-responsive table-condensed">
+    <tbody>
+    <tr>
+        <th class="valign-baseline">ID</th>
+        <td class="valign-baseline h6">{{vm.user.id}}</td>
+    </tr>
+    <tr>
+        <th class="valign-baseline">Type</th>
+        <td class="valign-baseline h6">{{vm.user.type}}</td>
+    </tr>
+    <tr>
+        <th class="valign-baseline">Registered</th>
+        <td class="valign-baseline h6">{{vm.user.creationDate | date:"medium"}}</td>
+    </tr>
+    <tr>
+        <th class="valign-baseline">Modified</th>
+        <td class="valign-baseline h6">{{vm.user.modificationDate | date:"medium"}}</td>
+    </tr>
+    </tbody>
+</table>

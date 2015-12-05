@@ -63,9 +63,24 @@ module constants {
         export var dashboard:string = "root.dashboard";
         export var home:string = "root.home";
         export var profile:string = "root.home.profile";
-        export var drinks:string = "root.home.drinks.overview.list";
+
+        export module drinks {
+            export var root:string = "root.home.drinks";
+            export var overview:string = "root.home.drinks.overview";
+            export var list:string = "root.home.drinks.overview.list";
+            export var create:string = "root.home.drinks.overview.list.newDrink";
+            export var details:string = "root.home.drinks.overview.list.details";
+            export var edit:string = "root.home.drinks.overview.list.details.editDrink";
+        }
+
         export var basket:string = "root.home.basket";
-        export var orders:string = "root.home.orders.list";
+
+        export module orders {
+            export var root:string = "root.home.orders";
+            export var list:string = "root.home.orders.list";
+            export var details:string = "root.home.orders.list.details";
+        }
+
         export var system:string = "root.home.system";
         export var users:string = "root.home.users";
     }
@@ -76,9 +91,9 @@ module constants {
         export var register:interfaces.ILink = new models.Link(RELS.register, NAMES.register, STATES.register);
         export var dashboard:interfaces.ILink = new models.Link(RELS.dashboard, NAMES.dashboard, STATES.dashboard);
         export var profile:interfaces.ILink = new models.Link(RELS.profile, NAMES.profile, STATES.profile);
-        export var drinks:interfaces.ILink = new models.Link(RELS.drinks, NAMES.drinks, STATES.drinks);
+        export var drinks:interfaces.ILink = new models.Link(RELS.drinks, NAMES.drinks, STATES.drinks.list);
         export var basket:interfaces.ILink = new models.Link(RELS.basket, NAMES.basket, STATES.basket);
-        export var orders:interfaces.ILink = new models.Link(RELS.orders, NAMES.orders, STATES.orders);
+        export var orders:interfaces.ILink = new models.Link(RELS.orders, NAMES.orders, STATES.orders.list);
         export var system:interfaces.ILink = new models.Link(RELS.system, NAMES.system, STATES.system);
         export var users:interfaces.ILink = new models.Link(RELS.users, NAMES.users, STATES.users);
     }
