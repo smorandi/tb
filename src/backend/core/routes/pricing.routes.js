@@ -33,4 +33,4 @@ module.exports = function (app) {
                 res.json(_.invoke(docs, "toJSON"));
             });
         });
-}
+};

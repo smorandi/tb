@@ -36,6 +36,6 @@ cqrs_cmdService.sendCommands = function (sendCommandFns, callback) {
             callback(err);
         }
     );
-}
+};
 
 module.exports = cqrs_cmdService;

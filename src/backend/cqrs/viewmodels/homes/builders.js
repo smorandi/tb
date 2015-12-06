@@ -30,7 +30,7 @@ var customerCreated = denormalizer.defineViewBuilder({
     id: "aggregate.id"
 }, function (data, vm) {
     logger.debug("customerCreated in collection: " + vm.repository.collectionName);
-    vm.set("loginname", data.loginname)
+    vm.set("loginname", data.loginname);
     vm.set("userType", data.type);
     vm.set("numberOfBasketItems", 0);
 });

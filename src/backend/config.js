@@ -17,7 +17,7 @@ exports.publicDir = path.join(__dirname + "/../public");
 exports.defaults = {
     priceReductionInterval: 3000,
     priceReductionGracePeriod: 6000
-}
+};
 
 //=============================================================================
 // Logger...
@@ -33,7 +33,7 @@ exports.logger = {
 exports.server = {
     protocol: utils.getValue("--protocol", "http"),
     port: utils.getValue("--port", "3000"),
-    host: "localhost",
+    host: utils.getValue("--host", "localhost"),
     backlog: 511,
     credentials: {
         key: fs.readFileSync(path.join(exports.backendDir, "sec/key.pem"), "utf8"),

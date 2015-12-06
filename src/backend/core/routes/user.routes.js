@@ -65,4 +65,4 @@ module.exports = function (app) {
                 res.status(204).end();
             }));
         });
-}
+};

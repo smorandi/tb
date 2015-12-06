@@ -3,7 +3,7 @@
 }
 
 .progress-bar {
-    text-shadow: 0px 0px 10px black;
+    text-shadow: 0 0 10px black;
 }
 
 .navbar-brand {
@@ -12,7 +12,7 @@
 
 /*need to do this because of a bootstrap bug: https://github.com/twbs/bootstrap/issues/10936*/
 .input-group .glyphicon {
-    top: 0px;
+    top: 0;
 }
 
 .form-horizontal .control-label{
@@ -40,7 +40,7 @@
 
 .navbar-inverse .navbar-nav > li > a {
     color: lightgrey;
-    text-shadow: 0px 0px 4px black;
+    text-shadow: 0 0 4px black;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover,

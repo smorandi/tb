@@ -21,22 +21,23 @@ module services {
             }
 
             return config;
-        }
+        };
 
         // optional method
         public requestError = rejection => {
             // do something on error
             return this.$q.reject(rejection);
-        }
+        };
 
         // optional method
         public response = response => {
             // do something on success
             return response;
-        }
+        };
+
         public responseError = rejection => {
             // do something on error
             return this.$q.reject(rejection);
-        }
+        };
     }
 }

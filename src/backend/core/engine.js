@@ -73,7 +73,7 @@ function getStatus() {
 
 function createEngine(callback) {
     commandService.send("createEngine").for("engine").instance("engine").go(function (event) {
-        logger.debug("engine created")
+        logger.debug("engine created");
         callback(null, event.payload);
     });
 }
@@ -84,7 +84,7 @@ function syncWithDB(callback) {
             callback(err);
         }
         else if (_.isEmpty(docs)) {
-            logger.debug("no engine found - creating new engine")
+            logger.debug("no engine found - creating new engine");
             createEngine(function (err, engine) {
                 if (err) {
                     callback(err);
@@ -112,15 +112,15 @@ function init(callback) {
 
     var tasks = [
         function (callback) {
-            logger.debug("syncronizing with DB...")
+            logger.debug("syncronizing with DB...");
             syncWithDB(callback);
         },
         function (callback) {
-            logger.debug("stopping the engine...")
+            logger.debug("stopping the engine...");
             stopEngine(callback);
         },
         function (callback) {
-            logger.debug("resetting prices...")
+            logger.debug("resetting prices...");
             resetPrices(callback);
         },
     ];
@@ -178,7 +178,7 @@ function restartLoop() {
 
 function changePriceReductionInterval(interval, callback) {
     commandService.send("changePriceReductionInterval").for("engine").instance("engine").with({payload: {priceReductionInterval: interval}}).go(function (event) {
-        logger.debug("interval changed")
+        logger.debug("interval changed");
         enginePriceReductionInterval = event.payload.priceReductionInterval;
         restartLoop();
         callback(null, event.payload);
@@ -187,7 +187,7 @@ function changePriceReductionInterval(interval, callback) {
 
 function changePriceReductionGracePeriod(gracePeriod, callback) {
     commandService.send("changePriceReductionGracePeriod").for("engine").instance("engine").with({payload: {priceReductionGracePeriod: gracePeriod}}).go(function (event) {
-        logger.debug("gracePeriod changed")
+        logger.debug("gracePeriod changed");
         enginePriceReductionGracePeriod = event.payload.priceReductionGracePeriod;
         restartLoop();
         callback(null, event.payload);
@@ -216,7 +216,7 @@ function startEngine(callback) {
 function stopEngine(callback) {
     if (isStarted()) {
         commandService.send("stopEngine").for("engine").instance("engine").go(function (event) {
-            logger.debug("engine stopped")
+            logger.debug("engine stopped");
             eventBus.removeListener(config.eventBusChannel_denormalizerEvent, orderConfirmedListener);
             clearInterval(timer);
 

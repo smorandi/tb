@@ -10,7 +10,7 @@ module constants {
         export var success = "success";
         export var info = "info";
         export var warning = "warning";
-    }
+    };
 
     export module LOCAL_STORAGE {
         export var credentialKey = "credentialToken";
@@ -19,17 +19,17 @@ module constants {
         export var dashboardView = "dashboardView";
         export var basketFilter = "basketFilter";
         export var orderView = "orderView";
-    }
+    };
 
     export module FILTER {
         export var basketTile:string = "tile";
         export var basketList:string = "list";
-    }
+    };
 
     export module FOOTER_STATE {
         export var orderTile:string = "tile";
         export var orderList:string = "list";
-    }
+    };
 
     export module RELS {
         export var root:string = "root";
@@ -42,7 +42,7 @@ module constants {
         export var orders:string = "orders";
         export var system:string = "system";
         export var users:string = "users";
-    }
+    };
 
     export module NAMES {
         export var root:string = "link.name.root";
@@ -55,7 +55,7 @@ module constants {
         export var orders:string = "link.name.orders";
         export var system:string = "link.name.system";
         export var users:string = "link.name.users";
-    }
+    };
 
     export module STATES {
         export var root:string = "root";
@@ -83,7 +83,7 @@ module constants {
 
         export var system:string = "root.home.system";
         export var users:string = "root.home.users";
-    }
+    };
 
     export module LINKS {
         export var root:interfaces.ILink = new models.Link(RELS.root, NAMES.root, STATES.root);
@@ -96,11 +96,11 @@ module constants {
         export var orders:interfaces.ILink = new models.Link(RELS.orders, NAMES.orders, STATES.orders.list);
         export var system:interfaces.ILink = new models.Link(RELS.system, NAMES.system, STATES.system);
         export var users:interfaces.ILink = new models.Link(RELS.users, NAMES.users, STATES.users);
-    }
+    };
 
     interface IRelToLinkMap {
         [key: string]: interfaces.ILink;
-    }
+    };
 
     export var REL_TO_LINK_MAP:IRelToLinkMap = {
         [RELS.root]: LINKS.root,
@@ -112,8 +112,8 @@ module constants {
         [RELS.system]: LINKS.system,
         [RELS.basket]: LINKS.basket,
         [RELS.orders]: LINKS.orders,
-        [RELS.users]: LINKS.users,
-    }
+        [RELS.users]: LINKS.users
+    };
 
     export var CATEGORY_IMAGE_MAP = {
         ["beer"]: "assets/images/drinks/beer.jpg",
@@ -122,6 +122,6 @@ module constants {
         ["coffee"]: "assets/images/drinks/coffee.jpg",
         ["tea"]: "assets/images/drinks/tea.jpg",
         ["shot"]: "assets/images/drinks/shot.jpg",
-        ["soft"]: "assets/images/drinks/soft.jpg",
-    }
+        ["soft"]: "assets/images/drinks/soft.jpg"
+    };
 }

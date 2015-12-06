@@ -12,4 +12,4 @@ exports.config = {
         //reporter: 'list',
         timeout : 10000
     }
-}
+};

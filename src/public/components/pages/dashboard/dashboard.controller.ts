@@ -33,13 +33,13 @@ module controllers {
 
             this.$scope.$watchCollection(() => dashboardService.dashboard, items => this.updateFilteredLists(items, this.search));
             this.$scope.$watch(() => this.search, search => {
-                this.storage.set(constants.LOCAL_STORAGE.dashboardSearch, search)
+                this.storage.set(constants.LOCAL_STORAGE.dashboardSearch, search);
                 this.updateFilteredLists(dashboardService.dashboard, this.search);
             });
         }
 
         private updateFilteredLists(items:any, search:string) {
-            this.filteredItems.all = {name: "All Drinks", items: this.createFilter(items, search)}
+            this.filteredItems.all = {name: "All Drinks", items: this.createFilter(items, search)};
 
             this.filteredItems.categories.length = 0;
             this.filteredItems.categories.push({name: "Cocktails", items: this.createFilter(items, search, "cocktail")});

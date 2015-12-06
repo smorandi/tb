@@ -31,4 +31,4 @@ module.exports = function (app) {
 
             res.form(resource);
         });
-}
+};

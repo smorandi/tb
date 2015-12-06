@@ -108,4 +108,4 @@ module.exports = function() {
     // how many browser should be started simultanous
     concurrency: Infinity
   }
-}
+};

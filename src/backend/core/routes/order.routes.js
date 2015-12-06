@@ -63,4 +63,4 @@ module.exports = function (app) {
                 res.status(202).end();
             }));
         });
-}
+};

@@ -52,4 +52,4 @@ module.exports = function (app) {
     router.route("/reinitializations").post(function (req, res, next) {
         controller.reInitialize(req, res, next);
     });
-}
+};

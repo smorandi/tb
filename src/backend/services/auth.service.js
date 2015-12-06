@@ -43,4 +43,4 @@ exports.authenticate = function (req, callback) {
     else {
         callback(new HTTPErrors.UnauthorizedError("Basic-auth header missing"));
     }
-}
+};

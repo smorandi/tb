@@ -27,7 +27,7 @@ var configuration = {
         }
     ],
     replaceConsole: false
-}
+};
 
 log4js.configure(configuration);
 
@@ -59,12 +59,14 @@ function flattenErrors(args) {
 
 logger.warn = function () {
     logger.__proto__.warn.apply(logger, flattenErrors(arguments));
-}
+};
+
 logger.error = function () {
     logger.__proto__.error.apply(logger, flattenErrors(arguments));
-}
+};
+
 logger.fatal = function () {
     logger.__proto__.fatal.apply(logger, flattenErrors(arguments));
-}
+};
 
 module.exports = logger;

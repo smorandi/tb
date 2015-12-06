@@ -20,7 +20,7 @@ var commandListener = function (command) {
             logger.error("command error: ", err);
         }
     });
-}
+};
 
 function onInit() {
     logger.debug(JSON.stringify(cqrs_domainService.getInfo(), null, 2));
