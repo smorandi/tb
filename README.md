@@ -55,16 +55,10 @@ being used)
 
 
 #TODOS
-* error handling when server is not running/responding
-* setting focus on first element on page does not really work
-* remove style tags in html -> move to css [done]
-* factor out lodash, possibly write own functions where lodash is used atm or import only specific function from lodash
-to minimize loadtime
-* prevent event propagation (bubbling) of several controls, i.e. search, inc/dec/addToBasket to prevent multi handling 
-of events in chain leading to effect like closing/flipping of widgets prematurely. [done]
-* extend dashborrd routes / ws-emits in server to transmit HAL resources (creation of proper resource with links to 
-add/remove of item to basket) + adding of tests for this scenario
-* finalize db-item list view/css/controller
-* add customer management screen (very simple)
-* remove drinks screen (will only be created hard-codedly in server's standard set)
-* beautify system screen
+* factor out lodash
+* complete translations
+
+#Known Issues
+* no table-sorting features
+* error handling, i.e. messages are not really top-notch
+* some code duplication in db-items
