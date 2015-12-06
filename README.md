@@ -1,14 +1,14 @@
 #Trinkbörse
 A Web Application to order drinks like stocks on a market.
 
-###Server: 
+###Server
 * RESTful HATEOAS driven node.js web-server using web-sockets for price-change propagation
 * Event-Sourcing (MongoDB) and CQRS-designed domain-model
 * role-based user-model using basic-authentication middleware
 * supports http & https protocol-schemes (switch protocols in config.js in the backend, however certs are self-signed, 
 so it's just a show-case)
 
-###Client:
+###Client
 * AngularJS / Bootstrap
 * heavily using flexbox
 * Typescript
@@ -53,12 +53,23 @@ being used)
 *   - test.all          --> start.mongod/start.server.dev/test.midway/test.unit/test.e2e
 *   - default           --> start.mongod/start.server/appOpen
 
+<hr>
 
 #TODOS
 * factor out lodash
 * complete translations
 
+<hr>
+
 #Known Issues
+###Server
+  * only "core" functionality is automatically tested
+  * server-side validation (pre-condition/business rule testing) is only implemented for drink creation and user creation 
+
+###Client
 * no table-sorting features
 * error handling, i.e. messages are not really top-notch
 * some code duplication in db-items
+* focus-handling not perfect, e.g. no focus transferal to fomrs when clicking "edit"
+* only tested with chrome (FF works OK, but focus handling is not done the same way)
+* currently credentials are stored in LocalStore und are not timedout -> shold switch to cookies or something similar
