@@ -19,22 +19,25 @@
 
                     <div class="db-item-flat-price-area-separator flex-align-self-stretch"></div>
 
-                    <h5 flash="vm.item.tick.timestamp" class="no-gutter flex-1 text-center text-nowrap">
+                    <h6 flash="vm.item.tick.timestamp"
+                        class="no-gutter text-nowrap flex-1 text-center"
+                        ng-class="{'text-danger' : vm.item.tick.delta > 0,
+                                       'text-success': vm.item.tick.delta <= 0}">
                         <small>
-                            <span class="glyphicon"
-                                  ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
-                                             'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
-                            </span>
+                                <span class="glyphicon"
+                                      ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
+                                                 'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
+                                </span>
                         </small>
-                        {{vm.item.tick.delta}}
-                    </h5>
+                        {{vm.item.tick.delta | currency:"":2}}
+                    </h6>
 
                     <div class="db-item-flat-price-area-separator flex-align-self-stretch"></div>
 
-                    <h5 flash="vm.item.price" class="text-primary no-gutter flex-1 text-nowrap text-right">
+                    <h6 flash="vm.item.price" class="text-primary no-gutter flex-1 text-nowrap text-right">
                         <strong ng-show="vm.item.price % 1 > 0">{{vm.item.price | currency:"":2}}</strong>
                         <strong ng-hide="vm.item.price % 1 > 0">{{vm.item.price | currency:"":2}}</strong>
-                    </h5>
+                    </h6>
                 </div>
             </div>
         </div>
@@ -79,23 +82,26 @@
 
                     <div class="db-item-flat-price-area-separator flex-align-self-stretch"></div>
 
-                    <h5 flash="vm.item.tick.timestamp" class="no-gutter flex-1 text-center text-nowrap">
+                    <h6 flash="vm.item.tick.timestamp"
+                        class="no-gutter text-nowrap flex-1 text-center"
+                        ng-class="{'text-danger' : vm.item.tick.delta > 0,
+                                       'text-success': vm.item.tick.delta <= 0}">
                         <small>
-                            <span class="glyphicon"
-                                  ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
-                                             'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
-                            </span>
+                                <span class="glyphicon"
+                                      ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
+                                                 'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
+                                </span>
                         </small>
-                        {{vm.item.tick.delta}}
-                    </h5>
+                        {{vm.item.tick.delta | currency:"":2}}
+                    </h6>
 
                     <div class="db-item-flat-price-area-separator flex-align-self-stretch">
                     </div>
 
-                    <h5 flash="vm.item.price" class="text-primary no-gutter flex-1 text-nowrap text-right">
+                    <h6 flash="vm.item.price" class="text-primary no-gutter flex-1 text-nowrap text-right">
                         <strong ng-show="vm.item.price % 1 > 0">{{vm.item.price | currency:"":2}}</strong>
                         <strong ng-hide="vm.item.price % 1 > 0">{{vm.item.price | currency:"":2}}</strong>
-                    </h5>
+                    </h6>
                 </div>
             </div>
         </div>

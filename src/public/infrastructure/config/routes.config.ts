@@ -232,7 +232,7 @@ module config {
                 .state(constants.STATES.drinks.create, {
                     url: "/new",
                     views: {
-                        "det@root.home.drinks.overview": {
+                        "@root.home.drinks": {
                             templateUrl: injections.components.page.drinks.create.template,
                             controller: injections.components.page.drinks.create.controller,
                             controllerAs: "vm"
@@ -255,6 +255,7 @@ module config {
                                         utilsService:services.UtilsService) => {
                             return utilsService.findInArray(drinkResources, item => item.id === $stateParams["id"]);
                         },
+                        edit: () => false,
                     },
                 })
                 //state for updating a drink
@@ -262,11 +263,14 @@ module config {
                     url: "/edit",
                     views: {
                         "det@root.home.drinks.overview": {
-                            templateUrl: injections.components.page.drinks.edit.template,
-                            controller: injections.components.page.drinks.edit.controller,
+                            templateUrl: injections.components.page.drinks.details.template,
+                            controller: injections.components.page.drinks.details.controller,
                             controllerAs: "vm"
                         }
                     },
+                    resolve: {
+                        edit: () => true,
+                    }
                 })
                 .state(constants.STATES.profile, {
                     url: "/profile",

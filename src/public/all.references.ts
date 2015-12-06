@@ -42,7 +42,6 @@
 /// <reference path="components/pages/drinks/list/drink-list.controller.ts" />
 /// <reference path="components/pages/drinks/details/drink-details.controller.ts" />
 /// <reference path="components/pages/drinks/create/drink-create.controller.ts" />
-/// <reference path="components/pages/drinks/edit/drink-edit.controller.ts" />
 /// <reference path="components/pages/basket/basket.controller.ts" />
 /// <reference path="components/pages/orders/list/orders-list.controller.ts" />
 /// <reference path="components/pages/orders/details/order-detail.controller.ts" />

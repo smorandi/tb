@@ -3,7 +3,6 @@
 </div>
 <form name="login-form" ng-submit="vm.login()" autocomplete="off">
     <div class="modal-body">
-        <div class="md-dialog-content">
             <div class="form-group">
                 <label for="loginname">{{ 'dialog.login.loginname' | translate }}</label>
                 <input type="text" class="form-control" id="loginname" ng-model="vm.credentials.loginname" autofocus placeholder="Enter your login name">
@@ -12,10 +11,9 @@
                 <label for="password">{{ 'dialog.login.password' | translate }}</label>
                 <input type="password" class="form-control" id="password" ng-model="vm.credentials.password" placeholder="Enter your password">
             </div>
-        </div>
     </div>
     <div class="modal-footer">
-        <button class="btn" type="button" ng-click="vm.cancel()">{{ 'dialog.login.btn.cancel' | translate }}</button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancel()">{{ 'dialog.login.btn.cancel' | translate }}</button>
         <button class="btn btn-primary" type="submit">{{ 'dialog.login.btn.login' | translate }}</button>
     </div>
 </form>

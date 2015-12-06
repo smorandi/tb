@@ -68,9 +68,9 @@ module constants {
             export var root:string = "root.home.drinks";
             export var overview:string = "root.home.drinks.overview";
             export var list:string = "root.home.drinks.overview.list";
-            export var create:string = "root.home.drinks.overview.list.newDrink";
+            export var create:string = "root.home.drinks.overview.list.new";
             export var details:string = "root.home.drinks.overview.list.details";
-            export var edit:string = "root.home.drinks.overview.list.details.editDrink";
+            export var edit:string = "root.home.drinks.overview.list.details.edit";
         }
 
         export var basket:string = "root.home.basket";

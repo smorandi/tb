@@ -51,6 +51,17 @@ var changeDrink = domain.defineCommand({
     existing: true
 }, function (data, aggregate) {
     data.modificationDate = new Date();
+
+    data = _.defaults(data, aggregate.attributes);
+
+    var currentPrice = data.priceTicks[0].price;
+    var newPrice = parseFloat(data.basePrice.toFixed(2));
+    var delta = parseFloat((data.basePrice - currentPrice).toFixed(2));
+
+    var priceTick = new models.PriceTick(newPrice, delta, "drink changed");
+
+    data.priceTicks.unshift(priceTick);
+
     aggregate.apply("drinkChanged", data);
 });
 

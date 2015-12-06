@@ -75,31 +75,19 @@
 
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
-                        ng-click="navCollapsed = !navCollapsed">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+            <div class="btn-toolbar navbar-left" role="toolbar">
+                <button class="btn btn-sm navbar-btn btn-success"
+                        stop-event
+                        ng-click="vm.createOrder()"
+                        ng-disabled="vm.basketItems.length <= 0">
+                    <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;Place Order
                 </button>
-            </div>
-
-            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
-                <div class="btn-toolbar navbar-left" role="toolbar">
-                    <button class="btn btn-sm navbar-btn btn-success"
-                            stop-event
-                            ng-click="vm.createOrder()"
-                            ng-disabled="vm.basketItems.length <= 0">
-                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;Place Order
-                    </button>
-                    <button class="btn btn-sm navbar-btn btn-danger"
-                            stop-event
-                            ng-click="vm.clearBasket()"
-                            ng-disabled="vm.basketItems.length <= 0">
-                        <span class="glyphicon glyphicon-trash"></span>&nbsp;Clear Basket
-                    </button>
-                </div>
+                <button class="btn btn-sm navbar-btn btn-danger"
+                        stop-event
+                        ng-click="vm.clearBasket()"
+                        ng-disabled="vm.basketItems.length <= 0">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;Clear Basket
+                </button>
             </div>
         </div>
     </nav>

@@ -67,7 +67,6 @@ angular.module(injections.constants.appName, ["valdr", "lodash", "ui.router", "n
     .controller(injections.components.page.drinks.list.controller, controllers.DrinkListController)
     .controller(injections.components.page.drinks.details.controller, controllers.DrinkDetailsController)
     .controller(injections.components.page.drinks.create.controller, controllers.DrinkCreateController)
-    .controller(injections.components.page.drinks.edit.controller, controllers.DrinkEditController)
 
     //profile
     .controller(injections.components.page.profile.controller, controllers.ProfileController)

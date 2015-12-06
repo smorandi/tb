@@ -11,15 +11,15 @@ var controllers;
             this.drinksResource = drinksResource;
             this.drinkResources = drinkResources;
             $log.info("DrinkListController called with client-url: " + $location.path());
-            if ($state.params["id"]) {
-                this.activeItem = $state.params["id"];
-            }
         }
         DrinkListController.prototype.canCreateNewDrink = function () {
             return this.drinksResource === undefined ? false : this.drinksResource.$has("create");
         };
         DrinkListController.prototype.canDeleteAllDrinks = function () {
             return this.drinksResource === undefined ? false : this.drinksResource.$has("delete");
+        };
+        DrinkListController.prototype.getImageForDrink = function (drink) {
+            return constants.CATEGORY_IMAGE_MAP[drink.category];
         };
         DrinkListController.prototype.canDelete = function (drink) {
             return drink.$has("delete");
@@ -32,11 +32,13 @@ var controllers;
             event.stopPropagation();
         };
         DrinkListController.prototype.createNewDrink = function () {
-            this.$state.go("root.home.drinks.overview.list.newDrink");
+            this.$state.go(constants.STATES.drinks.create);
         };
         DrinkListController.prototype.viewDrink = function (drink) {
-            this.activeItem = drink.id;
-            this.$state.go("root.home.drinks.overview.list.details", { id: drink.id });
+            this.$state.go(constants.STATES.drinks.details, { id: drink.id });
+        };
+        DrinkListController.prototype.isSelected = function (drink) {
+            return this.$state.includes(constants.STATES.drinks.details, { id: drink.id });
         };
         DrinkListController.$inject = [
             injections.angular.$log,

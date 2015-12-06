@@ -15,7 +15,7 @@ module config {
             });
 
             $translateProvider.preferredLanguage('en_US');
-            $translateProvider.useSanitizeValueStrategy('sanitize');
+            $translateProvider.useSanitizeValueStrategy('escape');
         }
     }
 }

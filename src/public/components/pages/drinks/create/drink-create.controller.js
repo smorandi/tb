@@ -3,21 +3,21 @@
 var controllers;
 (function (controllers) {
     var DrinkCreateController = (function () {
-        function DrinkCreateController($log, $location, $state, drinksResource, logger) {
-            this.$log = $log;
+        function DrinkCreateController(logger, $location, $state, $window, drinksResource) {
+            this.logger = logger;
             this.$location = $location;
             this.$state = $state;
+            this.$window = $window;
             this.drinksResource = drinksResource;
-            this.logger = logger;
             this.drink = new models.DrinkProperties();
             this.edit = false;
-            $log.info("DrinkEditController called with client-url: " + $location.path());
+            this.logger.info("DrinkEditController called with client-url: " + $location.path());
         }
         DrinkCreateController.prototype.createDrink = function () {
             var _this = this;
             if (this.drinkForm.$valid) {
                 this.drinksResource.$post("create", {}, this.drink).then(function (res) {
-                    _this.$state.go("root.home.drinks.overview.list", {}, { reload: true })
+                    _this.$state.go(constants.STATES.drinks.list, {}, { reload: true })
                         .then(function (res) {
                         _this.logger.info("The drink has been created!", "", enums.LogOptions.toast);
                     });
@@ -32,14 +32,14 @@ var controllers;
             }
         };
         DrinkCreateController.prototype.cancel = function () {
-            this.$state.go("^", {}, { reload: true });
+            this.$window.history.back();
         };
         DrinkCreateController.$inject = [
-            injections.angular.$log,
+            injections.services.loggerService,
             injections.angular.$location,
             injections.uiRouter.$stateService,
-            "drinksResource",
-            injections.services.loggerService,
+            injections.angular.$window,
+            "drinksResource"
         ];
         return DrinkCreateController;
     })();

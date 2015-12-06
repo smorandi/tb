@@ -23,14 +23,17 @@
                         <div class="db-item-tile-price-area-separator flex-align-self-stretch">
                         </div>
 
-                        <h5 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap flex-1 text-center">
+                        <h5 flash="vm.item.tick.timestamp"
+                            class="no-gutter text-nowrap flex-1 text-center"
+                            ng-class="{'text-danger' : vm.item.tick.delta > 0,
+                                       'text-success': vm.item.tick.delta <= 0}">
                             <small>
                                 <span class="glyphicon"
                                       ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
                                                  'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
                                 </span>
                             </small>
-                            {{vm.item.tick.delta}}
+                            {{vm.item.tick.delta | currency:"":2}}
                         </h5>
 
                         <div class="db-item-tile-price-area-separator flex-align-self-stretch">
@@ -101,14 +104,17 @@
 
                             <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>
 
-                            <h5 flash="vm.item.tick.timestamp" class="no-gutter text-nowrap flex-1 text-center">
+                            <h5 flash="vm.item.tick.timestamp"
+                                class="no-gutter text-nowrap flex-1 text-center"
+                                ng-class="{'text-danger' : vm.item.tick.delta > 0,
+                                       'text-success': vm.item.tick.delta <= 0}">
                                 <small>
-                                    <span class="glyphicon"
-                                          ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
-                                                     'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
-                                    </span>
+                                <span class="glyphicon"
+                                      ng-class="{'text-danger glyphicon-triangle-top' : vm.item.tick.delta > 0,
+                                                 'text-success glyphicon-triangle-bottom': vm.item.tick.delta <= 0}">
+                                </span>
                                 </small>
-                                {{vm.item.tick.delta}}
+                                {{vm.item.tick.delta | currency:"":2}}
                             </h5>
 
                             <div class="db-item-tile-price-area-separator flex-align-self-stretch"></div>

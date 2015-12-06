@@ -1,9 +1,3 @@
-/*[ng-click],*/
-/*[data-ng-click],*/
-/*[x-ng-click] {*/
-/*cursor: pointer;*/
-/*}*/
-
 body {
     /*we need this for the fixed-bootstrap nav layout*/
     padding-top: 30px;
@@ -50,6 +44,7 @@ hr.separator {
 .table tbody > tr > td.valign-baseline {
     vertical-align: baseline;
 }
+
 .table tbody > tr > th.valign-baseline {
     vertical-align: baseline;
 }
@@ -58,4 +53,20 @@ hr.separator {
 .table-borderless > tbody > tr > td,
 .table-borderless > tbody > tr > th {
     border: none;
+}
+
+.strut-20 {
+    width: 20px;
+    min-width: 20px;
+    max-width: 20px;
+    height: 20px;
+    min-height: 20px;
+    max-height: 20px;
+}
+
+.h-strut-20 {
+    width: 20px;
+    min-width: 20px;
+    max-width: 20px;
+    margin: 0px 4px
 }

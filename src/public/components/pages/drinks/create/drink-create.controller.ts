@@ -9,23 +9,25 @@ module controllers {
         private drinkForm:ng.IFormController;
 
         static $inject = [
-            injections.angular.$log,
+            injections.services.loggerService,
             injections.angular.$location,
             injections.uiRouter.$stateService,
-            "drinksResource",
-            injections.services.loggerService,
+            injections.angular.$window,
+            "drinksResource"
         ];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService,
-                     private drinksResource,  private logger:services.LoggerService
-        ) {
-            $log.info("DrinkEditController called with client-url: " + $location.path());
+        constructor(private logger:services.LoggerService,
+                    private $location:ng.ILocationService,
+                    private $state:ng.ui.IStateService,
+                    private $window:ng.IWindowService,
+                    private drinksResource) {
+            this.logger.info("DrinkEditController called with client-url: " + $location.path());
         }
 
         public createDrink():void {
             if (this.drinkForm.$valid) {
                 this.drinksResource.$post("create", {}, this.drink).then(res => {
-                    this.$state.go("root.home.drinks.overview.list", {}, {reload: true})
+                    this.$state.go(constants.STATES.drinks.list, {}, {reload: true})
                         .then(res=> {
                             this.logger.info("The drink has been created!", "", enums.LogOptions.toast);
                         });
@@ -35,13 +37,12 @@ module controllers {
                     } catch (e) {
                         this.logger.error("Error", err, enums.LogOptions.toast);
                     }
-
                 });
             }
         }
 
-        public cancel():void{
-            this.$state.go("^", {}, {reload: true});
+        public cancel():void {
+            this.$window.history.back();
         }
     }
 }

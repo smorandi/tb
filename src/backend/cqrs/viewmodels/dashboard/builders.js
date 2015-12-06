@@ -11,7 +11,6 @@ var drinkCreated = denormalizer.defineViewBuilder({
     vm.set("id", vm.id);
     vm.set("name", data.name);
     vm.set("description", data.description);
-    vm.set("imageUrl", data.imageUrl);
     vm.set("category", data.category);
     vm.set("tags", data.tags);
     vm.set("quantity", data.quantity);
@@ -32,13 +31,36 @@ var drinkChanged = denormalizer.defineViewBuilder({
 }, function (data, vm) {
     logger.debug("drinkChanged in collection: " + vm.repository.collectionName);
 
+    vm.set("id", vm.id);
     vm.set("name", data.name);
     vm.set("description", data.description);
-    vm.set("imageUrl", data.imageUrl);
     vm.set("category", data.category);
     vm.set("tags", data.tags);
     vm.set("quantity", data.quantity);
     vm.set("quantityUnit", data.quantityUnit);
+
+    var priceTick = data.priceTicks[0];
+    vm.set("tick", priceTick);
+    var newPrice = priceTick.price;
+    vm.set("price", newPrice);
+
+    var lowestPrice = vm.get("lowestPrice");
+    var highestPrice = vm.get("highestPrice");
+
+    var newLowestPrice = lowestPrice ? Math.min(lowestPrice, newPrice) : newPrice;
+    var newHighestPrice = highestPrice ? Math.max(highestPrice, newPrice) : newPrice;
+
+    vm.set("lowestPrice", newLowestPrice);
+    vm.set("highestPrice", newHighestPrice);
+
+    var allTimeLow = vm.get("allTimeLow");
+    var allTimeHigh = vm.get("allTimeHigh");
+
+    var newAllTimeLow = allTimeLow ? Math.min(allTimeLow, newLowestPrice) : newLowestPrice;
+    var newAllTimeHigh = allTimeHigh ? Math.max(allTimeHigh, newHighestPrice) : newHighestPrice;
+
+    vm.set("allTimeLow", newAllTimeLow);
+    vm.set("allTimeHigh", newAllTimeHigh);
 });
 
 var drinkDeleted = denormalizer.defineViewBuilder({
@@ -71,7 +93,6 @@ var priceChanged = denormalizer.defineViewBuilder({
 
     vm.set("lowestPrice", newLowestPrice);
     vm.set("highestPrice", newHighestPrice);
-
 
     var allTimeLow = vm.get("allTimeLow");
     var allTimeHigh = vm.get("allTimeHigh");

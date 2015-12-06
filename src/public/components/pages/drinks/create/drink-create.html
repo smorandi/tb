@@ -1,10 +1,13 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <strong> {{ "NEW_DRINK" | translate}} {{vm.drink.name}}</strong>
-    </div>
-    <div class="panel-body">
-        <drink-form data="vm.drink" form="vm.drinkForm" submit="vm.createDrink()" cancel="vm.cancel()"
-                    read-only="vm.edit">
-        </drink-form>
+<div class="container-fluid">
+    <page-header title="page.drinks.create.header.title" subtitle="page.drinks.create.header.subtitle"></page-header>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <label class="panel-title">{{"page.drinks.create.panel.title" | translate}}</label>
+        </div>
+        <div class="panel-body">
+            <drink-form data="vm.drink" form="vm.drinkForm" submit="vm.createDrink()" cancel="vm.cancel()"
+                        read-only="vm.edit">
+            </drink-form>
+        </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
 
 .db-item-tile {
     box-shadow: inset 2px 2px 10px 0px whitesmoke, inset -2px -2px 10px -0px black;
-    background-color: aliceblue;
+    background-color: ghostwhite;
 }
 
 .db-item-tile-container:hover .db-item-tile,

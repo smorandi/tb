@@ -3,34 +3,62 @@
 var controllers;
 (function (controllers) {
     var DrinkDetailsController = (function () {
-        function DrinkDetailsController($log, $location, $state, utilsService, drinkResource, logger) {
-            this.$log = $log;
+        function DrinkDetailsController(logger, $location, $state, modal, $translate, drinkResource, edit) {
+            if (edit === void 0) { edit = false; }
+            this.logger = logger;
             this.$location = $location;
             this.$state = $state;
-            this.utilsService = utilsService;
+            this.modal = modal;
+            this.$translate = $translate;
             this.drinkResource = drinkResource;
-            this.logger = logger;
-            this.edit = true;
-            this.drink = new models.DrinkProperties();
-            $log.info("DrinkDetailsController called with client-url: " + $location.path());
-            this.setDrinkResource(drinkResource);
+            this.edit = edit;
+            this.logger.info("DrinkEditController called with client-url: " + $location.path());
+            // clone it, so we can edit it without changing the original...
+            this.drink = angular.copy(drinkResource);
         }
-        DrinkDetailsController.prototype.setDrinkResource = function (resource) {
-            this.drinkResource = resource;
-            _.assign(this.drink, _.pick(this.drinkResource, _.keys(this.drink)));
-        };
         DrinkDetailsController.prototype.canDelete = function () {
             return this.drinkResource ? this.drinkResource.$has("delete") : false;
         };
         DrinkDetailsController.prototype.canEdit = function () {
             return this.drinkResource ? this.drinkResource.$has("update") : false;
         };
-        DrinkDetailsController.prototype.deleteDrink = function (event) {
+        DrinkDetailsController.prototype.save = function () {
             var _this = this;
-            if (this.utilsService.showPopup("Really delete this?")) {
-                this.drinkResource.$del("delete")
+            if (this.drinkForm.$valid) {
+                this.drinkResource.$put("update", {}, this.drink).then(function (res) {
+                    _this.$state.go("^", {}, { reload: true })
+                        .then(function (res) {
+                        _this.logger.info("The drink has been updated!", null, enums.LogOptions.toast);
+                    });
+                }).catch(function (err) {
+                    try {
+                        _this.logger.error(err.data.name, err.data.message, enums.LogOptions.toast);
+                    }
+                    catch (e) {
+                        _this.logger.error("Error", err, enums.LogOptions.toast);
+                    }
+                });
+            }
+        };
+        DrinkDetailsController.prototype.cancel = function () {
+            this.$state.go("^", {}, { reload: true });
+        };
+        DrinkDetailsController.prototype.deleteDrink = function () {
+            var _this = this;
+            var headerText = this.$translate.instant("dialog.deleteDrink.header", { value: this.drink.name });
+            var bodyText = this.$translate.instant("dialog.deleteDrink.body", { value: this.drink.name });
+            var modalOptions = {
+                headerText: headerText,
+                bodyText: bodyText,
+                closeButtonText: "dialog.deleteDrink.btn.cancel",
+                actionButtonText: "dialog.deleteDrink.btn.delete",
+                glyph: "glyphicon glyphicon-trash"
+            };
+            this.modal.showModal({}, modalOptions)
+                .then(function (res) {
+                _this.drinkResource.$del("delete")
                     .then(function (res) {
-                    _this.$state.go(constants.STATES.drinks, null, { reload: true })
+                    _this.$state.go(constants.STATES.drinks.list, null, { reload: true })
                         .then(function (res) {
                         _this.logger.info("The drink has been deleted!", null, enums.LogOptions.toast);
                     });
@@ -43,19 +71,23 @@ var controllers;
                         _this.logger.error("Error", err, enums.LogOptions.toast);
                     }
                 });
-            }
-            event.stopPropagation();
+            });
         };
         DrinkDetailsController.prototype.editDrink = function () {
-            this.$state.go(".editDrink");
+            this.$state.go(constants.STATES.drinks.edit, "", { reload: true });
+        };
+        DrinkDetailsController.prototype.isSelected = function () {
+            return this.$state.includes(constants.STATES.drinks.details) && this.drinkResource;
         };
         DrinkDetailsController.$inject = [
-            injections.angular.$log,
+            injections.services.loggerService,
             injections.angular.$location,
             injections.uiRouter.$stateService,
-            injections.services.utilsService,
+            injections.services.modalService,
+            injections.angular.$translateService,
             "drinkResource",
-            injections.services.loggerService];
+            "edit"
+        ];
         return DrinkDetailsController;
     })();
     controllers.DrinkDetailsController = DrinkDetailsController;

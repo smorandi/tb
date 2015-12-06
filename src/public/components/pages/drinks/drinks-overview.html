@@ -1,8 +1,11 @@
-<div class="row">
-    <div class="col-xs-12 col-sm-5 col-md-offset-1 col-md-5">
-        <div class="master" ui-view="mas"/>
-    </div>
-    <div class="col-xs-12 col-sm-7 col-md-5">
-        <div class="detail" ui-view="det"/>
+<div class="container-fluid">
+    <page-header title="page.drinks.header.title" subtitle="page.drinks.header.subtitle"></page-header>
+    <div class="row">
+        <div class="col-xs-12 col-sm-5">
+            <div class="master" ui-view="mas"/>
+        </div>
+        <div class="col-xs-12 col-sm-7">
+            <div class="detail" ui-view="det"/>
+        </div>
     </div>
 </div>

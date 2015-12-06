@@ -1,24 +1,42 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <strong> {{ "DETAILS_FOR" | translate}} {{vm.drink.name}}</strong>
-    </div>
-    <div class="panel-body">
-        <div class="list-group">
-            <div class="list-group-item">
-                <div class="row">
-                    <div class="col-sm-1">
-                        <a class="btn btn-primary" ng-show="vm.canEdit()" ng-click="vm.editDrink()">Edit</a>
-                    </div>
-                    <div class="col-sm-1">
-                        <a class="btn btn-danger" ng-show="vm.canDelete()" ng-click="vm.deleteDrink($event)">Delete</a>
-                    </div>
-                </div>
+        <div class="flex-container-row flex-align-items-center">
+            <label class="flex-auto panel-title" translate="page.drinks.details.panel.title"
+                   translate-values="{ value: '{{vm.drink.name}}'}"></label>
+
+            <div class="btn-group btn-group-sm" role="group">
+                <button type="button" class="btn btn-primary"
+                        ng-disabled="!vm.canEdit()"
+                        ng-click="vm.editDrink()">
+                    <span class="glyphicon glyphicon-edit"/>&nbsp;{{"page.drinks.details.panel.edit" | translate}}
+                </button>
+                <button type="button" class="btn btn-danger"
+                        ng-disabled="!vm.canDelete()"
+                        ng-click="vm.deleteDrink()">
+                    <span class="glyphicon glyphicon-trash"/>&nbsp;{{"page.drinks.details.panel.delete" | translate}}
+                </button>
             </div>
         </div>
-        <div ng-show="vm.drink">
+    </div>
+
+    <div class="panel-body">
+        <div ng-show="vm.isSelected()">
             <drink-form data="vm.drink" form="vm.drinkForm" submit="vm.save()" cancel="vm.cancel()"
-                        read-only="vm.edit">
+                        read-only="!vm.edit">
             </drink-form>
         </div>
+        <div ng-hide="vm.isSelected()"><em>No drink selected...</em></div>
     </div>
 </div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <label class="panel-title" translate="page.drinks.details.properties.title"
+               translate-values="{ value: '{{vm.drink.name}}'}"></label>
+    </div>
+    <div class="panel-body">
+        <div ng-show="vm.isSelected()" ng-include="'components/pages/drinks/details/drink-properties.html'"></div>
+        <div ng-hide="vm.isSelected()"><em>No drink selected...</em></div>
+    </div>
+</div>
+

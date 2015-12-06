@@ -3,9 +3,9 @@
 "use strict";
 
 module controllers {
+    import IResolvedState = angular.ui.IResolvedState;
     export class DrinkListController {
-        public query:string;
-        public activeItem:string;
+        public search:string;
 
         static $inject = [
             injections.angular.$log,
@@ -16,11 +16,13 @@ module controllers {
             "drinkResources"
         ];
 
-        constructor(private $log:ng.ILogService, private $location:ng.ILocationService, private $state:ng.ui.IStateService, private utilsService:services.UtilsService, private drinksResource, private drinkResources) {
+        constructor(private $log:ng.ILogService,
+                    private $location:ng.ILocationService,
+                    private $state:ng.ui.IStateService,
+                    private utilsService:services.UtilsService,
+                    private drinksResource,
+                    private drinkResources) {
             $log.info("DrinkListController called with client-url: " + $location.path());
-            if($state.params["id"]){
-                this.activeItem = $state.params["id"];
-            }
         }
 
         public canCreateNewDrink():boolean {
@@ -29,6 +31,10 @@ module controllers {
 
         public canDeleteAllDrinks():boolean {
             return this.drinksResource === undefined ? false : this.drinksResource.$has("delete");
+        }
+
+        public getImageForDrink(drink:any):boolean {
+            return constants.CATEGORY_IMAGE_MAP[drink.category];
         }
 
         public canDelete(drink:any):boolean {
@@ -43,12 +49,15 @@ module controllers {
         }
 
         public createNewDrink():void {
-            this.$state.go("root.home.drinks.overview.list.newDrink");
+            this.$state.go(constants.STATES.drinks.create);
         }
 
         public viewDrink(drink:any):void {
-            this.activeItem = drink.id;
-            this.$state.go("root.home.drinks.overview.list.details", {id: drink.id});
+            this.$state.go(constants.STATES.drinks.details, {id: drink.id});
+        }
+
+        public isSelected(drink:any):boolean {
+            return this.$state.includes(constants.STATES.drinks.details, {id: drink.id});
         }
     }
 }
