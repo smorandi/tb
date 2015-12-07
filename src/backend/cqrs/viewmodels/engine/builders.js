@@ -5,7 +5,7 @@ var _ = require("lodash");
 var engineCreated = denormalizer.defineViewBuilder({
     name: "engineCreated",
     aggregate: "engine",
-    id: "aggregate.id",
+    id: "aggregate.id"
 }, function (data, vm) {
     logger.debug("engineCreated in collection: " + vm.repository.collectionName);
     vm.set(data);
@@ -16,7 +16,7 @@ var engineStarted = denormalizer.defineViewBuilder({
     name: "engineStarted",
     aggregate: "engine",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("engineStarted in collection: " + vm.repository.collectionName);
     vm.set(data);
@@ -27,7 +27,7 @@ var engineStopped = denormalizer.defineViewBuilder({
     name: "engineStopped",
     aggregate: "engine",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("engineStopped in collection: " + vm.repository.collectionName);
     vm.set(data);
@@ -38,7 +38,7 @@ var priceReductionIntervalChanged = denormalizer.defineViewBuilder({
     name: "priceReductionIntervalChanged",
     aggregate: "engine",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("priceReductionIntervalChanged in collection: " + vm.repository.collectionName);
     vm.set(data);
@@ -49,7 +49,7 @@ var priceReductionGracePeriodChanged = denormalizer.defineViewBuilder({
     name: "priceReductionGracePeriodChanged",
     aggregate: "engine",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("priceReductionGracePeriodChanged in collection: " + vm.repository.collectionName);
     vm.set(data);

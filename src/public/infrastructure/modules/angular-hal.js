@@ -1,3 +1,6 @@
+/**
+ * Created by Stefano on 25.09.2015.
+ */
 /* global angular */
 
 // NOTE: this is a rip off "angular-hal": "~0.1.5". since it defines read-only properties which in certain use-cases

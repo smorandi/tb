@@ -15,7 +15,7 @@ var userChanged = denormalizer.defineViewBuilder({
     name: "userChanged",
     aggregate: "user",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("userChanged in collection: " + vm.repository.collectionName);
     vm.set(data);
@@ -25,7 +25,7 @@ var userDeleted = denormalizer.defineViewBuilder({
     name: "userDeleted",
     aggregate: "user",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("userDeleted in collection: " + vm.repository.collectionName);
     vm.destroy();

@@ -1,63 +1,63 @@
 <form name="vm.form" class="form-horizontal" role="form" novalidate valdr-type="Drink">
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.name.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.name.$invalid && !vm.readOnly,
                     'has-success': vm.form.name.$valid && !vm.readOnly}">
         <label for="name" class="col-sm-3 control-label">Name</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="text" ng-model="vm.data.name" class="form-control" id="name" name="name"
-                   placeholder="What is the name of the drink?" ng-readonly="vm.readOnly"/>
+            <input type="text" data-ng-model="vm.data.name" class="form-control" id="name" name="name"
+                   placeholder="What is the name of the drink?" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.name.$invalid, 'glyphicon-ok': vm.form.name.$valid}"
-                  ng-hide="vm.readOnly">
+                  data-ng-class="{'glyphicon-remove': vm.form.name.$invalid, 'glyphicon-ok': vm.form.name.$valid}"
+                  data-ng-hide="vm.readOnly">
             </span>
         </div>
     </div>
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.description.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.description.$invalid && !vm.readOnly,
                     'has-success': vm.form.description.$valid && !vm.readOnly}">
         <label for="description" class="col-sm-3 control-label">Description</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="text" ng-model="vm.data.description" class="form-control" id="description" name="description"
-                   placeholder="How would you describe the drink?" ng-readonly="vm.readOnly"/>
+            <input type="text" data-ng-model="vm.data.description" class="form-control" id="description" name="description"
+                   placeholder="How would you describe the drink?" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.description.$invalid, 'glyphicon-ok': vm.form.description.$valid}"
-                  ng-hide="vm.readOnly">
+                  data-ng-class="{'glyphicon-remove': vm.form.description.$invalid, 'glyphicon-ok': vm.form.description.$valid}"
+                  data-ng-hide="vm.readOnly">
             </span>
         </div>
     </div>
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-success': !vm.readOnly}">
+         data-ng-class="{'has-success': !vm.readOnly}">
         <label for="alcoholic" class="col-sm-3 control-label">Alcoholic</label>
 
         <div class="col-sm-9">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" ng-model="vm.data.alcoholic" id="alcoholic" name="alcoholic"
-                           placeholder="Does it contain alcohol" ng-disabled="vm.readOnly"/>
+                    <input type="checkbox" data-ng-model="vm.data.alcoholic" id="alcoholic" name="alcoholic"
+                           placeholder="Does it contain alcohol" data-ng-disabled="vm.readOnly"/>
                     &nbsp;
                 </label>
             </div>
         </div>
     </div>
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.quantity.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.quantity.$invalid && !vm.readOnly,
                      'has-success': vm.form.quantity.$valid && !vm.readOnly}">
         <label for="quantity" class="col-sm-3 control-label">Quantity</label>
 
         <div valdr-form-group class="col-sm-4">
-            <input type="number" ng-model="vm.data.quantity" class="form-control col-sm-5" id="quantity" name="quantity"
-                   placeholder="Quantity" ng-readonly="vm.readOnly"/>
+            <input type="number" data-ng-model="vm.data.quantity" class="form-control col-sm-5" id="quantity" name="quantity"
+                   placeholder="Quantity" data-ng-readonly="vm.readOnly"/>
              <span class="glyphicon form-control-feedback"
-                   ng-class="{'glyphicon-remove': vm.form.quantity.$invalid || vm.form.quantityUnit.$invalid ,
+                   data-ng-class="{'glyphicon-remove': vm.form.quantity.$invalid || vm.form.quantityUnit.$invalid ,
                               'glyphicon-ok': vm.form.quantity.$valid && vm.form.quantityUnit.$valid }"
-                   ng-hide="vm.readOnly">
+                   data-ng-hide="vm.readOnly">
             </span>
         </div>
         <div class="col-sm-4">
-            <div valdr-form-group ng-if="vm.readOnly == false">
-                <select class="form-control col-sm-4" ng-model="vm.data.quantityUnit" id="quantityUnit"
+            <div valdr-form-group data-ng-if="vm.readOnly == false">
+                <select class="form-control col-sm-4" data-ng-model="vm.data.quantityUnit" id="quantityUnit"
                         name="quantityUnit">
                     <option>ml</option>
                     <option>cl</option>
@@ -65,76 +65,76 @@
                     <option>l</option>
                 </select>
             </div>
-            <div ng-if="vm.readOnly == true">
-                <input name="quantityUnit" type="text" ng-model="vm.data.quantityUnit" class="form-control" readonly/>
+            <div data-ng-if="vm.readOnly == true">
+                <input name="quantityUnit" type="text" data-ng-model="vm.data.quantityUnit" class="form-control" readonly/>
             </div>
         </div>
     </div>
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.basePrice.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.basePrice.$invalid && !vm.readOnly,
                      'has-success': vm.form.basePrice.$valid && !vm.readOnly}">
         <label for="basePrice" class="col-sm-3 control-label">Base Price</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input name="basePrice" type="number" ng-model="vm.data.basePrice" class="form-control" id="basePrice"
-                   placeholder="How much for the drink?" step="0.01" ng-readonly="vm.readOnly"/>
+            <input name="basePrice" type="number" data-ng-model="vm.data.basePrice" class="form-control" id="basePrice"
+                   placeholder="How much for the drink?" step="0.01" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.basePrice.$invalid, 'glyphicon-ok': vm.form.basePrice.$valid}"
-                  ng-hide="vm.readOnly">
+                  data-ng-class="{'glyphicon-remove': vm.form.basePrice.$invalid, 'glyphicon-ok': vm.form.basePrice.$valid}"
+                  data-ng-hide="vm.readOnly">
             </span>
         </div>
     </div>
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.minPrice.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.minPrice.$invalid && !vm.readOnly,
                      'has-success': vm.form.minPrice.$valid && !vm.readOnly}">
         <label for="minPrice" class="col-sm-3 control-label">Min Price</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="number" ng-model="vm.data.minPrice" class="form-control" id="minPrice" name="minPrice"
-                   placeholder="Min price for the drink?" step="0.01" ng-readonly="vm.readOnly"/>
+            <input type="number" data-ng-model="vm.data.minPrice" class="form-control" id="minPrice" name="minPrice"
+                   placeholder="Min price for the drink?" step="0.01" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.minPrice.$invalid, 'glyphicon-ok': vm.form.minPrice.$valid}"
-                  ng-hide="vm.readOnly">
+                  data-ng-class="{'glyphicon-remove': vm.form.minPrice.$invalid, 'glyphicon-ok': vm.form.minPrice.$valid}"
+                  data-ng-hide="vm.readOnly">
             </span>
         </div>
     </div>
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.maxPrice.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.maxPrice.$invalid && !vm.readOnly,
                      'has-success': vm.form.maxPrice.$valid && !vm.readOnly}">
         <label for="maxPrice" class="col-sm-3 control-label">Max Price</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="number" ng-model="vm.data.maxPrice" class="form-control" id="maxPrice" name="maxPrice"
-                   placeholder="Max Price for the drink?" step="0.01" ng-readonly="vm.readOnly"/>
+            <input type="number" data-ng-model="vm.data.maxPrice" class="form-control" id="maxPrice" name="maxPrice"
+                   placeholder="Max Price for the drink?" step="0.01" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.maxPrice.$invalid, 'glyphicon-ok': vm.form.maxPrice.$valid}"
-                  ng-hide="vm.readOnly">
+                  data-ng-class="{'glyphicon-remove': vm.form.maxPrice.$invalid, 'glyphicon-ok': vm.form.maxPrice.$valid}"
+                  data-ng-hide="vm.readOnly">
             </span>
         </div>
     </div>
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.priceStep.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.priceStep.$invalid && !vm.readOnly,
                      'has-success': vm.form.priceStep.$valid && !vm.readOnly}">
         <label for="priceStep" class="col-sm-3 control-label">Price step</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="number" ng-model="vm.data.priceStep" class="form-control" id="priceStep" name="priceStep"
-                   placeholder="Price step for the drink?" step="0.01" ng-readonly="vm.readOnly"/>
+            <input type="number" data-ng-model="vm.data.priceStep" class="form-control" id="priceStep" name="priceStep"
+                   placeholder="Price step for the drink?" step="0.01" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.priceStep.$invalid, 'glyphicon-ok': vm.form.priceStep.$valid}"
-                  ng-hide="vm.readOnly">
+                  data-ng-class="{'glyphicon-remove': vm.form.priceStep.$invalid, 'glyphicon-ok': vm.form.priceStep.$valid}"
+                  data-ng-hide="vm.readOnly">
             </span>
         </div>
     </div>
 
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.category.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.category.$invalid && !vm.readOnly,
                      'has-success': vm.form.category.$valid && !vm.readOnly}">
         <label for="category" class="col-sm-3 control-label">Category</label>
 
         <div valdr-form-group class="col-sm-9">
-            <div ng-if="vm.readOnly == false">
-                <select class="form-control" ng-model="vm.data.category" id="category" name="category">
+            <div data-ng-if="vm.readOnly == false">
+                <select class="form-control" data-ng-model="vm.data.category" id="category" name="category">
                     <option>beer</option>
                     <option>wine</option>
                     <option>cocktail</option>
@@ -144,20 +144,20 @@
                     <option>soft</option>
                 </select>
             </div>
-            <div ng-if="vm.readOnly == true">
-                <input name="category" type="text" ng-model="vm.data.category" class="form-control" readonly/>
+            <div data-ng-if="vm.readOnly == true">
+                <input name="category" type="text" data-ng-model="vm.data.category" class="form-control" readonly/>
             </div>
         </div>
     </div>
 
-    <div class="form-group form-group-sm form-group-sm" ng-hide="vm.readOnly">
+    <div class="form-group form-group-sm form-group-sm" data-ng-hide="vm.readOnly">
         <div class="col-sm-offset-3 col-sm-9">
-            <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vm.form.$invalid"
-                    ng-click="vm.submit()">
-                <span class="glyphicon glyphicon-save"/>&nbsp;{{"forms.save" | translate}}
+            <button type="submit" class="btn btn-sm btn-primary" data-ng-disabled="vm.form.$invalid"
+                    data-ng-click="vm.submit()">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;{{"forms.save" | translate}}
             </button>
-            <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()">
-                <span class="glyphicon glyphicon-remove"/>&nbsp;{{"forms.cancel" | translate}}
+            <button type="button" class="btn btn-sm btn-default" data-ng-click="vm.cancel()">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;{{"forms.cancel" | translate}}
             </button>
         </div>
     </div>

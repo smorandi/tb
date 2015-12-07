@@ -4,5 +4,5 @@ var denormalizer = require("cqrs-eventdenormalizer");
 
 module.exports = denormalizer.defineCollection({
     name: "roots",
-    defaultPayload: "payload",
+    defaultPayload: "payload"
 });

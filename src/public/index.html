@@ -29,8 +29,7 @@
 </head>
 <body>
 
-<div>
-    <div data-ui-view/>
+<div data-ui-view>
 </div>
 
 <!--KEEP THIS!!! socket.io is automatically served by the server!! no need to include a script from some other place!-->
@@ -39,7 +38,6 @@
 <!-- endinject -->
 
 <!-- bower:js -->
-<script src="assets/lib/bower_components/jquery/dist/jquery.js"></script>
 <script src="assets/lib/bower_components/angular/angular.js"></script>
 <script src="assets/lib/bower_components/angular-animate/angular-animate.js"></script>
 <script src="assets/lib/bower_components/angular-aria/angular-aria.js"></script>
@@ -49,7 +47,6 @@
 <script src="assets/lib/bower_components/angular-resource/angular-resource.js"></script>
 <script src="assets/lib/bower_components/rfc6570/rfc6570.js"></script>
 <script src="assets/lib/bower_components/angular-socket-io/socket.js"></script>
-<script src="assets/lib/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script src="assets/lib/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="assets/lib/bower_components/AngularJS-Toaster/toaster.js"></script>
 <script src="assets/lib/bower_components/valdr/valdr.js"></script>
@@ -58,11 +55,11 @@
 <script src="assets/lib/bower_components/angular-lodash-module/angular-lodash-module.js"></script>
 <script src="assets/lib/bower_components/angular-translate/angular-translate.js"></script>
 <script src="assets/lib/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
-<script src="assets/lib/angular-hal.js"></script>
 <!-- endinject -->
 
 <!-- angular:js -->
 <script src="injections.js"></script>
+<script src="infrastructure/modules/angular-hal.js"></script>
 <script src="infrastructure/services/utils.service.js"></script>
 <script src="infrastructure/services/socket.service.js"></script>
 <script src="infrastructure/services/menu.service.js"></script>

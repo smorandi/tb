@@ -1,15 +1,14 @@
 # Node and related ecosystem
 # ==========================
-npm-debug.log
-*/node_modules/
-*/typings/
-.idea/
-**/*bower_components
-**/*/bower_components
-**/*.d.ts
+**/npm-debug.log
+**/node_modules
+**/typings
+**/build
+**/bower_components
 
 # General
 # =======
+*.idea
 *.log
 *.csv
 *.dat
@@ -20,4 +19,3 @@ npm-debug.log
 *.bak
 *.swp
 logs/
-build/

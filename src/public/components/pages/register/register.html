@@ -2,13 +2,14 @@
     <page-header title="page.register.header.title" subtitle="page.register.header.subtitle"></page-header>
 
     <div class="panel"
-         ng-class="{'panel-danger': vm.userForm.$invalid,
+         data-ng-class="{'panel-danger': vm.userForm.$invalid,
                     'panel-success': vm.userForm.$valid}">
         <div class="panel-heading">
             <label class="panel-title">{{"page.register.details.panel.title" | translate}}</label>
         </div>
         <div class="panel-body">
-            <user-form data="vm.user" form="vm.userForm" submit="vm.signUp()" cancel="vm.cancel()" read-only="false"></user-form>
+            <user-form data="vm.user" form="vm.userForm" submit="vm.signUp()" cancel="vm.cancel()"
+                       read-only="false"></user-form>
         </div>
     </div>
 </div>

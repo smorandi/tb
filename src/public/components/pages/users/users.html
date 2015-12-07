@@ -21,8 +21,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="user in vm.users | filter: vm.search" ng-click="vm.showDetails(user)"
-                        ng-class="{info: user.id == vm.user.id}">
+                    <tr data-ng-repeat="user in vm.users | filter: vm.search" data-ng-click="vm.showDetails(user)"
+                        data-ng-class="{info: user.id == vm.user.id}">
                         <td>{{user.loginname}}</td>
                         <td>{{user.type}}</td>
                     </tr>
@@ -33,7 +33,7 @@
 
         <div class="col-xs-12 col-sm-6">
             <div class="panel panel-default"
-                 ng-class="{'panel-danger': vm.userForm.$invalid && vm.isEdit,
+                 data-ng-class="{'panel-danger': vm.userForm.$invalid && vm.isEdit,
                             'panel-success': vm.userForm.$valid && vm.isEdit}">
                 <div class="panel-heading">
                     <div class="flex-container-row flex-align-items-center">
@@ -41,24 +41,24 @@
                                 translate-values="{ value: '{{vm.user.loginname}}'}"></label>
 
                         <div class="btn-group btn-group-sm" role="group">
-                            <button type="button" class="btn btn-primary" ng-disabled="!vm.user"
-                                    ng-click="vm.edit()"><span
-                                    class="glyphicon glyphicon-edit"/>&nbsp;{{"page.users.details.panel.edit" | translate}}
+                            <button type="button" class="btn btn-primary" data-ng-disabled="!vm.user"
+                                    data-ng-click="vm.edit()"><span
+                                    class="glyphicon glyphicon-edit"></span>&nbsp;{{"page.users.details.panel.edit" | translate}}
                             </button>
-                            <button type="button" class="btn btn-danger" ng-disabled="!vm.user"
-                                    ng-click="vm.unregister()"><span
-                                    class="glyphicon glyphicon-trash"/>&nbsp;{{"page.users.details.panel.unregister" | translate}}
+                            <button type="button" class="btn btn-danger" data-ng-disabled="!vm.user"
+                                    data-ng-click="vm.unregister()"><span
+                                    class="glyphicon glyphicon-trash"></span>&nbsp;{{"page.users.details.panel.unregister" | translate}}
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <div class="panel-body">
-                    <div ng-show="vm.user">
+                    <div data-ng-show="vm.user">
                         <user-form data="vm.user" form="vm.userForm" submit="vm.save()" cancel="vm.cancel()"
                                    read-only="!vm.isEdit"></user-form>
                     </div>
-                    <div ng-hide="vm.user"><em>No user selected...</em></div>
+                    <div data-ng-hide="vm.user"><em>No user selected...</em></div>
                 </div>
 
             </div>
@@ -68,8 +68,8 @@
                             translate-values="{ value: '{{vm.user.loginname}}'}"></label>
                 </div>
                 <div class="panel-body">
-                    <div ng-show="vm.user" ng-include="'components/pages/profile/profile-properties.html'"></div>
-                    <div ng-hide="vm.user"><em>No user selected...</em></div>
+                    <div data-ng-show="vm.user" data-ng-include="'components/pages/profile/profile-properties.html'"></div>
+                    <div data-ng-hide="vm.user"><em>No user selected...</em></div>
                 </div>
             </div>
         </div>

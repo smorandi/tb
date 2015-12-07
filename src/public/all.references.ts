@@ -1,7 +1,5 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-//inject:ts
-
 /// <reference path="injections.ts" />
 
 /// <reference path="api/interfaces.ts" />
@@ -63,5 +61,3 @@
 /// <reference path="components/forms/system/system-form.controller.ts" />
 /// <reference path="components/forms/drink/drink-form.directive.ts" />
 /// <reference path="components/forms/drink/drink-form.controller.ts" />
-
-//end-inject:ts

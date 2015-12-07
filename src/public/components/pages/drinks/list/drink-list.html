@@ -16,9 +16,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="drink in vm.drinkResources | filter: {name:vm.search} | orderBy:'name'"
-            ng-class="{'info': vm.isSelected(drink)}"
-            ng-click="vm.viewDrink(drink)">
+        <tr data-ng-repeat="drink in vm.drinkResources | filter: {name:vm.search} | orderBy:'name'"
+            data-ng-class="{'info': vm.isSelected(drink)}"
+            data-ng-click="vm.viewDrink(drink)">
             <td>
                 <div class="flex-container-row flex-align-items-center">
                     <div class="h-strut-20 flex-align-self-stretch" back-img="{{vm.getImageForDrink(drink)}}">
@@ -36,8 +36,8 @@
         <div class="btn-toolbar navbar-left" role="toolbar">
             <button class="btn btn-sm navbar-btn btn-primary"
                     stop-event
-                    ng-click="vm.createNewDrink()"
-                    ng-disabled="!vm.canCreateNewDrink()">
+                    data-ng-click="vm.createNewDrink()"
+                    data-ng-disabled="!vm.canCreateNewDrink()">
                 <span class="glyphicon glyphicon-plus"></span>&nbsp;Add Drink
             </button>
         </div>

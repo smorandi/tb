@@ -39,7 +39,7 @@ var userChanged = denormalizer.defineViewBuilder({
     name: "userChanged",
     aggregate: "user",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("userChanged in collection: " + vm.repository.collectionName);
     vm.set("loginname", data.loginname);
@@ -49,7 +49,7 @@ var userDeleted = denormalizer.defineViewBuilder({
     name: "userDeleted",
     aggregate: "user",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("userDeleted in collection: " + vm.repository.collectionName);
     vm.destroy();
@@ -59,7 +59,7 @@ var basketItemAdded = denormalizer.defineViewBuilder({
     name: "basketItemAdded",
     aggregate: "user",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (basketItem, vm) {
     logger.debug("basketItemAdded in collection: " + vm.repository.collectionName, basketItem);
     vm.set("numberOfBasketItems", vm.get("numberOfBasketItems") + 1);
@@ -69,7 +69,7 @@ var basketItemRemoved = denormalizer.defineViewBuilder({
     name: "basketItemRemoved",
     aggregate: "user",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (id, vm) {
     logger.debug("basketItemRemoved in collection: " + vm.repository.collectionName, id);
     vm.set("numberOfBasketItems", vm.get("numberOfBasketItems") - 1);
@@ -79,7 +79,7 @@ var orderCreated = denormalizer.defineViewBuilder({
     name: "orderCreated",
     aggregate: "user",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (order, vm) {
     logger.debug("orderCreated in collection: " + vm.repository.collectionName, order);
     vm.set("numberOfBasketItems", 0);

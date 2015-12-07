@@ -1,19 +1,23 @@
 <div class="modal-header">
-    <h3 class="modal-title"><span class="glyphicon glyphicon-log-in"/> Login</h3>
+    <h3 class="modal-title"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</h3>
 </div>
-<form name="login-form" ng-submit="vm.login()" autocomplete="off">
+<form name="login-form" data-ng-submit="vm.login()" autocomplete="off">
     <div class="modal-body">
-            <div class="form-group">
-                <label for="loginname">{{ 'dialog.login.loginname' | translate }}</label>
-                <input type="text" class="form-control" id="loginname" ng-model="vm.credentials.loginname" autofocus placeholder="Enter your login name">
-            </div>
-            <div class="form-group">
-                <label for="password">{{ 'dialog.login.password' | translate }}</label>
-                <input type="password" class="form-control" id="password" ng-model="vm.credentials.password" placeholder="Enter your password">
-            </div>
+        <div class="form-group">
+            <label for="loginname">{{ 'dialog.login.loginname' | translate }}</label>
+            <input type="text" class="form-control" id="loginname" data-ng-model="vm.credentials.loginname" autofocus
+                   placeholder="Enter your login name">
+        </div>
+        <div class="form-group">
+            <label for="password">{{ 'dialog.login.password' | translate }}</label>
+            <input type="password" class="form-control" id="password" data-ng-model="vm.credentials.password"
+                   placeholder="Enter your password">
+        </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-default" type="button" ng-click="vm.cancel()">{{ 'dialog.login.btn.cancel' | translate }}</button>
+        <button class="btn btn-default" type="button" data-ng-click="vm.cancel()">{{ 'dialog.login.btn.cancel' |
+            translate }}
+        </button>
         <button class="btn btn-primary" type="submit">{{ 'dialog.login.btn.login' | translate }}</button>
     </div>
 </form>

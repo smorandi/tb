@@ -63,7 +63,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="orderItem in vm.orderResource.orderItems">
+                    <tr data-ng-repeat="orderItem in vm.orderResource.orderItems">
                         <td class="valign-baseline h6">{{orderItem.item.name}}</td>
                         <td class="valign-baseline text-right h6">{{orderItem.number}}</td>
                         <td class="valign-baseline text-right h6">{{orderItem.item.price | currency:"":2}}</td>
@@ -90,8 +90,8 @@
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
-                        ng-click="navCollapsed = !navCollapsed">
+                <button type="button" class="navbar-toggle" data-ng-init="navCollapsed = true"
+                        data-ng-click="navCollapsed = !navCollapsed">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -99,11 +99,11 @@
                 </button>
             </div>
 
-            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
+            <div class="collapse navbar-collapse" data-ng-class="!navCollapsed && 'in'" data-ng-click="navCollapsed = true">
                 <div class="btn-toolbar navbar-left" role="toolbar">
                     <button class="btn btn-sm navbar-btn btn-info"
                             stop-event
-                            ng-click="vm.goBack()">
+                            data-ng-click="vm.goBack()">
                         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Back To Orders
                     </button>
                 </div>

@@ -16,7 +16,7 @@ var user = domain.defineAggregate({
         firstname: "firstname",
         lastname: "lastname",
         loginname: "loginname",
-        password: "password",
+        password: "password"
     });
 
 // ----------------------------------------------------------------
@@ -24,7 +24,7 @@ var user = domain.defineAggregate({
 // ----------------------------------------------------------------
 var createCustomer = domain.defineCommand({
     name: "createCustomer",
-    existing: false,
+    existing: false
 }, function (data, aggregate) {
     _.defaults(data, aggregate.attributes);
     data.id = aggregate.id;
@@ -50,7 +50,7 @@ var customerCreated = domain.defineEvent({
 // ----------------------------------------------------------------
 var createAdmin = domain.defineCommand({
     name: "createAdmin",
-    existing: false,
+    existing: false
 }, function (data, aggregate) {
     _.defaults(data, aggregate.attributes);
     data.id = aggregate.id;
@@ -73,7 +73,7 @@ var adminCreated = domain.defineEvent({
 // ----------------------------------------------------------------
 var createRoot = domain.defineCommand({
     name: "createRoot",
-    existing: false,
+    existing: false
 }, function (data, aggregate) {
     _.defaults(data, aggregate.attributes);
     data.id = aggregate.id;
@@ -98,7 +98,7 @@ var rootCreated = domain.defineEvent({
 // ----------------------------------------------------------------
 var changeUser = domain.defineCommand({
     name: "changeUser",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
     data.modificationDate = new Date();
     data.creationDate = aggregate.get("creationDate");
@@ -119,7 +119,7 @@ var userChanged = domain.defineEvent({
 // delete
 // ----------------------------------------------------------------
 var deleteUser = domain.defineCommand({
-    name: "deleteUser",
+    name: "deleteUser"
 }, function (data, aggregate) {
     aggregate.apply("userDeleted", data);
 });
@@ -137,7 +137,7 @@ var userDeleted = domain.defineEvent({
 // ----------------------------------------------------------------
 var addBasketItem = domain.defineCommand({
     name: "addBasketItem",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
 
     var basketItemId = uuid.v4().toString();
@@ -159,7 +159,7 @@ var basketItemAdded = domain.defineEvent({
 // ----------------------------------------------------------------
 var removeBasketItem = domain.defineCommand({
     name: "removeBasketItem",
-    existing: true,
+    existing: true
 }, function (basketItemId, aggregate) {
     aggregate.apply("basketItemRemoved", basketItemId);
 });
@@ -178,7 +178,7 @@ var basketItemRemoved = domain.defineEvent({
 // ----------------------------------------------------------------
 var changeBasketItem = domain.defineCommand({
     name: "changeBasketItem",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
     //DO NOT CHANGE THE AGGREGATE IN HERE!!!
     var basketItem = _.clone(_.find(aggregate.get("basket"), "id", data.basketItemId), true);
@@ -254,7 +254,7 @@ var orderConfirmed = domain.defineEvent({
 
 var precondition_basketItem_exists = domain.definePreCondition({
     name: "changeBasketItem",
-    description: "basket item must exist",
+    description: "basket item must exist"
 }, function (data, aggregate, callback) {
     if (!data.basketItemId) {
         callback(new Error());
@@ -269,7 +269,7 @@ var precondition_basketItem_exists = domain.definePreCondition({
 
 var precondition_createUser_mandatoryAttributesSet = domain.definePreCondition({
     name: ["createAdmin", "createCustomer"],
-    description: "mandatory attributes must be set",
+    description: "mandatory attributes must be set"
 }, function (data, aggregate, callback) {
     if (!data.firstname) {
         callback(new Error());
@@ -290,7 +290,7 @@ var precondition_createUser_mandatoryAttributesSet = domain.definePreCondition({
 
 var precondition_createUser_loginNameMustBeUnique = domain.definePreCondition({
     name: ["createAdmin", "createCustomer"],
-    description: "loginname already exists",
+    description: "loginname already exists"
 }, function (data, aggregate, callback) {
     validationService.isUniqueLoginName(data.loginname, function (err, isUnique) {
         if (err) {
@@ -308,7 +308,7 @@ var precondition_createUser_loginNameMustBeUnique = domain.definePreCondition({
 
 var precondition_changeUser_allowedChanges = domain.definePreCondition({
     name: "changeUser",
-    description: "change is not allowed",
+    description: "change is not allowed"
 }, function (data, aggregate, callback) {
     //only firstname, lastname, loginname and password can be changed!!!
     // --> check here...
@@ -318,7 +318,7 @@ var precondition_changeUser_allowedChanges = domain.definePreCondition({
 
 var businessRule_makeOrder_basketMustNotBeEmpty = domain.definePreCondition({
     name: ["createOrder"],
-    description: "basket must not be empty",
+    description: "basket must not be empty"
 }, function (data, aggregate, callback) {
     if (aggregate.get("basket").length === 0) {
         callback(new Error());

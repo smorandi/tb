@@ -32,11 +32,11 @@ function startServer(clear, populate, callback) {
 
     var bootstrap = [
         function (callback) {
-            systemService.init(clear, populate, callback);
+            webSocketService.init(server, callback);
         },
         function (callback) {
-            webSocketService.init(server, callback);
-        }
+            systemService.init(clear, populate, callback);
+        },
     ];
 
     async.series(bootstrap, function (err) {
@@ -72,7 +72,7 @@ function startServer(clear, populate, callback) {
 }
 
 function stopServer(callback) {
-    logger.info("stoping the server");
+    logger.info("stopping the server");
 
     server.close(function (err) {
         logger.info("server stopped");
@@ -83,6 +83,6 @@ function stopServer(callback) {
 module.exports = {
     startServer: startServer,
     stopServer: stopServer,
-    server: server,
+    server: server
 };
 

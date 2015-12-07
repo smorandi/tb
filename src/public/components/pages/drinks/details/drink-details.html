@@ -6,26 +6,26 @@
 
             <div class="btn-group btn-group-sm" role="group">
                 <button type="button" class="btn btn-primary"
-                        ng-disabled="!vm.canEdit()"
-                        ng-click="vm.editDrink()">
-                    <span class="glyphicon glyphicon-edit"/>&nbsp;{{"page.drinks.details.panel.edit" | translate}}
+                        data-ng-disabled="!vm.canEdit()"
+                        data-ng-click="vm.editDrink()">
+                    <span class="glyphicon glyphicon-edit"></span>&nbsp;{{"page.drinks.details.panel.edit" | translate}}
                 </button>
                 <button type="button" class="btn btn-danger"
-                        ng-disabled="!vm.canDelete()"
-                        ng-click="vm.deleteDrink()">
-                    <span class="glyphicon glyphicon-trash"/>&nbsp;{{"page.drinks.details.panel.delete" | translate}}
+                        data-ng-disabled="!vm.canDelete()"
+                        data-ng-click="vm.deleteDrink()">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;{{"page.drinks.details.panel.delete" | translate}}
                 </button>
             </div>
         </div>
     </div>
 
     <div class="panel-body">
-        <div ng-show="vm.isSelected()">
+        <div data-ng-show="vm.isSelected()">
             <drink-form data="vm.drink" form="vm.drinkForm" submit="vm.save()" cancel="vm.cancel()"
                         read-only="!vm.edit">
             </drink-form>
         </div>
-        <div ng-hide="vm.isSelected()"><em>No drink selected...</em></div>
+        <div data-ng-hide="vm.isSelected()"><em>No drink selected...</em></div>
     </div>
 </div>
 
@@ -35,8 +35,9 @@
                translate-values="{ value: '{{vm.drink.name}}'}"></label>
     </div>
     <div class="panel-body">
-        <div ng-show="vm.isSelected()" ng-include="'components/pages/drinks/details/drink-properties.html'"></div>
-        <div ng-hide="vm.isSelected()"><em>No drink selected...</em></div>
+        <div data-ng-show="vm.isSelected()"
+             data-ng-include="'components/pages/drinks/details/drink-properties.html'"></div>
+        <div data-ng-hide="vm.isSelected()"><em>No drink selected...</em></div>
     </div>
 </div>
 

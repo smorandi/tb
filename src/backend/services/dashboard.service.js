@@ -30,5 +30,5 @@ function emitDashboard(callback) {
 }
 
 module.exports = {
-    emitDashboard: emitDashboard,
+    emitDashboard: emitDashboard
 };

@@ -129,7 +129,6 @@ it("customer creates order", function (done) {
         .addRequestOptions(common.headers.auth.defaults.customer)
         .addRequestOptions(common.headers.contentType.json)
         .post({}, function (err, res) {
-            setTimeout(done, 1000);
             expect(err).not.to.be.ok();
             expect(res).to.be.ok();
 

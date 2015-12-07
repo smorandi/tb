@@ -18,9 +18,6 @@ var controllers;
         DrinkListController.prototype.canDeleteAllDrinks = function () {
             return this.drinksResource === undefined ? false : this.drinksResource.$has("delete");
         };
-        DrinkListController.prototype.getImageForDrink = function (drink) {
-            return constants.CATEGORY_IMAGE_MAP[drink.category];
-        };
         DrinkListController.prototype.canDelete = function (drink) {
             return drink.$has("delete");
         };
@@ -30,6 +27,9 @@ var controllers;
                 drink.$del("delete").then(function (x) { return _this.$state.reload(); });
             }
             event.stopPropagation();
+        };
+        DrinkListController.prototype.getImageForDrink = function (drink) {
+            return constants.CATEGORY_IMAGE_MAP[drink.category];
         };
         DrinkListController.prototype.createNewDrink = function () {
             this.$state.go(constants.STATES.drinks.create);

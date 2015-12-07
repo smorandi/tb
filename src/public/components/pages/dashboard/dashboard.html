@@ -1,12 +1,14 @@
 <div class="container-fluid">
     <page-header title="page.dashboard.header.title" subtitle="page.dashboard.header.subtitle"></page-header>
 
-    <div ng-switch on="vm.currentFilter">
-        <div ng-switch-when="all">
-            <div ng-include="'components/pages/dashboard/all.html'"/>
+    <div data-ng-switch on="vm.currentFilter">
+        <div data-ng-switch-when="all">
+            <div data-ng-include="'components/pages/dashboard/all.html'">
+            </div>
         </div>
-        <div ng-switch-when="category">
-            <div ng-include="'components/pages/dashboard/category.html'"/>
+        <div data-ng-switch-when="category">
+            <div data-ng-include="'components/pages/dashboard/category.html'">
+            </div>
         </div>
     </div>
 
@@ -14,8 +16,8 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
-                        ng-click="navCollapsed = !navCollapsed">
+                <button type="button" class="navbar-toggle" data-ng-init="navCollapsed = true"
+                        data-ng-click="navCollapsed = !navCollapsed">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -24,31 +26,31 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true">
+            <div class="collapse navbar-collapse" data-ng-class="!navCollapsed && 'in'"
+                 data-ng-click="navCollapsed = true">
                 <div class="btn-toolbar navbar-left" role="toolbar">
                     <div class="btn-group btn-group-sm" role="group">
                         <button class="btn btn-default navbar-btn"
                                 stop-event
-                                ng-class="{'active btn-info': vm.currentFilter === 'all'}"
-                                ng-click="vm.setFilter('all')"><span class="glyphicon glyphicon-globe"/> All
+                                data-ng-class="{'active btn-info': vm.currentFilter === 'all'}"
+                                data-ng-click="vm.setFilter('all')"><span class="glyphicon glyphicon-globe"></span>&nbsp;All
                         </button>
                         <button class="btn btn-default navbar-btn"
                                 stop-event
-                                ng-class="{'active btn-info': vm.currentFilter === 'category'}"
-                                ng-click="vm.setFilter('category')"><span class="glyphicon glyphicon-tags"/>
-                            Categories
+                                data-ng-class="{'active btn-info': vm.currentFilter === 'category'}"
+                                data-ng-click="vm.setFilter('category')"><span class="glyphicon glyphicon-tags"></span>&nbsp;Categories
                         </button>
                     </div>
                     <div class="btn-group btn-group-sm" role="group">
                         <button class="btn btn-default navbar-btn"
                                 stop-event
-                                ng-class="{'active btn-info': vm.currentView === 'tiles'}"
-                                ng-click="vm.setView('tiles')"><span class="glyphicon glyphicon-th-large"/> Tiles
+                                data-ng-class="{'active btn-info': vm.currentView === 'tiles'}"
+                                data-ng-click="vm.setView('tiles')"><span class="glyphicon glyphicon-th-large"></span>&nbsp;Tiles
                         </button>
                         <button class="btn btn-default navbar-btn"
                                 stop-event
-                                ng-class="{'active btn-info': vm.currentView === 'list'}"
-                                ng-click="vm.setView('list')"><span class="glyphicon glyphicon-th-list"/> List
+                                data-ng-class="{'active btn-info': vm.currentView === 'list'}"
+                                data-ng-click="vm.setView('list')"><span class="glyphicon glyphicon-th-list"></span>&nbsp;List
                         </button>
                     </div>
                 </div>

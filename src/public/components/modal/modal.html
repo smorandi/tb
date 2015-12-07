@@ -1,6 +1,7 @@
 <div class="modal-header">
     <h3 class="modal-title">
-        <span ng-class="modalOptions.glyph ? modalOptions.glyph : ''"/> {{modalOptions.headerText | translate}}
+        <span data-ng-class="modalOptions.glyph ? modalOptions.glyph : ''"></span>&nbsp;{{modalOptions.headerText |
+        translate}}
     </h3>
 </div>
 <div class="modal-body">
@@ -8,9 +9,9 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default"
-            ng-click="modalOptions.close()">{{modalOptions.closeButtonText | translate}}
+            data-ng-click="modalOptions.close()">{{modalOptions.closeButtonText | translate}}
     </button>
     <button type="button" class="btn btn-primary"
-            ng-click="modalOptions.ok();">{{modalOptions.actionButtonText | translate}}
+            data-ng-click="modalOptions.ok();">{{modalOptions.actionButtonText | translate}}
     </button>
 </div>

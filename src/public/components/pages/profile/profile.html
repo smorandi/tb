@@ -4,24 +4,27 @@
     <div class="row">
         <div class=" col-xs-12 col-sm-7">
             <div class="panel panel-default"
-                 ng-class="{'panel-danger': vm.userForm.$invalid && vm.isEdit,
+                 data-ng-class="{'panel-danger': vm.userForm.$invalid && vm.isEdit,
                             'panel-success': vm.userForm.$valid && vm.isEdit}">
                 <div class="panel-heading">
                     <div class="flex-container-row flex-align-items-center">
                         <label class="panel-title flex-auto">{{"page.profile.details.title" | translate}}</label>
 
                         <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                            <button type="button" class="btn btn-primary" ng-click="vm.edit()"><span
-                                    class="glyphicon glyphicon-edit"/>&nbsp;{{"page.profile.details.edit" | translate}}
+                            <button type="button" class="btn btn-primary" data-ng-click="vm.edit()"><span
+                                    class="glyphicon glyphicon-edit"></span>&nbsp;{{"page.profile.details.edit" |
+                                translate}}
                             </button>
-                            <button type="button" class="btn btn-danger" ng-click="vm.unregister()"><span
-                                    class="glyphicon glyphicon-trash"/>&nbsp;{{"page.profile.details.unregister" | translate}}
+                            <button type="button" class="btn btn-danger" data-ng-click="vm.unregister()"><span
+                                    class="glyphicon glyphicon-trash"></span>&nbsp;{{"page.profile.details.unregister" |
+                                translate}}
                             </button>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <user-form data="vm.user" form="vm.userForm" submit="vm.save()" cancel="vm.cancel()" read-only="!vm.isEdit"></user-form>
+                    <user-form data="vm.user" form="vm.userForm" submit="vm.save()" cancel="vm.cancel()"
+                               read-only="!vm.isEdit"></user-form>
                 </div>
             </div>
         </div>
@@ -34,7 +37,7 @@
                             <label class="panel-title">{{"page.profile.properties.title" | translate}}</label>
                         </div>
                         <div class="panel-body">
-                            <div ng-include="'components/pages/profile/profile-properties.html'">
+                            <div data-ng-include="'components/pages/profile/profile-properties.html'">
                             </div>
                         </div>
                     </div>

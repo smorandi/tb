@@ -1,70 +1,70 @@
 <form name="vm.form" class="form-horizontal" role="form" novalidate valdr-type="User">
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.loginname.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.loginname.$invalid && !vm.readOnly,
                     'has-success': vm.form.loginname.$valid && !vm.readOnly}">
         <label for="loginname" class="col-sm-3 control-label text-nowrap">Login Name</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="text" ng-model="vm.data.loginname" class="form-control" id="loginname"
-                   name="loginname" placeholder="Login Name" ng-readonly="vm.readOnly"/>
+            <input type="text" data-ng-model="vm.data.loginname" class="form-control" id="loginname"
+                   name="loginname" placeholder="Login Name" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon glyphicon-ok form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.loginname.$invalid}"
-                  ng-hide="vm.readOnly"></span>
+                  data-ng-class="{'glyphicon-remove': vm.form.loginname.$invalid}"
+                  data-ng-hide="vm.readOnly"></span>
         </div>
     </div>
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.password.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.password.$invalid && !vm.readOnly,
                     'has-success': vm.form.password.$valid && !vm.readOnly}">
         <label for="password" class="col-sm-3 control-label text-nowrap">Password</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="password" ng-model="vm.data.password" class="form-control" id="password"
-                   name="password" placeholder="Password" ng-readonly="vm.readOnly"/>
+            <input type="password" data-ng-model="vm.data.password" class="form-control" id="password"
+                   name="password" placeholder="Password" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon glyphicon-ok form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.password.$invalid}"
-                  ng-hide="vm.readOnly">
+                  data-ng-class="{'glyphicon-remove': vm.form.password.$invalid}"
+                  data-ng-hide="vm.readOnly">
             </span>
         </div>
     </div>
 
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.firstname.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.firstname.$invalid && !vm.readOnly,
                     'has-success': vm.form.firstname.$valid && !vm.readOnly}">
         <label for="firstname" class="col-sm-3 control-label text-nowrap">First Name</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="text" ng-model="vm.data.firstname" class="form-control" id="firstname"
-                   name="firstname" placeholder="First Name" ng-readonly="vm.readOnly"/>
+            <input type="text" data-ng-model="vm.data.firstname" class="form-control" id="firstname"
+                   name="firstname" placeholder="First Name" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon glyphicon-ok form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.firstname.$invalid}"
-                  ng-hide="vm.readOnly">
+                  data-ng-class="{'glyphicon-remove': vm.form.firstname.$invalid}"
+                  data-ng-hide="vm.readOnly">
             </span>
         </div>
 
     </div>
     <div class="form-group form-group-sm has-feedback"
-         ng-class="{'has-error': vm.form.lastname.$invalid && !vm.readOnly,
+         data-ng-class="{'has-error': vm.form.lastname.$invalid && !vm.readOnly,
                     'has-success': vm.form.lastname.$valid && !vm.readOnly}">
         <label for="lastname" class="col-sm-3 control-label text-nowrap">Last Name</label>
 
         <div valdr-form-group class="col-sm-9">
-            <input type="text" ng-model="vm.data.lastname" class="form-control" id="lastname"
-                   name="lastname" placeholder="Last Name" ng-readonly="vm.readOnly"/>
+            <input type="text" data-ng-model="vm.data.lastname" class="form-control" id="lastname"
+                   name="lastname" placeholder="Last Name" data-ng-readonly="vm.readOnly"/>
             <span class="glyphicon glyphicon-ok form-control-feedback"
-                  ng-class="{'glyphicon-remove': vm.form.lastname.$invalid}"
-                  ng-hide="vm.readOnly">
+                  data-ng-class="{'glyphicon-remove': vm.form.lastname.$invalid}"
+                  data-ng-hide="vm.readOnly">
             </span>
         </div>
     </div>
 
-    <div class="form-group form-group-sm" ng-hide="vm.readOnly">
+    <div class="form-group form-group-sm" data-ng-hide="vm.readOnly">
         <div class="col-sm-offset-3 col-sm-9">
-            <button type="submit" class="btn btn-sm btn-primary" ng-disabled="vm.form.$invalid"
-                    ng-click="vm.submit()">
-                <span class="glyphicon glyphicon-save"/>&nbsp;{{"forms.save" | translate}}
+            <button type="submit" class="btn btn-sm btn-primary" data-ng-disabled="vm.form.$invalid"
+                    data-ng-click="vm.submit()">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;{{"forms.save" | translate}}
             </button>
-            <button type="button" class="btn btn-sm btn-default" ng-click="vm.cancel()">
-                <span class="glyphicon glyphicon-remove"/>&nbsp;{{"forms.cancel" | translate}}
+            <button type="button" class="btn btn-sm btn-default" data-ng-click="vm.cancel()">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;{{"forms.cancel" | translate}}
             </button>
         </div>
     </div>

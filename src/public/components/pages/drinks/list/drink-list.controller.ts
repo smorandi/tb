@@ -33,10 +33,6 @@ module controllers {
             return this.drinksResource === undefined ? false : this.drinksResource.$has("delete");
         }
 
-        public getImageForDrink(drink:any):boolean {
-            return constants.CATEGORY_IMAGE_MAP[drink.category];
-        }
-
         public canDelete(drink:any):boolean {
             return drink.$has("delete");
         }
@@ -46,6 +42,10 @@ module controllers {
                 drink.$del("delete").then(x => this.$state.reload());
             }
             event.stopPropagation();
+        }
+
+        public getImageForDrink(drink:any):boolean {
+            return constants.CATEGORY_IMAGE_MAP[drink.category];
         }
 
         public createNewDrink():void {

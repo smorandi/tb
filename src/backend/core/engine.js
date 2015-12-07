@@ -257,5 +257,5 @@ module.exports = {
     start: startEngine,
     stop: stopEngine,
     changePriceReductionInterval: changePriceReductionInterval,
-    changePriceReductionGracePeriod: changePriceReductionGracePeriod,
+    changePriceReductionGracePeriod: changePriceReductionGracePeriod
 };

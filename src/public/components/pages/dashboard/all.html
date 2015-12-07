@@ -1,23 +1,23 @@
 <div class="flex-container-column">
-    <div ng-switch on="vm.currentView">
-        <div ng-switch-when="tiles">
-            <div ng-show="vm.filteredItems.all.items.length > 0"
+    <div data-ng-switch on="vm.currentView">
+        <div data-ng-switch-when="tiles">
+            <div data-ng-show="vm.filteredItems.all.items.length > 0"
                  class="flex-container-row flex-auto flex-wrap flex-justify-content-center">
-                <div ng-repeat="item in vm.filteredItems.all.items">
+                <div data-ng-repeat="item in vm.filteredItems.all.items">
                     <db-item-tile item="item"></db-item-tile>
                 </div>
             </div>
         </div>
-        <div ng-switch-when="list">
-            <div ng-show="vm.filteredItems.all.items.length > 0">
-                <div ng-repeat="item in vm.filteredItems.all.items">
+        <div data-ng-switch-when="list">
+            <div data-ng-show="vm.filteredItems.all.items.length > 0">
+                <div data-ng-repeat="item in vm.filteredItems.all.items">
                     <db-item-flat item="item"></db-item-flat>
                 </div>
             </div>
         </div>
     </div>
 
-    <div ng-hide="vm.filteredItems.all.items.length > 0"
+    <div data-ng-hide="vm.filteredItems.all.items.length > 0"
          class="flex-container-row flex-wrap flex-justify-content-center">
         <h5><em>No drinks found...</em></h5>
     </div>

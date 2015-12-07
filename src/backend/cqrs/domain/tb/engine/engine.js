@@ -18,7 +18,7 @@ var engine = domain.defineAggregate({
     });
 
 var createEngine = domain.defineCommand({
-    name: "createEngine",
+    name: "createEngine"
 }, function (data, aggregate) {
     var data = _.cloneDeep(aggregate.attributes);
     data.status = "idle";
@@ -35,7 +35,7 @@ var engineCreated = domain.defineEvent({
 
 var startEngine = domain.defineCommand({
     name: "startEngine",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
     var data = _.cloneDeep(aggregate.attributes);
     data.status = "running";
@@ -52,7 +52,7 @@ var engineStarted = domain.defineEvent({
 
 var stopEngine = domain.defineCommand({
     name: "stopEngine",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
     var data = _.cloneDeep(aggregate.attributes);
     data.status = "idle";
@@ -69,7 +69,7 @@ var engineStopped = domain.defineEvent({
 
 var changePriceReductionInterval = domain.defineCommand({
     name: "changePriceReductionInterval",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
     data.event = new models.Event("priceReductionIntervalChanged");
     aggregate.apply("priceReductionIntervalChanged", data);
@@ -84,7 +84,7 @@ var priceReductionIntervalChanged = domain.defineEvent({
 
 var changePriceReductionGracePeriod = domain.defineCommand({
     name: "changePriceReductionGracePeriod",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
     data.event = new models.Event("priceReductionGracePeriodChanged");
     aggregate.apply("priceReductionGracePeriodChanged", data);
@@ -99,7 +99,7 @@ var priceReductionGracePeriodChanged = domain.defineEvent({
 
 var requestPriceTick = domain.defineCommand({
     name: "requestPriceTick",
-    existing: true,
+    existing: true
 }, function (data, aggregate) {
     data.event = new models.Event("priceTickRequest");
     aggregate.apply("priceTickRequested", data);

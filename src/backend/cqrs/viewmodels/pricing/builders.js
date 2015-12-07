@@ -26,7 +26,7 @@ var drinkChanged = denormalizer.defineViewBuilder({
     name: "drinkChanged",
     aggregate: "drink",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("drinkChanged in collection: " + vm.repository.collectionName);
 
@@ -40,7 +40,7 @@ var drinkDeleted = denormalizer.defineViewBuilder({
     name: "drinkDeleted",
     aggregate: "drink",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (data, vm) {
     logger.debug("drinkDeleted in collection: " + vm.repository.collectionName);
     vm.destroy();
@@ -50,7 +50,7 @@ var priceChanged = denormalizer.defineViewBuilder({
     name: "priceChanged",
     aggregate: "drink",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (priceTick, vm) {
     logger.debug("priceChanged in collection: " + vm.repository.collectionName);
     vm.set("price", priceTick.price);
@@ -61,7 +61,7 @@ var priceReset = denormalizer.defineViewBuilder({
     name: "priceReset",
     aggregate: "drink",
     id: "aggregate.id",
-    autoCreate: false,
+    autoCreate: false
 }, function (priceTick, vm) {
     logger.debug("priceReset in collection: " + vm.repository.collectionName);
     vm.set("price", priceTick.price);
@@ -70,7 +70,7 @@ var priceReset = denormalizer.defineViewBuilder({
 var orderConfirmed = denormalizer.defineViewBuilder({
     name: "orderConfirmed",
     aggregate: "user",
-    query: {},
+    query: {}
 }, function (order, vm) {
     logger.debug("orderConfirmed in collection: " + vm.repository.collectionName);
 
@@ -84,7 +84,7 @@ var orderConfirmed = denormalizer.defineViewBuilder({
 var engineStarted = denormalizer.defineViewBuilder({
     name: "engineStarted",
     aggregate: "engine",
-    query: {},
+    query: {}
 }, function (engine, vm) {
     logger.debug("engineStarted in collection: " + vm.repository.collectionName);
     vm.set("priceReductionTimeBase", engine.event.timestamp);
@@ -93,7 +93,7 @@ var engineStarted = denormalizer.defineViewBuilder({
 var engineStopped = denormalizer.defineViewBuilder({
     name: "engineStopped",
     aggregate: "engine",
-    query: {},
+    query: {}
 }, function (engine, vm) {
     logger.debug("engineStopped in collection: " + vm.repository.collectionName);
     vm.set("priceReductionTimeBase", null);
@@ -102,7 +102,7 @@ var engineStopped = denormalizer.defineViewBuilder({
 var priceTickRequested = denormalizer.defineViewBuilder({
     name: "priceTickRequested",
     aggregate: "engine",
-    query: {},
+    query: {}
 }, function (engine, vm) {
     logger.debug("priceTickRequested in collection: " + vm.repository.collectionName);
 });

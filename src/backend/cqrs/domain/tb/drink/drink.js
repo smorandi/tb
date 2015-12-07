@@ -133,7 +133,7 @@ var priceReset = domain.defineEvent({
 //=============================================================================
 var precondition_price_mustBeGreaterThanOrEqualMinPrice = domain.definePreCondition({
     name: ["changePrice"],
-    description: "price must be greater than or equal the min price",
+    description: "price must be greater than or equal the min price"
 }, function (data, aggregate) {
 
     if (data.price < aggregate.get("minPrice")) {
@@ -143,7 +143,7 @@ var precondition_price_mustBeGreaterThanOrEqualMinPrice = domain.definePreCondit
 
 var precondition_price_mustBeLowerThanOrEqualMaxPrice = domain.definePreCondition({
     name: ["changePrice"],
-    description: "price must be lower than or equal the max price",
+    description: "price must be lower than or equal the max price"
 }, function (data, aggregate) {
 
     if (data.price > aggregate.get("maxPrice")) {

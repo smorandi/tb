@@ -28,12 +28,17 @@ function onWebsocketConnection(socket) {
 
 
 function broadcast(channel, data) {
-    webSocket.sockets.emit(channel, data);
+    // check as this might be called even before the service has actually been initialized...
+    if (webSocket) {
+        webSocket.sockets.emit(channel, data);
+    }
+    else {
+        logger.warn("trying to broadcast before socket has been initialized");
+    }
 }
 
 function init(server, callback) {
     logger.info("initialize websocket-service");
-
     webSocket = socketIO.listen(server);
     webSocket.on("connection", onWebsocketConnection);
     callback(null);

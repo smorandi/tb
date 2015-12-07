@@ -208,5 +208,5 @@ module.exports = {
     stopEngine: stopEngine,
     changePriceReductionInterval: changePriceReductionInterval,
     changePriceReductionGracePeriod: changePriceReductionGracePeriod,
-    createStandardSet: createStandardSet,
+    createStandardSet: createStandardSet
 };
