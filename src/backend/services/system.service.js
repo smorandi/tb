@@ -73,7 +73,7 @@ function clearAll(callback) {
     ];
 
     async.series(tasks, callback);
-};
+}
 
 
 function replay(callback) {
@@ -122,11 +122,11 @@ function reInit(callback) {
         },
         function (callback) {
             dashboardService.emitDashboard(callback);
-        },
+        }
     ];
 
     async.series(tasks, callback);
-};
+}
 
 function createStandardSet(callback) {
     logger.info("creating standard-set");
@@ -198,7 +198,7 @@ function init(clear, populate, callback) {
     });
 
     async.series(tasks, callback);
-};
+}
 
 module.exports = {
     init: init,

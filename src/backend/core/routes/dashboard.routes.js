@@ -24,11 +24,11 @@ module.exports = function (app) {
 
     router.route("/")
         .get(function (req, res, next) {
-            authenticate(req, function(err, isAdmin, isRoot, user){
+            authenticate(req, function (err, isAdmin, isRoot, user) {
                 // only return a resource if we are a customer. admins and roots do NOT have a basket.
-                if(!isAdmin && !isRoot && user) {
+                if (!isAdmin && !isRoot && user) {
                     dashboardCollection.findViewModels({}, function (err, docs) {
-                        if(err){
+                        if (err) {
                             next(err);
                         }
                         var baseUrl = resourceUtils.createBaseUrl(req, config.urls.dashboard);
@@ -43,7 +43,12 @@ module.exports = function (app) {
                     });
                 } else {
                     dashboardCollection.findViewModels({}, function (err, docs) {
-                        err ? next(err) : res.json(_.invoke(docs, "toJSON"));
+                        if (err) {
+                            next(err);
+                        }
+                        else {
+                            res.json(_.invoke(docs, "toJSON"));
+                        }
                     });
                 }
             });

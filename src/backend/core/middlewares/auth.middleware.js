@@ -79,5 +79,5 @@ exports.requireMatchingUserIdByKey = function (paramIdKey) {
         else {
             next(new HTTPErrors.ForbiddenError("Id mismatch"));
         }
-    }
+    };
 };

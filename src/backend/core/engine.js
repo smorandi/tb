@@ -140,7 +140,7 @@ function loop(callback) {
                     commandFns.push(commandFunction);
                 });
                 callback(null, commandFns);
-            })
+            });
         },
         function (commandFns, callback) {
             commandService.sendCommands(commandFns, function (err) {
@@ -171,7 +171,7 @@ function restartLoop() {
                 else {
                     logger.trace("loop completed");
                 }
-            })
+            });
         }, enginePriceReductionInterval);
     }
 }

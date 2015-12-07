@@ -17,10 +17,6 @@ function orderContainsDrinkId(order, id) {
     return _.find(orderItemItems, {id: id}) !== undefined;
 }
 
-function ordersContainsOrderId(order) {
-    return _.find(orders, {id: order.id}) !== undefined;
-}
-
 function enrichOrderWithCurrentPrice(order, callback) {
     pricingCollection.findViewModels({}, function (err, docs) {
         if (err) {
@@ -118,7 +114,6 @@ function calculateNewPricesForTimebase(timebase, gracePeriod, callback) {
 module.exports = {
     enrichOrderWithCurrentPrice: enrichOrderWithCurrentPrice,
     orderContainsDrinkId: orderContainsDrinkId,
-    ordersContainsOrderId: ordersContainsOrderId,
     calculateNewPricesForDrinksInOrder: calculateNewPricesForDrinksInOrder,
     calculateNewPricesForTimebase: calculateNewPricesForTimebase
 };

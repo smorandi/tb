@@ -26,7 +26,7 @@ function emitDashboard(callback) {
             webSocketService.broadcast(config.websocketChannel_dashboard, _.invoke(docs, "toJSON"));
             callback(null);
         }
-    })
+    });
 }
 
 module.exports = {

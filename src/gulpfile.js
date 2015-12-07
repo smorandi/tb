@@ -12,6 +12,8 @@ var exec = require("child_process").exec;
 var exit = require("gulp-exit");
 var gnf = require("gulp-npm-files");
 var rimraf = require("gulp-rimraf");
+var sloc = require('gulp-sloc');
+var jshint = require('gulp-jshint');
 var gulpProtractorAngular = require("gulp-angular-protractor");
 var Server = require("karma").Server;
 
@@ -265,7 +267,6 @@ gulp.task("build.node", ["build.rimraf"], function () {
         .pipe(gulp.dest("./build"));
 });
 
-
 gulp.task("build.fe", ["build.fe.angular.html", "build.fe.angular.js", "build.fe.file", "build.fe.css", "build.bower"]);
 gulp.task("build.server", ["build.server.js", "build.server.file", "build.server.main", "build.node"]);
 gulp.task("build.all", ["build.fe", "build.server"]);
@@ -275,3 +276,19 @@ gulp.task("default",
     [TASK_SERVER_START, TASK_DEV_APP_OPEN]
 );
 
+
+gulp.task('sloc-server', function(){
+    gulp.src(["./backend/**/*.js"])
+        .pipe(sloc());
+});
+
+gulp.task('sloc-client', function(){
+    gulp.src(["!./public/assets/**/*", "!**/*/all.references.js", "./public/**/*.js"])
+        .pipe(sloc());
+});
+
+gulp.task('lint', function() {
+    return gulp.src(["./backend/**/*.js"])
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
+});

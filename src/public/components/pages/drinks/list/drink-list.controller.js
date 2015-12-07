@@ -1,4 +1,3 @@
-///<reference path="../../../../all.references.ts" />
 "use strict";
 var controllers;
 (function (controllers) {

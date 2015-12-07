@@ -13,13 +13,13 @@ module.exports = function (req, res, next) {
         if (resource) {
             o["application/hal+json"] = function () {
                 res.json(util.isFunction(resource) ? resource() : resource);
-            }
+            };
         }
 
         if (json) {
             o["application/json"] = function () {
                 res.json(util.isFunction(json) ? json() : json);
-            }
+            };
         }
 
         res.format(o);

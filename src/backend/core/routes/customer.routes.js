@@ -5,6 +5,7 @@
 var _ = require("lodash");
 var hal = require("halberd");
 var router = require("express").Router();
+var HTTPErrors = require("http-custom-errors");
 
 var logger = require("../../utils/logger");
 var config = require("../../config");

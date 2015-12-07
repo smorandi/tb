@@ -13,7 +13,7 @@ var logger = require("../utils/logger");
 var hal = require("halberd");
 
 function createBaseUrl(req, url) {
-    return req.protocol + "://" + req.headers["host"] + url;
+    return req.protocol + "://" + req.headers.host + url;
 }
 
 function createSelfLink(baseUrl, entity) {
@@ -57,7 +57,7 @@ function createCollectionResource(baseUrl, entities, collectionCrudLinks, entity
     var name = (embedName === null || embedName === undefined) ? "items" : embedName;
 
     var embeddedResources = _.map(entities, function (entity) {
-        return createResource(baseUrl, entity, entityCrudLinks)
+        return createResource(baseUrl, entity, entityCrudLinks);
     });
     collection.embed(name, embeddedResources);
 

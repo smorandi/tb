@@ -20,10 +20,10 @@ var engine = domain.defineAggregate({
 var createEngine = domain.defineCommand({
     name: "createEngine"
 }, function (data, aggregate) {
-    var data = _.cloneDeep(aggregate.attributes);
-    data.status = "idle";
-    data.event = new models.Event("engineCreated");
-    aggregate.apply("engineCreated", data);
+    var engineData = _.cloneDeep(aggregate.attributes);
+    engineData.status = "idle";
+    engineData.event = new models.Event("engineCreated");
+    aggregate.apply("engineCreated", engineData);
 });
 
 var engineCreated = domain.defineEvent({
@@ -37,10 +37,10 @@ var startEngine = domain.defineCommand({
     name: "startEngine",
     existing: true
 }, function (data, aggregate) {
-    var data = _.cloneDeep(aggregate.attributes);
-    data.status = "running";
-    data.event = new models.Event("engineStarted");
-    aggregate.apply("engineStarted", data);
+    var engineData = _.cloneDeep(aggregate.attributes);
+    engineData.status = "running";
+    engineData.event = new models.Event("engineStarted");
+    aggregate.apply("engineStarted", engineData);
 });
 
 var engineStarted = domain.defineEvent({
@@ -54,10 +54,10 @@ var stopEngine = domain.defineCommand({
     name: "stopEngine",
     existing: true
 }, function (data, aggregate) {
-    var data = _.cloneDeep(aggregate.attributes);
-    data.status = "idle";
-    data.event = new models.Event("engineStopped");
-    aggregate.apply("engineStopped", data);
+    var engineData = _.cloneDeep(aggregate.attributes);
+    engineData.status = "idle";
+    engineData.event = new models.Event("engineStopped");
+    aggregate.apply("engineStopped", engineData);
 });
 
 var engineStopped = domain.defineEvent({

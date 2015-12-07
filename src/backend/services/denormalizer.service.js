@@ -33,7 +33,7 @@ function onInit() {
         logger.trace("denormalizer -> event-bus (denormalizer-event): " + evt.name, evt);
         eventBus.emit(config.eventBusChannel_denormalizerEvent, evt);
     });
-};
+}
 
 function init(callback) {
     cqrs_denormalizerService.init(function (err, warnings) {
@@ -49,18 +49,18 @@ function init(callback) {
             callback(null);
         }
     });
-};
+}
 
 function clear(callback) {
     cqrs_denormalizerService.clear(function (err) {
         callback(err);
     });
-};
+}
 
 function replay(events, callback) {
     cqrs_denormalizerService.replay(events, function (err) {
         callback(err);
     });
-};
+}
 
 module.exports = {init: init, clear: clear, replay: replay};

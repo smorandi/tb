@@ -261,9 +261,12 @@ var precondition_basketItem_exists = domain.definePreCondition({
     }
     else {
         var basketItem = _.find(aggregate.get("basket"), "id", data.basketItemId);
-        basketItem ?
-            callback(null) :
+        if (basketItem) {
+            callback(null);
+        }
+        else {
             callback(new Error());
+        }
     }
 });
 

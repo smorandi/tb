@@ -6,6 +6,7 @@
 var _ = require("lodash");
 var hal = require("halberd");
 var router = require("express").Router();
+var HTTPErrors = require("http-custom-errors");
 
 var logger = require("../../utils/logger");
 var config = require("../../config");
@@ -31,9 +32,12 @@ module.exports = function (app) {
         .get(requireAdmin, function (req, res, next) {
             var baseUrl = resourceUtils.createBaseUrl(req, config.urls.baskets);
             basketsCollection.findViewModels({}, function (err, docs) {
-                err ?
-                    next(err) :
+                if (err) {
+                    next(err);
+                }
+                else {
                     res.form(resourceUtils.createCollectionResource(baseUrl, docs), docs);
+                }
             });
         });
 
