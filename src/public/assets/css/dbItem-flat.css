@@ -1,54 +1,46 @@
 .db-item-flat-container {
-    /*min-width: 160px;*/
-    /*max-width: 160px;*/
-    min-height: 40px;
-    max-height: 40px;
-    margin: 2px;
-    cursor: pointer;
-    outline: none;
+  /*min-width: 160px;*/
+  /*max-width: 160px;*/
+  min-height: 40px;
+  max-height: 40px;
+  margin: 2px;
+  cursor: pointer;
+  outline: none;
 }
-
 .db-item-flat {
-    box-shadow: inset 2px 2px 4px 0 whitesmoke, inset -2px -2px 4px 0 black;
-    background-color: ghostwhite;
-    padding: 0;
+  box-shadow: inset 2px 2px 4px 0 whitesmoke, inset -2px -2px 4px 0 black;
+  background-color: ghostwhite;
+  padding: 0;
 }
-
 .db-item-flat-container:hover .db-item-flat,
 .db-item-flat-container:focus .db-item-flat {
-    box-shadow: inset 2px 2px 4px 0 yellow, inset -2px -2px 4px 0 orange;
+  box-shadow: inset 2px 2px 4px 0 yellow, inset -2px -2px 4px 0 orange;
 }
-
 .db-item-flat-caption-text {
-    font-family: 'Indie Flower', cursive;
-    color: black;
+  font-family: 'Indie Flower', cursive;
+  color: black;
 }
-
 .db-item-flat-caption-image {
-    width: 40px;
-    height: 40px;
-    margin: 0 4px 0 0;
-    align-self: center;
-    box-shadow: inset 0 0 10px 0 black;
+  width: 40px;
+  height: 40px;
+  margin: 0 4px 0 0;
+  align-self: center;
+  box-shadow: inset 0 0 10px 0 black;
 }
-
 .db-item-flat-container:hover .db-item-flat-caption-image,
 .db-item-flat-container:focus .db-item-flat-caption-image {
-    /*box-shadow: inset 2px 2px 4px -2px yellow, inset -2px 0px 4px -2px black;*/
-    box-shadow: inset 0 0 10px 0 orange;
+  /*box-shadow: inset 2px 2px 4px -2px yellow, inset -2px 0px 4px -2px black;*/
+  box-shadow: inset 0 0 10px 0 orange;
 }
-
 .db-item-flat-quantity {
-    padding-right: 4px;
+  padding-right: 4px;
 }
-
 .db-item-flat-price-area {
-    flex: 0 0 140px;
-    align-self: stretch;
-    padding: 0 6px;
-    background: linear-gradient(to bottom, rgba(40, 40, 40, 0.2), rgba(20, 20, 20, 0.1));
+  flex: 0 0 140px;
+  align-self: stretch;
+  padding: 0 6px;
+  background: linear-gradient(to bottom, rgba(40, 40, 40, 0.2), rgba(20, 20, 20, 0.1));
 }
-
 .db-item-flat-price-area-separator {
-    border-right: solid thin darkgray;
+  border-right: solid thin darkgray;
 }

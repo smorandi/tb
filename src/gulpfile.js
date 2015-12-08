@@ -15,6 +15,7 @@ var rimraf = require("gulp-rimraf");
 var sloc = require('gulp-sloc');
 var jshint = require('gulp-jshint');
 var gulpProtractorAngular = require("gulp-angular-protractor");
+var less = require("gulp-less");
 var Server = require("karma").Server;
 
 var urlApp = "http://localhost:3000";
@@ -205,6 +206,17 @@ gulp.task(TASK_TEST_ALL,
 gulp.task("build.rimraf", function () {
     return gulp.src("./build", {read: false})
         .pipe(rimraf({force: true}));
+});
+
+gulp.task("build.less", function() {
+    gulp.src("./public/assets/less/*.less")
+        .pipe(less())
+        .pipe(gulp.dest("./public/assets/css"));
+});
+gulp.task("build.less.one", function() {
+    gulp.src("./public/assets/less/mainOne.less")
+        .pipe(less())
+        .pipe(gulp.dest("./public/assets/css"));
 });
 
 gulp.task("build.fe.angular.html", ["build.rimraf"], function () {
