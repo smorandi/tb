@@ -1,0 +1,87 @@
+.progress {
+  height: 100%;
+}
+.progress-bar {
+  text-shadow: 0 0 10px black;
+}
+.navbar-brand {
+  /*padding: 2px 0;*/
+}
+/*need to do this because of a bootstrap bug: https://github.com/twbs/bootstrap/issues/10936*/
+.input-group .glyphicon {
+  top: 0;
+}
+.form-horizontal .control-label {
+  text-align: left !important;
+}
+.input-group-xs > .form-control,
+.input-group-xs > .input-group-addon,
+.input-group-xs > .input-group-btn > .btn {
+  height: 20px;
+  padding: 1px 3px;
+  font-size: 10px;
+  line-height: 2;
+}
+/*increase size of links*/
+.navbar-nav > li > a {
+  font-size: 1.1em;
+}
+.navbar-inverse {
+  background: linear-gradient(to top, rgba(102, 56, 0, 0.98), rgba(40, 40, 40, 0.98));
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: lightgrey;
+  text-shadow: 0 0 4px black;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #fff;
+  background-color: rgba(102, 56, 0, 0.98);
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color: #fff;
+  background: linear-gradient(to top, orange 2px, rgba(102, 56, 0, 0.98) 4px, rgba(20, 20, 20, 0.98) 8px);
+}
+.navbar-inverse.in {
+  background: linear-gradient(to bottom, rgba(40, 40, 40, 0.94) 1px, rgba(255, 165, 0, 0.94) 50px, rgba(51, 28, 0, 0.98) 51px);
+}
+.navbar-inverse.in .navbar-nav > .active > a,
+.navbar-inverse.in .navbar-nav > .active > a:hover,
+.navbar-inverse.in .navbar-nav > .active > a:focus {
+  /*color: green;*/
+  background: #080808;
+  /*background-color: #080808;*/
+}
+.navbar-default {
+  background-color: rgba(40, 40, 40, 0.94);
+}
+.page-header {
+  color: orange;
+}
+.panel-heading {
+  background-color: lightgrey !important;
+  background: linear-gradient(to top, lightgrey, ghostwhite);
+}
+.panel-heading .panel-title {
+  color: black !important;
+  text-shadow: 0 0 10px white;
+}
+.modal-header {
+  background: linear-gradient(to top, black, rgba(255, 165, 0, 0.8) 1px, #ffa500);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  text-shadow: 1px 1px 2px whitesmoke;
+}
+.modal-body {
+  background: linear-gradient(to top, lightgrey, ghostwhite);
+}
+.modal-footer {
+  /*background-color: whitesmoke;*/
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 10px;
+  background: linear-gradient(to bottom, black, aliceblue 1px, lightgrey);
+  border: none;
+}
