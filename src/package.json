@@ -11,7 +11,8 @@
     "prestart": "start mongod",
     "start-dev": "npm start -- --clear --populate",
     "test": "mocha ./test/all.test.js",
-    "pretest": "start mongod"
+    "pretest": "start mongod",
+    "gulp": "gulp"
   },
   "dependencies": {
     "async": "^1.5.0",

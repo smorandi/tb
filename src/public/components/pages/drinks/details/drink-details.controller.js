@@ -1,3 +1,4 @@
+///<reference path="../../../../all.references.ts" />
 "use strict";
 var controllers;
 (function (controllers) {
@@ -12,6 +13,7 @@ var controllers;
             this.drinkResource = drinkResource;
             this.edit = edit;
             this.logger.info("DrinkEditController called with client-url: " + $location.path());
+            // clone it, so we can edit it without changing the original...
             this.drink = angular.copy(drinkResource);
         }
         DrinkDetailsController.prototype.canDelete = function () {
@@ -50,7 +52,7 @@ var controllers;
                 bodyText: bodyText,
                 closeButtonText: "dialog.deleteDrink.btn.cancel",
                 actionButtonText: "dialog.deleteDrink.btn.delete",
-                glyph: "glyphicon glyphicon-trash",
+                glyph: "glyphicon glyphicon-trash"
             };
             this.modal.showModal({}, modalOptions)
                 .then(function (res) {
