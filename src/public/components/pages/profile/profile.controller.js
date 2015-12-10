@@ -1,3 +1,4 @@
+///<reference path="../../../all.references.ts" />
 "use strict";
 var controllers;
 (function (controllers) {
@@ -12,6 +13,7 @@ var controllers;
             this.profileResource = profileResource;
             this.isEdit = false;
             this.logger.info("ProfileController called with client-url: " + $location.path());
+            // assigns the values contained in the resource for which we have keys for...
             this.user = angular.copy(profileResource);
         }
         ProfileController.prototype.edit = function () {
@@ -46,7 +48,7 @@ var controllers;
                 bodyText: "dialog.unregister.body",
                 closeButtonText: "dialog.unregister.btn.cancel",
                 actionButtonText: "dialog.unregister.btn.unregister",
-                glyph: "glyphicon glyphicon-trash",
+                glyph: "glyphicon glyphicon-trash"
             };
             this.modal.showModal({}, modalOptions)
                 .then(function (res) {
