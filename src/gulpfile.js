@@ -20,7 +20,6 @@ var Server = require("karma").Server;
 
 var urlApp = "http://localhost:3000";
 
-var MESSAGE_TASK_START = "start task";
 var MESSAGE_TASK_END = "task end";
 var MESSAGE_INFO = "info";
 var MESSAGE_WARNING = "warning";
@@ -74,7 +73,7 @@ gulp.task(TASK_DEV_INJECT, function () {
         .pipe(inject(gulp.src(["./public/api/**/*.js", "./public/components/**/*.js", "./public/infrastructure/**/*.js", "./public/injections.js"],
             {read: true}).pipe(filesort()), {relative: true, name: "angular"}))
         .pipe(inject(gulp.src(["./public/app.js"], {read: false}), {relative: true, name: "anguapp"}))
-        .pipe(inject(gulp.src(["./public/assets/css/**/*.css"], {read: false}), {relative: true}))
+        .pipe(inject(gulp.src(["./public/assets/css/**/*.css"], {read: false}), {relative: true, name: "style"}))
         .pipe(gulp.dest("./public"))
         .on("error", function (e) {
             logGulp(TASK_DEV_INJECT, e, MESSAGE_ERROR);
@@ -208,15 +207,10 @@ gulp.task("build.rimraf", function () {
         .pipe(rimraf({force: true}));
 });
 
-gulp.task("build.less", function() {
-    gulp.src("./public/assets/less/*.less")
+gulp.task("build.fe.less", ["build.rimraf"], function() {
+    gulp.src("./public/assets/less/tb.less")
         .pipe(less())
-        .pipe(gulp.dest("./public/assets/css"));
-});
-gulp.task("build.less.one", function() {
-    gulp.src("./public/assets/less/mainOne.less")
-        .pipe(less())
-        .pipe(gulp.dest("./public/assets/css"));
+        .pipe(gulp.dest("./public/assets/css/main"));
 });
 
 gulp.task("build.fe.angular.html", ["build.rimraf"], function () {
@@ -248,7 +242,7 @@ gulp.task("build.fe.css", ["build.rimraf"], function () {
 });
 
 gulp.task("build.fe.file", ["build.rimraf"], function () {
-    return gulp.src(["!./public/assets/lib/**/*", "./public/**/*.jpg", "./public/**/*.ico", "./public/**/*.png", "./public/**/*.json"])
+    return gulp.src(["!./public/assets/lib/**/*", "./public/**/*.jpg", "./public/**/*.ico", "./public/**/*.png", "./public/**/*.json", "./public/**/glyphicons*"])
         .pipe(gulp.dest("./build/public/"));
 });
 
@@ -279,9 +273,10 @@ gulp.task("build.node", ["build.rimraf"], function () {
         .pipe(gulp.dest("./build"));
 });
 
+gulp.task("build.inject", ["build.fe.less", "dev.inject"]);
 gulp.task("build.fe", ["build.fe.angular.html", "build.fe.angular.js", "build.fe.file", "build.fe.css", "build.bower"]);
 gulp.task("build.server", ["build.server.js", "build.server.file", "build.server.main", "build.node"]);
-gulp.task("build.all", ["build.fe", "build.server"]);
+gulp.task("build.all", ["build.inject", "build.fe", "build.server"]);
 
 //workflow
 gulp.task("default",

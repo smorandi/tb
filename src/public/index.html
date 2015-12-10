@@ -4,25 +4,15 @@
     <title>client</title>
 
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <!-- inject:head:js -->
-    <!-- endinject -->
+
     <!-- inject:html -->
     <!-- endinject -->
     <!-- bower:css -->
-    <!--<link rel="stylesheet" href="assets/lib/bower_components/font-awesome/css/font-awesome.css">-->
     <link rel="stylesheet" href="assets/lib/bower_components/AngularJS-Toaster/toaster.css">
-    <!--<link rel="stylesheet" href="assets/lib/bower_components/bootstrap-css-only/css/bootstrap.css">-->
     <!-- endinject -->
-    <!--<link rel="stylesheet" href="assets/css/bootstrap.css">-->
-    <!--<link rel="stylesheet" href="assets/css/main.css">-->
-    <!--<link rel="stylesheet" href="assets/css/dbItem-flat.css">-->
-    <!--<link rel="stylesheet" href="assets/css/dbItem-tile.css">-->
-    <!--<link rel="stylesheet" href="assets/css/flipper.css">-->
-    <!--<link rel="stylesheet" href="assets/css/flash.css">-->
-    <!--<link rel="stylesheet" href="assets/css/flex.css">-->
-    <!--<link rel="stylesheet" href="assets/css/basket.css">-->
-    <!--<link rel="stylesheet" href="assets/css/bootstrap-overrides.css">-->
-    <link rel="stylesheet" href="assets/css/mainOne.css">
+    <!-- style:css -->
+    <link rel="stylesheet" href="assets/css/main/tb.css">
+    <!-- endinject -->
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <!-- head:js -->
@@ -36,100 +26,82 @@
 
 <!--KEEP THIS!!! socket.io is automatically served by the server!! no need to include a script from some other place!-->
 <script src="socket.io/socket.io.js"></script>
-<!-- first:js -->
-<!-- endinject -->
 
 <!-- bower:js -->
 <script src="assets/lib/bower_components/angular/angular.js"></script>
 <script src="assets/lib/bower_components/angular-animate/angular-animate.js"></script>
-<script src="assets/lib/bower_components/angular-aria/angular-aria.js"></script>
 <script src="assets/lib/bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="assets/lib/bower_components/angular-aria/angular-aria.js"></script>
 <script src="assets/lib/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="assets/lib/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
 <script src="assets/lib/bower_components/angular-resource/angular-resource.js"></script>
-<script src="assets/lib/bower_components/rfc6570/rfc6570.js"></script>
+<script src="assets/lib/bower_components/lodash/lodash.js"></script>
 <script src="assets/lib/bower_components/angular-socket-io/socket.js"></script>
 <script src="assets/lib/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="assets/lib/bower_components/AngularJS-Toaster/toaster.js"></script>
-<script src="assets/lib/bower_components/valdr/valdr.js"></script>
-<script src="assets/lib/bower_components/valdr/valdr-message.js"></script>
-<script src="assets/lib/bower_components/lodash/lodash.js"></script>
 <script src="assets/lib/bower_components/angular-lodash-module/angular-lodash-module.js"></script>
 <script src="assets/lib/bower_components/angular-translate/angular-translate.js"></script>
 <script src="assets/lib/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<script src="assets/lib/bower_components/rfc6570/rfc6570.js"></script>
+<script src="assets/lib/bower_components/valdr/valdr.js"></script>
+<script src="assets/lib/bower_components/valdr/valdr-message.js"></script>
 <!-- endinject -->
 
 <!-- angular:js -->
 <script src="injections.js"></script>
-<script src="infrastructure/modules/angular-hal.js"></script>
 <script src="infrastructure/services/utils.service.js"></script>
 <script src="infrastructure/services/socket.service.js"></script>
+<script src="infrastructure/services/modal.service.js"></script>
 <script src="infrastructure/services/menu.service.js"></script>
 <script src="infrastructure/services/logger.service.js"></script>
 <script src="infrastructure/services/localStorage.service.js"></script>
 <script src="infrastructure/services/httpInterceptor.service.js"></script>
+<script src="infrastructure/services/focus.service.js"></script>
 <script src="infrastructure/services/dashboard.service.js"></script>
 <script src="infrastructure/services/auth.service.js"></script>
 <script src="infrastructure/services/api.service.js"></script>
-<script src="infrastructure/services/modal.service.js"></script>
-<script src="infrastructure/services/focus.service.js"></script>
+<script src="infrastructure/modules/angular-hal.js"></script>
 <script src="infrastructure/run/run.js"></script>
-
+<script src="infrastructure/directives/stopEvent.directive.js"></script>
 <script src="infrastructure/directives/flash.directive.js"></script>
 <script src="infrastructure/directives/backImg.directive.js"></script>
-<script src="infrastructure/directives/stopEvent.directive.js"></script>
 <script src="infrastructure/directives/auto-fill-fix.directive.js"></script>
-
+<script src="infrastructure/config/valdr.config.js"></script>
 <script src="infrastructure/config/routes.config.js"></script>
 <script src="infrastructure/config/interceptor.config.js"></script>
 <script src="infrastructure/config/i18n.config.js"></script>
-<script src="infrastructure/config/valdr.config.js"></script>
-
+<script src="components/pages/orders/list/orders-list.controller.js"></script>
+<script src="components/pages/orders/details/order-detail.controller.js"></script>
 <script src="components/pages/drinks/list/drink-list.controller.js"></script>
 <script src="components/pages/drinks/details/drink-details.controller.js"></script>
 <script src="components/pages/drinks/create/drink-create.controller.js"></script>
-<script src="components/pages/orders/list/orders-list.controller.js"></script>
-<script src="components/pages/orders/details/order-detail.controller.js"></script>
+<script src="components/pages/users/users.controller.js"></script>
 <script src="components/pages/system/system.controller.js"></script>
 <script src="components/pages/register/register.controller.js"></script>
 <script src="components/pages/profile/profile.controller.js"></script>
 <script src="components/pages/dashboard/dashboard.controller.js"></script>
 <script src="components/pages/basket/basket.controller.js"></script>
-<script src="components/pages/users/users.controller.js"></script>
-
-<!--login-->
-<script src="components/login/login-dialog.controller.js"></script>
-
-<!--db item-->
-<script src="components/dbItem/dbItem.controller.js"></script>
-<script src="components/dbItem/tile/dbItem-tile.directive.js"></script>
-<script src="components/dbItem/flat/dbItem-flat.directive.js"></script>
-
-<!--search -->
-<script src="components/search/search.controller.js"></script>
-<script src="components/search/search.directive.js"></script>
-
-<!--header-->
-<script src="components/header/header.directive.js"></script>
-<script src="components/header/header.controller.js"></script>
-
-<!--page header-->
-<script src="components/pageHeader/pageHeader.directive.js"></script>
-<script src="components/pageHeader/pageHeader.controller.js"></script>
-
-<!--forms-->
 <script src="components/forms/user/user-form.directive.js"></script>
 <script src="components/forms/user/user-form.controller.js"></script>
 <script src="components/forms/system/system-form.directive.js"></script>
 <script src="components/forms/system/system-form.controller.js"></script>
 <script src="components/forms/drink/drink-form.directive.js"></script>
 <script src="components/forms/drink/drink-form.controller.js"></script>
-
+<script src="components/dbItem/tile/dbItem-tile.directive.js"></script>
+<script src="components/dbItem/flat/dbItem-flat.directive.js"></script>
+<script src="components/search/search.directive.js"></script>
+<script src="components/search/search.controller.js"></script>
+<script src="components/pageHeader/pageHeader.directive.js"></script>
+<script src="components/pageHeader/pageHeader.controller.js"></script>
+<script src="components/header/header.directive.js"></script>
+<script src="components/header/header.controller.js"></script>
+<script src="components/login/login-dialog.controller.js"></script>
+<script src="components/dbItem/dbItem.controller.js"></script>
+<script src="api/validations.js"></script>
 <script src="api/models.js"></script>
 <script src="api/interfaces.js"></script>
-<script src="api/constants.js"></script>
 <script src="api/enums.js"></script>
-<script src="api/validations.js"></script>
+<script src="api/constants.js"></script>
 <!-- endinject -->
 
 <!-- anguapp:js -->
