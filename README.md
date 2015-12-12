@@ -72,4 +72,4 @@ being used)
 * some code duplication in db-items
 * focus-handling not perfect, e.g. no focus transferal to fomrs when clicking "edit"
 * only tested with chrome (FF works OK, but focus handling is not done the same way)
-* currently credentials are stored in LocalStore und are not timedout -> shold switch to cookies or something similar
+* currently credentials are stored in LocalStore und are not timedout -> should switch to cookies or something similar
