@@ -119,7 +119,7 @@ gulp.task(TASK_SERVER_START_DEV, function (cb) {
 
 // Testing
 gulp.task(TASK_TEST_E2E, function (callback) {
-    gulp.src(["./testFE/*.js"])
+    gulp.src(["./testFE/e2e/*.js"])
         .pipe(gulpProtractorAngular({
             "configFile": "./testFE/protractor.conf.js",
             "debug": false,
