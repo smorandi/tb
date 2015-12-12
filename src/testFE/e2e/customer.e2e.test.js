@@ -27,6 +27,4 @@ describe('customer case', function() {
     //describe('login', function(){
     //    element(by.linkText('Login')).getOuterHtml().click();
     //});
-
-
 });

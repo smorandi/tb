@@ -21,7 +21,7 @@ being used)
 ##Pre-Requisites:
 * working network ;)
 * Mongo-DB 3.0.4+ (mongod must be accessible via **path**)
-* Node v0.12.6+ (incl. npm)
+* Node 4.2.3 (incl. npm)
 * that's it...the rest (inlcuding client deps) will be installed by npm
 
 <hr>
