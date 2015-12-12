@@ -10,9 +10,10 @@
     "transpile": "tsc",
     "prestart": "start mongod",
     "start-dev": "npm start -- --clear --populate",
-    "test": "mocha ./test/all.test.js",
+    "test": "npm run gulp test.all",
     "pretest": "start mongod",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "build": "npm run gulp build.all"
   },
   "dependencies": {
     "async": "^1.5.0",
@@ -65,6 +66,7 @@
     "gulp-npm-files": "^0.1.3",
     "gulp-open": "^1.0.0",
     "gulp-rimraf": "^0.2.0",
+    "gulp-sequence": "^0.4.1",
     "gulp-size": "^2.0.0",
     "gulp-sloc": "^1.0.4",
     "gulp-uglify": "^1.5.1",

@@ -15,11 +15,9 @@ describe('customer case', function() {
     });
 
     describe('check dashboard', function(){
-        it('has dashboard 10 tiles', function() {
-            element.all(by.css('[ng-click="vm.flip()"]')).then(function(items) {
-                //browser.debugger();
-                expect(items).to.have.length(20);
-                //expect(items[0].getText()).toBe('First');
+        it('has dashboard tiles', function() {
+            element.all(by.css('db-item-tile')).then(function(items) {
+                expect(items).not.to.be.null;
             });
         });
     });
