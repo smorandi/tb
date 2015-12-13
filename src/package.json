@@ -11,7 +11,7 @@
     "prestart": "start mongod",
     "start-dev": "npm start -- --clear --populate",
     "start-build": "start mongod & node ./build/server.js",
-    "test": "npm run gulp test.all",
+    "test": "mocha ./test/all.test.js",
     "test-midway": "npm run gulp test.midway",
     "test-unit": "npm run gulp test.unit",
     "test-e2e": "npm run gulp test.e2e",
