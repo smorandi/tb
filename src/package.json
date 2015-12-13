@@ -4,7 +4,7 @@
   "private": true,
   "main": "tb-server.js",
   "scripts": {
-    "postinstall": "npm run install-bower && npm run install-tsd && npm run transpile && npm run build",
+    "postinstall": "npm run install-bower && npm run install-tsd && npm run transpile && npm run gulp -- build.all",
     "install-bower": "bower install",
     "install-tsd": "tsd install",
     "transpile": "tsc",
@@ -16,7 +16,7 @@
     "test-unit": "npm run gulp test.unit",
     "test-e2e": "npm run gulp test.e2e",
     "pretest": "start mongod",
-    "gulp": "gulp",
+    "gulp": "gulp"
   },
   "dependencies": {
     "async": "^1.5.0",
