@@ -17,7 +17,6 @@
     "test-e2e": "npm run gulp test.e2e",
     "pretest": "start mongod",
     "gulp": "gulp",
-    "build": "npm run gulp build.all"
   },
   "dependencies": {
     "async": "^1.5.0",
