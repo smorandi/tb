@@ -57,6 +57,7 @@ var TASK_BUILD_SERVER = "build.server";
 
 var TASK_SERVER_START = "start.server";
 var TASK_SERVER_START_DEV = "start.server.dev";
+var TASK_SERVER_START_BUILD = "start.server.build";
 
 function logGulp(taskName, message, state) {
 
@@ -161,6 +162,19 @@ gulp.task(TASK_SERVER_START_DEV, function (cb) {
     });
 });
 
+gulp.task(TASK_SERVER_START_BUILD, function (cb) {
+    exec("start npm run start-build", function (err, stdout, stderr) {
+        logGulp(TASK_SERVER_START_BUILD, stdout, MESSAGE_INFO);
+        logGulp(TASK_SERVER_START_BUILD, stderr, MESSAGE_INFO);
+        if (err) {
+            logGulp(TASK_SERVER_START_BUILD, err, MESSAGE_ERROR);
+            cb(err);
+        } else {
+            cb();
+        }
+    });
+});
+
 // tasks for testing
 gulp.task(TASK_TEST_E2E, function (callback) {
     gulp.src(["./testFE/e2e/*.js"])
@@ -181,67 +195,19 @@ gulp.task(TASK_TEST_UNIT, function (done) {
     var karmaServer = new Server({
         configFile: __dirname + "/testFE/karma-unit.conf.js",
         singleRun: true
-    });
-
-    karmaServer.on("browser_error", function (browser, err) {
-        logGulp(TASK_TEST_UNIT, "tests failed: " + err.message, MESSAGE_ERROR);
-        logGulp(TASK_TEST_UNIT, MESSAGE_TASK_END, MESSAGE_INFO);
-        done(err);
-    });
-
-    karmaServer.on("run_complete", function (browsers, results) {
-        var error = null;
-        if (results.error) {
-            logGulp(TASK_TEST_UNIT, "tests failed", MESSAGE_ERROR);
-            try {
-                throw new Error("Unit tests failed");
-            } catch (e) {
-                error = e;
-            }
-        } else {
-            logGulp(TASK_TEST_UNIT, "tests success", MESSAGE_SUCCESS);
-        }
-        logGulp(TASK_TEST_UNIT, MESSAGE_TASK_END, MESSAGE_INFO);
-        done(error);
-    });
-
-    karmaServer.start();
+    }, done).start();
 });
 
 gulp.task(TASK_TEST_MIDWAY, function (done) {
+
     var midwayServer = new Server({
         configFile: __dirname + "/testFE/karma-midway.conf.js",
         singleRun: true
-    });
-
-    midwayServer.on("browser_error", function (browser, err) {
-        logGulp(TASK_TEST_MIDWAY, "tets failed " + err.message, MESSAGE_ERROR);
-        logGulp(TASK_TEST_MIDWAY, MESSAGE_TASK_END, MESSAGE_INFO);
-        done(err);
-    });
-
-    midwayServer.on("run_complete", function (browsers, results) {
-        var error = null;
-
-        logGulp(TASK_TEST_MIDWAY, "tests " + results.failed + " failed, " + results.success + " success", MESSAGE_INFO);
-
-        if (results.error) {
-            logGulp(TASK_TEST_MIDWAY, "tests failed", MESSAGE_ERROR);
-            error = new Error("Unit tests failed");
-        } else {
-            logGulp(TASK_TEST_MIDWAY, "tests success", MESSAGE_SUCCESS);
-        }
-        logGulp(TASK_TEST_MIDWAY, MESSAGE_TASK_END, MESSAGE_INFO);
-        done(error);
-    });
-
-    midwayServer.start();
+    }, done).start();
 
 });
 
-gulp.task(TASK_TEST_ALL,
-    [TASK_SERVER_START_DEV, TASK_TEST_MIDWAY, TASK_TEST_UNIT, TASK_TEST_E2E]
-);
+gulp.task(TASK_TEST_ALL , gulpSequence(TASK_TEST_MIDWAY, TASK_TEST_UNIT, TASK_TEST_E2E));
 
 // tasks to build the project
 

@@ -4,13 +4,17 @@
   "private": true,
   "main": "tb-server.js",
   "scripts": {
-    "postinstall": "npm run install-bower && npm run install-tsd && npm run transpile",
+    "postinstall": "npm run install-bower && npm run install-tsd && npm run transpile && npm run build",
     "install-bower": "bower install",
     "install-tsd": "tsd install",
     "transpile": "tsc",
     "prestart": "start mongod",
     "start-dev": "npm start -- --clear --populate",
+    "start-build": "start mongod & node ./build/server.js",
     "test": "npm run gulp test.all",
+    "test-midway": "npm run gulp test.midway",
+    "test-unit": "npm run gulp test.unit",
+    "test-e2e": "npm run gulp test.e2e",
     "pretest": "start mongod",
     "gulp": "gulp",
     "build": "npm run gulp build.all"
