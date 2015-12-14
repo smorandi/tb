@@ -8,7 +8,7 @@ A Web Application to order drinks like stocks on a market.
 * supports http & https protocol-schemes (switch protocols in config.js in the backend, however certs are self-signed, 
 so it's just a show-case)
 
-###front-end
+###Front-end
 * AngularJS / Bootstrap
 * heavily using flexbox
 * Typescript
